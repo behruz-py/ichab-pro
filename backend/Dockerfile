@@ -19,4 +19,9 @@ COPY . .
 
 RUN mkdir -p /app/media /app/staticfiles
 
+COPY docker-entrypoint.sh /entrypoint.sh
+RUN sed -i 's/\r$//' /entrypoint.sh && chmod +x /entrypoint.sh
+
 EXPOSE 8000
+
+ENTRYPOINT ["/entrypoint.sh"]
