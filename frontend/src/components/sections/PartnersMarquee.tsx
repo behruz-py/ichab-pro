@@ -38,6 +38,10 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
     const track     = trackRef.current;
     if (!container || !track || count === 0) return;
 
+    // Explicit HTMLDivElement aliases — TypeScript loses narrowing inside closures
+    const containerEl: HTMLDivElement = container;
+    const trackEl: HTMLDivElement     = track;
+
     // Start from middle of the repeated array so cards appear on both sides
     const mid = Math.floor(REPEAT / 2);
     offsetRef.current = mid * STRIDE;
@@ -45,23 +49,21 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
     function tick() {
       if (!pausedRef.current) {
         offsetRef.current += SPEED;
-        // Prevent float overflow over long sessions
+        // Prevent float overflow over very long sessions
         if (offsetRef.current > loopLen * 1000) {
           offsetRef.current -= loopLen * 500;
         }
       }
 
-      const cw = container.offsetWidth;
+      const cw = containerEl.offsetWidth;
       const cx = cw / 2;
 
-      // translateX so that card[0] would be centered when offset=0
-      // card[i] center = (cx - CARD_W/2 - offset) + i*STRIDE + CARD_W/2
-      //                = cx + i*STRIDE - offset
+      // card[i] screen center = cx + i*STRIDE - offset
       const trackX = cx - CARD_W / 2 - offsetRef.current;
-      track.style.transform = `translateX(${trackX.toFixed(2)}px)`;
+      trackEl.style.transform = `translateX(${trackX.toFixed(2)}px)`;
 
       // Coverflow: scale, opacity, blur, rotateY based on distance from center
-      const cards = track.children;
+      const cards = trackEl.children;
       for (let i = 0; i < cards.length; i++) {
         const cardCX   = i * STRIDE + CARD_W / 2;   // card center relative to track origin
         const screenCX = cardCX + trackX;            // card center on screen
