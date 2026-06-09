@@ -1,0 +1,5 @@
+﻿# Force LF for shell scripts and other Linux files
+*.sh text eol=lf
+*.sh -crlf
+Procfile text eol=lf
+docker-entrypoint.sh text eol=lf
