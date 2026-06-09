@@ -1,4 +1,5 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from .models import ProductCategory, Product, ProductImage
 
 
@@ -9,7 +10,7 @@ class ProductImageInline(admin.TabularInline):
 
 
 @admin.register(ProductCategory)
-class ProductCategoryAdmin(admin.ModelAdmin):
+class ProductCategoryAdmin(ModelAdmin):
     list_display = ("name_uz", "parent", "slug", "is_active", "order")
     list_editable = ("is_active", "order")
     list_filter = ("is_active", "parent")
@@ -18,7 +19,7 @@ class ProductCategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(ModelAdmin):
     list_display = ("name_uz", "category", "is_active", "order", "created_at")
     list_editable = ("is_active", "order")
     list_filter = ("is_active", "category")

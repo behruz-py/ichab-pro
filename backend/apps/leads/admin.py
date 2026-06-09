@@ -1,10 +1,11 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from django.utils import timezone
 from .models import Lead
 
 
 @admin.register(Lead)
-class LeadAdmin(admin.ModelAdmin):
+class LeadAdmin(ModelAdmin):
     list_display = ("name", "company", "phone", "email", "status", "source_page", "created_at")
     list_editable = ("status",)
     list_filter = ("status", "created_at")

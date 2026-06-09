@@ -1,9 +1,10 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from .models import Statistic
 
 
 @admin.register(Statistic)
-class StatisticAdmin(admin.ModelAdmin):
+class StatisticAdmin(ModelAdmin):
     list_display = ("label_uz", "value", "suffix_uz", "icon", "is_active", "order")
     list_editable = ("value", "is_active", "order")
     list_filter = ("is_active",)

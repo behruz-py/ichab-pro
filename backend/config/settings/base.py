@@ -14,6 +14,9 @@ if _railway_host:
     CSRF_TRUSTED_ORIGINS = [f"https://{_railway_host}"]
 
 DJANGO_APPS = [
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -183,3 +186,66 @@ CELERY_BROKER_URL = config("REDIS_URL", default="redis://localhost:6379/0")
 CELERY_RESULT_BACKEND = config("REDIS_URL", default="redis://localhost:6379/0")
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
+
+# ─── Unfold Admin ───────────────────────────────────────────────────────────────
+UNFOLD = {
+    "SITE_TITLE": "Ichab Pro",
+    "SITE_HEADER": "Ichab Pro Admin",
+    "SITE_URL": "/",
+    "SITE_ICON": None,
+    "SITE_LOGO": None,
+    "SITE_SYMBOL": "settings",
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": True,
+    "THEME": "dark",
+    "COLORS": {
+        "primary": {
+            "50": "240 249 255",
+            "100": "224 242 254",
+            "200": "186 230 253",
+            "300": "125 211 252",
+            "400": "56 189 248",
+            "500": "14 165 233",
+            "600": "2 132 199",
+            "700": "3 105 161",
+            "800": "7 89 133",
+            "900": "12 74 110",
+            "950": "8 47 73",
+        },
+    },
+    "EXTENSIONS": {
+        "modeltranslation": {
+            "flags": {},
+        },
+    },
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": True,
+        "navigation": [
+            {
+                "title": "Asosiy",
+                "items": [
+                    {
+                        "title": "Foydalanuvchilar",
+                        "icon": "people",
+                        "link": "/admin/auth/user/",
+                    },
+                ],
+            },
+            {
+                "title": "Kontent",
+                "items": [
+                    {"title": "Bo'linmalar", "icon": "apartment", "link": "/admin/divisions/division/"},
+                    {"title": "Mahsulotlar", "icon": "inventory_2", "link": "/admin/products/product/"},
+                    {"title": "Xizmatlar", "icon": "miscellaneous_services", "link": "/admin/services/service/"},
+                    {"title": "Loyihalar", "icon": "construction", "link": "/admin/projects/project/"},
+                    {"title": "Hamkorlar", "icon": "handshake", "link": "/admin/partners/partner/"},
+                    {"title": "Sertifikatlar", "icon": "workspace_premium", "link": "/admin/certificates/certificate/"},
+                    {"title": "Statistika", "icon": "bar_chart", "link": "/admin/stats/statistic/"},
+                    {"title": "Sahifalar", "icon": "article", "link": "/admin/pages/pagecontent/"},
+                    {"title": "Murojaatlar", "icon": "mail", "link": "/admin/leads/lead/"},
+                ],
+            },
+        ],
+    },
+}

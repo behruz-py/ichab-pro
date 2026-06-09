@@ -1,4 +1,5 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from .models import Service, ServiceImage
 
 
@@ -9,7 +10,7 @@ class ServiceImageInline(admin.TabularInline):
 
 
 @admin.register(Service)
-class ServiceAdmin(admin.ModelAdmin):
+class ServiceAdmin(ModelAdmin):
     list_display = ("name_uz", "division", "is_active", "order")
     list_editable = ("is_active", "order")
     list_filter = ("is_active", "division")

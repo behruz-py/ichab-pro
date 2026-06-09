@@ -1,4 +1,5 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from .models import Project, ProjectImage
 
 
@@ -9,7 +10,7 @@ class ProjectImageInline(admin.TabularInline):
 
 
 @admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):
+class ProjectAdmin(ModelAdmin):
     list_display = ("name_uz", "client_uz", "division", "completed_date", "is_active", "order")
     list_editable = ("is_active", "order")
     list_filter = ("is_active", "division")

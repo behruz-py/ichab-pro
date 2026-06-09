@@ -1,9 +1,10 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from .models import PageContent
 
 
 @admin.register(PageContent)
-class PageContentAdmin(admin.ModelAdmin):
+class PageContentAdmin(ModelAdmin):
     list_display = ("key", "title_uz", "is_active", "order")
     list_editable = ("is_active", "order")
     list_filter = ("is_active",)

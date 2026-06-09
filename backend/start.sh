@@ -6,6 +6,9 @@ PORT="${PORT:-8000}"
 echo "[start] Running migrations..."
 python manage.py migrate --noinput
 
+echo "[start] Collecting static files..."
+python manage.py collectstatic --noinput --clear
+
 echo "[start] Creating superuser if not exists..."
 python manage.py shell -c "
 from django.contrib.auth import get_user_model

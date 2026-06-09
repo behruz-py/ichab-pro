@@ -1,9 +1,10 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from .models import Division
 
 
 @admin.register(Division)
-class DivisionAdmin(admin.ModelAdmin):
+class DivisionAdmin(ModelAdmin):
     list_display = ("name_uz", "slug", "is_active", "order", "created_at")
     list_editable = ("is_active", "order")
     list_filter = ("is_active",)
