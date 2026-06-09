@@ -99,20 +99,47 @@ export default async function HomePage({ params: { locale } }: Props) {
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Reveal variant="scale">
-            <div className="glass-card rounded-3xl border border-accent/20 p-12 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-accent-secondary/5 rounded-3xl" />
+            <div
+              className="rounded-3xl p-12 relative overflow-hidden"
+              style={{
+                background: "rgba(9,18,42,0.70)",
+                border: "1px solid rgba(59,130,246,0.20)",
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
+                boxShadow: "0 8px 48px rgba(0,0,0,0.30), 0 0 80px rgba(59,130,246,0.05)",
+              }}
+            >
+              {/* Glow corner */}
+              <div
+                className="absolute -top-20 left-1/2 -translate-x-1/2 w-[400px] h-[200px] rounded-full pointer-events-none"
+                style={{ background: "radial-gradient(ellipse, rgba(59,130,246,0.14) 0%, transparent 70%)" }}
+              />
               <div className="relative">
-                <h2 className="font-display text-3xl md:text-4xl font-bold text-content mb-4">
+                <span
+                  className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-4"
+                  style={{ color: "#3B82F6" }}
+                >
+                  Biz bilan bog&apos;laning
+                </span>
+                <h2
+                  className="font-display font-bold text-content mb-4"
+                  style={{ fontSize: "clamp(26px, 3.5vw, 42px)" }}
+                >
                   {tHero("cta_primary")}?
                 </h2>
-                <p className="text-content-secondary mb-8 max-w-lg mx-auto">
+                <p className="mb-10 max-w-lg mx-auto" style={{ color: "#7B93B8" }}>
                   {tHero("subtitle")}
                 </p>
                 <Link
                   href={`/${locale}/contact`}
-                  className="inline-flex px-10 py-4 rounded-xl bg-accent text-surface font-semibold text-lg shadow-glow hover:opacity-90 transition-all hover:scale-[1.02]"
+                  className="inline-flex items-center gap-2 px-10 py-4 rounded-2xl font-semibold text-base text-white transition-all duration-200 hover:scale-[1.03] hover:-translate-y-0.5"
+                  style={{
+                    background: "linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%)",
+                    boxShadow: "0 8px 32px rgba(59,130,246,0.40), inset 0 1px 0 rgba(255,255,255,0.18)",
+                  }}
                 >
                   {tHero("cta_primary")}
+                  <span>→</span>
                 </Link>
               </div>
             </div>
