@@ -13,6 +13,10 @@ if _railway_host:
     ALLOWED_HOSTS.append(_railway_host)
     CSRF_TRUSTED_ORIGINS = [f"https://{_railway_host}"]
 
+# Railway terminates SSL at the proxy level
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
+
 DJANGO_APPS = [
     "unfold",
     "django.contrib.admin",
