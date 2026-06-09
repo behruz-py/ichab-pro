@@ -235,7 +235,7 @@ UNFOLD = {
                 "items": [
                     {"title": "Bo'linmalar", "icon": "apartment", "link": "/admin/divisions/division/"},
                     {"title": "Mahsulotlar", "icon": "inventory_2", "link": "/admin/products/product/"},
-                    {"title": "Xizmatlar", "icon": "miscellaneous_services", "link": "/admin/services/service/"},
+                    {"title": "Xizmatlar", "icon": "build", "link": "/admin/services/service/"},
                     {"title": "Loyihalar", "icon": "construction", "link": "/admin/projects/project/"},
                     {"title": "Hamkorlar", "icon": "handshake", "link": "/admin/partners/partner/"},
                     {"title": "Sertifikatlar", "icon": "workspace_premium", "link": "/admin/certificates/certificate/"},
