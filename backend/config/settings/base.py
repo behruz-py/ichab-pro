@@ -1,7 +1,6 @@
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
-import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -81,6 +80,7 @@ ASGI_APPLICATION = "config.asgi.application"
 # Railway provides DATABASE_URL; fallback to individual vars for local/Docker
 _db_url = config("DATABASE_URL", default="")
 if _db_url:
+    import dj_database_url
     DATABASES = {"default": dj_database_url.parse(_db_url, conn_max_age=600)}
 else:
     DATABASES = {
