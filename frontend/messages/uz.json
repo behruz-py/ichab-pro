@@ -1,0 +1,111 @@
+{
+  "nav": {
+    "home": "Bosh sahifa",
+    "about": "Korporatsiya haqida",
+    "divisions": "Bo'linmalar",
+    "services": "Xizmatlar",
+    "products": "Mahsulotlar",
+    "projects": "Loyihalar",
+    "certificates": "Sertifikatlar",
+    "partners": "Hamkorlar",
+    "contact": "Aloqa"
+  },
+  "hero": {
+    "badge": "Sanoat avtomatizatsiyasi",
+    "title": "Kelajak ishlab chiqarishini",
+    "title_accent": "bugun quramiz",
+    "subtitle": "PLC, SCADA, sensorlar va boshqaruv tizimlari bo'yicha turnkey yechimlar. O'zbekiston sanoatini xalqaro standartlarga mos modernizatsiya qilamiz.",
+    "cta_primary": "Bepul konsultatsiya",
+    "cta_secondary": "Loyihalarimiz",
+    "scroll_hint": "Pastga aylantiring"
+  },
+  "stats": {
+    "title": "Raqamlarda ICHAB"
+  },
+  "divisions": {
+    "title": "Tarkibiy bo'linmalar",
+    "subtitle": "Sanoat avtomatizatsiyasining barcha sohalarida mutaxassis bo'linmalarimiz.",
+    "view_all": "Barcha bo'linmalar",
+    "view_detail": "Batafsil"
+  },
+  "services": {
+    "title": "Xizmatlarimiz",
+    "subtitle": "Loyihalashdan tortib texnik xizmat ko'rsatishgacha to'liq tsikl.",
+    "filter_all": "Barchasi",
+    "learn_more": "Batafsil"
+  },
+  "products": {
+    "title": "Mahsulotlar katalogi",
+    "subtitle": "Yetakchi ishlab chiqaruvchilarning sertifikatlangan mahsulotlari.",
+    "search_placeholder": "Mahsulot qidirish...",
+    "download_catalog": "Katalog yuklab olish",
+    "view_detail": "Batafsil",
+    "filter_category": "Kategoriya bo'yicha"
+  },
+  "projects": {
+    "title": "Bajarilgan loyihalar",
+    "subtitle": "O'zbekiston va mintaqada muvaffaqiyatli amalga oshirilgan ishlar.",
+    "view_all": "Barcha loyihalar",
+    "client": "Mijoz",
+    "location": "Joylashuv",
+    "completed": "Bajarilgan sana",
+    "result": "Natija"
+  },
+  "certificates": {
+    "title": "Sertifikatlar",
+    "subtitle": "Xalqaro va milliy standartlarga muvofiqligimizning tasdiq.",
+    "international": "Xalqaro",
+    "national": "Milliy"
+  },
+  "partners": {
+    "title": "Ishonchli hamkorlar",
+    "subtitle": "Dunyoning yetakchi sanoat kompaniyalari bilan hamkorlik.",
+    "visit_site": "Saytga o'tish"
+  },
+  "contact": {
+    "title": "Biz bilan bog'laning",
+    "subtitle": "Loyihangiz haqida muhokama qilishga tayyormiz.",
+    "form": {
+      "name": "Ism va familiya",
+      "company": "Kompaniya nomi",
+      "phone": "Telefon raqam",
+      "email": "Email manzil",
+      "message": "Xabar",
+      "subject": "Murojaat mavzusi",
+      "submit": "Yuborish",
+      "submitting": "Yuborilmoqda...",
+      "success": "Murojaatingiz qabul qilindi! Tez orada bog'lanamiz.",
+      "error": "Xatolik yuz berdi. Qaytadan urinib ko'ring.",
+      "required_either": "Telefon yoki email kiritish majburiy."
+    }
+  },
+  "common": {
+    "loading": "Yuklanmoqda...",
+    "error": "Xatolik yuz berdi",
+    "not_found": "Topilmadi",
+    "back": "Orqaga",
+    "read_more": "Batafsil o'qish",
+    "close": "Yopish",
+    "theme": {
+      "toggle": "Tema almashtirish",
+      "midnight": "Midnight Industrial",
+      "light": "Pure Light",
+      "cyber": "Cyber Aurora"
+    },
+    "lang": {
+      "uz": "O'zbek",
+      "ru": "Русский",
+      "en": "English"
+    }
+  },
+  "footer": {
+    "description": "O'zbekiston sanoatini zamonaviy avtomatizatsiya yechimlari bilan ta'minlovchi yetakchi kompaniya.",
+    "quick_links": "Tezkor havolalar",
+    "contact_info": "Kontakt",
+    "address": "Toshkent sh., Mirzo Ulug'bek tumani, Universitet ko'chasi, 2-uy",
+    "phone": "+998 71 200-01-00",
+    "email": "info@ichab.uz",
+    "copyright": "© {year} ICHAB. Barcha huquqlar himoyalangan.",
+    "made_with": "Ishlab chiqarilgan"
+  }
+}

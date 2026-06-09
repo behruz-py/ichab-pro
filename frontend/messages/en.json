@@ -1,0 +1,111 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "divisions": "Divisions",
+    "services": "Services",
+    "products": "Products",
+    "projects": "Projects",
+    "certificates": "Certificates",
+    "partners": "Partners",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Industrial Automation",
+    "title": "The factory of the future —",
+    "title_accent": "we build it today",
+    "subtitle": "Turnkey solutions for PLC, SCADA, sensors and control systems. Modernizing Uzbekistan's industry to international standards.",
+    "cta_primary": "Free Consultation",
+    "cta_secondary": "Our Projects",
+    "scroll_hint": "Scroll down"
+  },
+  "stats": {
+    "title": "ICHAB in numbers"
+  },
+  "divisions": {
+    "title": "Divisions",
+    "subtitle": "Specialized teams across all areas of industrial automation.",
+    "view_all": "All Divisions",
+    "view_detail": "Details"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Full cycle — from design to ongoing maintenance.",
+    "filter_all": "All",
+    "learn_more": "Learn More"
+  },
+  "products": {
+    "title": "Product Catalog",
+    "subtitle": "Certified products from the world's leading manufacturers.",
+    "search_placeholder": "Search products...",
+    "download_catalog": "Download Catalog",
+    "view_detail": "Details",
+    "filter_category": "By Category"
+  },
+  "projects": {
+    "title": "Completed Projects",
+    "subtitle": "Successfully delivered projects across Uzbekistan and the region.",
+    "view_all": "All Projects",
+    "client": "Client",
+    "location": "Location",
+    "completed": "Completion Date",
+    "result": "Result"
+  },
+  "certificates": {
+    "title": "Certificates",
+    "subtitle": "Proof of compliance with international and national standards.",
+    "international": "International",
+    "national": "National"
+  },
+  "partners": {
+    "title": "Trusted Partners",
+    "subtitle": "Partnerships with the world's leading industrial companies.",
+    "visit_site": "Visit Site"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Ready to discuss your project.",
+    "form": {
+      "name": "Full Name",
+      "company": "Company Name",
+      "phone": "Phone Number",
+      "email": "Email Address",
+      "message": "Message",
+      "subject": "Subject",
+      "submit": "Send Message",
+      "submitting": "Sending...",
+      "success": "Your message has been received! We will get back to you shortly.",
+      "error": "Something went wrong. Please try again.",
+      "required_either": "Phone or email is required."
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "not_found": "Not Found",
+    "back": "Back",
+    "read_more": "Read More",
+    "close": "Close",
+    "theme": {
+      "toggle": "Toggle theme",
+      "midnight": "Midnight Industrial",
+      "light": "Pure Light",
+      "cyber": "Cyber Aurora"
+    },
+    "lang": {
+      "uz": "O'zbek",
+      "ru": "Русский",
+      "en": "English"
+    }
+  },
+  "footer": {
+    "description": "Uzbekistan's leading company providing modern automation solutions for industry.",
+    "quick_links": "Quick Links",
+    "contact_info": "Contact Info",
+    "address": "2 Universitet St., Mirzo-Ulugbek District, Tashkent",
+    "phone": "+998 71 200-01-00",
+    "email": "info@ichab.uz",
+    "copyright": "© {year} ICHAB. All rights reserved.",
+    "made_with": "Made with"
+  }
+}
