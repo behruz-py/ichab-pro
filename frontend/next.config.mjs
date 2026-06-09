@@ -12,6 +12,11 @@ const nextConfig = {
         port: "8000",
         pathname: "/media/**",
       },
+      {
+        protocol: "https",
+        hostname: "ichab-pro-production-e3e8.up.railway.app",
+        pathname: "/media/**",
+      },
     ],
   },
   async rewrites() {
