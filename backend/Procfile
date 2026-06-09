@@ -1,1 +1,0 @@
-web: echo "=== ENV ===" && echo "PORT=$PORT" && echo "PWD=$(pwd)" && echo "PYTHON=$(which python)" && python -u manage.py migrate --noinput 2>&1 && echo "=== STARTING GUNICORN ===" && gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 1 --timeout 120 --log-level debug --access-logfile - --error-logfile - 2>&1
