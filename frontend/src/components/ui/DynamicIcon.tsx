@@ -17,8 +17,7 @@ function kebabToPascal(str: string) {
 
 export function DynamicIcon({ name, size = 22, className = "" }: Props) {
   const pascal = kebabToPascal(name);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const Icon = (LucideIcons as any)[pascal] as React.ComponentType<{ size?: number; className?: string }> | undefined;
+  const Icon = (LucideIcons as Record<string, unknown>)[pascal] as React.ComponentType<{ size?: number; className?: string }> | undefined;
 
   if (!Icon) return null;
   return <Icon size={size} className={className} />;
