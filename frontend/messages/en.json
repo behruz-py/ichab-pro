@@ -41,7 +41,14 @@
     "search_placeholder": "Search products...",
     "download_catalog": "Download Catalog",
     "view_detail": "Details",
-    "filter_category": "By Category"
+    "filter_all": "All",
+    "filter_category": "By Category",
+    "not_found": "No products found",
+    "catalog_pdf": "Catalog (PDF)",
+    "specs_title": "Technical Specifications",
+    "back_to_catalog": "Back to catalog",
+    "no_description": "No description provided",
+    "no_image": "No image uploaded"
   },
   "projects": {
     "title": "Completed Projects",

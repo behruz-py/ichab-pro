@@ -67,7 +67,8 @@ class ProductListSerializer(TranslatedSerializerMixin, serializers.ModelSerializ
         return None
 
     def get_main_image(self, obj):
-        img = obj.images.filter(is_main=True).first() or obj.images.first()
+        imgs = list(obj.images.all())  # uses prefetch_related cache — no extra query
+        img = next((i for i in imgs if i.is_main), imgs[0] if imgs else None)
         if not img:
             return None
         request = self.context.get("request")

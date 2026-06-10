@@ -1,10 +1,10 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
+import { ProductGallery } from "../_ProductGallery";
 
 type Props = { params: { locale: string; slug: string } };
 
@@ -37,13 +37,10 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
   setRequestLocale(locale);
 
   const product = await api.products.detail(slug, locale).catch(() => notFound());
-
   const t = await getTranslations({ locale, namespace: "products" });
 
-  const images   = product.images  ?? [];
-  const specs    = product.specs   ?? [];
-  const mainImage    = images.find(i => i.is_main) ?? images[0];
-  const otherImages  = images.filter(i => i.id !== mainImage?.id);
+  const images = product.images ?? [];
+  const specs  = product.specs  ?? [];
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -65,43 +62,15 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-12">
 
-        {/* ── Rasm galereya ── */}
-        <div className="flex flex-col gap-3">
-          <div className="relative rounded-2xl overflow-hidden"
-            style={{ aspectRatio: "4/3", background: "rgba(5,9,24,0.8)", border: "1px solid rgba(59,130,246,0.14)" }}>
-            {mainImage ? (
-              <Image
-                src={mainImage.image}
-                alt={mainImage.alt_uz || product.name}
-                fill className="object-contain"
-                sizes="(max-width:1024px) 100vw, 50vw"
-                priority
-              />
-            ) : (
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  strokeWidth="1" style={{ color: "#1e3a5f" }}>
-                  <rect x="2" y="3" width="20" height="14" rx="2" />
-                  <path d="M8 21h8M12 17v4" />
-                </svg>
-                <span className="text-xs" style={{ color: "#344768" }}>Rasm yuklanmagan</span>
-              </div>
-            )}
-          </div>
+        {/* ── Gallery (interactive client component) ── */}
+        <ProductGallery
+          images={images}
+          productName={product.name}
+          locale={locale}
+          noImageText={t("no_image")}
+        />
 
-          {otherImages.length > 0 && (
-            <div className="flex gap-2 overflow-x-auto pb-1">
-              {otherImages.map(img => (
-                <div key={img.id} className="relative flex-shrink-0 rounded-xl overflow-hidden"
-                  style={{ width: "80px", height: "60px", border: "1px solid rgba(59,130,246,0.20)" }}>
-                  <Image src={img.image} alt={img.alt_uz || ""} fill className="object-cover" sizes="80px" />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* ── Ma'lumot ── */}
+        {/* ── Info ── */}
         <div className="flex flex-col gap-5">
           {product.category && (
             <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#3B82F6" }}>
@@ -109,8 +78,10 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
             </span>
           )}
 
-          <h1 className="font-display font-bold leading-tight"
-            style={{ fontSize: "clamp(22px,3vw,36px)", color: "#E2EAF4" }}>
+          <h1
+            className="font-display font-bold leading-tight"
+            style={{ fontSize: "clamp(22px,3vw,36px)", color: "#E2EAF4" }}
+          >
             {product.name || slug}
           </h1>
 
@@ -119,7 +90,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
               {product.description}
             </p>
           ) : (
-            <p className="text-sm italic" style={{ color: "#344768" }}>Tavsif kiritilmagan</p>
+            <p className="text-sm italic" style={{ color: "#344768" }}>{t("no_description")}</p>
           )}
 
           {product.catalog_file && (
@@ -134,12 +105,13 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
                 boxShadow: "0 6px 24px rgba(59,130,246,0.28)",
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
-              Katalog (PDF)
+              {t("catalog_pdf")}
             </a>
           )}
         </div>
@@ -152,7 +124,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
           <div className="px-6 py-4"
             style={{ background: "rgba(59,130,246,0.06)", borderBottom: "1px solid rgba(59,130,246,0.14)" }}>
             <h2 className="font-display font-bold text-lg" style={{ color: "#E2EAF4" }}>
-              Texnik xususiyatlar
+              {t("specs_title")}
             </h2>
           </div>
           <table className="w-full">
@@ -181,7 +153,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
         className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-blue-300"
         style={{ color: "#60A5FA" }}
       >
-        ← {t("title")} ga qaytish
+        ← {t("back_to_catalog")}
       </Link>
     </div>
   );

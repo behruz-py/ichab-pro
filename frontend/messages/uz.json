@@ -41,7 +41,14 @@
     "search_placeholder": "Mahsulot qidirish...",
     "download_catalog": "Katalog yuklab olish",
     "view_detail": "Batafsil",
-    "filter_category": "Kategoriya bo'yicha"
+    "filter_all": "Barchasi",
+    "filter_category": "Kategoriya bo'yicha",
+    "not_found": "Mahsulot topilmadi",
+    "catalog_pdf": "Katalog (PDF)",
+    "specs_title": "Texnik xususiyatlar",
+    "back_to_catalog": "Katalogga qaytish",
+    "no_description": "Tavsif kiritilmagan",
+    "no_image": "Rasm yuklanmagan"
   },
   "projects": {
     "title": "Bajarilgan loyihalar",

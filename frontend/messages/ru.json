@@ -41,7 +41,14 @@
     "search_placeholder": "Поиск продукции...",
     "download_catalog": "Скачать каталог",
     "view_detail": "Подробнее",
-    "filter_category": "По категории"
+    "filter_all": "Все",
+    "filter_category": "По категории",
+    "not_found": "Товары не найдены",
+    "catalog_pdf": "Каталог (PDF)",
+    "specs_title": "Технические характеристики",
+    "back_to_catalog": "Вернуться к каталогу",
+    "no_description": "Описание не добавлено",
+    "no_image": "Фото не загружено"
   },
   "projects": {
     "title": "Выполненные проекты",

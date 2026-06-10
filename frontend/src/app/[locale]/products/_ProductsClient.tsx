@@ -31,8 +31,11 @@ export function ProductsClient({ products, categories }: Props) {
     <>
       {/* Search */}
       <div className="relative mb-6 max-w-md">
-        <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" fill="none" viewBox="0 0 24 24"
-          stroke="currentColor" style={{ color: "#344768" }}>
+        <svg
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          style={{ color: "#344768" }}
+        >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
             d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
         </svg>
@@ -41,7 +44,7 @@ export function ProductsClient({ products, categories }: Props) {
           placeholder={t("search_placeholder")}
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 rounded-xl border text-content placeholder:text-content-muted focus:outline-none transition-colors"
+          className="w-full pl-10 pr-4 py-3 rounded-xl border text-content placeholder:text-content-muted focus:outline-none focus:border-blue-500/50 transition-colors"
           style={{
             background: "rgba(255,255,255,0.04)",
             borderColor: "rgba(59,130,246,0.18)",
@@ -61,7 +64,7 @@ export function ProductsClient({ products, categories }: Props) {
                 : { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(59,130,246,0.18)", color: "#7B93B8" }
             }
           >
-            {t("filter_category")}
+            {t("filter_all")}
           </button>
           {categories.map(cat => (
             <button
@@ -88,34 +91,26 @@ export function ProductsClient({ products, categories }: Props) {
             <Link
               key={product.id}
               href={`/${locale}/products/${product.slug}`}
-              className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-300"
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(59,130,246,0.14)",
-              }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(59,130,246,0.40)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(59,130,246,0.12)";
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(59,130,246,0.14)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "";
-              }}
+              className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 border border-blue-500/[0.14] hover:border-blue-500/40 hover:shadow-[0_8px_32px_rgba(59,130,246,0.12)]"
+              style={{ background: "rgba(255,255,255,0.03)" }}
             >
               {/* Image */}
-              <div className="relative overflow-hidden" style={{ aspectRatio: "4/3", background: "rgba(5,9,24,0.8)" }}>
+              <div
+                className="relative overflow-hidden"
+                style={{ aspectRatio: "4/3", background: "rgba(5,9,24,0.8)" }}
+              >
                 {product.main_image ? (
                   <Image
                     src={product.main_image}
                     alt={product.name}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-contain transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,25vw"
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                      strokeWidth="1.2" style={{ color: "#1e3a5f" }}>
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" strokeWidth="1.2" style={{ color: "#1e3a5f" }}>
                       <rect x="2" y="3" width="20" height="14" rx="2" />
                       <path d="M8 21h8M12 17v4" />
                     </svg>
@@ -131,12 +126,16 @@ export function ProductsClient({ products, categories }: Props) {
                     {product.category_name}
                   </span>
                 )}
-                <h2 className="font-display font-semibold text-sm leading-snug mb-3 flex-1 line-clamp-2 transition-colors duration-200 group-hover:text-blue-300"
-                  style={{ color: "#E2EAF4" }}>
+                <h2
+                  className="font-display font-semibold text-sm leading-snug mb-3 flex-1 line-clamp-2 group-hover:text-blue-300 transition-colors duration-200"
+                  style={{ color: "#E2EAF4" }}
+                >
                   {product.name}
                 </h2>
-                <span className="text-xs font-semibold flex items-center gap-1 transition-all duration-200 group-hover:gap-2"
-                  style={{ color: "#60A5FA" }}>
+                <span
+                  className="text-xs font-semibold flex items-center gap-1 group-hover:gap-2 transition-all duration-200"
+                  style={{ color: "#60A5FA" }}
+                >
                   {t("view_detail")} →
                 </span>
               </div>
@@ -145,11 +144,11 @@ export function ProductsClient({ products, categories }: Props) {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center py-24 gap-4">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            strokeWidth="1.2" style={{ color: "#1e3a5f" }}>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="1.2" style={{ color: "#1e3a5f" }}>
             <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
           </svg>
-          <p style={{ color: "#344768" }}>Mahsulot topilmadi</p>
+          <p style={{ color: "#344768" }}>{t("not_found")}</p>
         </div>
       )}
     </>

@@ -4,6 +4,8 @@ import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { ProductsClient } from "./_ProductsClient";
 
+export const revalidate = 60;
+
 type Props = { params: { locale: string } };
 
 export function generateStaticParams() {
