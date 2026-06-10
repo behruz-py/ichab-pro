@@ -70,7 +70,17 @@ class ProductAdmin(ModelAdmin):
                 "Bir nechta model/variant uchun qiymatlar jadvali. "
                 "Birinchi qator — ustun sarlavhalari, qolganlar — ma'lumot qatorlari. "
                 "Ustunlarni | (vertikal chiziq) bilan ajrating. "
-                "Misol birinchi qator: Parametr | ВТЕ-200/48 | ВТЕ-315/75 | ВТЕ-315/115"
+                "Bo'sh kataklar uchun - yozing. Quyidagi namunani to'g'ridan to'g'ri tahrirlang:\n\n"
+                "Наименование параметра | ВТЕ-200/48 | ВТЕ-315/48 | ВТЕ-315/75 | ВТЕ-315/115 | ВТЕ-315/150 | ВТЕ-315/230\n"
+                "Номинальная мощность, кВА | 15,12 | - | 23,62 | 36,22 | 47,25 | 72,45\n"
+                "Номинальный ток, А | 200 | - | - | 315 | - | -\n"
+                "Номинальное напряжение, В | 48 | - | 75 | 115 | 150 | 230\n"
+                "Кратность форсировки по напряжению, не менее | 1,75 / 2,5 | - | - | - | - | -\n"
+                "Схема выпрямления | 3-х фазная мостовая | - | - | - | - | -\n"
+                "Габариты (ВхШхГ), мм | 1450x650x430* | - | - | - | - | -\n"
+                "Масса возбудителя, кг | 90-110 | - | - | - | 135-140 | -\n"
+                "КПД, % | 91 | - | 92 | 94 | 94 | 96\n"
+                "Коэффициент мощности | 0,88 | - | 0,88 | - | - | 0,92"
             ),
             "fields": ("spec_table",),
         }),
