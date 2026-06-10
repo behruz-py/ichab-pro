@@ -9,10 +9,15 @@ export const metadata: Metadata = {
   description:
     "PLC, SCADA, sensorlar va boshqaruv tizimlari bo'yicha turnkey yechimlar. O'zbekiston sanoatini xalqaro standartlarga mos modernizatsiya.",
   keywords: ["PLC", "SCADA", "avtomatizatsiya", "sensorlar", "industrial automation", "Uzbekistan"],
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     type: "website",
     locale: "uz_UZ",
     siteName: "ICHAB",
+    images: [{ url: "/favicon.png", width: 512, height: 512 }],
   },
 };
 

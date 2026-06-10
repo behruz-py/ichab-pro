@@ -3,144 +3,137 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import type { Statistic } from "@/types/api";
-import { VIEWPORT } from "@/lib/motion";
+import { staggerContainer, fadeUp, VIEWPORT } from "@/lib/motion";
 import { DynamicIcon } from "@/components/ui/DynamicIcon";
 
 function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
-  const [count, setCount] = useState(0);
-  const ref     = useRef<HTMLSpanElement>(null);
-  const started = useRef(false);
+  const [count, setCount]   = useState(0);
+  const ref                  = useRef<HTMLSpanElement>(null);
+  const started              = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          const duration = 2400;
-          const start = performance.now();
-          const tick = (now: number) => {
-            const t = Math.min((now - start) / duration, 1);
-            const ease = 1 - Math.pow(1 - t, 4);
-            setCount(Math.round(ease * target));
-            if (t < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        }
-      },
-      { threshold: 0.3 }
-    );
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !started.current) {
+        started.current = true;
+        const duration = 2200;
+        const start    = performance.now();
+        const tick = (now: number) => {
+          const t    = Math.min((now - start) / duration, 1);
+          const ease = 1 - Math.pow(1 - t, 4);
+          setCount(Math.round(ease * target));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }
+    }, { threshold: 0.3 });
     observer.observe(el);
     return () => observer.disconnect();
   }, [target]);
 
-  return (
-    <span ref={ref} className="tabular-nums">
-      {count}{suffix}
-    </span>
-  );
+  return <span ref={ref} className="tabular-nums">{count}{suffix}</span>;
 }
 
-interface Props {
-  stats: Statistic[];
-  title: string;
-}
+interface Props { stats: Statistic[]; title: string; }
+
+// Accent colors per card index (blue variants)
+const ACCENTS = [
+  { border: "rgba(59,130,246,0.35)",  glow: "rgba(59,130,246,0.15)",  icon: "rgba(59,130,246,0.18)"  },
+  { border: "rgba(96,165,250,0.30)",  glow: "rgba(96,165,250,0.12)",  icon: "rgba(96,165,250,0.14)"  },
+  { border: "rgba(56,189,248,0.30)",  glow: "rgba(56,189,248,0.12)",  icon: "rgba(56,189,248,0.14)"  },
+  { border: "rgba(59,130,246,0.35)",  glow: "rgba(59,130,246,0.15)",  icon: "rgba(59,130,246,0.18)"  },
+];
 
 export function StatsSection({ stats, title }: Props) {
   return (
-    <section className="relative py-20 overflow-hidden">
-      {/* Top/bottom hairlines */}
-      <div
-        className="absolute top-0 inset-x-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent 0%, rgba(59,130,246,0.30) 50%, transparent 100%)" }}
-      />
-      <div
-        className="absolute bottom-0 inset-x-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent 0%, rgba(59,130,246,0.30) 50%, transparent 100%)" }}
-      />
+    <section className="relative py-24 overflow-hidden">
 
-      {/* Background glow */}
+      {/* Top/bottom lines */}
+      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(59,130,246,0.30) 50%,transparent)" }} />
+      <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(59,130,246,0.30) 50%,transparent)" }} />
+
+      {/* Wide ambient glow */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[300px] rounded-full"
-          style={{ background: "radial-gradient(ellipse, rgba(59,130,246,0.07) 0%, transparent 70%)", filter: "blur(20px)" }}
-        />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[400px] rounded-full"
+          style={{ background: "radial-gradient(ellipse, rgba(59,130,246,0.07) 0%, transparent 70%)", filter: "blur(30px)" }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
         {/* Label */}
         <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={VIEWPORT}
-          transition={{ duration: 0.5 }}
-          className="text-center text-xs font-bold uppercase tracking-[0.22em] mb-14"
+          initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={VIEWPORT} transition={{ duration: 0.5 }}
+          className="text-center text-xs font-bold uppercase tracking-[0.22em] mb-12"
           style={{ color: "#344768" }}
         >
           {title}
         </motion.p>
 
-        {/* Stats grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={VIEWPORT}
-              transition={{ delay: i * 0.10, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className={`
-                text-center px-6 py-10 group cursor-default
-                ${i < stats.length - 1 ? "border-r border-white/[0.05]" : ""}
-              `}
-            >
-              {/* Icon */}
-              {stat.icon && (
-                <div className="flex justify-center mb-5">
-                  <div
-                    className="w-11 h-11 rounded-2xl flex items-center justify-center"
-                    style={{
-                      background: "rgba(59,130,246,0.09)",
-                      border: "1px solid rgba(59,130,246,0.20)",
-                    }}
-                  >
-                    <DynamicIcon name={stat.icon} size={20} className="text-blue-400" />
-                  </div>
-                </div>
-              )}
-
-              {/* Big number */}
-              <div
-                className="font-display font-bold leading-none mb-3 tabular-nums"
+        {/* Cards */}
+        <motion.div
+          variants={staggerContainer} initial="hidden" whileInView="visible" viewport={VIEWPORT}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-5"
+        >
+          {stats.map((stat, i) => {
+            const accent = ACCENTS[i % ACCENTS.length];
+            return (
+              <motion.div
+                key={stat.id}
+                variants={fadeUp}
+                className="group relative p-7 rounded-2xl text-center overflow-hidden cursor-default transition-transform duration-300 hover:-translate-y-1"
                 style={{
-                  fontSize: "clamp(44px, 5vw, 68px)",
-                  background: "linear-gradient(135deg, #3B82F6 0%, #60A5FA 50%, #38BDF8 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
+                  background:           "rgba(9,18,42,0.70)",
+                  border:               `1px solid ${accent.border}`,
+                  backdropFilter:       "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
+                  boxShadow:            `0 4px 32px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.03)`,
                 }}
               >
-                <AnimatedCounter target={stat.value} suffix={stat.suffix} />
-              </div>
+                {/* Hover top glow */}
+                <div className="absolute top-0 inset-x-0 h-24 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{ background: `radial-gradient(ellipse at 50% 0%, ${accent.glow} 0%, transparent 75%)` }} />
 
-              {/* Label */}
-              <div className="text-sm font-medium" style={{ color: "#7B93B8" }}>
-                {stat.label}
-              </div>
+                {/* Top accent line */}
+                <div className="absolute top-0 inset-x-8 h-px rounded-b"
+                  style={{ background: `linear-gradient(90deg, transparent, ${accent.border}, transparent)` }} />
 
-              {/* Animated underline */}
-              <motion.div
-                className="mx-auto mt-5 h-px rounded-full"
-                style={{ background: "linear-gradient(90deg, transparent, rgba(59,130,246,0.50), transparent)" }}
-                initial={{ width: 0 }}
-                whileInView={{ width: "60%" }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: 0.4 + i * 0.10 }}
-              />
-            </motion.div>
-          ))}
-        </div>
+                {/* Icon */}
+                {stat.icon && (
+                  <div className="flex justify-center mb-4">
+                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                      style={{ background: accent.icon, border: `1px solid ${accent.border}` }}>
+                      <DynamicIcon name={stat.icon} size={20} className="text-blue-400" />
+                    </div>
+                  </div>
+                )}
+
+                {/* Big number */}
+                <div className="relative font-display font-bold leading-none mb-2 tabular-nums"
+                  style={{
+                    fontSize: "clamp(48px, 5vw, 72px)",
+                    background: "linear-gradient(135deg, #3B82F6 0%, #60A5FA 55%, #38BDF8 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                </div>
+
+                {/* Label */}
+                <div className="text-[13px] font-medium leading-snug" style={{ color: "#7B93B8" }}>
+                  {stat.label}
+                </div>
+
+                {/* Bottom glow on hover */}
+                <div className="absolute bottom-0 inset-x-4 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+                  style={{ background: `linear-gradient(90deg, transparent, ${accent.border}, transparent)` }} />
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );

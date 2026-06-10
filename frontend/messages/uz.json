@@ -1,6 +1,7 @@
 {
   "nav": {
     "home": "Bosh sahifa",
+    "company": "Kompaniya",
     "about": "Korporatsiya haqida",
     "divisions": "Bo'linmalar",
     "services": "Xizmatlar",
@@ -58,9 +59,12 @@
     "national": "Milliy"
   },
   "partners": {
+    "badge": "Hamkorlar",
     "title": "Ishonchli hamkorlar",
     "subtitle": "Dunyoning yetakchi sanoat kompaniyalari bilan hamkorlik.",
-    "visit_site": "Saytga o'tish"
+    "visit_site": "Saytga o'tish",
+    "strategic": "strategik hamkor",
+    "all_count": "ta hamkor"
   },
   "contact": {
     "title": "Biz bilan bog'laning",

@@ -67,19 +67,19 @@ import type {
 export const api = {
   divisions: {
     list: (lang?: string) =>
-      request<PaginatedResponse<Division>>("divisions/?page_size=100", { lang, revalidate: 300 }),
+      request<PaginatedResponse<Division>>("divisions/?page_size=100", { lang, revalidate: 60 }),
     detail: (slug: string, lang?: string) =>
-      request<Division>(`divisions/${slug}/`, { lang, revalidate: 300 }),
+      request<Division>(`divisions/${slug}/`, { lang, revalidate: 60 }),
   },
   products: {
     categories: (lang?: string) =>
       request<PaginatedResponse<ProductCategory>>("products/categories/?page_size=100", { lang, revalidate: 300 }),
     list: (params?: Record<string, string>, lang?: string) => {
-      const qs = params ? "&" + new URLSearchParams(params).toString() : "";
-      return request<PaginatedResponse<Product>>(`products/?page_size=50${qs}`, { lang, revalidate: 300 });
+      const qs = params && Object.keys(params).length ? "&" + new URLSearchParams(params).toString() : "";
+      return request<PaginatedResponse<Product>>(`products/?page_size=200${qs}`, { lang, revalidate: 60 });
     },
     detail: (slug: string, lang?: string) =>
-      request<Product>(`products/${slug}/`, { lang, revalidate: 300 }),
+      request<Product>(`products/${slug}/`, { lang, revalidate: 60 }),
   },
   services: {
     list: (lang?: string) =>
@@ -93,8 +93,8 @@ export const api = {
   },
   partners: {
     list: (featured?: boolean, lang?: string) => {
-      const qs = featured ? "?is_featured=true&page_size=100" : "?page_size=100";
-      return request<PaginatedResponse<Partner>>(`partners/${qs}`, { lang, revalidate: 300 });
+      const qs = featured ? "?is_featured=true&is_active=true&page_size=100" : "?is_active=true&page_size=100";
+      return request<PaginatedResponse<Partner>>(`partners/${qs}`, { lang, revalidate: 60 });
     },
   },
   projects: {
@@ -109,7 +109,7 @@ export const api = {
   },
   pages: {
     byKey: (key: string, lang?: string) =>
-      request<PageContent>(`pages/by-key/${key}/`, { lang, revalidate: 600 }),
+      request<PageContent>(`pages/by-key/${key}/`, { lang, revalidate: 60 }),
   },
   leads: {
     create: (data: LeadCreate) =>

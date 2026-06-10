@@ -25,7 +25,11 @@ export function formatDate(dateString: string | null, locale: string = "uz"): st
 export function mediaUrl(path: string | null | undefined): string {
   if (!path) return "";
   if (path.startsWith("http")) return path;
-  const base = process.env.NEXT_PUBLIC_MEDIA_URL ?? "http://localhost:8000";
+  const media = process.env.NEXT_PUBLIC_MEDIA_URL;
+  if (media) return `${media.replace(/\/+$/, "")}${path}`;
+  // Derive server root from API URL — no separate env var needed
+  const api = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
+  const base = api.replace(/\/api.*$/, "");
   return `${base}${path}`;
 }
 

@@ -35,17 +35,14 @@ export interface ProductCategory {
   name: string;
   icon: string;
   cover_image: string | null;
-  parent: number | null;
-  children_count?: number;
-  children?: ProductCategory[];
   order: number;
 }
 
 export interface ProductSpec {
-  label_uz: string;
-  label_ru: string;
-  label_en: string;
+  id: number;
+  label: string;
   value: string;
+  order: number;
 }
 
 export interface ProductImage {
@@ -62,12 +59,12 @@ export interface Product {
   id: number;
   slug: string;
   name: string;
-  description: string;
+  description?: string;
   category: ProductCategory | null;
   category_name?: string;
   main_image: string | null;
   images?: ProductImage[];
-  specifications: ProductSpec[];
+  specs?: ProductSpec[];
   catalog_file: string | null;
   order: number;
   is_active: boolean;
@@ -96,6 +93,8 @@ export interface Service {
   price_from: string | null;
   order: number;
   is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
 
 // ─── Certificate ──────────────────────────────────────────────────────────────
@@ -111,6 +110,8 @@ export interface Certificate {
   is_international: boolean;
   order: number;
   is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
 
 // ─── Partner ──────────────────────────────────────────────────────────────────
@@ -152,6 +153,8 @@ export interface Project {
   images?: ProjectImage[];
   order: number;
   is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
 
 // ─── Statistic ────────────────────────────────────────────────────────────────

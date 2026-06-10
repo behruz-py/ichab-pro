@@ -5,8 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Division } from "@/types/api";
 import { mediaUrl } from "@/lib/utils";
-import { staggerContainer, fadeUp, fadeLeft, VIEWPORT } from "@/lib/motion";
-import { MeshBlobs } from "@/components/ui/MeshBlobs";
+import { fadeLeft, VIEWPORT } from "@/lib/motion";
 
 interface Props {
   divisions: Division[];
@@ -17,144 +16,165 @@ interface Props {
   viewDetail: string;
 }
 
+function PlaceholderBg({ index }: { index: number }) {
+  const gradients = [
+    "radial-gradient(circle at 30% 40%, rgba(29,78,216,0.40) 0%, rgba(5,9,24,0.98) 65%)",
+    "radial-gradient(circle at 70% 30%, rgba(14,165,233,0.30) 0%, rgba(5,9,24,0.98) 65%)",
+    "radial-gradient(circle at 50% 70%, rgba(99,102,241,0.28) 0%, rgba(5,9,24,0.98) 65%)",
+    "radial-gradient(circle at 20% 60%, rgba(6,182,212,0.28) 0%, rgba(5,9,24,0.98) 65%)",
+    "radial-gradient(circle at 80% 50%, rgba(59,130,246,0.28) 0%, rgba(5,9,24,0.98) 65%)",
+  ];
+  return <div className="absolute inset-0" style={{ background: gradients[index % gradients.length] }} />;
+}
+
 export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, viewDetail }: Props) {
+  const shown = divisions.slice(0, 6);
+  if (!shown.length) return null;
+
   return (
-    <section className="relative py-24 overflow-hidden">
-      <MeshBlobs variant="default" />
+    <section className="relative py-20">
+      <div className="absolute inset-0 pointer-events-none" style={{
+        opacity: 0.018,
+        backgroundImage:
+          "repeating-linear-gradient(0deg,rgba(99,179,237,1) 0px,transparent 1px,transparent 38px)," +
+          "repeating-linear-gradient(90deg,rgba(99,179,237,1) 0px,transparent 1px,transparent 38px)",
+      }} />
+      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(59,130,246,0.22) 50%,transparent)" }} />
+      <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(59,130,246,0.12) 50%,transparent)" }} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Section header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 gap-5">
-          <motion.div
-            variants={fadeLeft}
-            initial="hidden"
-            whileInView="visible"
-            viewport={VIEWPORT}
-          >
-            <span
-              className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3"
-              style={{ color: "#3B82F6" }}
-            >
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-5">
+          <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" viewport={VIEWPORT}>
+            <span className="inline-block text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#3B82F6" }}>
               Bo&apos;linmalar
             </span>
-            <h2
-              className="font-display font-bold text-content leading-tight"
-              style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}
-            >
+            <h2 className="font-display font-bold text-content leading-tight" style={{ fontSize: "clamp(28px,3.5vw,44px)" }}>
               {title}
             </h2>
-            <p className="mt-3 max-w-lg" style={{ color: "#7B93B8" }}>
-              {subtitle}
-            </p>
+            <p className="mt-3 max-w-lg" style={{ color: "#7B93B8" }}>{subtitle}</p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={VIEWPORT}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={VIEWPORT} transition={{ duration: 0.5, delay: 0.2 }}>
             <Link
               href={`/${locale}/divisions`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shrink-0"
-              style={{
-                background: "rgba(59,130,246,0.10)",
-                border: "1px solid rgba(59,130,246,0.25)",
-                color: "#60A5FA",
-              }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold shrink-0 transition-all duration-200 hover:gap-3"
+              style={{ background: "rgba(59,130,246,0.10)", border: "1px solid rgba(59,130,246,0.25)", color: "#60A5FA" }}
             >
-              {viewAll}
-              <motion.span
-                animate={{ x: [0, 4, 0] }}
-                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-              >
-                →
-              </motion.span>
+              {viewAll} →
             </Link>
           </motion.div>
         </div>
 
-        {/* Grid */}
+        {/* Card grid */}
         <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={VIEWPORT}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
-          {divisions.slice(0, 6).map((div) => (
-            <motion.div key={div.id} variants={fadeUp}>
-              <Link
-                href={`/${locale}/divisions/${div.slug}`}
-                className="group block rounded-2xl overflow-hidden transition-all duration-300"
-                style={{
-                  background: "rgba(9,18,42,0.65)",
-                  border: "1px solid rgba(59,130,246,0.12)",
-                  backdropFilter: "blur(16px)",
-                  WebkitBackdropFilter: "blur(16px)",
-                }}
-              >
-                {/* Cover image */}
-                <div className="relative h-44 overflow-hidden" style={{ background: "rgba(5,10,23,0.80)" }}>
-                  {div.cover_image ? (
-                    <Image
-                      src={mediaUrl(div.cover_image)}
-                      alt={div.name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,33vw"
-                    />
-                  ) : (
-                    <div
-                      className="w-full h-full flex items-center justify-center"
-                      style={{ background: "linear-gradient(135deg, rgba(29,78,216,0.12) 0%, rgba(14,165,233,0.08) 100%)" }}
-                    >
-                      {div.logo ? (
-                        <Image src={mediaUrl(div.logo)} alt={div.name} width={56} height={56} className="object-contain opacity-50" />
-                      ) : (
-                        <span className="text-5xl" style={{ color: "rgba(59,130,246,0.25)" }}>⚙</span>
-                      )}
-                    </div>
-                  )}
-                  {/* Gradient overlay */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-                    style={{ background: "linear-gradient(to top, rgba(9,18,42,0.90) 0%, transparent 60%)" }}
-                  />
-                  {/* Blue line at top on hover */}
-                  <div
-                    className="absolute top-0 inset-x-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ background: "linear-gradient(90deg, transparent, rgba(59,130,246,0.80), transparent)" }}
-                  />
-                </div>
+          {shown.map((div, i) => (
+            <Link
+              key={div.id}
+              href={`/${locale}/divisions/${div.slug}`}
+              className="group relative block rounded-2xl overflow-hidden"
+              style={{
+                aspectRatio: "16/9",
+                border: "1px solid rgba(59,130,246,0.16)",
+              }}
+            >
+              {/* ── Image — fills 16:9 card exactly, zero crop ── */}
+              {div.cover_image ? (
+                <Image
+                  src={mediaUrl(div.cover_image)}
+                  alt={div.name}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                  sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,33vw"
+                  priority={i < 3}
+                />
+              ) : (
+                <PlaceholderBg index={i} />
+              )}
 
-                {/* Content */}
-                <div className="p-5">
-                  <h3
-                    className="font-display font-semibold text-content mb-2 transition-colors duration-200 group-hover:text-blue-400"
-                  >
-                    {div.name}
-                  </h3>
-                  <p className="text-sm line-clamp-2 leading-relaxed mb-4" style={{ color: "#7B93B8" }}>
-                    {div.short_description}
-                  </p>
-                  <span
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold transition-all duration-200 group-hover:gap-2.5"
-                    style={{ color: "#3B82F6" }}
-                  >
-                    {viewDetail}
-                    <span>→</span>
+              {/* ── Bottom blur + dark fade — one seamless layer ── */}
+              <div className="absolute inset-x-0 bottom-0" style={{ height: "70%" }}>
+                <div className="absolute inset-0" style={{
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  maskImage: "linear-gradient(to bottom, transparent 0%, black 55%)",
+                  WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 55%)",
+                }} />
+                <div className="absolute inset-0" style={{
+                  background: "linear-gradient(to bottom, transparent 0%, rgba(3,8,20,0.65) 40%, rgba(3,8,20,0.96) 75%, rgba(3,8,20,1) 100%)",
+                }} />
+              </div>
+
+              {/* ── Top vignette for badge ── */}
+              <div className="absolute inset-x-0 top-0 h-16 pointer-events-none" style={{
+                background: "linear-gradient(to bottom, rgba(3,8,20,0.60) 0%, transparent 100%)",
+              }} />
+
+              {/* ── Hover top accent line ── */}
+              <div className="absolute top-0 inset-x-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                style={{ background: "linear-gradient(90deg, transparent, #3B82F6 30%, #38BDF8 50%, #3B82F6 70%, transparent)" }} />
+
+              {/* ── LAB badge + logo ── */}
+              <div className="absolute top-3 left-3 flex items-center gap-2 z-10">
+                <span className="font-mono text-[11px] font-bold tracking-widest px-2.5 py-1 rounded-lg"
+                  style={{
+                    background: "rgba(3,8,20,0.75)",
+                    border: "1px solid rgba(59,130,246,0.45)",
+                    color: "#60A5FA",
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                  }}>
+                  LAB · {String(i + 1).padStart(2, "0")}
+                </span>
+                {div.logo && (
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center"
+                    style={{
+                      background: "rgba(255,255,255,0.14)",
+                      border: "1px solid rgba(255,255,255,0.22)",
+                      backdropFilter: "blur(8px)",
+                      WebkitBackdropFilter: "blur(8px)",
+                    }}>
+                    <Image src={mediaUrl(div.logo)} alt={div.name} width={18} height={18} className="object-contain" />
+                  </div>
+                )}
+              </div>
+
+              {/* ── Bottom text ── */}
+              <div className="absolute bottom-0 inset-x-0 px-4 pb-4 pt-2 z-10">
+                <h3
+                  className="font-display font-bold leading-snug mb-1.5 group-hover:text-blue-300 transition-colors duration-200 line-clamp-2"
+                  style={{
+                    color: "#F0F6FF",
+                    fontSize: "15px",
+                    textShadow: "0 2px 10px rgba(0,0,0,0.80)",
+                  }}
+                >
+                  {div.name}
+                </h3>
+                <div className="flex items-center justify-between">
+                  {div.leader_name ? (
+                    <p className="text-xs" style={{ color: "rgba(147,197,253,0.75)" }}>
+                      {div.leader_name}
+                    </p>
+                  ) : <span />}
+                  <span className="text-xs font-bold transition-all duration-200 group-hover:translate-x-0.5"
+                    style={{ color: "#60A5FA" }}>
+                    {viewDetail} →
                   </span>
                 </div>
+              </div>
 
-                {/* Bottom glow line on hover */}
-                <div
-                  className="h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: "linear-gradient(90deg, transparent, rgba(59,130,246,0.40), transparent)" }}
-                />
-              </Link>
-            </motion.div>
+              {/* ── Hover glow ring ── */}
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                style={{ boxShadow: "inset 0 0 0 1px rgba(59,130,246,0.52)" }} />
+            </Link>
           ))}
         </motion.div>
       </div>

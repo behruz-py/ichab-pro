@@ -2,15 +2,16 @@ import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { StatsSection } from "@/components/sections/StatsSection";
-import { DivisionsPreview } from "@/components/sections/DivisionsPreview";
-import { ServicesPreview } from "@/components/sections/ServicesPreview";
-import { PartnersMarquee } from "@/components/sections/PartnersMarquee";
-import { Reveal } from "@/components/ui/Reveal";
+import { HeroSection }       from "@/components/sections/HeroSection";
+import { TrustStrip }        from "@/components/sections/TrustStrip";
+import { StatsSection }      from "@/components/sections/StatsSection";
+import { DivisionsPreview }  from "@/components/sections/DivisionsPreview";
+import { ServicesPreview }   from "@/components/sections/ServicesPreview";
+import { ProcessSection }    from "@/components/sections/ProcessSection";
+import { PartnersMarquee }   from "@/components/sections/PartnersMarquee";
+import { Reveal }            from "@/components/ui/Reveal";
 
 type Props = { params: { locale: string } };
 
@@ -44,10 +45,10 @@ export default async function HomePage({ params: { locale } }: Props) {
     api.partners.list(true, locale),
   ]);
 
-  const stats = statsRes.status === "fulfilled" ? statsRes.value.results : [];
+  const stats     = statsRes.status     === "fulfilled" ? statsRes.value.results     : [];
   const divisions = divisionsRes.status === "fulfilled" ? divisionsRes.value.results : [];
-  const services = servicesRes.status === "fulfilled" ? servicesRes.value.results : [];
-  const partners = partnersRes.status === "fulfilled" ? partnersRes.value.results : [];
+  const services  = servicesRes.status  === "fulfilled" ? servicesRes.value.results  : [];
+  const partners  = partnersRes.status  === "fulfilled" ? partnersRes.value.results  : [];
 
   return (
     <>
@@ -61,6 +62,9 @@ export default async function HomePage({ params: { locale } }: Props) {
         ctaSecondary={tHero("cta_secondary")}
         scrollHint={tHero("scroll_hint")}
       />
+
+      {/* Trust strip — thin marquee bar */}
+      <TrustStrip />
 
       {stats.length > 0 && (
         <StatsSection stats={stats} title={tStats("title")} />
@@ -87,6 +91,9 @@ export default async function HomePage({ params: { locale } }: Props) {
         />
       )}
 
+      {/* How we work */}
+      <ProcessSection locale={locale} />
+
       {partners.length > 0 && (
         <PartnersMarquee
           partners={partners}
@@ -102,23 +109,22 @@ export default async function HomePage({ params: { locale } }: Props) {
             <div
               className="rounded-3xl p-12 relative overflow-hidden"
               style={{
-                background: "rgba(9,18,42,0.70)",
-                border: "1px solid rgba(59,130,246,0.20)",
-                backdropFilter: "blur(20px)",
+                background:           "rgba(9,18,42,0.70)",
+                border:               "1px solid rgba(59,130,246,0.20)",
+                backdropFilter:       "blur(20px)",
                 WebkitBackdropFilter: "blur(20px)",
-                boxShadow: "0 8px 48px rgba(0,0,0,0.30), 0 0 80px rgba(59,130,246,0.05)",
+                boxShadow:            "0 8px 48px rgba(0,0,0,0.30), 0 0 80px rgba(59,130,246,0.05)",
               }}
             >
-              {/* Glow corner */}
-              <div
-                className="absolute -top-20 left-1/2 -translate-x-1/2 w-[400px] h-[200px] rounded-full pointer-events-none"
-                style={{ background: "radial-gradient(ellipse, rgba(59,130,246,0.14) 0%, transparent 70%)" }}
-              />
+              {/* Glow top */}
+              <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[400px] h-[200px] rounded-full pointer-events-none"
+                style={{ background: "radial-gradient(ellipse, rgba(59,130,246,0.14) 0%, transparent 70%)" }} />
+              {/* Bottom glow */}
+              <div className="absolute -bottom-10 left-1/4 w-[300px] h-[150px] rounded-full pointer-events-none"
+                style={{ background: "radial-gradient(ellipse, rgba(249,115,22,0.06) 0%, transparent 70%)" }} />
+
               <div className="relative">
-                <span
-                  className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-4"
-                  style={{ color: "#3B82F6" }}
-                >
+                <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-4" style={{ color: "#3B82F6" }}>
                   Biz bilan bog&apos;laning
                 </span>
                 <h2
@@ -135,7 +141,7 @@ export default async function HomePage({ params: { locale } }: Props) {
                   className="inline-flex items-center gap-2 px-10 py-4 rounded-2xl font-semibold text-base text-white transition-all duration-200 hover:scale-[1.03] hover:-translate-y-0.5"
                   style={{
                     background: "linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%)",
-                    boxShadow: "0 8px 32px rgba(59,130,246,0.40), inset 0 1px 0 rgba(255,255,255,0.18)",
+                    boxShadow:  "0 8px 32px rgba(59,130,246,0.40), inset 0 1px 0 rgba(255,255,255,0.18)",
                   }}
                 >
                   {tHero("cta_primary")}

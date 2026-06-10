@@ -88,14 +88,16 @@ export function LoadingScreen({ onComplete }: Props) {
               />
 
               {/* Logo image or fallback */}
-              <div className="w-20 h-20 rounded-2xl overflow-hidden flex items-center justify-center bg-white p-2 shadow-[0_0_0_1px_rgba(255,255,255,0.2),0_0_24px_rgba(77,138,240,0.35)]">
+              <div className="w-20 h-20 flex items-center justify-center"
+                style={{ filter: "drop-shadow(0 0 18px rgba(59,130,246,0.55)) drop-shadow(0 0 8px rgba(249,115,22,0.25))" }}
+              >
                 {!logoError ? (
                   <Image
-                    src="/logo.png"
+                    src="/logo-icon.png"
                     alt="ICHAB"
                     width={80}
                     height={80}
-                    className="object-contain"
+                    className="object-contain w-full h-full"
                     onError={() => setLogoError(true)}
                     priority
                   />

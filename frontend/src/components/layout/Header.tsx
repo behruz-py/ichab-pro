@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -10,29 +10,50 @@ import { useUIStore } from "@/store/ui.store";
 import { cn } from "@/lib/utils";
 import { LogoBadge } from "@/components/shared/LogoBadge";
 
-const NAV_KEYS = [
-  "home", "about", "divisions", "services",
-  "products", "projects", "certificates", "partners", "contact",
-] as const;
-
-const NAV_PATHS: Record<(typeof NAV_KEYS)[number], string> = {
-  home:         "/",
-  about:        "/about",
-  divisions:    "/divisions",
-  services:     "/services",
-  products:     "/products",
-  projects:     "/projects",
-  certificates: "/certificates",
-  partners:     "/partners",
-  contact:      "/contact",
+const BRAND_NAME: Record<string, string> = {
+  uz: "ICHAB",
+  ru: "УАП",
+  en: "MAD",
 };
 
+const FULL_NAME: Record<string, string> = {
+  uz: "ISHLAB CHIQARISHNI AVTOMATLASHTIRISH BOSHQARMASI",
+  ru: "УПРАВЛЕНИЕ АВТОМАТИЗАЦИИ ПРОИЗВОДСТВА",
+  en: "MANUFACTURING AUTOMATION DEPARTMENT",
+};
+
+const DROPDOWN_ITEMS = [
+  { key: "about",        path: "/about",        icon: (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="11" height="11" rx="2.5" stroke="currentColor" strokeWidth="1.3"/><path d="M6.5 5.5V9M6.5 4h.01" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
+  )},
+  { key: "divisions",    path: "/divisions",    icon: (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="4.5" height="4.5" rx="1.2" stroke="currentColor" strokeWidth="1.3"/><rect x="7.5" y="1" width="4.5" height="4.5" rx="1.2" stroke="currentColor" strokeWidth="1.3"/><rect x="1" y="7.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" strokeWidth="1.3"/><rect x="7.5" y="7.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" strokeWidth="1.3"/></svg>
+  )},
+  { key: "certificates", path: "/certificates", icon: (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="5.5" r="3" stroke="currentColor" strokeWidth="1.3"/><path d="M4.5 8.5L3 12l3.5-1.5L10 12l-1.5-3.5" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/></svg>
+  )},
+  { key: "partners",     path: "/partners",     icon: (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 9.5C1.5 8 3 7 4.5 7h4C10 7 11.5 8 11.5 9.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><circle cx="4.5" cy="4" r="2" stroke="currentColor" strokeWidth="1.3"/><circle cx="8.5" cy="4" r="2" stroke="currentColor" strokeWidth="1.3"/></svg>
+  )},
+] as const;
+
+const MAIN_NAV = [
+  { key: "services",  path: "/services"  },
+  { key: "products",  path: "/products"  },
+  { key: "projects",  path: "/projects"  },
+  { key: "contact",   path: "/contact"   },
+] as const;
+
 export function Header() {
-  const locale            = useLocale();
-  const pathname          = usePathname();
-  const t                 = useTranslations("nav");
+  const locale   = useLocale();
+  const pathname = usePathname();
+  const t        = useTranslations("nav");
   const { mobileMenuOpen, toggleMobileMenu, setMobileMenuOpen } = useUIStore();
-  const [scrolled, setScrolled] = useState(false);
+
+  const [scrolled,     setScrolled]     = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [hovered,      setHovered]      = useState<string | null>(null);
+  const dropdownTimer = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20);
@@ -43,102 +64,244 @@ export function Header() {
 
   useEffect(() => { setMobileMenuOpen(false); }, [pathname, setMobileMenuOpen]);
 
-  function isActive(key: (typeof NAV_KEYS)[number]) {
-    if (key === "home") return pathname === `/${locale}`;
-    return pathname.startsWith(`/${locale}${NAV_PATHS[key]}`);
+  function isActive(path: string) {
+    return pathname.startsWith(`/${locale}${path}`);
   }
+  function isDropdownActive() {
+    return DROPDOWN_ITEMS.some(item => isActive(item.path));
+  }
+
+  function openDropdown()  { clearTimeout(dropdownTimer.current); setDropdownOpen(true); }
+  function closeDropdown() { dropdownTimer.current = setTimeout(() => setDropdownOpen(false), 130); }
 
   return (
     <>
-      {/* ── Floating pill header ─────────────────────────────────────────── */}
       <header className="fixed top-0 inset-x-0 z-50 px-3 sm:px-5 pt-3 sm:pt-4 pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
-            "max-w-[1340px] mx-auto rounded-2xl pointer-events-auto transition-all duration-400",
+            "max-w-[1340px] mx-auto rounded-2xl pointer-events-auto transition-all duration-400 relative",
             scrolled
               ? "shadow-[0_8px_40px_rgba(0,0,0,0.55),0_0_0_1px_rgba(59,130,246,0.18)]"
               : "shadow-[0_0_0_1px_rgba(59,130,246,0.10)]"
           )}
           style={{
-            background: scrolled
-              ? "rgba(5,10,23,0.92)"
-              : "rgba(5,10,23,0.55)",
-            backdropFilter: "blur(24px)",
+            background:           scrolled ? "rgba(5,10,23,0.93)" : "rgba(5,10,23,0.55)",
+            backdropFilter:       "blur(24px)",
             WebkitBackdropFilter: "blur(24px)",
           }}
         >
           {/* Blue top accent line */}
           <div
-            className={cn("absolute top-0 left-6 right-6 h-px rounded-b-none transition-opacity duration-400", scrolled ? "opacity-60" : "opacity-30")}
+            className={cn("absolute top-0 left-6 right-6 h-px transition-opacity duration-400", scrolled ? "opacity-70" : "opacity-30")}
             style={{ background: "linear-gradient(90deg, transparent 0%, rgba(59,130,246,0.7) 40%, rgba(96,165,250,0.9) 50%, rgba(59,130,246,0.7) 60%, transparent 100%)" }}
           />
 
           <div className="px-4 sm:px-5 h-[58px] flex items-center justify-between gap-3">
 
-            {/* ── Logo ────────────────────────────────────────────────────── */}
+            {/* ── Logo ──────────────────────────────────────────────────── */}
             <Link
               href={`/${locale}`}
-              className="flex items-center gap-2.5 group flex-shrink-0"
+              className="flex items-center gap-3 group flex-shrink-0"
               aria-label="ICHAB home"
             >
-              <LogoBadge size={30} />
-              <div className="hidden sm:flex flex-col leading-none gap-[2px]">
-                <span className="font-display font-bold text-[15px] text-content tracking-wide group-hover:text-accent transition-colors duration-200">
-                  ICHAB
-                </span>
-                <span className="text-[9px] text-content-muted font-medium tracking-[0.1em] uppercase">
-                  Pro
-                </span>
+              <motion.div
+                whileHover={{ scale: 1.10, rotate: -6 }}
+                transition={{ type: "spring", stiffness: 400, damping: 18 }}
+              >
+                <LogoBadge size={44} />
+              </motion.div>
+
+              <span
+                className="hidden sm:block font-display font-bold tracking-[0.08em] transition-all duration-200"
+                style={{
+                  fontSize: "30px",
+                  background: "linear-gradient(135deg, #E2EAF4 0%, #60A5FA 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  filter: "drop-shadow(0 0 10px rgba(59,130,246,0.40))",
+                }}
+              >
+                {BRAND_NAME[locale] ?? "ICHAB"}
+              </span>
+
+              {/* ── Full name — current locale only ── */}
+              <div className="hidden xl:flex items-stretch gap-3 ml-0.5">
+                <div className="w-px self-stretch" style={{ background: "rgba(59,130,246,0.22)" }} />
+                <p
+                  className="font-semibold uppercase self-center leading-[1.40]"
+                  style={{
+                    fontSize: "8px",
+                    letterSpacing: "0.07em",
+                    color: "rgba(147,197,253,0.52)",
+                    maxWidth: "110px",
+                  }}
+                >
+                  {FULL_NAME[locale] ?? FULL_NAME.uz}
+                </p>
               </div>
             </Link>
 
-            {/* ── Desktop nav ─────────────────────────────────────────────── */}
-            <nav className="hidden xl:flex items-center gap-0.5 flex-1 justify-center" aria-label="Main navigation">
-              {NAV_KEYS.map((key) => {
-                const active = isActive(key);
-                return (
-                  <Link
-                    key={key}
-                    href={`/${locale}${NAV_PATHS[key] === "/" ? "" : NAV_PATHS[key]}`}
-                    className={cn(
-                      "relative px-3 py-1.5 rounded-xl text-[12.5px] font-medium transition-all duration-200 whitespace-nowrap",
-                      active
-                        ? "text-blue-400"
-                        : "text-content-secondary hover:text-content hover:bg-white/[0.05]"
-                    )}
+            {/* ── Desktop nav ───────────────────────────────────────────── */}
+            <nav
+              className="hidden xl:flex items-center gap-0.5 flex-1 justify-center"
+              onMouseLeave={() => setHovered(null)}
+              aria-label="Main navigation"
+            >
+
+              {/* Kompaniya dropdown trigger */}
+              <div
+                className="relative"
+                onMouseEnter={() => { setHovered("company"); openDropdown(); }}
+                onMouseLeave={() => { closeDropdown(); }}
+              >
+                <button
+                  className={cn(
+                    "relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12.5px] font-medium transition-colors duration-200 whitespace-nowrap",
+                    isDropdownActive() || dropdownOpen ? "text-blue-400" : "text-content-secondary hover:text-content"
+                  )}
+                >
+                  {/* Shared hover pill */}
+                  {hovered === "company" && !(isDropdownActive() || dropdownOpen) && (
+                    <motion.span
+                      layoutId="nav-hover-pill"
+                      className="absolute inset-0 rounded-xl"
+                      style={{ background: "rgba(255,255,255,0.06)" }}
+                      transition={{ type: "spring", stiffness: 480, damping: 36 }}
+                    />
+                  )}
+                  {/* Active bg */}
+                  {(isDropdownActive() || dropdownOpen) && (
+                    <motion.span
+                      layoutId="nav-active-bg"
+                      className="absolute inset-0 rounded-xl"
+                      style={{ background: "rgba(59,130,246,0.10)", border: "1px solid rgba(59,130,246,0.22)" }}
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{t("company")}</span>
+                  <motion.svg
+                    className="relative z-10 flex-shrink-0"
+                    animate={{ rotate: dropdownOpen ? 180 : 0 }}
+                    transition={{ duration: 0.22 }}
+                    width="10" height="10" viewBox="0 0 10 10" fill="none"
                   >
-                    {active && (
-                      <motion.span
-                        layoutId="nav-active-bg"
-                        className="absolute inset-0 rounded-xl"
-                        style={{ background: "rgba(59,130,246,0.10)", border: "1px solid rgba(59,130,246,0.22)" }}
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                      />
-                    )}
-                    <span className="relative z-10">{t(key)}</span>
-                  </Link>
+                    <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </motion.svg>
+                </button>
+
+                {/* Dropdown panel */}
+                <AnimatePresence>
+                  {dropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0,  scale: 1    }}
+                      exit={{    opacity: 0, y: -8, scale: 0.96 }}
+                      transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                      onMouseEnter={openDropdown}
+                      onMouseLeave={closeDropdown}
+                      className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 w-56 rounded-2xl z-50 py-2 overflow-hidden"
+                      style={{
+                        background:           "rgba(5,10,23,0.97)",
+                        backdropFilter:       "blur(28px)",
+                        WebkitBackdropFilter: "blur(28px)",
+                        border:               "1px solid rgba(59,130,246,0.18)",
+                        boxShadow:            "0 16px 56px rgba(0,0,0,0.60), 0 0 0 1px rgba(59,130,246,0.06)",
+                      }}
+                    >
+                      {/* Top accent line */}
+                      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(59,130,246,0.55) 50%, transparent)" }} />
+
+                      {DROPDOWN_ITEMS.map((item, i) => {
+                        const active = isActive(item.path);
+                        return (
+                          <motion.div
+                            key={item.key}
+                            initial={{ opacity: 0, x: -6 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.04, duration: 0.16 }}
+                          >
+                            <Link
+                              href={`/${locale}${item.path}`}
+                              className={cn(
+                                "flex items-center gap-3 mx-1.5 my-0.5 px-3 py-2.5 rounded-xl text-[12.5px] font-medium transition-all duration-150 group",
+                                active
+                                  ? "text-blue-400 bg-blue-500/10"
+                                  : "text-content-secondary hover:text-content hover:bg-white/[0.05]"
+                              )}
+                            >
+                              <span style={{ color: active ? "#60A5FA" : "rgba(59,130,246,0.50)" }}>
+                                {item.icon}
+                              </span>
+                              <span className="flex-1">{t(item.key)}</span>
+                              {active && <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
+                            </Link>
+                          </motion.div>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Standalone nav items */}
+              {MAIN_NAV.map(({ key, path }) => {
+                const active = isActive(path);
+                return (
+                  <div
+                    key={key}
+                    className="relative"
+                    onMouseEnter={() => setHovered(key)}
+                  >
+                    <Link
+                      href={`/${locale}${path}`}
+                      className={cn(
+                        "relative flex items-center px-3 py-1.5 rounded-xl text-[12.5px] font-medium transition-colors duration-200 whitespace-nowrap",
+                        active ? "text-blue-400" : "text-content-secondary hover:text-content"
+                      )}
+                    >
+                      {/* Shared hover pill — slides between items */}
+                      {hovered === key && !active && (
+                        <motion.span
+                          layoutId="nav-hover-pill"
+                          className="absolute inset-0 rounded-xl"
+                          style={{ background: "rgba(255,255,255,0.06)" }}
+                          transition={{ type: "spring", stiffness: 480, damping: 36 }}
+                        />
+                      )}
+                      {/* Active bg */}
+                      {active && (
+                        <motion.span
+                          layoutId="nav-active-bg"
+                          className="absolute inset-0 rounded-xl"
+                          style={{ background: "rgba(59,130,246,0.10)", border: "1px solid rgba(59,130,246,0.22)" }}
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                      <span className="relative z-10">{t(key)}</span>
+                    </Link>
+                  </div>
                 );
               })}
             </nav>
 
-            {/* ── Right controls ───────────────────────────────────────────── */}
+            {/* ── Right controls ────────────────────────────────────────── */}
             <div className="flex items-center gap-2 flex-shrink-0">
               <div className="hidden sm:block">
                 <LangSwitcher />
               </div>
 
-              {/* Contact CTA */}
+              {/* CTA — pulsing glow */}
               <Link
                 href={`/${locale}/contact`}
-                className="hidden lg:inline-flex items-center px-4 py-1.5 rounded-xl text-[12px] font-semibold transition-all duration-200 ml-1"
+                className="hidden lg:inline-flex items-center px-4 py-1.5 rounded-xl text-[12px] font-semibold transition-colors duration-200 ml-1 cta-pulse"
                 style={{
-                  background: "linear-gradient(135deg, rgba(29,78,216,0.80), rgba(59,130,246,0.85))",
-                  border: "1px solid rgba(96,165,250,0.35)",
-                  color: "#fff",
-                  boxShadow: "0 4px 16px rgba(59,130,246,0.25)",
+                  background: "linear-gradient(135deg, rgba(29,78,216,0.85), rgba(59,130,246,0.90))",
+                  border:     "1px solid rgba(96,165,250,0.38)",
+                  color:      "#fff",
                 }}
               >
                 Bog&apos;lanish
@@ -174,7 +337,7 @@ export function Header() {
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 0.22 }}
               className="fixed inset-0 z-40 xl:hidden"
-              style={{ background: "rgba(5,10,23,0.75)", backdropFilter: "blur(6px)" }}
+              style={{ background: "rgba(5,10,23,0.78)", backdropFilter: "blur(6px)" }}
               onClick={() => setMobileMenuOpen(false)}
             />
             <motion.div
@@ -183,22 +346,30 @@ export function Header() {
               transition={{ type: "spring", stiffness: 340, damping: 34 }}
               className="fixed right-0 top-0 h-full w-[280px] z-50 xl:hidden flex flex-col"
               style={{
-                background: "rgba(5,10,23,0.97)",
-                backdropFilter: "blur(24px)",
-                borderLeft: "1px solid rgba(59,130,246,0.12)",
-                boxShadow: "-12px 0 48px rgba(0,0,0,0.55)",
+                background:           "rgba(5,10,23,0.97)",
+                backdropFilter:       "blur(24px)",
+                WebkitBackdropFilter: "blur(24px)",
+                borderLeft:           "1px solid rgba(59,130,246,0.12)",
+                boxShadow:            "-12px 0 48px rgba(0,0,0,0.55)",
               }}
             >
-              <div
-                className="absolute top-0 left-0 right-0 h-px"
-                style={{ background: "linear-gradient(90deg, transparent, rgba(59,130,246,0.60) 50%, transparent)" }}
-              />
+              <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(59,130,246,0.60) 50%, transparent)" }} />
 
-              {/* Drawer header */}
               <div className="h-[72px] flex items-center justify-between px-5 border-b border-white/[0.05]">
-                <div className="flex items-center gap-2.5">
-                  <LogoBadge size={28} />
-                  <span className="font-display font-bold text-[15px] text-content">ICHAB Pro</span>
+                <div className="flex items-center gap-3">
+                  <LogoBadge size={40} />
+                  <span
+                    className="font-display font-bold tracking-[0.08em]"
+                    style={{
+                      fontSize: "20px",
+                      background: "linear-gradient(135deg, #E2EAF4 0%, #60A5FA 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                    }}
+                  >
+                    {BRAND_NAME[locale] ?? "ICHAB"}
+                  </span>
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
@@ -210,36 +381,68 @@ export function Header() {
                 </button>
               </div>
 
-              {/* Drawer nav */}
-              <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
-                {NAV_KEYS.map((key, i) => {
-                  const active = isActive(key);
-                  return (
-                    <motion.div
-                      key={key}
-                      initial={{ opacity: 0, x: 16 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.04, duration: 0.22 }}
-                    >
-                      <Link
-                        href={`/${locale}${NAV_PATHS[key] === "/" ? "" : NAV_PATHS[key]}`}
-                        className={cn(
-                          "flex items-center justify-between px-4 py-3 rounded-xl text-[13.5px] font-medium transition-all duration-200",
-                          active
-                            ? "text-blue-400"
-                            : "text-content-secondary hover:text-content hover:bg-white/[0.04]"
-                        )}
-                        style={active ? { background: "rgba(59,130,246,0.10)", border: "1px solid rgba(59,130,246,0.20)" } : {}}
+              <nav className="flex-1 overflow-y-auto px-3 py-4">
+                <div className="mb-3">
+                  <p className="px-4 mb-1.5 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(59,130,246,0.55)" }}>
+                    {t("company")}
+                  </p>
+                  <div className="space-y-0.5">
+                    {DROPDOWN_ITEMS.map((item, i) => {
+                      const active = isActive(item.path);
+                      return (
+                        <motion.div
+                          key={item.key}
+                          initial={{ opacity: 0, x: 16 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.04, duration: 0.22 }}
+                        >
+                          <Link
+                            href={`/${locale}${item.path}`}
+                            className={cn(
+                              "flex items-center gap-3 px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200",
+                              active ? "text-blue-400" : "text-content-secondary hover:text-content hover:bg-white/[0.04]"
+                            )}
+                            style={active ? { background: "rgba(59,130,246,0.10)", border: "1px solid rgba(59,130,246,0.20)" } : {}}
+                          >
+                            <span style={{ color: active ? "#60A5FA" : "rgba(59,130,246,0.45)" }}>{item.icon}</span>
+                            {t(item.key)}
+                            {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mx-4 my-3 h-px" style={{ background: "rgba(255,255,255,0.05)" }} />
+
+                <div className="space-y-0.5">
+                  {MAIN_NAV.map(({ key, path }, i) => {
+                    const active = isActive(path);
+                    return (
+                      <motion.div
+                        key={key}
+                        initial={{ opacity: 0, x: 16 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: (i + DROPDOWN_ITEMS.length) * 0.04, duration: 0.22 }}
                       >
-                        {t(key)}
-                        {active && <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
-                      </Link>
-                    </motion.div>
-                  );
-                })}
+                        <Link
+                          href={`/${locale}${path}`}
+                          className={cn(
+                            "flex items-center justify-between px-4 py-3 rounded-xl text-[13.5px] font-medium transition-all duration-200",
+                            active ? "text-blue-400" : "text-content-secondary hover:text-content hover:bg-white/[0.04]"
+                          )}
+                          style={active ? { background: "rgba(59,130,246,0.10)", border: "1px solid rgba(59,130,246,0.20)" } : {}}
+                        >
+                          {t(key)}
+                          {active && <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
+                </div>
               </nav>
 
-              {/* Drawer footer */}
               <div className="px-5 py-5 border-t border-white/[0.05] space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] text-content-muted font-semibold uppercase tracking-[0.1em]">Til</span>
@@ -247,11 +450,8 @@ export function Header() {
                 </div>
                 <Link
                   href={`/${locale}/contact`}
-                  className="flex items-center justify-center w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all"
-                  style={{
-                    background: "linear-gradient(135deg, #1D4ED8, #3B82F6)",
-                    boxShadow: "0 4px 16px rgba(59,130,246,0.30)",
-                  }}
+                  className="flex items-center justify-center w-full py-2.5 rounded-xl text-sm font-semibold text-white"
+                  style={{ background: "linear-gradient(135deg, #1D4ED8, #3B82F6)", boxShadow: "0 4px 16px rgba(59,130,246,0.30)" }}
                 >
                   Bog&apos;lanish
                 </Link>
@@ -261,7 +461,6 @@ export function Header() {
         )}
       </AnimatePresence>
 
-      {/* Page spacer */}
       <div className="h-[73px]" aria-hidden="true" />
     </>
   );

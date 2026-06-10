@@ -1,6 +1,7 @@
 {
   "nav": {
     "home": "Home",
+    "company": "Company",
     "about": "About",
     "divisions": "Divisions",
     "services": "Services",
@@ -58,9 +59,12 @@
     "national": "National"
   },
   "partners": {
+    "badge": "Partners",
     "title": "Trusted Partners",
     "subtitle": "Partnerships with the world's leading industrial companies.",
-    "visit_site": "Visit Site"
+    "visit_site": "Visit Site",
+    "strategic": "strategic partners",
+    "all_count": "partners"
   },
   "contact": {
     "title": "Get in Touch",
