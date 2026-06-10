@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import mark_safe
 from unfold.admin import ModelAdmin
 from .models import ProductCategory, Product, ProductImage, ProductSpecification
 
@@ -66,11 +67,15 @@ class ProductAdmin(ModelAdmin):
             "fields": ("description_uz", "description_ru", "description_en"),
         }),
         ("Ko'p ustunli jadval (ixtiyoriy)", {
-            "description": (
-                "Bir nechta model/variant uchun qiymatlar jadvali. "
+            "description": mark_safe(
+                "<p>Bir nechta model/variant uchun qiymatlar jadvali. "
                 "Birinchi qator — ustun sarlavhalari, qolganlar — ma'lumot qatorlari. "
-                "Ustunlarni | (vertikal chiziq) bilan ajrating. "
-                "Bo'sh kataklar uchun - yozing. Quyidagi namunani to'g'ridan to'g'ri tahrirlang:\n\n"
+                "Ustunlarni <code>|</code> (vertikal chiziq) bilan ajrating. "
+                "<strong>Har bir qator ALOHIDA QATORDA bo'lishi SHART.</strong></p>"
+                "<p>Quyidagi namunani to'liq nusxalab maydonga joylashtiring:</p>"
+                "<pre style='background:#0f172a;color:#94a3b8;padding:12px 16px;"
+                "font-size:11px;line-height:1.7;border-radius:6px;"
+                "overflow-x:auto;white-space:pre;margin:4px 0 8px'>"
                 "Наименование параметра | ВТЕ-200/48 | ВТЕ-315/48 | ВТЕ-315/75 | ВТЕ-315/115 | ВТЕ-315/150 | ВТЕ-315/230\n"
                 "Номинальная мощность, кВА | 15,12 | - | 23,62 | 36,22 | 47,25 | 72,45\n"
                 "Номинальный ток, А | 200 | - | - | 315 | - | -\n"
@@ -81,6 +86,7 @@ class ProductAdmin(ModelAdmin):
                 "Масса возбудителя, кг | 90-110 | - | - | - | 135-140 | -\n"
                 "КПД, % | 91 | - | 92 | 94 | 94 | 96\n"
                 "Коэффициент мощности | 0,88 | - | 0,88 | - | - | 0,92"
+                "</pre>"
             ),
             "fields": ("spec_table",),
         }),
