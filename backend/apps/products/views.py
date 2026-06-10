@@ -9,6 +9,7 @@ from .serializers import (
 
 
 class ProductCategoryViewSet(PublicReadAdminWriteMixin, viewsets.ModelViewSet):
+    lookup_field = "slug"
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ["is_active"]
     search_fields = ["name_uz", "name_ru", "name_en"]
@@ -27,6 +28,7 @@ class ProductCategoryViewSet(PublicReadAdminWriteMixin, viewsets.ModelViewSet):
 
 
 class ProductViewSet(PublicReadAdminWriteMixin, viewsets.ModelViewSet):
+    lookup_field = "slug"
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ["is_active", "category"]
     search_fields = ["name_uz", "name_ru", "name_en"]
