@@ -87,3 +87,20 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"{self.product} — rasm #{self.pk}"
+
+
+class ProductSpecification(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="specs")
+    label_uz = models.CharField(max_length=200, help_text="Masalan: Quvvat manbai")
+    label_ru = models.CharField(max_length=200, blank=True, help_text="Masalan: Питание")
+    label_en = models.CharField(max_length=200, blank=True, help_text="Masalan: Power supply")
+    value = models.CharField(max_length=500, help_text="Masalan: 24V DC, 0.5A")
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Texnik xususiyat"
+        verbose_name_plural = "Texnik xususiyatlar"
+        ordering = ["order"]
+
+    def __str__(self):
+        return f"{self.label_uz}: {self.value}"

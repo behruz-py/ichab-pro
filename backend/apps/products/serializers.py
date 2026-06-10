@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from core.serializers import TranslatedSerializerMixin, ImageFieldAbsoluteURL, FileFieldAbsoluteURL
-from .models import ProductCategory, Product, ProductImage
+from .models import ProductCategory, Product, ProductImage, ProductSpecification
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -11,28 +11,27 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ("id", "image", "alt_uz", "alt_ru", "alt_en", "is_main", "order")
 
 
+class ProductSpecificationSerializer(TranslatedSerializerMixin, serializers.ModelSerializer):
+    label = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProductSpecification
+        fields = ("id", "label", "value", "order")
+
+    def get_label(self, obj):
+        return self.get_t(obj, "label")
+
+
 class ProductCategoryListSerializer(TranslatedSerializerMixin, serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     cover_image = ImageFieldAbsoluteURL(read_only=True)
-    children_count = serializers.IntegerField(source="children.count", read_only=True)
 
     class Meta:
         model = ProductCategory
-        fields = ("id", "slug", "name", "icon", "cover_image", "parent", "children_count", "order")
+        fields = ("id", "slug", "name", "icon", "cover_image", "order")
 
     def get_name(self, obj):
         return self.get_t(obj, "name")
-
-
-class ProductCategoryDetailSerializer(ProductCategoryListSerializer):
-    children = serializers.SerializerMethodField()
-
-    class Meta(ProductCategoryListSerializer.Meta):
-        fields = ProductCategoryListSerializer.Meta.fields + ("children",)
-
-    def get_children(self, obj):
-        qs = obj.children.filter(is_active=True).order_by("order")
-        return ProductCategoryListSerializer(qs, many=True, context=self.context).data
 
 
 class ProductCategoryWriteSerializer(serializers.ModelSerializer):
@@ -43,22 +42,18 @@ class ProductCategoryWriteSerializer(serializers.ModelSerializer):
 
 class ProductListSerializer(TranslatedSerializerMixin, serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
-    description = serializers.SerializerMethodField()
     category_name = serializers.SerializerMethodField()
     main_image = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
         fields = (
-            "id", "slug", "name", "description", "category", "category_name",
+            "id", "slug", "name", "category", "category_name",
             "main_image", "order", "is_active",
         )
 
     def get_name(self, obj):
         return self.get_t(obj, "name")
-
-    def get_description(self, obj):
-        return self.get_t(obj, "description")
 
     def get_category_name(self, obj):
         if obj.category:
@@ -67,11 +62,10 @@ class ProductListSerializer(TranslatedSerializerMixin, serializers.ModelSerializ
 
     def get_main_image(self, obj):
         img = obj.images.filter(is_main=True).first() or obj.images.first()
-        if img:
-            request = self.context.get("request")
-            url = img.image.url
-            return request.build_absolute_uri(url) if request else url
-        return None
+        if not img:
+            return None
+        request = self.context.get("request")
+        return request.build_absolute_uri(img.image.url) if request else img.image.url
 
 
 class ProductDetailSerializer(TranslatedSerializerMixin, serializers.ModelSerializer):
@@ -79,14 +73,15 @@ class ProductDetailSerializer(TranslatedSerializerMixin, serializers.ModelSerial
     description = serializers.SerializerMethodField()
     category = ProductCategoryListSerializer(read_only=True)
     images = ProductImageSerializer(many=True, read_only=True)
+    specs = ProductSpecificationSerializer(many=True, read_only=True)
     catalog_file = FileFieldAbsoluteURL(read_only=True)
 
     class Meta:
         model = Product
         fields = (
             "id", "slug", "name", "description", "category",
-            "specifications", "images", "catalog_file",
-            "order", "is_active", "created_at", "updated_at",
+            "specs", "images", "catalog_file",
+            "order", "is_active",
         )
 
     def get_name(self, obj):
@@ -99,4 +94,4 @@ class ProductDetailSerializer(TranslatedSerializerMixin, serializers.ModelSerial
 class ProductWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        exclude = ("created_at", "updated_at")
+        exclude = ("created_at", "updated_at", "specifications")
