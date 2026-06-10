@@ -7,6 +7,7 @@ from .serializers import DivisionListSerializer, DivisionDetailSerializer, Divis
 
 class DivisionViewSet(PublicReadAdminWriteMixin, viewsets.ModelViewSet):
     queryset = Division.objects.filter(is_active=True).order_by("order")
+    lookup_field = "slug"
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ["is_active"]
     search_fields = ["name_uz", "name_ru", "name_en"]

@@ -6,13 +6,16 @@ from .models import Division
 class DivisionListSerializer(TranslatedSerializerMixin, serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     short_description = serializers.SerializerMethodField()
+    leader_name = serializers.SerializerMethodField()
     logo = ImageFieldAbsoluteURL(read_only=True)
+    cover_image = ImageFieldAbsoluteURL(read_only=True)
 
     class Meta:
         model = Division
         fields = (
             "id", "slug", "name", "short_description",
-            "logo", "order", "is_active",
+            "logo", "cover_image", "leader_name",
+            "order", "is_active",
         )
 
     def get_name(self, obj):
@@ -20,6 +23,9 @@ class DivisionListSerializer(TranslatedSerializerMixin, serializers.ModelSeriali
 
     def get_short_description(self, obj):
         return self.get_t(obj, "short_description")
+
+    def get_leader_name(self, obj):
+        return self.get_t(obj, "leader_name")
 
 
 class DivisionDetailSerializer(TranslatedSerializerMixin, serializers.ModelSerializer):
