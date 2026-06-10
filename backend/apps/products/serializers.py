@@ -11,7 +11,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ("id", "image", "alt_uz", "alt_ru", "alt_en", "is_main", "order")
 
 
-class ProductSpecificationSerializer(TranslatedSerializerMixin, serializers.ModelSerializer):
+class ProductSpecificationSerializer(serializers.ModelSerializer):
     label = serializers.SerializerMethodField()
 
     class Meta:
@@ -19,7 +19,13 @@ class ProductSpecificationSerializer(TranslatedSerializerMixin, serializers.Mode
         fields = ("id", "label", "value", "order")
 
     def get_label(self, obj):
-        return self.get_t(obj, "label")
+        request = self.context.get("request")
+        lang = "uz"
+        if request:
+            candidate = request.query_params.get("lang", "uz")
+            if candidate in ("uz", "ru", "en"):
+                lang = candidate
+        return getattr(obj, f"label_{lang}", None) or obj.label_uz or ""
 
 
 class ProductCategoryListSerializer(TranslatedSerializerMixin, serializers.ModelSerializer):

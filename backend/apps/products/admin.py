@@ -1,9 +1,9 @@
 from django.contrib import admin
-from unfold.admin import ModelAdmin, TabularInline
+from unfold.admin import ModelAdmin
 from .models import ProductCategory, Product, ProductImage, ProductSpecification
 
 
-class ProductImageInline(TabularInline):
+class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
     fields = ("image", "is_main", "order", "alt_uz")
@@ -11,7 +11,7 @@ class ProductImageInline(TabularInline):
     verbose_name_plural = "Rasmlar (birinchisini 'Asosiy' deb belgilang)"
 
 
-class ProductSpecificationInline(TabularInline):
+class ProductSpecificationInline(admin.TabularInline):
     model = ProductSpecification
     extra = 1
     fields = ("label_uz", "label_ru", "label_en", "value", "order")
