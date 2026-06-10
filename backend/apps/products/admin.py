@@ -65,6 +65,15 @@ class ProductAdmin(ModelAdmin):
             "description": "Mahsulot haqida batafsil matn. Qo'llanish sohalari, afzalliklari.",
             "fields": ("description_uz", "description_ru", "description_en"),
         }),
+        ("Ko'p ustunli jadval (ixtiyoriy)", {
+            "description": (
+                "Bir nechta model/variant uchun qiymatlar jadvali. "
+                "Birinchi qator — ustun sarlavhalari, qolganlar — ma'lumot qatorlari. "
+                "Ustunlarni | (vertikal chiziq) bilan ajrating. "
+                "Misol birinchi qator: Parametr | ВТЕ-200/48 | ВТЕ-315/75 | ВТЕ-315/115"
+            ),
+            "fields": ("spec_table",),
+        }),
         ("Katalog fayli", {
             "description": "PDF katalog yoki texnik pasport. Foydalanuvchilar yuklab oladi. Ixtiyoriy.",
             "fields": ("catalog_file",),

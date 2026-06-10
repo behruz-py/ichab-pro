@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { ProductGallery } from "../_ProductGallery";
+import { SpecTable } from "../_SpecTable";
 
 type Props = { params: { locale: string; slug: string } };
 
@@ -145,6 +146,11 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
             </tbody>
           </table>
         </div>
+      )}
+
+      {/* ── Ko'p ustunli jadval ── */}
+      {product.spec_table && (
+        <SpecTable raw={product.spec_table} title={t("specs_title")} />
       )}
 
       {/* Back */}

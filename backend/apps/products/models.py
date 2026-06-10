@@ -55,6 +55,21 @@ class Product(TranslatedModel, OrderedModel, ActiveModel):
     # Flexible technical specs: [{"label_uz": "...", "label_ru": "...", "label_en": "...", "value": "..."}]
     specifications = models.JSONField(default=list, blank=True)
 
+    # Multi-column spec table (pipe-separated text format):
+    # First line = column headers separated by |
+    # Each subsequent line = row label | value1 | value2 | ...
+    spec_table = models.TextField(
+        blank=True,
+        verbose_name="Ko'p ustunli jadval",
+        help_text=(
+            "Ixtiyoriy. Birinchi qator — ustun sarlavhalari (| bilan ajrating).\n"
+            "Qolgan qatorlar — ma'lumot. Misol:\n"
+            "Parametr | ВТЕ-200/48 | ВТЕ-315/75\n"
+            "Nominal quvvat, kVA | 15,12 | 23,62\n"
+            "Nominal tok, A | 200 | 315"
+        ),
+    )
+
     catalog_file = models.FileField(upload_to="products/catalogs/", blank=True, null=True)
 
     class Meta:

@@ -87,7 +87,7 @@ class ProductDetailSerializer(TranslatedSerializerMixin, serializers.ModelSerial
         model = Product
         fields = (
             "id", "slug", "name", "description", "category",
-            "specs", "images", "catalog_file",
+            "specs", "spec_table", "images", "catalog_file",
             "order", "is_active",
         )
 

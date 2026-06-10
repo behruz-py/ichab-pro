@@ -65,6 +65,7 @@ export interface Product {
   main_image: string | null;
   images?: ProductImage[];
   specs?: ProductSpec[];
+  spec_table?: string;
   catalog_file: string | null;
   order: number;
   is_active: boolean;
