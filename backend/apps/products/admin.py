@@ -1,7 +1,15 @@
 from django.contrib import admin
-from django.utils.html import mark_safe
+from django.urls import path, reverse
+from django.shortcuts import redirect, get_object_or_404
+from django.template.response import TemplateResponse
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
+from django.contrib import messages
 from unfold.admin import ModelAdmin
-from .models import ProductCategory, Product, ProductImage, ProductSpecification
+from .models import (
+    ProductCategory, Product, ProductImage, ProductSpecification,
+    ProductParameter, ProductVariant, ProductVariantValue,
+)
 
 
 class ProductImageInline(admin.TabularInline):
@@ -15,16 +23,32 @@ class ProductImageInline(admin.TabularInline):
 class ProductSpecificationInline(admin.TabularInline):
     model = ProductSpecification
     extra = 1
-    fields = ("label_uz", "label_ru", "label_en", "value", "order")
+    fields = ("label_uz", "label_ru", "label_en", "value", "unit", "order")
     verbose_name = "Xususiyat"
-    verbose_name_plural = "Texnik xususiyatlar (har bir qator — bitta ko'rsatkich)"
+    verbose_name_plural = "Oddiy texnik xususiyatlar (variantsiz — har qator bitta ko'rsatkich)"
+
+
+class ProductParameterInline(admin.TabularInline):
+    model = ProductParameter
+    extra = 1
+    fields = ("label_uz", "label_ru", "label_en", "unit", "order")
+    verbose_name = "Jadval qatori (parametr)"
+    verbose_name_plural = "① Ko'p ustunli jadval — QATORLAR (parametrlar)"
+
+
+class ProductVariantInline(admin.TabularInline):
+    model = ProductVariant
+    extra = 1
+    fields = ("code", "order")
+    verbose_name = "Jadval ustuni (variant)"
+    verbose_name_plural = "② Ko'p ustunli jadval — USTUNLAR (variantlar)"
 
 
 @admin.register(ProductCategory)
 class ProductCategoryAdmin(ModelAdmin):
-    list_display  = ("name_uz", "slug", "is_active", "order")
+    list_display  = ("name_uz", "slug", "parent", "is_active", "order")
     list_editable = ("is_active", "order")
-    list_filter   = ("is_active",)
+    list_filter   = ("is_active", "parent")
     search_fields = ("name_uz", "name_ru", "name_en")
     prepopulated_fields = {"slug": ("name_uz",)}
 
@@ -32,6 +56,10 @@ class ProductCategoryAdmin(ModelAdmin):
         ("Nomi", {
             "description": "Kategoriya nomini kiriting. Slug avtomatik to'ldiriladi — o'zgartirmang.",
             "fields": ("slug", "name_uz", "name_ru", "name_en"),
+        }),
+        ("Ierarxiya", {
+            "description": "Ichki kategoriya bo'lsa, asosiy kategoriyani tanlang. Bosh kategoriya bo'lsa bo'sh qoldiring.",
+            "fields": ("parent",),
         }),
         ("Ko'rinish", {
             "description": "Muqova rasm ixtiyoriy. Icon — 'fa-cogs' yoki emoji '⚙️' ko'rinishida.",
@@ -46,56 +74,137 @@ class ProductCategoryAdmin(ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(ModelAdmin):
-    list_display  = ("name_uz", "category", "is_active", "order", "created_at")
+    list_display  = ("name_uz", "sku", "category", "availability", "is_active", "order")
     list_editable = ("is_active", "order")
-    list_filter   = ("is_active", "category")
-    search_fields = ("name_uz", "name_ru", "name_en")
+    list_filter   = ("is_active", "availability", "category")
+    search_fields = ("name_uz", "name_ru", "name_en", "sku", "brand")
     prepopulated_fields = {"slug": ("name_uz",)}
-    inlines = [ProductImageInline, ProductSpecificationInline]
+    inlines = [
+        ProductImageInline, ProductSpecificationInline,
+        ProductParameterInline, ProductVariantInline,
+    ]
+    readonly_fields = ("variant_matrix_link",)
 
     fieldsets = (
-        ("Kategoriya & Slug", {
+        ("Asosiy", {
             "description": "Kategoriyani tanlang. Slug — URL manzili, Name uz yozilsa avtomatik to'ldiriladi.",
-            "fields": ("category", "slug"),
+            "fields": ("category", "slug", "sku", "brand", "availability"),
         }),
         ("Nomi", {
-            "description": "Faqat o'zbekcha majburiy. Qolganlar ixtiyoriy.",
+            "description": "Faqat o'zbekcha majburiy. Rus va ingliz tillarini ham to'ldirish tavsiya etiladi.",
             "fields": ("name_uz", "name_ru", "name_en"),
         }),
-        ("Tavsif", {
+        ("Qisqa tavsif", {
+            "description": "Kartalar va qidiruv natijalarida ko'rinadigan 1-2 jumla.",
+            "fields": ("short_description_uz", "short_description_ru", "short_description_en"),
+        }),
+        ("To'liq tavsif", {
             "description": "Mahsulot haqida batafsil matn. Qo'llanish sohalari, afzalliklari.",
             "fields": ("description_uz", "description_ru", "description_en"),
         }),
-        ("Ko'p ustunli jadval (ixtiyoriy)", {
+        ("Ko'p ustunli jadval (qiymatlar)", {
             "description": mark_safe(
-                "<p>Bir nechta model/variant uchun qiymatlar jadvali. "
-                "Birinchi qator — ustun sarlavhalari, qolganlar — ma'lumot qatorlari. "
-                "Ustunlarni <code>|</code> (vertikal chiziq) bilan ajrating. "
-                "<strong>Har bir qator ALOHIDA QATORDA bo'lishi SHART.</strong></p>"
-                "<p>Quyidagi namunani to'liq nusxalab maydonga joylashtiring:</p>"
-                "<pre style='background:#0f172a;color:#94a3b8;padding:12px 16px;"
-                "font-size:11px;line-height:1.7;border-radius:6px;"
-                "overflow-x:auto;white-space:pre;margin:4px 0 8px'>"
-                "Наименование параметра | ВТЕ-200/48 | ВТЕ-315/48 | ВТЕ-315/75 | ВТЕ-315/115 | ВТЕ-315/150 | ВТЕ-315/230\n"
-                "Номинальная мощность, кВА | 15,12 | - | 23,62 | 36,22 | 47,25 | 72,45\n"
-                "Номинальный ток, А | 200 | - | - | 315 | - | -\n"
-                "Номинальное напряжение, В | 48 | - | 75 | 115 | 150 | 230\n"
-                "Кратность форсировки по напряжению, не менее | 1,75 / 2,5 | - | - | - | - | -\n"
-                "Схема выпрямления | 3-х фазная мостовая | - | - | - | - | -\n"
-                "Габариты (ВхШхГ), мм | 1450x650x430* | - | - | - | - | -\n"
-                "Масса возбудителя, кг | 90-110 | - | - | - | 135-140 | -\n"
-                "КПД, % | 91 | - | 92 | 94 | 94 | 96\n"
-                "Коэффициент мощности | 0,88 | - | 0,88 | - | - | 0,92"
-                "</pre>"
+                "Avval pastdagi ① QATORLAR va ② USTUNLAR bo'limlarini to'ldiring va "
+                "<b>Saqlash</b>ni bosing. Keyin shu yerdagi tugma orqali jadval kataklarini to'ldiring."
             ),
-            "fields": ("spec_table",),
+            "fields": ("variant_matrix_link",),
         }),
         ("Katalog fayli", {
             "description": "PDF katalog yoki texnik pasport. Foydalanuvchilar yuklab oladi. Ixtiyoriy.",
             "fields": ("catalog_file",),
+        }),
+        ("SEO (qidiruv tizimlari)", {
+            "classes": ("collapse",),
+            "description": "Ixtiyoriy. Bo'sh qoldirilsa mahsulot nomi va qisqa tavsifi avtomatik ishlatiladi.",
+            "fields": (
+                "meta_title_uz", "meta_title_ru", "meta_title_en",
+                "meta_description_uz", "meta_description_ru", "meta_description_en",
+            ),
         }),
         ("Sozlamalar", {
             "description": "Order: kichik son = yuqorida (0, 1, 2...). Is active: belgilanmasa ko'rinmaydi.",
             "fields": ("order", "is_active"),
         }),
     )
+
+    # ─── Variant matrix editor ──────────────────────────────────────────────
+    @admin.display(description="Jadval kataklari")
+    def variant_matrix_link(self, obj):
+        if not obj or not obj.pk:
+            return "Avval mahsulotni saqlang, keyin bu yerda jadval tahrirlovchisi paydo bo'ladi."
+        n_params = obj.parameters.count()
+        n_variants = obj.variants.count()
+        if not n_params or not n_variants:
+            return "① Kamida bitta QATOR (parametr) va ② bitta USTUN (variant) qo'shib, saqlang."
+        url = reverse("admin:products_product_matrix", args=[obj.pk])
+        return format_html(
+            '<a href="{}" class="button" style="display:inline-block;padding:8px 18px;'
+            'background:#3B82F6;color:#fff;border-radius:8px;text-decoration:none;font-weight:600">'
+            '✎ Jadval kataklarini to\'ldirish ({}×{})</a>',
+            url, n_params, n_variants,
+        )
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom = [
+            path(
+                "<path:object_id>/matrix/",
+                self.admin_site.admin_view(self.matrix_view),
+                name="products_product_matrix",
+            ),
+        ]
+        return custom + urls
+
+    def matrix_view(self, request, object_id):
+        product = get_object_or_404(Product, pk=object_id)
+        parameters = list(product.parameters.all().order_by("order"))
+        variants = list(product.variants.all().order_by("order"))
+
+        if request.method == "POST":
+            existing = {
+                (vv.parameter_id, vv.variant_id): vv
+                for vv in ProductVariantValue.objects.filter(variant__product=product)
+            }
+            for p in parameters:
+                for v in variants:
+                    key = f"cell_{p.id}_{v.id}"
+                    value = request.POST.get(key, "").strip()
+                    obj = existing.get((p.id, v.id))
+                    if obj:
+                        if obj.value != value:
+                            obj.value = value
+                            obj.save(update_fields=["value"])
+                    elif value:
+                        ProductVariantValue.objects.create(parameter=p, variant=v, value=value)
+            messages.success(request, "Jadval qiymatlari saqlandi.")
+            return redirect(reverse("admin:products_product_change", args=[product.pk]))
+
+        value_map = {
+            (vv.parameter_id, vv.variant_id): vv.value
+            for vv in ProductVariantValue.objects.filter(variant__product=product)
+        }
+        rows = []
+        for p in parameters:
+            cells = [
+                {"name": f"cell_{p.id}_{v.id}", "value": value_map.get((p.id, v.id), "")}
+                for v in variants
+            ]
+            rows.append({"param": p, "cells": cells})
+
+        context = {
+            **self.admin_site.each_context(request),
+            "title": f"Jadval kataklari — {product}",
+            "product": product,
+            "variants": variants,
+            "rows": rows,
+            "back_url": reverse("admin:products_product_change", args=[product.pk]),
+            "opts": self.model._meta,
+        }
+        return TemplateResponse(request, "admin/products/variant_matrix.html", context)
+
+
+@admin.register(ProductVariant)
+class ProductVariantAdmin(ModelAdmin):
+    list_display = ("code", "product", "order")
+    list_filter = ("product",)
+    search_fields = ("code", "product__name_uz")

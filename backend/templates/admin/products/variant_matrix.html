@@ -1,0 +1,51 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<div style="max-width:100%;overflow-x:auto;padding:8px 0">
+  <p style="margin-bottom:16px;color:#9ca3af">
+    Har bir katakka tegishli qiymatni yozing. Qiymat yo'q bo'lsa bo'sh qoldiring yoki <b>-</b> yozing.
+    Qatorlar (parametrlar) va ustunlar (variantlar)ni o'zgartirish uchun
+    <a href="{{ back_url }}" style="color:#60a5fa">mahsulot sahifasiga qayting</a>.
+  </p>
+
+  <form method="post">
+    {% csrf_token %}
+    <table style="border-collapse:collapse;width:100%;font-size:13px">
+      <thead>
+        <tr>
+          <th style="position:sticky;left:0;background:#1f2937;color:#e5e7eb;text-align:left;
+                     padding:10px 12px;border:1px solid #374151;min-width:240px">Parametr</th>
+          {% for v in variants %}
+            <th style="background:#1e3a5f;color:#bfdbfe;padding:10px 12px;border:1px solid #374151;
+                       white-space:nowrap;text-align:center;min-width:120px">{{ v.code }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          <tr>
+            <td style="position:sticky;left:0;background:#111827;color:#d1d5db;padding:8px 12px;
+                       border:1px solid #374151;font-weight:500">
+              {{ row.param.label_uz }}{% if row.param.unit %}, {{ row.param.unit }}{% endif %}
+            </td>
+            {% for cell in row.cells %}
+              <td style="padding:4px;border:1px solid #374151;background:#0b1220">
+                <input type="text" name="{{ cell.name }}" value="{{ cell.value }}"
+                       style="width:100%;box-sizing:border-box;padding:7px 9px;background:#0f172a;
+                              color:#e5e7eb;border:1px solid #334155;border-radius:6px;text-align:center">
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div style="margin-top:20px;display:flex;gap:12px;align-items:center">
+      <button type="submit"
+              style="padding:10px 24px;background:#3B82F6;color:#fff;border:none;border-radius:8px;
+                     font-weight:600;cursor:pointer">Saqlash</button>
+      <a href="{{ back_url }}"
+         style="padding:10px 24px;color:#9ca3af;text-decoration:none">Bekor qilish</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
