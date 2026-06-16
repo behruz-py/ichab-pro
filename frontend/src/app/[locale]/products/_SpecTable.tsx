@@ -1,47 +1,19 @@
+import type { VariantTable } from "@/types/api";
+
 interface Props {
-  raw: string;
+  table: VariantTable;
   title: string;
+  paramHeader: string;
 }
 
-interface ParsedTable {
-  headers: string[];
-  rows: { label: string; values: string[] }[];
-}
-
-function parse(raw: string): ParsedTable | null {
-  const lines = raw
-    .split("\n")
-    .map(l => l.trim())
-    .filter(Boolean);
-
-  if (lines.length < 2) return null;
-
-  const headers = lines[0].split("|").map(h => h.trim());
-  if (headers.length < 2) return null;
-
-  const rows = lines.slice(1).map(line => {
-    const cells = line.split("|").map(c => c.trim());
-    return {
-      label: cells[0] ?? "",
-      values: cells.slice(1),
-    };
-  });
-
-  return { headers, rows };
-}
-
-export function SpecTable({ raw, title }: Props) {
-  const table = parse(raw);
-  if (!table) return null;
-
-  const colCount = table.headers.length - 1; // first header = parameter column
+export function SpecTable({ table, title, paramHeader }: Props) {
+  if (!table.variants.length || !table.rows.length) return null;
 
   return (
     <div
       className="rounded-2xl overflow-hidden mb-10"
       style={{ border: "1px solid rgba(59,130,246,0.14)" }}
     >
-      {/* Header */}
       <div
         className="px-6 py-4"
         style={{
@@ -54,26 +26,23 @@ export function SpecTable({ raw, title }: Props) {
         </h2>
       </div>
 
-      {/* Scrollable table wrapper for mobile */}
       <div className="overflow-x-auto">
         <table className="w-full min-w-max">
           <thead>
             <tr style={{ background: "rgba(59,130,246,0.08)" }}>
-              {/* Parameter column header */}
               <th
                 className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider"
-                style={{ color: "#7B93B8", borderBottom: "1px solid rgba(59,130,246,0.14)", minWidth: "180px" }}
+                style={{ color: "#7B93B8", borderBottom: "1px solid rgba(59,130,246,0.14)", minWidth: "200px" }}
               >
-                {table.headers[0]}
+                {paramHeader}
               </th>
-              {/* Value column headers */}
-              {table.headers.slice(1).map((h, i) => (
+              {table.variants.map((code, i) => (
                 <th
                   key={i}
                   className="px-4 py-3 text-center text-xs font-bold uppercase tracking-wider whitespace-nowrap"
                   style={{ color: "#60A5FA", borderBottom: "1px solid rgba(59,130,246,0.14)", minWidth: "100px" }}
                 >
-                  {h}
+                  {code}
                 </th>
               ))}
             </tr>
@@ -89,14 +58,15 @@ export function SpecTable({ raw, title }: Props) {
                   style={{ color: "#7B93B8", borderBottom: "1px solid rgba(59,130,246,0.08)" }}
                 >
                   {row.label}
+                  {row.unit ? <span style={{ color: "#344768" }}>, {row.unit}</span> : null}
                 </td>
-                {Array.from({ length: colCount }).map((_, ci) => (
+                {table.variants.map((_, ci) => (
                   <td
                     key={ci}
                     className="px-4 py-3 text-sm font-semibold text-center"
                     style={{ color: "#E2EAF4", borderBottom: "1px solid rgba(59,130,246,0.08)" }}
                   >
-                    {row.values[ci] ?? "—"}
+                    {row.values[ci]?.trim() ? row.values[ci] : "—"}
                   </td>
                 ))}
               </tr>

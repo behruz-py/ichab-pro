@@ -48,7 +48,16 @@
     "specs_title": "Texnik xususiyatlar",
     "back_to_catalog": "Katalogga qaytish",
     "no_description": "Tavsif kiritilmagan",
-    "no_image": "Rasm yuklanmagan"
+    "no_image": "Rasm yuklanmagan",
+    "comparison_title": "Modellar bo'yicha taqqoslash",
+    "param_header": "Parametr",
+    "sku": "Artikul",
+    "brand": "Brend",
+    "availability": "Holati",
+    "availability_available": "Mavjud",
+    "availability_on_order": "Buyurtma asosida",
+    "availability_discontinued": "Ishlab chiqarishdan olingan",
+    "request_quote": "So'rov yuborish"
   },
   "projects": {
     "title": "Bajarilgan loyihalar",

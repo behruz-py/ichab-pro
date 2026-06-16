@@ -35,6 +35,7 @@ export interface ProductCategory {
   name: string;
   icon: string;
   cover_image: string | null;
+  parent?: number | null;
   order: number;
 }
 
@@ -42,12 +43,14 @@ export interface ProductSpec {
   id: number;
   label: string;
   value: string;
+  unit?: string;
   order: number;
 }
 
 export interface ProductImage {
   id: number;
   image: string;
+  alt?: string;
   alt_uz: string;
   alt_ru: string;
   alt_en: string;
@@ -55,17 +58,30 @@ export interface ProductImage {
   order: number;
 }
 
+export type Availability = "available" | "on_order" | "discontinued";
+
+export interface VariantTable {
+  variants: string[];
+  rows: { label: string; unit: string; values: string[] }[];
+}
+
 export interface Product {
   id: number;
   slug: string;
   name: string;
+  short_description?: string;
   description?: string;
+  sku?: string;
+  brand?: string;
+  availability?: Availability;
+  meta_title?: string;
+  meta_description?: string;
   category: ProductCategory | null;
   category_name?: string;
   main_image: string | null;
   images?: ProductImage[];
   specs?: ProductSpec[];
-  spec_table?: string;
+  variant_table?: VariantTable | null;
   catalog_file: string | null;
   order: number;
   is_active: boolean;

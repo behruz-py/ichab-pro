@@ -48,7 +48,16 @@
     "specs_title": "Технические характеристики",
     "back_to_catalog": "Вернуться к каталогу",
     "no_description": "Описание не добавлено",
-    "no_image": "Фото не загружено"
+    "no_image": "Фото не загружено",
+    "comparison_title": "Сравнение по моделям",
+    "param_header": "Параметр",
+    "sku": "Артикул",
+    "brand": "Бренд",
+    "availability": "Наличие",
+    "availability_available": "В наличии",
+    "availability_on_order": "Под заказ",
+    "availability_discontinued": "Снято с производства",
+    "request_quote": "Оставить заявку"
   },
   "projects": {
     "title": "Выполненные проекты",

@@ -22,7 +22,11 @@ export function ProductsClient({ products, categories }: Props) {
     if (selectedCategory) list = list.filter(p => String(p.category?.id) === selectedCategory);
     if (search.trim()) {
       const q = search.toLowerCase();
-      list = list.filter(p => p.name.toLowerCase().includes(q));
+      list = list.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        (p.sku?.toLowerCase().includes(q) ?? false) ||
+        (p.short_description?.toLowerCase().includes(q) ?? false)
+      );
     }
     return list;
   }, [products, selectedCategory, search]);
@@ -127,11 +131,18 @@ export function ProductsClient({ products, categories }: Props) {
                   </span>
                 )}
                 <h2
-                  className="font-display font-semibold text-sm leading-snug mb-3 flex-1 line-clamp-2 group-hover:text-blue-300 transition-colors duration-200"
+                  className="font-display font-semibold text-sm leading-snug mb-1.5 line-clamp-2 group-hover:text-blue-300 transition-colors duration-200"
                   style={{ color: "#E2EAF4" }}
                 >
                   {product.name}
                 </h2>
+                {product.short_description ? (
+                  <p className="text-xs leading-relaxed mb-3 line-clamp-2 flex-1" style={{ color: "#7B93B8" }}>
+                    {product.short_description}
+                  </p>
+                ) : (
+                  <div className="flex-1" />
+                )}
                 <span
                   className="text-xs font-semibold flex items-center gap-1 group-hover:gap-2 transition-all duration-200"
                   style={{ color: "#60A5FA" }}

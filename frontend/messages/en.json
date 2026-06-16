@@ -48,7 +48,16 @@
     "specs_title": "Technical Specifications",
     "back_to_catalog": "Back to catalog",
     "no_description": "No description provided",
-    "no_image": "No image uploaded"
+    "no_image": "No image uploaded",
+    "comparison_title": "Comparison by model",
+    "param_header": "Parameter",
+    "sku": "SKU",
+    "brand": "Brand",
+    "availability": "Availability",
+    "availability_available": "In stock",
+    "availability_on_order": "On order",
+    "availability_discontinued": "Discontinued",
+    "request_quote": "Request a quote"
   },
   "projects": {
     "title": "Completed Projects",
