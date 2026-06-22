@@ -23,8 +23,7 @@ const TECH_TAGS = ["PLC", "SCADA", "HMI", "VFD", "IoT", "DCS"];
 export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPrimary, ctaSecondary, scrollHint }: Props) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
-  const opacity  = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
@@ -42,7 +41,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
           alt=""
           fill
           className="object-cover object-center"
-          style={{ opacity: 0.50 }}
+          style={{ opacity: 0.42, filter: "blur(3px) saturate(1.05)" }}
           priority
         />
         {/* Left edge — fades into page background */}
@@ -78,7 +77,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
 
       {/* ── Main content ── */}
       <motion.div
-        style={{ y: contentY, opacity }}
+        style={{ y: contentY }}
         className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28"
       >
         <motion.div
