@@ -151,7 +151,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
         {/* ── Info ── */}
         <div className="flex flex-col gap-4">
           {product.category && (
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#3E6A99" }}>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#2F5E94" }}>
               {product.category.name}
             </span>
           )}
@@ -201,9 +201,9 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
               href={`/${locale}/contact?product=${encodeURIComponent(product.name)}`}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-opacity hover:opacity-90"
               style={{
-                background: "linear-gradient(135deg, #2D5279, #3E6A99)",
+                background: "linear-gradient(135deg, #F2982F 0%, #E07A22 100%)",
                 color: "#fff",
-                boxShadow: "0 6px 24px rgba(62,106,153,0.28)",
+                boxShadow: "0 6px 22px rgba(224,122,34,0.30)",
               }}
             >
               <Send size={16} />
@@ -216,7 +216,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-colors"
-                style={{ border: "1px solid rgba(62,106,153,0.3)", color: "#3E6A99" }}
+                style={{ border: "1px solid rgba(47,94,148,0.3)", color: "#2F5E94" }}
               >
                 <FileDown size={16} />
                 {t("catalog_pdf")}
@@ -229,9 +229,9 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
       {/* ── Simple specs ── */}
       {specs.length > 0 && (
         <div className="rounded-2xl overflow-hidden mb-10"
-          style={{ border: "1px solid rgba(62,106,153,0.14)" }}>
+          style={{ border: "1px solid rgba(47,94,148,0.14)" }}>
           <div className="px-6 py-4"
-            style={{ background: "rgba(62,106,153,0.06)", borderBottom: "1px solid rgba(62,106,153,0.14)" }}>
+            style={{ background: "rgba(47,94,148,0.06)", borderBottom: "1px solid rgba(47,94,148,0.14)" }}>
             <h2 className="font-display font-bold text-lg" style={{ color: "#1E293B" }}>
               {t("specs_title")}
             </h2>
@@ -242,11 +242,11 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
                 <tr key={spec.id}
                   style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "transparent" }}>
                   <td className="px-6 py-3 text-sm font-medium w-1/2"
-                    style={{ color: "#475569", borderBottom: "1px solid rgba(62,106,153,0.08)" }}>
+                    style={{ color: "#475569", borderBottom: "1px solid rgba(47,94,148,0.08)" }}>
                     {spec.label}
                   </td>
                   <td className="px-6 py-3 text-sm font-semibold w-1/2"
-                    style={{ color: "#1E293B", borderBottom: "1px solid rgba(62,106,153,0.08)" }}>
+                    style={{ color: "#1E293B", borderBottom: "1px solid rgba(47,94,148,0.08)" }}>
                     {spec.value}{spec.unit ? ` ${spec.unit}` : ""}
                   </td>
                 </tr>
@@ -265,7 +265,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
       <Link
         href={`/${locale}/products`}
         className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-blue-300"
-        style={{ color: "#3E6A99" }}
+        style={{ color: "#2F5E94" }}
       >
         <ArrowLeft size={16} /> {t("back_to_catalog")}
       </Link>

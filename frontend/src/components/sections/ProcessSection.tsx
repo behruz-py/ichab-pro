@@ -51,11 +51,11 @@ export function ProcessSection({ locale }: Props) {
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0" style={{ background: "rgba(237,241,246,0.45)" }} />
-        <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(62,106,153,0.22) 50%,transparent)" }} />
-        <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(62,106,153,0.22) 50%,transparent)" }} />
+        <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(47,94,148,0.22) 50%,transparent)" }} />
+        <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(47,94,148,0.22) 50%,transparent)" }} />
         {/* Ambient glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] rounded-full"
-          style={{ background: "radial-gradient(ellipse, rgba(62,106,153,0.06) 0%, transparent 70%)", filter: "blur(30px)" }} />
+          style={{ background: "radial-gradient(ellipse, rgba(47,94,148,0.06) 0%, transparent 70%)", filter: "blur(30px)" }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -65,7 +65,7 @@ export function ProcessSection({ locale }: Props) {
           variants={fadeUp} initial="hidden" whileInView="visible" viewport={VIEWPORT}
           className="text-center mb-16"
         >
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3" style={{ color: "#3E6A99" }}>
+          <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3" style={{ color: "#2F5E94" }}>
             {badge}
           </span>
           <h2 className="font-display font-bold text-content" style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}>
@@ -80,7 +80,7 @@ export function ProcessSection({ locale }: Props) {
         >
           {/* Connector line (desktop only) */}
           <div className="hidden lg:block absolute top-[42px] left-[12.5%] right-[12.5%] h-px pointer-events-none z-0"
-            style={{ background: "linear-gradient(90deg, transparent 0%, rgba(62,106,153,0.30) 15%, rgba(62,106,153,0.30) 85%, transparent 100%)" }} />
+            style={{ background: "linear-gradient(90deg, transparent 0%, rgba(47,94,148,0.30) 15%, rgba(47,94,148,0.30) 85%, transparent 100%)" }} />
 
           {steps.map((step, i) => (
             <motion.div
@@ -92,7 +92,7 @@ export function ProcessSection({ locale }: Props) {
                 className="group relative p-6 rounded-2xl h-full transition-all duration-350 hover:translate-y-[-4px]"
                 style={{
                   background:           "rgba(247,249,252,0.70)",
-                  border:               "1px solid rgba(62,106,153,0.12)",
+                  border:               "1px solid rgba(47,94,148,0.12)",
                   backdropFilter:       "blur(18px)",
                   WebkitBackdropFilter: "blur(18px)",
                   boxShadow:            "0 4px 24px rgba(0,0,0,0.25)",
@@ -100,16 +100,16 @@ export function ProcessSection({ locale }: Props) {
               >
                 {/* Hover glow */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
-                  style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(62,106,153,0.10) 0%, transparent 70%)" }} />
+                  style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(47,94,148,0.10) 0%, transparent 70%)" }} />
 
                 {/* Step icon badge (centered, doubles as connector node) */}
                 <div className="flex items-center justify-center mb-5">
                   <div
                     className="w-[52px] h-[52px] rounded-2xl flex items-center justify-center relative"
                     style={{
-                      background: "linear-gradient(135deg, rgba(45,82,121,0.70) 0%, rgba(62,106,153,0.60) 100%)",
-                      border:     "1px solid rgba(62,106,153,0.40)",
-                      boxShadow:  "0 0 20px rgba(62,106,153,0.28), 0 4px 12px rgba(0,0,0,0.30)",
+                      background: "linear-gradient(135deg, rgba(36,76,119,0.70) 0%, rgba(47,94,148,0.60) 100%)",
+                      border:     "1px solid rgba(47,94,148,0.40)",
+                      boxShadow:  "0 0 20px rgba(47,94,148,0.28), 0 4px 12px rgba(0,0,0,0.30)",
                     }}
                   >
                     {(() => {
@@ -122,7 +122,7 @@ export function ProcessSection({ locale }: Props) {
                       style={{
                         fontSize: "10px", fontWeight: 800, letterSpacing: "0.02em",
                         color: "#1E293B", fontFamily: "monospace",
-                        background: "#0B1733", border: "1px solid rgba(62,106,153,0.45)",
+                        background: "#0B1733", border: "1px solid rgba(47,94,148,0.45)",
                       }}
                     >
                       {String(i + 1).padStart(2, "0")}
@@ -139,7 +139,7 @@ export function ProcessSection({ locale }: Props) {
 
                 {/* Bottom glow on hover */}
                 <div className="absolute bottom-0 inset-x-8 h-px rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-                  style={{ background: "linear-gradient(90deg, transparent, rgba(62,106,153,0.55), transparent)" }} />
+                  style={{ background: "linear-gradient(90deg, transparent, rgba(47,94,148,0.55), transparent)" }} />
               </div>
             </motion.div>
           ))}

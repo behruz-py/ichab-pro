@@ -52,7 +52,7 @@ export function ProductsClient({ products, categories }: Props) {
           className="w-full pl-10 pr-4 py-3 rounded-xl border text-content placeholder:text-content-muted focus:outline-none focus:border-blue-500/50 transition-colors"
           style={{
             background: "rgba(255,255,255,0.04)",
-            borderColor: "rgba(62,106,153,0.18)",
+            borderColor: "rgba(47,94,148,0.18)",
           }}
         />
       </div>
@@ -65,8 +65,8 @@ export function ProductsClient({ products, categories }: Props) {
             className="px-4 py-2 rounded-xl text-sm font-medium transition-all"
             style={
               selectedCategory === ""
-                ? { background: "#3E6A99", color: "#fff", boxShadow: "0 0 16px rgba(62,106,153,0.35)" }
-                : { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(62,106,153,0.18)", color: "#475569" }
+                ? { background: "#2F5E94", color: "#fff", boxShadow: "0 0 16px rgba(47,94,148,0.35)" }
+                : { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(47,94,148,0.18)", color: "#475569" }
             }
           >
             {t("filter_all")}
@@ -78,8 +78,8 @@ export function ProductsClient({ products, categories }: Props) {
               className="px-4 py-2 rounded-xl text-sm font-medium transition-all"
               style={
                 selectedCategory === String(cat.id)
-                  ? { background: "#3E6A99", color: "#fff", boxShadow: "0 0 16px rgba(62,106,153,0.35)" }
-                  : { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(62,106,153,0.18)", color: "#475569" }
+                  ? { background: "#2F5E94", color: "#fff", boxShadow: "0 0 16px rgba(47,94,148,0.35)" }
+                  : { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(47,94,148,0.18)", color: "#475569" }
               }
             >
               {cat.icon && <span className="mr-1">{cat.icon}</span>}
@@ -96,7 +96,7 @@ export function ProductsClient({ products, categories }: Props) {
             <Link
               key={product.id}
               href={`/${locale}/products/${product.slug}`}
-              className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 border border-blue-500/[0.14] hover:border-blue-500/40 hover:shadow-[0_8px_32px_rgba(62,106,153,0.12)]"
+              className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 border border-blue-500/[0.14] hover:border-blue-500/40 hover:shadow-[0_8px_32px_rgba(47,94,148,0.12)]"
               style={{ background: "rgba(255,255,255,0.03)" }}
             >
               {/* Image */}
@@ -127,7 +127,7 @@ export function ProductsClient({ products, categories }: Props) {
               <div className="p-4 flex flex-col flex-1">
                 {product.category_name && (
                   <span className="text-xs font-semibold mb-1.5 uppercase tracking-wider"
-                    style={{ color: "#3E6A99" }}>
+                    style={{ color: "#2F5E94" }}>
                     {product.category_name}
                   </span>
                 )}
@@ -146,7 +146,7 @@ export function ProductsClient({ products, categories }: Props) {
                 )}
                 <span
                   className="text-xs font-semibold flex items-center gap-1 group-hover:gap-2 transition-all duration-200"
-                  style={{ color: "#3E6A99" }}
+                  style={{ color: "#2F5E94" }}
                 >
                   {t("view_detail")} <ArrowRight size={13} />
                 </span>

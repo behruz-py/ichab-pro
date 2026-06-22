@@ -29,7 +29,7 @@ export async function Footer() {
       {/* Top gradient line */}
       <div
         className="absolute top-0 inset-x-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent 0%, rgba(62,106,153,0.45) 30%, rgba(62,106,153,0.65) 50%, rgba(62,106,153,0.45) 70%, transparent 100%)" }}
+        style={{ background: "linear-gradient(90deg, transparent 0%, rgba(47,94,148,0.45) 30%, rgba(47,94,148,0.65) 50%, rgba(47,94,148,0.45) 70%, transparent 100%)" }}
       />
 
       {/* Background orb */}
@@ -62,7 +62,7 @@ export async function Footer() {
           <div>
             <h3
               className="text-xs font-bold uppercase tracking-[0.18em] mb-5"
-              style={{ color: "#3E6A99" }}
+              style={{ color: "#2F5E94" }}
             >
               {tFooter("quick_links")}
             </h3>
@@ -76,7 +76,7 @@ export async function Footer() {
                   >
                     <span
                       className="w-1 h-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{ background: "#3E6A99" }}
+                      style={{ background: "#2F5E94" }}
                     />
                     <span className="group-hover:text-blue-400 transition-colors">
                       {tNav(key)}
@@ -91,7 +91,7 @@ export async function Footer() {
           <div>
             <h3
               className="text-xs font-bold uppercase tracking-[0.18em] mb-5"
-              style={{ color: "#3E6A99" }}
+              style={{ color: "#2F5E94" }}
             >
               {tFooter("contact_info")}
             </h3>
@@ -134,7 +134,7 @@ export async function Footer() {
           </p>
           <p className="text-xs" style={{ color: "#94A3B8" }}>
             {tFooter("made_with")}{" "}
-            <Heart size={12} fill="#3E6A99" style={{ color: "#3E6A99", display: "inline", verticalAlign: "middle" }} />
+            <Heart size={12} fill="#2F5E94" style={{ color: "#2F5E94", display: "inline", verticalAlign: "middle" }} />
           </p>
         </div>
       </div>

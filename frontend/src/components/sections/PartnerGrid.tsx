@@ -35,7 +35,7 @@ function PartnerCard({ partner, visitSite }: { partner: Partner; visitSite: stri
       className="group relative rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-[5px]"
       style={{
         background: "rgba(247,249,252,0.75)",
-        border: "1px solid rgba(62,106,153,0.13)",
+        border: "1px solid rgba(47,94,148,0.13)",
         backdropFilter: "blur(18px)",
         WebkitBackdropFilter: "blur(18px)",
       }}
@@ -43,7 +43,7 @@ function PartnerCard({ partner, visitSite }: { partner: Partner; visitSite: stri
       {/* Hover glow ring — overlays the card */}
       <div
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{ boxShadow: "inset 0 0 0 1px rgba(62,106,153,0.40), 0 12px 48px rgba(62,106,153,0.18)" }}
+        style={{ boxShadow: "inset 0 0 0 1px rgba(47,94,148,0.40), 0 12px 48px rgba(47,94,148,0.18)" }}
       />
 
       {/* White logo zone */}
@@ -68,7 +68,7 @@ function PartnerCard({ partner, visitSite }: { partner: Partner; visitSite: stri
         {/* Top blue accent line that slides in on hover */}
         <div
           className="absolute top-0 inset-x-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ background: "linear-gradient(90deg, #2D5279, #3E6A99, #517FB0)" }}
+          style={{ background: "linear-gradient(90deg, #244C77, #2F5E94, #3D72AD)" }}
         />
       </div>
 
@@ -97,9 +97,9 @@ function PartnerCard({ partner, visitSite }: { partner: Partner; visitSite: stri
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-1.5 text-xs font-semibold py-2 px-3 rounded-xl transition-all duration-200 hover:bg-blue-500/20"
             style={{
-              background: "rgba(62,106,153,0.10)",
-              border: "1px solid rgba(62,106,153,0.22)",
-              color: "#3E6A99",
+              background: "rgba(47,94,148,0.10)",
+              border: "1px solid rgba(47,94,148,0.22)",
+              color: "#2F5E94",
               textDecoration: "none",
             }}
           >

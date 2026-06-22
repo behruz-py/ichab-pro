@@ -19,7 +19,7 @@ const TRACK = [...ITEMS, ...ITEMS, ...ITEMS];
 
 export function TrustStrip() {
   return (
-    <div className="relative overflow-hidden py-4" style={{ borderTop: "1px solid rgba(62,106,153,0.10)", borderBottom: "1px solid rgba(62,106,153,0.10)", background: "rgba(237,241,246,0.60)" }}>
+    <div className="relative overflow-hidden py-4" style={{ borderTop: "1px solid rgba(47,94,148,0.10)", borderBottom: "1px solid rgba(47,94,148,0.10)", background: "rgba(237,241,246,0.60)" }}>
 
       {/* Edge fades */}
       <div className="pointer-events-none absolute left-0 top-0 h-full w-32 z-10"
@@ -34,10 +34,10 @@ export function TrustStrip() {
       >
         {TRACK.map((item, i) => (
           <span key={i} className="inline-flex items-center gap-3 px-6">
-            <ShieldCheck size={13} style={{ color: "#3E6A99", flexShrink: 0 }} />
+            <ShieldCheck size={13} style={{ color: "#2F5E94", flexShrink: 0 }} />
             <span
               style={{
-                color: i % (ITEMS.length * 2) < ITEMS.length ? "#475569" : "#3E6A99",
+                color: i % (ITEMS.length * 2) < ITEMS.length ? "#475569" : "#2F5E94",
                 fontSize: "12px",
                 fontWeight: 500,
                 letterSpacing: "0.04em",

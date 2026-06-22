@@ -63,7 +63,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "radial-gradient(rgba(62,106,153,0.18) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(rgba(47,94,148,0.18) 1px, transparent 1px)",
           backgroundSize: "40px 40px",
           opacity: 0.28,
           maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
@@ -90,11 +90,11 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
           <motion.div variants={fadeIn} className="mb-8">
             <span
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium"
-              style={{ background: "rgba(62,106,153,0.08)", border: "1px solid rgba(62,106,153,0.24)", color: "#3E6A99" }}
+              style={{ background: "rgba(47,94,148,0.08)", border: "1px solid rgba(47,94,148,0.24)", color: "#2F5E94" }}
             >
               <motion.span
                 className="w-2 h-2 rounded-full flex-shrink-0"
-                style={{ background: "#3E6A99" }}
+                style={{ background: "#2F5E94" }}
                 animate={{ scale: [1, 1.7, 1], opacity: [1, 0.35, 1] }}
                 transition={{ duration: 2.2, repeat: Infinity }}
               />
@@ -111,7 +111,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
             <br />
             <span
               style={{
-                background: "linear-gradient(135deg, #2563EB 0%, #3E6A99 45%, #517FB0 100%)",
+                background: "linear-gradient(135deg, #E8852C 0%, #F2972F 45%, #F9B23D 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -135,8 +135,8 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
                 href={`/${locale}/contact`}
                 className="inline-flex items-center justify-center px-8 py-4 rounded-2xl text-base font-semibold text-white"
                 style={{
-                  background: "linear-gradient(135deg, #2D5279 0%, #3E6A99 100%)",
-                  boxShadow: "0 8px 32px rgba(62,106,153,0.38), inset 0 1px 0 rgba(255,255,255,0.18)",
+                  background: "linear-gradient(135deg, #F2982F 0%, #E07A22 100%)",
+                  boxShadow: "0 8px 28px rgba(224,122,34,0.38), inset 0 1px 0 rgba(255,255,255,0.18)",
                 }}
               >
                 {ctaPrimary}
@@ -166,7 +166,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.0 + i * 0.07, duration: 0.35 }}
                 className="px-3 py-1 rounded-lg text-xs font-mono font-semibold"
-                style={{ background: "rgba(62,106,153,0.07)", border: "1px solid rgba(62,106,153,0.20)", color: "#3E6A99" }}
+                style={{ background: "rgba(47,94,148,0.07)", border: "1px solid rgba(47,94,148,0.20)", color: "#2F5E94" }}
               >
                 {tag}
               </motion.span>
@@ -186,9 +186,9 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
           className="w-5 h-8 rounded-full flex items-start justify-center pt-1.5"
-          style={{ border: "1.5px solid rgba(62,106,153,0.35)" }}
+          style={{ border: "1.5px solid rgba(47,94,148,0.35)" }}
         >
-          <div className="w-1 h-2.5 rounded-full" style={{ background: "rgba(62,106,153,0.70)" }} />
+          <div className="w-1 h-2.5 rounded-full" style={{ background: "rgba(47,94,148,0.70)" }} />
         </motion.div>
         <span className="text-[10px] font-medium tracking-wider uppercase" style={{ color: "#94A3B8" }}>
           {scrollHint}

@@ -39,10 +39,10 @@ interface Props { stats: Statistic[]; title: string; }
 
 // Accent colors per card index (blue variants)
 const ACCENTS = [
-  { border: "rgba(62,106,153,0.35)",  glow: "rgba(62,106,153,0.15)",  icon: "rgba(62,106,153,0.18)"  },
-  { border: "rgba(62,106,153,0.30)",  glow: "rgba(62,106,153,0.12)",  icon: "rgba(62,106,153,0.14)"  },
-  { border: "rgba(81,127,176,0.30)",  glow: "rgba(81,127,176,0.12)",  icon: "rgba(81,127,176,0.14)"  },
-  { border: "rgba(62,106,153,0.35)",  glow: "rgba(62,106,153,0.15)",  icon: "rgba(62,106,153,0.18)"  },
+  { border: "rgba(47,94,148,0.35)",  glow: "rgba(47,94,148,0.15)",  icon: "rgba(47,94,148,0.18)"  },
+  { border: "rgba(47,94,148,0.30)",  glow: "rgba(47,94,148,0.12)",  icon: "rgba(47,94,148,0.14)"  },
+  { border: "rgba(61,114,173,0.30)",  glow: "rgba(61,114,173,0.12)",  icon: "rgba(61,114,173,0.14)"  },
+  { border: "rgba(47,94,148,0.35)",  glow: "rgba(47,94,148,0.15)",  icon: "rgba(47,94,148,0.18)"  },
 ];
 
 export function StatsSection({ stats, title }: Props) {
@@ -50,13 +50,13 @@ export function StatsSection({ stats, title }: Props) {
     <section className="relative py-24 overflow-hidden">
 
       {/* Top/bottom lines */}
-      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(62,106,153,0.30) 50%,transparent)" }} />
-      <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(62,106,153,0.30) 50%,transparent)" }} />
+      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(47,94,148,0.30) 50%,transparent)" }} />
+      <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(47,94,148,0.30) 50%,transparent)" }} />
 
       {/* Wide ambient glow */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[400px] rounded-full"
-          style={{ background: "radial-gradient(ellipse, rgba(62,106,153,0.07) 0%, transparent 70%)", filter: "blur(30px)" }} />
+          style={{ background: "radial-gradient(ellipse, rgba(47,94,148,0.07) 0%, transparent 70%)", filter: "blur(30px)" }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -113,7 +113,7 @@ export function StatsSection({ stats, title }: Props) {
                 <div className="relative font-display font-bold leading-none mb-2 tabular-nums"
                   style={{
                     fontSize: "clamp(48px, 5vw, 72px)",
-                    background: "linear-gradient(135deg, #3E6A99 0%, #3E6A99 55%, #517FB0 100%)",
+                    background: "linear-gradient(135deg, #E8852C 0%, #F2972F 55%, #F9B23D 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",

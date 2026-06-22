@@ -123,7 +123,13 @@
       "Bash(xargs -0 sed -i -e 's/rgba\\(9,18,42/rgba\\(247,249,252/g' -e 's/rgba\\(7,14,31/rgba\\(237,241,246/g')",
       "Bash(sed -i 's/rgba\\(5,10,23/rgba\\(229,234,241/g' components/sections/HeroSection.tsx)",
       "Bash(sed -i 's/rgba\\(5,10,23/rgba\\(247,249,252/g' \"app/[locale]/products/_ProductGallery.tsx\")",
-      "Bash(sed -i 's/rgba\\(5,9,24/rgba\\(247,249,252/g' \"app/[locale]/products/_ProductsClient.tsx\" components/sections/ServicesPreview.tsx)"
+      "Bash(sed -i 's/rgba\\(5,9,24/rgba\\(247,249,252/g' \"app/[locale]/products/_ProductsClient.tsx\" components/sections/ServicesPreview.tsx)",
+      "Bash(xargs -0 sed -i -e 's/#3E6A99/#2F5E94/g' -e 's/#2D5279/#244C77/g' -e 's/#517FB0/#3D72AD/g' -e 's/#2A4E75/#244C77/g' -e 's/rgba\\(62,106,153/rgba\\(47,94,148/g' -e 's/rgba\\(45,82,121/rgba\\(36,76,119/g' -e 's/rgba\\(81,127,176/rgba\\(61,114,173/g')",
+      "Bash(sed -i 's/0 8px 32px rgba\\(47,94,148,0.40\\)/0 8px 28px rgba\\(224,122,34,0.38\\)/' \"app/[locale]/page.tsx\")",
+      "Bash(sed -i 's/0 8px 32px rgba\\(47,94,148,0.38\\)/0 8px 28px rgba\\(224,122,34,0.38\\)/' components/sections/HeroSection.tsx)",
+      "Bash(sed -i 's/0 6px 24px rgba\\(47,94,148,0.28\\)/0 6px 22px rgba\\(224,122,34,0.30\\)/' \"app/[locale]/products/[slug]/page.tsx\")",
+      "Bash(sed -i 's/0 8px 32px rgba\\(47,94,148,0.35\\)/0 8px 28px rgba\\(224,122,34,0.36\\)/' \"app/[locale]/divisions/[slug]/page.tsx\")",
+      "Bash(sed -i 's/0 4px 16px rgba\\(47,94,148,0.30\\)/0 4px 16px rgba\\(224,122,34,0.34\\)/' components/layout/Header.tsx)"
     ],
     "additionalDirectories": [
       "d:\\Document\\developing\\Web\\ichab_pro\\frontend\\src\\app\\[locale]\\products"

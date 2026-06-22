@@ -21,7 +21,7 @@ export function ServicesPreview({ services, locale, title, subtitle, learnMore }
     <section className="relative py-24 overflow-hidden" style={{ background: "rgba(237,241,246,0.50)" }}>
       <MeshBlobs variant="services" />
 
-      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(62,106,153,0.20) 50%,transparent)" }} />
+      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(47,94,148,0.20) 50%,transparent)" }} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -30,7 +30,7 @@ export function ServicesPreview({ services, locale, title, subtitle, learnMore }
           variants={fadeUp} initial="hidden" whileInView="visible" viewport={VIEWPORT}
           className="text-center mb-14"
         >
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3" style={{ color: "#3E6A99" }}>Xizmatlar</span>
+          <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3" style={{ color: "#2F5E94" }}>Xizmatlar</span>
           <h2 className="font-display font-bold text-content" style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}>
             {title}
           </h2>
@@ -61,13 +61,13 @@ export function ServicesPreview({ services, locale, title, subtitle, learnMore }
                     {svc.icon ? (
                       <div
                         className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-                        style={{ background: "rgba(62,106,153,0.10)", border: "1px solid rgba(62,106,153,0.22)" }}
+                        style={{ background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.22)" }}
                       >
                         <DynamicIcon name={svc.icon} size={22} className="text-blue-400" />
                       </div>
                     ) : <div />}
 
-                    <span className="text-[11px] font-bold font-mono" style={{ color: "rgba(62,106,153,0.35)" }}>
+                    <span className="text-[11px] font-bold font-mono" style={{ color: "rgba(47,94,148,0.35)" }}>
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
@@ -80,23 +80,23 @@ export function ServicesPreview({ services, locale, title, subtitle, learnMore }
                   </p>
 
                   {svc.price_from && (
-                    <p className="text-xs font-medium mb-4" style={{ color: "#3E6A99" }}>{svc.price_from}</p>
+                    <p className="text-xs font-medium mb-4" style={{ color: "#2F5E94" }}>{svc.price_from}</p>
                   )}
 
                   {/* Learn more — slides on hover */}
                   <div className="flex items-center justify-between">
                     <span
                       className="inline-flex items-center gap-1.5 text-xs font-semibold transition-all duration-200 group-hover:gap-3"
-                      style={{ color: "#3E6A99" }}
+                      style={{ color: "#2F5E94" }}
                     >
                       {learnMore} <ArrowRight size={14} />
                     </span>
                     {/* Arrow circle */}
                     <div
                       className="w-7 h-7 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0"
-                      style={{ background: "rgba(62,106,153,0.15)", border: "1px solid rgba(62,106,153,0.30)" }}
+                      style={{ background: "rgba(47,94,148,0.15)", border: "1px solid rgba(47,94,148,0.30)" }}
                     >
-                      <ArrowRight size={13} style={{ color: "#3E6A99" }} />
+                      <ArrowRight size={13} style={{ color: "#2F5E94" }} />
                     </div>
                   </div>
                 </Link>

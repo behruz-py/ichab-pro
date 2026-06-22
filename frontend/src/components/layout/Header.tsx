@@ -77,8 +77,8 @@ export function Header() {
           className={cn(
             "max-w-[1340px] mx-auto rounded-2xl pointer-events-auto transition-all duration-400 relative",
             scrolled
-              ? "shadow-[0_8px_40px_rgba(45,82,121,0.16),0_0_0_1px_rgba(62,106,153,0.18)]"
-              : "shadow-[0_0_0_1px_rgba(62,106,153,0.10)]"
+              ? "shadow-[0_8px_40px_rgba(36,76,119,0.16),0_0_0_1px_rgba(47,94,148,0.18)]"
+              : "shadow-[0_0_0_1px_rgba(47,94,148,0.10)]"
           )}
           style={{
             background:           scrolled ? "rgba(247,249,252,0.92)" : "rgba(247,249,252,0.70)",
@@ -89,7 +89,7 @@ export function Header() {
           {/* Blue top accent line */}
           <div
             className={cn("absolute top-0 left-6 right-6 h-px transition-opacity duration-400", scrolled ? "opacity-70" : "opacity-30")}
-            style={{ background: "linear-gradient(90deg, transparent 0%, rgba(62,106,153,0.7) 40%, rgba(62,106,153,0.9) 50%, rgba(62,106,153,0.7) 60%, transparent 100%)" }}
+            style={{ background: "linear-gradient(90deg, transparent 0%, rgba(47,94,148,0.7) 40%, rgba(47,94,148,0.9) 50%, rgba(47,94,148,0.7) 60%, transparent 100%)" }}
           />
 
           <div className="px-4 sm:px-5 h-[58px] flex items-center justify-between gap-3">
@@ -111,11 +111,11 @@ export function Header() {
                 className="hidden sm:block font-display font-bold tracking-[0.08em] transition-all duration-200"
                 style={{
                   fontSize: "30px",
-                  background: "linear-gradient(135deg, #1E293B 0%, #3E6A99 100%)",
+                  background: "linear-gradient(135deg, #1E293B 0%, #2F5E94 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
-                  filter: "drop-shadow(0 0 10px rgba(62,106,153,0.40))",
+                  filter: "drop-shadow(0 0 10px rgba(47,94,148,0.40))",
                 }}
               >
                 {BRAND_NAME[locale] ?? "ICHAB"}
@@ -123,13 +123,13 @@ export function Header() {
 
               {/* ── Full name — current locale only ── */}
               <div className="hidden xl:flex items-stretch gap-3 ml-0.5">
-                <div className="w-px self-stretch" style={{ background: "rgba(62,106,153,0.22)" }} />
+                <div className="w-px self-stretch" style={{ background: "rgba(47,94,148,0.22)" }} />
                 <p
                   className="font-semibold uppercase self-center leading-[1.40]"
                   style={{
                     fontSize: "8px",
                     letterSpacing: "0.07em",
-                    color: "rgba(81,127,176,0.52)",
+                    color: "rgba(61,114,173,0.52)",
                     maxWidth: "110px",
                   }}
                 >
@@ -171,7 +171,7 @@ export function Header() {
                     <motion.span
                       layoutId="nav-active-bg"
                       className="absolute inset-0 rounded-xl"
-                      style={{ background: "rgba(62,106,153,0.10)", border: "1px solid rgba(62,106,153,0.22)" }}
+                      style={{ background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.22)" }}
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -200,12 +200,12 @@ export function Header() {
                         background:           "rgba(247,249,252,0.97)",
                         backdropFilter:       "blur(28px)",
                         WebkitBackdropFilter: "blur(28px)",
-                        border:               "1px solid rgba(62,106,153,0.18)",
-                        boxShadow:            "0 16px 56px rgba(0,0,0,0.60), 0 0 0 1px rgba(62,106,153,0.06)",
+                        border:               "1px solid rgba(47,94,148,0.18)",
+                        boxShadow:            "0 16px 56px rgba(0,0,0,0.60), 0 0 0 1px rgba(47,94,148,0.06)",
                       }}
                     >
                       {/* Top accent line */}
-                      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(62,106,153,0.55) 50%, transparent)" }} />
+                      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(47,94,148,0.55) 50%, transparent)" }} />
 
                       {DROPDOWN_ITEMS.map((item, i) => {
                         const active = isActive(item.path);
@@ -226,7 +226,7 @@ export function Header() {
                                   : "text-content-secondary hover:text-content hover:bg-white/[0.05]"
                               )}
                             >
-                              <Icon size={15} style={{ color: active ? "#3E6A99" : "rgba(62,106,153,0.50)" }} className="flex-shrink-0" />
+                              <Icon size={15} style={{ color: active ? "#2F5E94" : "rgba(47,94,148,0.50)" }} className="flex-shrink-0" />
                               <span className="flex-1">{t(item.key)}</span>
                               {active && <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
                             </Link>
@@ -268,7 +268,7 @@ export function Header() {
                         <motion.span
                           layoutId="nav-active-bg"
                           className="absolute inset-0 rounded-xl"
-                          style={{ background: "rgba(62,106,153,0.10)", border: "1px solid rgba(62,106,153,0.22)" }}
+                          style={{ background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.22)" }}
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
                         />
                       )}
@@ -290,8 +290,8 @@ export function Header() {
                 href={`/${locale}/contact`}
                 className="hidden lg:inline-flex items-center px-4 py-1.5 rounded-xl text-[12px] font-semibold transition-colors duration-200 ml-1 cta-pulse"
                 style={{
-                  background: "linear-gradient(135deg, rgba(45,82,121,0.85), rgba(62,106,153,0.90))",
-                  border:     "1px solid rgba(62,106,153,0.38)",
+                  background: "linear-gradient(135deg, #F2982F 0%, #E07A22 100%)",
+                  border:     "1px solid rgba(224,122,34,0.45)",
                   color:      "#fff",
                 }}
               >
@@ -340,11 +340,11 @@ export function Header() {
                 background:           "rgba(247,249,252,0.97)",
                 backdropFilter:       "blur(24px)",
                 WebkitBackdropFilter: "blur(24px)",
-                borderLeft:           "1px solid rgba(62,106,153,0.12)",
-                boxShadow:            "-12px 0 48px rgba(45,82,121,0.16)",
+                borderLeft:           "1px solid rgba(47,94,148,0.12)",
+                boxShadow:            "-12px 0 48px rgba(36,76,119,0.16)",
               }}
             >
-              <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(62,106,153,0.60) 50%, transparent)" }} />
+              <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(47,94,148,0.60) 50%, transparent)" }} />
 
               <div className="h-[72px] flex items-center justify-between px-5 border-b border-white/[0.05]">
                 <div className="flex items-center gap-3">
@@ -353,7 +353,7 @@ export function Header() {
                     className="font-display font-bold tracking-[0.08em]"
                     style={{
                       fontSize: "20px",
-                      background: "linear-gradient(135deg, #1E293B 0%, #3E6A99 100%)",
+                      background: "linear-gradient(135deg, #1E293B 0%, #2F5E94 100%)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
@@ -372,7 +372,7 @@ export function Header() {
 
               <nav className="flex-1 overflow-y-auto px-3 py-4">
                 <div className="mb-3">
-                  <p className="px-4 mb-1.5 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(62,106,153,0.55)" }}>
+                  <p className="px-4 mb-1.5 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(47,94,148,0.55)" }}>
                     {t("company")}
                   </p>
                   <div className="space-y-0.5">
@@ -392,9 +392,9 @@ export function Header() {
                               "flex items-center gap-3 px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200",
                               active ? "text-blue-400" : "text-content-secondary hover:text-content hover:bg-white/[0.04]"
                             )}
-                            style={active ? { background: "rgba(62,106,153,0.10)", border: "1px solid rgba(62,106,153,0.20)" } : {}}
+                            style={active ? { background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.20)" } : {}}
                           >
-                            <Icon size={16} style={{ color: active ? "#3E6A99" : "rgba(62,106,153,0.45)" }} className="flex-shrink-0" />
+                            <Icon size={16} style={{ color: active ? "#2F5E94" : "rgba(47,94,148,0.45)" }} className="flex-shrink-0" />
                             {t(item.key)}
                             {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
                           </Link>
@@ -422,7 +422,7 @@ export function Header() {
                             "flex items-center justify-between px-4 py-3 rounded-xl text-[13.5px] font-medium transition-all duration-200",
                             active ? "text-blue-400" : "text-content-secondary hover:text-content hover:bg-white/[0.04]"
                           )}
-                          style={active ? { background: "rgba(62,106,153,0.10)", border: "1px solid rgba(62,106,153,0.20)" } : {}}
+                          style={active ? { background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.20)" } : {}}
                         >
                           {t(key)}
                           {active && <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
@@ -441,7 +441,7 @@ export function Header() {
                 <Link
                   href={`/${locale}/contact`}
                   className="flex items-center justify-center w-full py-2.5 rounded-xl text-sm font-semibold text-white"
-                  style={{ background: "linear-gradient(135deg, #2D5279, #3E6A99)", boxShadow: "0 4px 16px rgba(62,106,153,0.30)" }}
+                  style={{ background: "linear-gradient(135deg, #F2982F 0%, #E07A22 100%)", boxShadow: "0 4px 16px rgba(224,122,34,0.34)" }}
                 >
                   Bog&apos;lanish
                 </Link>
