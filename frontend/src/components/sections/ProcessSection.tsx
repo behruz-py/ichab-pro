@@ -95,7 +95,7 @@ export function ProcessSection({ locale }: Props) {
                   border:               "1px solid rgba(47,94,148,0.12)",
                   backdropFilter:       "blur(18px)",
                   WebkitBackdropFilter: "blur(18px)",
-                  boxShadow:            "0 4px 24px rgba(0,0,0,0.25)",
+                  boxShadow:            "0 4px 24px rgba(36,76,119,0.09)",
                 }}
               >
                 {/* Hover glow */}
@@ -109,7 +109,7 @@ export function ProcessSection({ locale }: Props) {
                     style={{
                       background: "linear-gradient(135deg, rgba(36,76,119,0.70) 0%, rgba(47,94,148,0.60) 100%)",
                       border:     "1px solid rgba(47,94,148,0.40)",
-                      boxShadow:  "0 0 20px rgba(47,94,148,0.28), 0 4px 12px rgba(0,0,0,0.30)",
+                      boxShadow:  "0 0 20px rgba(47,94,148,0.28), 0 4px 12px rgba(36,76,119,0.10)",
                     }}
                   >
                     {(() => {
@@ -130,7 +130,7 @@ export function ProcessSection({ locale }: Props) {
                   </div>
                 </div>
 
-                <h3 className="font-display font-bold text-content text-center mb-2 transition-colors duration-200 group-hover:text-blue-400">
+                <h3 className="font-display font-bold text-content text-center mb-2 transition-colors duration-200 group-hover:text-[#244C77]">
                   {step.title}
                 </h3>
                 <p className="text-sm leading-relaxed text-center" style={{ color: "#475569" }}>

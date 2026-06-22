@@ -46,10 +46,10 @@ export function LangSwitcher({ className }: { className?: string }) {
         aria-haspopup="listbox"
         className={cn(
           "flex items-center gap-1.5 px-3 h-8 rounded-lg text-[12px] font-semibold transition-all duration-200",
-          "border bg-white/[0.05] backdrop-blur-sm",
+          "border bg-black/[0.03] backdrop-blur-sm",
           open
             ? "border-accent/45 text-accent bg-accent/8"
-            : "border-white/[0.09] text-content-secondary hover:text-content hover:border-white/[0.16] hover:bg-white/[0.08]"
+            : "border-black/[0.08] text-content-secondary hover:text-content hover:border-black/10 hover:bg-black/[0.04]"
         )}
       >
         {LANG_LABELS[locale]}
@@ -85,7 +85,7 @@ export function LangSwitcher({ className }: { className?: string }) {
                   "w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold transition-colors duration-150",
                   locale === l
                     ? "text-accent bg-accent/10"
-                    : "text-content-secondary hover:text-content hover:bg-white/5"
+                    : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
                 )}
               >
                 {LANG_LABELS[l]}

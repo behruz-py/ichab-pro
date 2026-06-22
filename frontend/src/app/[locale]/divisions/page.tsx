@@ -205,7 +205,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                 {/* Bottom content */}
                 <div className="absolute bottom-0 inset-x-0 p-5">
                   <h2
-                    className="font-display font-bold text-lg leading-snug mb-1.5 group-hover:text-blue-300 transition-colors duration-200"
+                    className="font-display font-bold text-lg leading-snug mb-1.5 group-hover:text-[#244C77] transition-colors duration-200"
                     style={{ color: "#1E293B" }}
                   >
                     {div.name}

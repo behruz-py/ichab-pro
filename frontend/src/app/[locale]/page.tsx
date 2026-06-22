@@ -114,7 +114,7 @@ export default async function HomePage({ params: { locale } }: Props) {
                 border:               "1px solid rgba(47,94,148,0.20)",
                 backdropFilter:       "blur(20px)",
                 WebkitBackdropFilter: "blur(20px)",
-                boxShadow:            "0 8px 48px rgba(0,0,0,0.30), 0 0 80px rgba(47,94,148,0.05)",
+                boxShadow:            "0 8px 48px rgba(36,76,119,0.10), 0 0 80px rgba(47,94,148,0.05)",
               }}
             >
               {/* Glow top */}

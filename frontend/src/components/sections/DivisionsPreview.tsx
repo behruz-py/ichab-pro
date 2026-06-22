@@ -150,7 +150,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
               {/* ── Bottom text ── */}
               <div className="absolute bottom-0 inset-x-0 px-4 pb-4 pt-2 z-10">
                 <h3
-                  className="font-display font-bold leading-snug mb-1.5 group-hover:text-blue-300 transition-colors duration-200 line-clamp-2"
+                  className="font-display font-bold leading-snug mb-1.5 group-hover:text-[#244C77] transition-colors duration-200 line-clamp-2"
                   style={{
                     color: "#F0F6FF",
                     fontSize: "15px",

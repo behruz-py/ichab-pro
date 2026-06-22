@@ -154,7 +154,7 @@ export function Header() {
                 <button
                   className={cn(
                     "relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12.5px] font-medium transition-colors duration-200 whitespace-nowrap",
-                    isDropdownActive() || dropdownOpen ? "text-blue-400" : "text-content-secondary hover:text-content"
+                    isDropdownActive() || dropdownOpen ? "text-[#2F5E94]" : "text-content-secondary hover:text-content"
                   )}
                 >
                   {/* Shared hover pill */}
@@ -222,8 +222,8 @@ export function Header() {
                               className={cn(
                                 "flex items-center gap-3 mx-1.5 my-0.5 px-3 py-2.5 rounded-xl text-[12.5px] font-medium transition-all duration-150 group",
                                 active
-                                  ? "text-blue-400 bg-blue-500/10"
-                                  : "text-content-secondary hover:text-content hover:bg-white/[0.05]"
+                                  ? "text-[#2F5E94] bg-blue-500/10"
+                                  : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
                               )}
                             >
                               <Icon size={15} style={{ color: active ? "#2F5E94" : "rgba(47,94,148,0.50)" }} className="flex-shrink-0" />
@@ -251,7 +251,7 @@ export function Header() {
                       href={`/${locale}${path}`}
                       className={cn(
                         "relative flex items-center px-3 py-1.5 rounded-xl text-[12.5px] font-medium transition-colors duration-200 whitespace-nowrap",
-                        active ? "text-blue-400" : "text-content-secondary hover:text-content"
+                        active ? "text-[#2F5E94]" : "text-content-secondary hover:text-content"
                       )}
                     >
                       {/* Shared hover pill — slides between items */}
@@ -307,7 +307,7 @@ export function Header() {
                   "xl:hidden w-9 h-9 flex flex-col items-center justify-center gap-[5px] rounded-xl border transition-all duration-200",
                   mobileMenuOpen
                     ? "border-blue-500/40 bg-blue-500/10"
-                    : "border-white/[0.08] bg-white/[0.04] hover:border-blue-500/30"
+                    : "border-black/[0.08] bg-black/[0.03] hover:border-blue-500/30"
                 )}
               >
                 <span className={cn("block w-[17px] h-[1.5px] bg-content rounded-full transition-all duration-300 origin-center", mobileMenuOpen && "rotate-45 translate-y-[6.5px]")} />
@@ -346,7 +346,7 @@ export function Header() {
             >
               <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(47,94,148,0.60) 50%, transparent)" }} />
 
-              <div className="h-[72px] flex items-center justify-between px-5 border-b border-white/[0.05]">
+              <div className="h-[72px] flex items-center justify-between px-5 border-b border-black/[0.06]">
                 <div className="flex items-center gap-3">
                   <LogoBadge size={40} />
                   <span
@@ -364,7 +364,7 @@ export function Header() {
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center text-content-muted hover:text-content hover:bg-white/[0.06] transition-all"
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-content-muted hover:text-content hover:bg-black/[0.04] transition-all"
                 >
                   <X size={14} strokeWidth={2} />
                 </button>
@@ -390,7 +390,7 @@ export function Header() {
                             href={`/${locale}${item.path}`}
                             className={cn(
                               "flex items-center gap-3 px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200",
-                              active ? "text-blue-400" : "text-content-secondary hover:text-content hover:bg-white/[0.04]"
+                              active ? "text-[#2F5E94]" : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
                             )}
                             style={active ? { background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.20)" } : {}}
                           >
@@ -420,7 +420,7 @@ export function Header() {
                           href={`/${locale}${path}`}
                           className={cn(
                             "flex items-center justify-between px-4 py-3 rounded-xl text-[13.5px] font-medium transition-all duration-200",
-                            active ? "text-blue-400" : "text-content-secondary hover:text-content hover:bg-white/[0.04]"
+                            active ? "text-[#2F5E94]" : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
                           )}
                           style={active ? { background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.20)" } : {}}
                         >
@@ -433,7 +433,7 @@ export function Header() {
                 </div>
               </nav>
 
-              <div className="px-5 py-5 border-t border-white/[0.05] space-y-4">
+              <div className="px-5 py-5 border-t border-black/[0.06] space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] text-content-muted font-semibold uppercase tracking-[0.1em]">Til</span>
                   <LangSwitcher />

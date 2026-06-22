@@ -45,7 +45,7 @@ export async function Footer() {
             <Link href={`/${locale}`} className="flex items-center gap-3 mb-5 group w-fit">
               <LogoBadge size={38} />
               <div className="flex flex-col leading-none gap-1">
-                <span className="font-display font-bold text-lg text-content group-hover:text-blue-400 transition-colors">
+                <span className="font-display font-bold text-lg text-content group-hover:text-[#244C77] transition-colors">
                   ICHAB Pro
                 </span>
                 <span className="text-[9px] text-content-muted font-medium uppercase tracking-[0.12em]">
@@ -78,7 +78,7 @@ export async function Footer() {
                       className="w-1 h-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                       style={{ background: "#2F5E94" }}
                     />
-                    <span className="group-hover:text-blue-400 transition-colors">
+                    <span className="group-hover:text-[#244C77] transition-colors">
                       {tNav(key)}
                     </span>
                   </Link>
@@ -97,26 +97,26 @@ export async function Footer() {
             </h3>
             <ul className="space-y-3.5">
               <li className="flex items-start gap-3 text-sm" style={{ color: "#475569" }}>
-                <MapPin size={16} className="mt-0.5 flex-shrink-0 text-blue-500" />
+                <MapPin size={16} className="mt-0.5 flex-shrink-0 text-[#2F5E94]" />
                 <span className="leading-relaxed">{tFooter("address")}</span>
               </li>
               <li>
                 <a
                   href={`tel:${tFooter("phone").replace(/\s/g, "")}`}
-                  className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-blue-400 group"
+                  className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-[#244C77] group"
                   style={{ color: "#475569" }}
                 >
-                  <Phone size={16} className="text-blue-500 flex-shrink-0" />
+                  <Phone size={16} className="text-[#2F5E94] flex-shrink-0" />
                   {tFooter("phone")}
                 </a>
               </li>
               <li>
                 <a
                   href={`mailto:${tFooter("email")}`}
-                  className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-blue-400"
+                  className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-[#244C77]"
                   style={{ color: "#475569" }}
                 >
-                  <Mail size={16} className="text-blue-500 flex-shrink-0" />
+                  <Mail size={16} className="text-[#2F5E94] flex-shrink-0" />
                   {tFooter("email")}
                 </a>
               </li>

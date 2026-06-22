@@ -84,11 +84,11 @@ export function StatsSection({ stats, title }: Props) {
                 variants={fadeUp}
                 className="group relative p-7 rounded-2xl text-center overflow-hidden cursor-default transition-transform duration-300 hover:-translate-y-1"
                 style={{
-                  background:           "rgba(247,249,252,0.70)",
+                  background:           "var(--card-bg)",
                   border:               `1px solid ${accent.border}`,
                   backdropFilter:       "blur(20px)",
                   WebkitBackdropFilter: "blur(20px)",
-                  boxShadow:            `0 4px 32px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.03)`,
+                  boxShadow:            `0 1px 2px rgba(15,23,42,0.04), 0 10px 28px rgba(36,76,119,0.08)`,
                 }}
               >
                 {/* Hover top glow */}
@@ -104,7 +104,7 @@ export function StatsSection({ stats, title }: Props) {
                   <div className="flex justify-center mb-4">
                     <div className="w-11 h-11 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
                       style={{ background: accent.icon, border: `1px solid ${accent.border}` }}>
-                      <DynamicIcon name={stat.icon} size={20} className="text-blue-400" />
+                      <DynamicIcon name={stat.icon} size={20} className="text-[#2F5E94]" />
                     </div>
                   </div>
                 )}

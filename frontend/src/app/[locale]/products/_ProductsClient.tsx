@@ -132,7 +132,7 @@ export function ProductsClient({ products, categories }: Props) {
                   </span>
                 )}
                 <h2
-                  className="font-display font-semibold text-sm leading-snug mb-1.5 line-clamp-2 group-hover:text-blue-300 transition-colors duration-200"
+                  className="font-display font-semibold text-sm leading-snug mb-1.5 line-clamp-2 group-hover:text-[#244C77] transition-colors duration-200"
                   style={{ color: "#1E293B" }}
                 >
                   {product.name}

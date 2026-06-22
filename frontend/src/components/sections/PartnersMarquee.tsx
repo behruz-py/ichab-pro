@@ -26,10 +26,10 @@ function cfBlur   (t: number) { return t * t * t * 10; }
 const SHADOW_ACTIVE = [
   "0 0 0 2.5px rgba(47,94,148,0.72)",
   "0 0 28px rgba(47,94,148,0.32)",
-  "0 8px 40px rgba(0,0,0,0.55)",
+  "0 8px 40px rgba(36,76,119,0.14)",
 ].join(", ");
 
-const SHADOW_NORMAL = "0 4px 24px rgba(0,0,0,0.30), 0 1px 4px rgba(0,0,0,0.16)";
+const SHADOW_NORMAL = "0 4px 24px rgba(36,76,119,0.10), 0 1px 4px rgba(36,76,119,0.06)";
 
 interface Props {
   partners: Partner[];

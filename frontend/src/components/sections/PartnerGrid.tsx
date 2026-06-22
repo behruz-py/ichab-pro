@@ -75,7 +75,7 @@ function PartnerCard({ partner, visitSite }: { partner: Partner; visitSite: stri
       {/* Content */}
       <div className="p-4">
         <p
-          className="font-semibold text-sm text-center leading-snug mb-1 group-hover:text-blue-400 transition-colors duration-200"
+          className="font-semibold text-sm text-center leading-snug mb-1 group-hover:text-[#244C77] transition-colors duration-200"
           style={{ color: "#1E293B" }}
         >
           {partner.name}

@@ -277,7 +277,7 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
                       >
                         <Phone size={15} />
                       </span>
-                      <span className="group-hover:text-blue-400 transition-colors duration-200">
+                      <span className="group-hover:text-[#244C77] transition-colors duration-200">
                         {div.contact_phone}
                       </span>
                     </a>
@@ -299,7 +299,7 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
                       >
                         <Mail size={14} />
                       </span>
-                      <span className="group-hover:text-blue-400 transition-colors duration-200 truncate">
+                      <span className="group-hover:text-[#244C77] transition-colors duration-200 truncate">
                         {div.contact_email}
                       </span>
                     </a>

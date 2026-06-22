@@ -129,7 +129,8 @@
       "Bash(sed -i 's/0 8px 32px rgba\\(47,94,148,0.38\\)/0 8px 28px rgba\\(224,122,34,0.38\\)/' components/sections/HeroSection.tsx)",
       "Bash(sed -i 's/0 6px 24px rgba\\(47,94,148,0.28\\)/0 6px 22px rgba\\(224,122,34,0.30\\)/' \"app/[locale]/products/[slug]/page.tsx\")",
       "Bash(sed -i 's/0 8px 32px rgba\\(47,94,148,0.35\\)/0 8px 28px rgba\\(224,122,34,0.36\\)/' \"app/[locale]/divisions/[slug]/page.tsx\")",
-      "Bash(sed -i 's/0 4px 16px rgba\\(47,94,148,0.30\\)/0 4px 16px rgba\\(224,122,34,0.34\\)/' components/layout/Header.tsx)"
+      "Bash(sed -i 's/0 4px 16px rgba\\(47,94,148,0.30\\)/0 4px 16px rgba\\(224,122,34,0.34\\)/' components/layout/Header.tsx)",
+      "Bash(python -)"
     ],
     "additionalDirectories": [
       "d:\\Document\\developing\\Web\\ichab_pro\\frontend\\src\\app\\[locale]\\products"

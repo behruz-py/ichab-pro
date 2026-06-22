@@ -127,7 +127,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
 
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm mb-8 flex-wrap" style={{ color: "#94A3B8" }}>
-        <Link href={`/${locale}/products`} className="transition-colors hover:text-blue-400">
+        <Link href={`/${locale}/products`} className="transition-colors hover:text-[#244C77]">
           {t("title")}
         </Link>
         <span>/</span>
@@ -264,7 +264,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
       {/* Back */}
       <Link
         href={`/${locale}/products`}
-        className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-blue-300"
+        className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-[#244C77]"
         style={{ color: "#2F5E94" }}
       >
         <ArrowLeft size={16} /> {t("back_to_catalog")}

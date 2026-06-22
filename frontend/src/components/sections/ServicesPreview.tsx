@@ -63,7 +63,7 @@ export function ServicesPreview({ services, locale, title, subtitle, learnMore }
                         className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
                         style={{ background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.22)" }}
                       >
-                        <DynamicIcon name={svc.icon} size={22} className="text-blue-400" />
+                        <DynamicIcon name={svc.icon} size={22} className="text-[#2F5E94]" />
                       </div>
                     ) : <div />}
 
@@ -72,7 +72,7 @@ export function ServicesPreview({ services, locale, title, subtitle, learnMore }
                     </span>
                   </div>
 
-                  <h3 className="font-display font-semibold text-content mb-2 transition-colors duration-200 group-hover:text-blue-400">
+                  <h3 className="font-display font-semibold text-content mb-2 transition-colors duration-200 group-hover:text-[#244C77]">
                     {svc.name}
                   </h3>
                   <p className="text-sm line-clamp-3 leading-relaxed mb-5 flex-1" style={{ color: "#475569" }}>

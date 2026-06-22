@@ -24,7 +24,7 @@ export function ThemeSwitcher({ className }: { className?: string }) {
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       className={cn(
         "w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200",
-        "border border-white/[0.09] bg-white/[0.05] backdrop-blur-sm",
+        "border border-black/[0.08] bg-black/[0.03] backdrop-blur-sm",
         "hover:border-accent/40 hover:bg-accent/8 hover:text-accent",
         className
       )}
