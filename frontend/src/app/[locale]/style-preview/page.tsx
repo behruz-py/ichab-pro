@@ -12,19 +12,21 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// ─── Slate palette tokens ──────────────────────────────────────────────────
+// ─── Muted slate palette tokens (v2: deeper canvas, calmer accents) ─────────
 const C = {
-  page:    "#EEF2F7",
-  surface: "#FFFFFF",
-  subtle:  "#F8FAFC",
-  border:  "rgba(15,23,42,0.08)",
+  page:    "#E5EAF1",   // deeper tinted gray-blue (less white)
+  pageEnd: "#DCE3EC",   // subtle gradient end
+  surface: "#F7F9FC",   // off-white card (not pure white)
+  subtle:  "#EDF1F6",   // section band
+  border:  "rgba(15,23,42,0.10)",
   text:    "#1E293B",
   text2:   "#475569",
   muted:   "#94A3B8",
-  sky:     "#0EA5E9",
-  teal:    "#14B8A6",
-  grad:    "linear-gradient(135deg, #0EA5E9 0%, #14B8A6 100%)",
-  cardShadow: "0 1px 2px rgba(15,23,42,0.04), 0 10px 30px rgba(15,23,42,0.06)",
+  sky:     "#3E6A99",   // muted steel blue (primary accent)
+  skyDeep: "#2D5279",   // deeper steel blue
+  teal:    "#5A8B8E",   // muted teal-slate (sparingly)
+  grad:    "linear-gradient(135deg, #3E6A99 0%, #2D5279 100%)",  // calm mono-blue
+  cardShadow: "0 1px 2px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.05)",
 };
 
 export default function StylePreviewPage() {
@@ -32,7 +34,7 @@ export default function StylePreviewPage() {
     <div
       style={{
         position: "fixed", inset: 0, zIndex: 200, overflowY: "auto",
-        background: `linear-gradient(180deg, ${C.page} 0%, #F1F5F9 100%)`,
+        background: `linear-gradient(180deg, ${C.page} 0%, ${C.pageEnd} 100%)`,
         color: C.text,
         fontFamily: "var(--font-sans, system-ui, sans-serif)",
       }}
@@ -43,16 +45,16 @@ export default function StylePreviewPage() {
       </div>
 
       {/* ── Navbar ── */}
-      <header style={{ position: "sticky", top: 0, zIndex: 10, background: "rgba(255,255,255,0.85)", backdropFilter: "blur(16px)", borderBottom: `1px solid ${C.border}` }}>
+      <header style={{ position: "sticky", top: 0, zIndex: 10, background: "rgba(243,246,250,0.82)", backdropFilter: "blur(16px)", borderBottom: `1px solid ${C.border}` }}>
         <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ width: 38, height: 38, borderRadius: 10, background: C.grad, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 14px rgba(14,165,233,0.30)" }}>
+            <div style={{ width: 38, height: 38, borderRadius: 10, background: C.grad, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 14px rgba(62,106,153,0.30)" }}>
               <Settings size={20} color="#fff" />
             </div>
             <span style={{ fontSize: 24, fontWeight: 800, letterSpacing: "0.06em", color: C.text }}>ICHAB</span>
           </div>
           <nav style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 13.5, fontWeight: 500, color: C.text2 }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "8px 14px", borderRadius: 10, color: C.sky, background: "rgba(14,165,233,0.08)" }}>Kompaniya <ChevronDown size={13} /></span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "8px 14px", borderRadius: 10, color: C.sky, background: "rgba(62,106,153,0.08)" }}>Kompaniya <ChevronDown size={13} /></span>
             <span style={{ padding: "8px 14px" }}>Xizmatlar</span>
             <span style={{ padding: "8px 14px" }}>Mahsulotlar</span>
             <span style={{ padding: "8px 14px" }}>Loyihalar</span>
@@ -60,7 +62,7 @@ export default function StylePreviewPage() {
           </nav>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ fontSize: 13, color: C.text2, border: `1px solid ${C.border}`, padding: "6px 12px", borderRadius: 9 }}>UZ</span>
-            <span style={{ fontSize: 13, fontWeight: 600, color: "#fff", background: C.grad, padding: "8px 18px", borderRadius: 10, boxShadow: "0 4px 14px rgba(14,165,233,0.30)" }}>Bog&apos;lanish</span>
+            <span style={{ fontSize: 13, fontWeight: 600, color: "#fff", background: C.grad, padding: "8px 18px", borderRadius: 10, boxShadow: "0 4px 14px rgba(62,106,153,0.30)" }}>Bog&apos;lanish</span>
           </div>
         </div>
       </header>
@@ -69,7 +71,7 @@ export default function StylePreviewPage() {
       <section style={{ maxWidth: 1240, margin: "0 auto", padding: "72px 24px 48px" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 48, alignItems: "center" }}>
           <div>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.14em", color: C.sky, background: "rgba(14,165,233,0.10)", padding: "6px 14px", borderRadius: 999 }}>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.14em", color: C.sky, background: "rgba(62,106,153,0.10)", padding: "6px 14px", borderRadius: 999 }}>
               <ShieldCheck size={14} /> Sanoat avtomatizatsiyasi
             </span>
             <h1 style={{ fontSize: "clamp(34px, 4.5vw, 56px)", fontWeight: 800, lineHeight: 1.08, margin: "20px 0 18px", color: C.text, letterSpacing: "-0.02em" }}>
@@ -79,7 +81,7 @@ export default function StylePreviewPage() {
               PLC, SCADA, sensorlar va boshqaruv tizimlari bo'yicha to'liq yechimlar. O'zbekiston sanoatini xalqaro standartlarga mos darajaga olib chiqamiz.
             </p>
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 600, color: "#fff", background: C.grad, padding: "13px 26px", borderRadius: 14, boxShadow: "0 8px 24px rgba(14,165,233,0.28)" }}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 600, color: "#fff", background: C.grad, padding: "13px 26px", borderRadius: 14, boxShadow: "0 8px 24px rgba(62,106,153,0.28)" }}>
                 Loyiha boshlash <ArrowRight size={17} />
               </span>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 600, color: C.text, background: C.surface, padding: "13px 26px", borderRadius: 14, border: `1px solid ${C.border}`, boxShadow: C.cardShadow }}>
@@ -98,7 +100,7 @@ export default function StylePreviewPage() {
                 { Icon: ShieldCheck, label: "Sertifikatlar", val: "ISO" },
               ].map(({ Icon, label, val }, i) => (
                 <div key={i} style={{ background: C.subtle, borderRadius: 16, border: `1px solid ${C.border}`, padding: "18px 16px" }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(14,165,233,0.10)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(62,106,153,0.10)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
                     <Icon size={20} color={C.sky} />
                   </div>
                   <div style={{ fontSize: 24, fontWeight: 800, color: C.text }}>{val}</div>
@@ -111,7 +113,7 @@ export default function StylePreviewPage() {
       </section>
 
       {/* ── Trust strip ── */}
-      <div style={{ borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, background: "rgba(255,255,255,0.6)" }}>
+      <div style={{ borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, background: "rgba(243,246,250,0.55)" }}>
         <div style={{ maxWidth: 1240, margin: "0 auto", padding: "16px 24px", display: "flex", flexWrap: "wrap", gap: 28, justifyContent: "center" }}>
           {["ISO 9001:2015", "25+ yil tajriba", "150+ loyiha", "PLC · SCADA · HMI", "24/7 yordam", "Xalqaro standartlar"].map((t, i) => (
             <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, fontWeight: 500, color: C.text2 }}>
@@ -135,7 +137,7 @@ export default function StylePreviewPage() {
           ].map(({ Icon, title, desc }, i) => (
             <div key={i} style={{ background: C.surface, borderRadius: 18, border: `1px solid ${C.border}`, boxShadow: C.cardShadow, padding: 24, transition: "transform .2s, box-shadow .2s" }}
               className="preview-card">
-              <div style={{ width: 48, height: 48, borderRadius: 14, background: C.grad, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16, boxShadow: "0 6px 18px rgba(14,165,233,0.25)" }}>
+              <div style={{ width: 48, height: 48, borderRadius: 14, background: C.grad, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16, boxShadow: "0 6px 18px rgba(62,106,153,0.25)" }}>
                 <Icon size={24} color="#fff" />
               </div>
               <h3 style={{ fontSize: 17, fontWeight: 700, color: C.text, marginBottom: 8 }}>{title}</h3>
@@ -157,16 +159,16 @@ export default function StylePreviewPage() {
             <h2 style={{ fontSize: 28, fontWeight: 800, color: C.text, margin: "10px 0 12px" }}>Kirish-taqsimlash qurilmasi (ВРУ)</h2>
             <div style={{ display: "flex", gap: 18, fontSize: 13.5, color: C.text2, marginBottom: 16 }}>
               <span>Artikul: <b style={{ color: C.text }}>ВРУ-1-21</b></span>
-              <span style={{ background: "rgba(20,184,166,0.12)", color: "#0d9488", padding: "3px 12px", borderRadius: 999, fontWeight: 600, fontSize: 12 }}>Mavjud</span>
+              <span style={{ background: "rgba(90,139,142,0.12)", color: "#4a7c7f", padding: "3px 12px", borderRadius: 999, fontWeight: 600, fontSize: 12 }}>Mavjud</span>
             </div>
             <p style={{ fontSize: 14.5, lineHeight: 1.65, color: C.text2, marginBottom: 22 }}>
               Elektr energiyasini qabul qilish, taqsimlash va hisobga olish uchun mo'ljallangan. Ortiqcha yuklanish va qisqa tutashuvdan himoya.
             </p>
             <div style={{ display: "flex", gap: 12 }}>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, color: "#fff", background: C.grad, padding: "12px 22px", borderRadius: 12, boxShadow: "0 6px 18px rgba(14,165,233,0.26)" }}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, color: "#fff", background: C.grad, padding: "12px 22px", borderRadius: 12, boxShadow: "0 6px 18px rgba(62,106,153,0.26)" }}>
                 <Send size={16} /> So'rov yuborish
               </span>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, color: C.sky, padding: "12px 22px", borderRadius: 12, border: `1px solid rgba(14,165,233,0.35)` }}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, color: C.sky, padding: "12px 22px", borderRadius: 12, border: `1px solid rgba(62,106,153,0.35)` }}>
                 <FileDown size={16} /> Katalog (PDF)
               </span>
             </div>
@@ -181,7 +183,7 @@ export default function StylePreviewPage() {
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", minWidth: 640, borderCollapse: "collapse", fontSize: 13.5 }}>
               <thead>
-                <tr style={{ background: "rgba(14,165,233,0.05)" }}>
+                <tr style={{ background: "rgba(62,106,153,0.05)" }}>
                   <th style={{ textAlign: "left", padding: "12px 18px", color: C.text2, fontWeight: 700, fontSize: 11.5, textTransform: "uppercase", letterSpacing: "0.06em" }}>Parametr</th>
                   {["ВТЕ-200/48", "ВТЕ-315/75", "ВТЕ-315/150"].map((c, i) => (
                     <th key={i} style={{ textAlign: "center", padding: "12px 16px", color: C.sky, fontWeight: 700, fontSize: 11.5, textTransform: "uppercase" }}>{c}</th>
@@ -210,7 +212,7 @@ export default function StylePreviewPage() {
 
       {/* ── CTA band ── */}
       <section style={{ maxWidth: 1240, margin: "0 auto 56px", padding: "0 24px" }}>
-        <div style={{ background: C.grad, borderRadius: 24, padding: "48px 40px", textAlign: "center", boxShadow: "0 16px 48px rgba(14,165,233,0.30)" }}>
+        <div style={{ background: C.grad, borderRadius: 24, padding: "48px 40px", textAlign: "center", boxShadow: "0 16px 48px rgba(62,106,153,0.30)" }}>
           <h2 style={{ fontSize: 30, fontWeight: 800, color: "#fff", marginBottom: 12 }}>Loyihangizni boshlaymizmi?</h2>
           <p style={{ fontSize: 16, color: "rgba(255,255,255,0.9)", marginBottom: 24, maxWidth: 520, marginInline: "auto" }}>
             Bepul konsultatsiya oling — mutaxassislarimiz texnik talablarni aniqlaydi.
