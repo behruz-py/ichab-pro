@@ -26,6 +26,10 @@ const C = {
   skyDeep: "#2D5279",   // deeper steel blue
   teal:    "#5A8B8E",   // muted teal-slate (sparingly)
   grad:    "linear-gradient(135deg, #3E6A99 0%, #2D5279 100%)",  // calm mono-blue
+  // Warm complementary accent — used sparingly for highlights / featured
+  warm:    "linear-gradient(135deg, #EF8E36 0%, #F9C04D 100%)",
+  warmSolid: "#E8852C",
+  warmTint:  "rgba(239,142,54,0.12)",
   cardShadow: "0 1px 2px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.05)",
 };
 
@@ -75,7 +79,7 @@ export default function StylePreviewPage() {
               <ShieldCheck size={14} /> Sanoat avtomatizatsiyasi
             </span>
             <h1 style={{ fontSize: "clamp(34px, 4.5vw, 56px)", fontWeight: 800, lineHeight: 1.08, margin: "20px 0 18px", color: C.text, letterSpacing: "-0.02em" }}>
-              Ishlab chiqarishni <span style={{ background: C.grad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>aqlli tizimlar</span> bilan modernizatsiya
+              Ishlab chiqarishni <span style={{ background: C.warm, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>aqlli tizimlar</span> bilan modernizatsiya
             </h1>
             <p style={{ fontSize: 17, lineHeight: 1.6, color: C.text2, maxWidth: 520, marginBottom: 28 }}>
               PLC, SCADA, sensorlar va boshqaruv tizimlari bo'yicha to'liq yechimlar. O'zbekiston sanoatini xalqaro standartlarga mos darajaga olib chiqamiz.
@@ -88,20 +92,28 @@ export default function StylePreviewPage() {
                 Loyihalarni ko'rish <ArrowRight size={17} />
               </span>
             </div>
+
+            {/* Warm star-rating highlight */}
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginTop: 24, background: C.warmTint, padding: "8px 16px", borderRadius: 999 }}>
+              <span style={{ display: "inline-flex", gap: 2 }}>
+                {[0,1,2,3,4].map(i => <Star key={i} size={15} fill={C.warmSolid} color={C.warmSolid} />)}
+              </span>
+              <span style={{ fontSize: 13, fontWeight: 600, color: C.text }}>5.0 — 100+ mijoz ishonchi</span>
+            </div>
           </div>
 
           {/* Hero visual card */}
           <div style={{ background: C.surface, borderRadius: 24, border: `1px solid ${C.border}`, boxShadow: C.cardShadow, padding: 28 }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
               {[
-                { Icon: Cpu, label: "PLC tizimlari", val: "120+" },
-                { Icon: Gauge, label: "SCADA loyihalar", val: "85+" },
-                { Icon: Factory, label: "Avtomatika", val: "150+" },
-                { Icon: ShieldCheck, label: "Sertifikatlar", val: "ISO" },
-              ].map(({ Icon, label, val }, i) => (
+                { Icon: Cpu, label: "PLC tizimlari", val: "120+", warm: false },
+                { Icon: Gauge, label: "SCADA loyihalar", val: "85+", warm: false },
+                { Icon: Factory, label: "Avtomatika", val: "150+", warm: false },
+                { Icon: ShieldCheck, label: "Sertifikatlar", val: "ISO", warm: true },
+              ].map(({ Icon, label, val, warm }, i) => (
                 <div key={i} style={{ background: C.subtle, borderRadius: 16, border: `1px solid ${C.border}`, padding: "18px 16px" }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(62,106,153,0.10)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
-                    <Icon size={20} color={C.sky} />
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: warm ? C.warm : "rgba(62,106,153,0.10)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12, boxShadow: warm ? "0 4px 12px rgba(239,142,54,0.30)" : "none" }}>
+                    <Icon size={20} color={warm ? "#fff" : C.sky} />
                   </div>
                   <div style={{ fontSize: 24, fontWeight: 800, color: C.text }}>{val}</div>
                   <div style={{ fontSize: 12.5, color: C.muted, marginTop: 2 }}>{label}</div>
@@ -131,12 +143,17 @@ export default function StylePreviewPage() {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
           {[
-            { Icon: Cpu, title: "INSA — Aqlli tizimlar", desc: "Sanoat kompyuterlari va aqlli boshqaruv yechimlari." },
-            { Icon: Gauge, title: "ASUTP — Avtomatlashtirish", desc: "Texnologik jarayonlarni avtomatik boshqarish tizimlari." },
-            { Icon: Settings, title: "MOP — Modernizatsiya", desc: "Eski uskunalarni zamonaviy darajaga yangilash." },
-          ].map(({ Icon, title, desc }, i) => (
-            <div key={i} style={{ background: C.surface, borderRadius: 18, border: `1px solid ${C.border}`, boxShadow: C.cardShadow, padding: 24, transition: "transform .2s, box-shadow .2s" }}
+            { Icon: Cpu, title: "INSA — Aqlli tizimlar", desc: "Sanoat kompyuterlari va aqlli boshqaruv yechimlari.", featured: true },
+            { Icon: Gauge, title: "ASUTP — Avtomatlashtirish", desc: "Texnologik jarayonlarni avtomatik boshqarish tizimlari.", featured: false },
+            { Icon: Settings, title: "MOP — Modernizatsiya", desc: "Eski uskunalarni zamonaviy darajaga yangilash.", featured: false },
+          ].map(({ Icon, title, desc, featured }, i) => (
+            <div key={i} style={{ position: "relative", background: C.surface, borderRadius: 18, border: `1px solid ${C.border}`, boxShadow: C.cardShadow, padding: 24, transition: "transform .2s, box-shadow .2s" }}
               className="preview-card">
+              {featured && (
+                <span style={{ position: "absolute", top: 16, right: 16, display: "inline-flex", alignItems: "center", gap: 5, fontSize: 11, fontWeight: 700, color: "#fff", background: C.warm, padding: "4px 11px", borderRadius: 999, boxShadow: "0 3px 10px rgba(239,142,54,0.35)" }}>
+                  <Star size={11} fill="#fff" color="#fff" /> Yetakchi
+                </span>
+              )}
               <div style={{ width: 48, height: 48, borderRadius: 14, background: C.grad, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16, boxShadow: "0 6px 18px rgba(62,106,153,0.25)" }}>
                 <Icon size={24} color="#fff" />
               </div>
@@ -217,7 +234,7 @@ export default function StylePreviewPage() {
           <p style={{ fontSize: 16, color: "rgba(255,255,255,0.9)", marginBottom: 24, maxWidth: 520, marginInline: "auto" }}>
             Bepul konsultatsiya oling — mutaxassislarimiz texnik talablarni aniqlaydi.
           </p>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 700, color: C.sky, background: "#fff", padding: "13px 28px", borderRadius: 14, boxShadow: "0 8px 24px rgba(0,0,0,0.15)" }}>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 15, fontWeight: 700, color: "#fff", background: C.warm, padding: "13px 28px", borderRadius: 14, boxShadow: "0 8px 24px rgba(239,142,54,0.40)" }}>
             Bog&apos;lanish <ArrowRight size={17} />
           </span>
         </div>
@@ -255,7 +272,7 @@ export default function StylePreviewPage() {
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
           <div style={{ maxWidth: 1240, margin: "0 auto", padding: "16px 24px", fontSize: 12.5, color: "#64748B", display: "flex", justifyContent: "space-between" }}>
             <span>© 2026 ICHAB</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>Star bilan ishlangan <Star size={12} fill={C.teal} color={C.teal} /></span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>Sifat bilan ishlangan <Star size={12} fill={C.warmSolid} color={C.warmSolid} /></span>
           </div>
         </div>
       </footer>
