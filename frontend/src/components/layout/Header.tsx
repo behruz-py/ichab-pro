@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { Info, LayoutGrid, Award, Users, ChevronDown, X } from "lucide-react";
 import { LangSwitcher } from "@/components/shared/LangSwitcher";
 import { useUIStore } from "@/store/ui.store";
 import { cn } from "@/lib/utils";
@@ -23,18 +24,10 @@ const FULL_NAME: Record<string, string> = {
 };
 
 const DROPDOWN_ITEMS = [
-  { key: "about",        path: "/about",        icon: (
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="11" height="11" rx="2.5" stroke="currentColor" strokeWidth="1.3"/><path d="M6.5 5.5V9M6.5 4h.01" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
-  )},
-  { key: "divisions",    path: "/divisions",    icon: (
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="4.5" height="4.5" rx="1.2" stroke="currentColor" strokeWidth="1.3"/><rect x="7.5" y="1" width="4.5" height="4.5" rx="1.2" stroke="currentColor" strokeWidth="1.3"/><rect x="1" y="7.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" strokeWidth="1.3"/><rect x="7.5" y="7.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" strokeWidth="1.3"/></svg>
-  )},
-  { key: "certificates", path: "/certificates", icon: (
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="5.5" r="3" stroke="currentColor" strokeWidth="1.3"/><path d="M4.5 8.5L3 12l3.5-1.5L10 12l-1.5-3.5" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/></svg>
-  )},
-  { key: "partners",     path: "/partners",     icon: (
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 9.5C1.5 8 3 7 4.5 7h4C10 7 11.5 8 11.5 9.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><circle cx="4.5" cy="4" r="2" stroke="currentColor" strokeWidth="1.3"/><circle cx="8.5" cy="4" r="2" stroke="currentColor" strokeWidth="1.3"/></svg>
-  )},
+  { key: "about",        path: "/about",        Icon: Info },
+  { key: "divisions",    path: "/divisions",    Icon: LayoutGrid },
+  { key: "certificates", path: "/certificates", Icon: Award },
+  { key: "partners",     path: "/partners",     Icon: Users },
 ] as const;
 
 const MAIN_NAV = [
@@ -183,14 +176,13 @@ export function Header() {
                     />
                   )}
                   <span className="relative z-10">{t("company")}</span>
-                  <motion.svg
-                    className="relative z-10 flex-shrink-0"
+                  <motion.span
+                    className="relative z-10 flex-shrink-0 inline-flex"
                     animate={{ rotate: dropdownOpen ? 180 : 0 }}
                     transition={{ duration: 0.22 }}
-                    width="10" height="10" viewBox="0 0 10 10" fill="none"
                   >
-                    <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </motion.svg>
+                    <ChevronDown size={13} strokeWidth={2} />
+                  </motion.span>
                 </button>
 
                 {/* Dropdown panel */}
@@ -217,6 +209,7 @@ export function Header() {
 
                       {DROPDOWN_ITEMS.map((item, i) => {
                         const active = isActive(item.path);
+                        const Icon = item.Icon;
                         return (
                           <motion.div
                             key={item.key}
@@ -233,9 +226,7 @@ export function Header() {
                                   : "text-content-secondary hover:text-content hover:bg-white/[0.05]"
                               )}
                             >
-                              <span style={{ color: active ? "#60A5FA" : "rgba(59,130,246,0.50)" }}>
-                                {item.icon}
-                              </span>
+                              <Icon size={15} style={{ color: active ? "#60A5FA" : "rgba(59,130,246,0.50)" }} className="flex-shrink-0" />
                               <span className="flex-1">{t(item.key)}</span>
                               {active && <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
                             </Link>
@@ -375,9 +366,7 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-8 h-8 rounded-lg flex items-center justify-center text-content-muted hover:text-content hover:bg-white/[0.06] transition-all"
                 >
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M1 1L11 11M11 1L1 11" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"/>
-                  </svg>
+                  <X size={14} strokeWidth={2} />
                 </button>
               </div>
 
@@ -389,6 +378,7 @@ export function Header() {
                   <div className="space-y-0.5">
                     {DROPDOWN_ITEMS.map((item, i) => {
                       const active = isActive(item.path);
+                      const Icon = item.Icon;
                       return (
                         <motion.div
                           key={item.key}
@@ -404,7 +394,7 @@ export function Header() {
                             )}
                             style={active ? { background: "rgba(59,130,246,0.10)", border: "1px solid rgba(59,130,246,0.20)" } : {}}
                           >
-                            <span style={{ color: active ? "#60A5FA" : "rgba(59,130,246,0.45)" }}>{item.icon}</span>
+                            <Icon size={16} style={{ color: active ? "#60A5FA" : "rgba(59,130,246,0.45)" }} className="flex-shrink-0" />
                             {t(item.key)}
                             {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
                           </Link>
