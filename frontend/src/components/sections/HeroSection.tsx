@@ -2,10 +2,10 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { staggerContainer, fadeUp, fadeIn } from "@/lib/motion";
-import { HeroVisual } from "./_HeroVisual";
 
 interface Props {
   locale: string;
@@ -28,15 +28,34 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
 
-      {/* ── Hero visual — right side: clean HTML hub & stat cards (localizable) ── */}
+      {/* ── Hero visual — right side image ── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        className="hidden lg:block absolute inset-y-0 right-0"
-        style={{ width: "52%" }}
+        transition={{ duration: 1.6, ease: "easeOut" }}
+        className="absolute inset-y-0 right-0 pointer-events-none"
+        style={{ width: "58%" }}
       >
-        <HeroVisual locale={locale} />
+        <Image
+          src="/hero-visual.png"
+          alt=""
+          fill
+          className="object-cover object-center"
+          style={{ opacity: 0.85 }}
+          priority
+        />
+        {/* Left edge — fades into page background */}
+        <div className="absolute inset-0" style={{
+          background: "linear-gradient(to right, rgba(229,234,241,1) 0%, rgba(229,234,241,0.45) 16%, rgba(229,234,241,0.06) 38%, transparent 56%)",
+        }} />
+        {/* Right edge */}
+        <div className="absolute inset-0" style={{
+          background: "linear-gradient(to left, rgba(229,234,241,0.85) 0%, transparent 16%)",
+        }} />
+        {/* Top + bottom */}
+        <div className="absolute inset-0" style={{
+          background: "linear-gradient(to bottom, rgba(229,234,241,0.55) 0%, transparent 18%, transparent 80%, rgba(229,234,241,0.60) 100%)",
+        }} />
       </motion.div>
 
       {/* Dot grid */}
