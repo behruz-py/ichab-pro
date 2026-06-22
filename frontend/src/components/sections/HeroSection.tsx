@@ -2,10 +2,10 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { staggerContainer, fadeUp, fadeIn } from "@/lib/motion";
+import { HeroVisual } from "./_HeroVisual";
 
 interface Props {
   locale: string;
@@ -28,34 +28,15 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
 
-      {/* ── Hero visual — right side ambient background ── */}
+      {/* ── Hero visual — right side: clean HTML hub & stat cards (localizable) ── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.6, ease: "easeOut" }}
-        className="absolute inset-y-0 right-0 pointer-events-none"
-        style={{ width: "58%" }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="hidden lg:block absolute inset-y-0 right-0"
+        style={{ width: "52%" }}
       >
-        <Image
-          src="/hero-visual.png"
-          alt=""
-          fill
-          className="object-cover object-center"
-          style={{ opacity: 0.42, filter: "blur(3px) saturate(1.05)" }}
-          priority
-        />
-        {/* Left edge — fades into page background */}
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to right, rgba(229,234,241,1) 0%, rgba(229,234,241,0.50) 18%, rgba(229,234,241,0.08) 40%, transparent 58%)",
-        }} />
-        {/* Right edge */}
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to left, rgba(229,234,241,0.90) 0%, transparent 18%)",
-        }} />
-        {/* Top + bottom */}
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to bottom, rgba(229,234,241,0.65) 0%, transparent 20%, transparent 78%, rgba(229,234,241,0.70) 100%)",
-        }} />
+        <HeroVisual locale={locale} />
       </motion.div>
 
       {/* Dot grid */}
