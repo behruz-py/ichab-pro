@@ -113,7 +113,7 @@ export function StatsSection({ stats, title }: Props) {
                 <div className="relative font-display font-bold leading-none mb-2 tabular-nums"
                   style={{
                     fontSize: "clamp(48px, 5vw, 72px)",
-                    background: "linear-gradient(135deg, #E8852C 0%, #F2972F 55%, #F9B23D 100%)",
+                    background: "linear-gradient(135deg, #DE7216 0%, #EC7A18 55%, #F09A24 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",

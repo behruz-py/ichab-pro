@@ -114,14 +114,14 @@ function PartnerCard({ partner, visitSite }: { partner: Partner; visitSite: stri
         <div
           className="absolute top-2.5 right-2.5 flex items-center justify-center w-6 h-6 rounded-lg"
           style={{
-            background: "rgba(239,142,54,0.18)",
-            border: "1px solid rgba(239,142,54,0.38)",
-            color: "#E8852C",
+            background: "rgba(234,110,20,0.18)",
+            border: "1px solid rgba(234,110,20,0.38)",
+            color: "#DE7216",
             fontSize: "11px",
           }}
           title="Strategik hamkor"
         >
-          <Star size={12} fill="#E8852C" />
+          <Star size={12} fill="#DE7216" />
         </div>
       )}
     </div>

@@ -313,8 +313,8 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
               href={`/${locale}/contact`}
               className="flex items-center justify-center gap-2 w-full py-3.5 px-5 rounded-2xl font-semibold text-sm text-white transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5"
               style={{
-                background: "linear-gradient(135deg, #F2982F 0%, #E07A22 100%)",
-                boxShadow: "0 8px 28px rgba(224,122,34,0.36), inset 0 1px 0 rgba(255,255,255,0.16)",
+                background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)",
+                boxShadow: "0 8px 28px rgba(208,98,16,0.36), inset 0 1px 0 rgba(255,255,255,0.16)",
               }}
             >
               Bog&apos;lanish <ArrowRight size={16} />

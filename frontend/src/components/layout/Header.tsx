@@ -290,8 +290,8 @@ export function Header() {
                 href={`/${locale}/contact`}
                 className="hidden lg:inline-flex items-center px-4 py-1.5 rounded-xl text-[12px] font-semibold transition-colors duration-200 ml-1 cta-pulse"
                 style={{
-                  background: "linear-gradient(135deg, #F2982F 0%, #E07A22 100%)",
-                  border:     "1px solid rgba(224,122,34,0.45)",
+                  background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)",
+                  border:     "1px solid rgba(208,98,16,0.45)",
                   color:      "#fff",
                 }}
               >
@@ -441,7 +441,7 @@ export function Header() {
                 <Link
                   href={`/${locale}/contact`}
                   className="flex items-center justify-center w-full py-2.5 rounded-xl text-sm font-semibold text-white"
-                  style={{ background: "linear-gradient(135deg, #F2982F 0%, #E07A22 100%)", boxShadow: "0 4px 16px rgba(224,122,34,0.34)" }}
+                  style={{ background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)", boxShadow: "0 4px 16px rgba(208,98,16,0.34)" }}
                 >
                   Bog&apos;lanish
                 </Link>

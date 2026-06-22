@@ -22,17 +22,17 @@
   --accent-gradient:    linear-gradient(135deg, #3D72AD 0%, #2F5E94 48%, #244C77 100%);
 
   /* Warm complementary accent — the "action" signal: CTAs, featured, highlights */
-  --warm:               linear-gradient(135deg, #F2972F 0%, #F9C04D 100%);
-  --warm-btn:           linear-gradient(135deg, #F2982F 0%, #E07A22 100%);
-  --warm-solid:         #E8852C;
-  --warm-tint:          rgba(239, 142, 54, 0.14);
+  --warm:               linear-gradient(135deg, #EC7A18 0%, #F4A52C 100%);
+  --warm-btn:           linear-gradient(135deg, #EE8418 0%, #D2630E 100%);
+  --warm-solid:         #DE7216;
+  --warm-tint:          rgba(234, 110, 20, 0.14);
 
   --border:             rgba(15, 23, 42, 0.10);
   --border-subtle:      rgba(15, 23, 42, 0.08);
 
   --gradient:
     radial-gradient(ellipse 80% 60% at 80% -8%, rgba(47, 94, 148, 0.14) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 50% at 10% 108%, rgba(239, 142, 54, 0.08) 0%, transparent 45%),
+    radial-gradient(ellipse 60% 50% at 10% 108%, rgba(234, 110, 20, 0.08) 0%, transparent 45%),
     linear-gradient(180deg, #E5EAF1 0%, #E9EDF3 60%, #DCE3EC 100%);
 
   --glass:              rgba(247, 249, 252, 0.80);
@@ -89,12 +89,12 @@
     justify-content: center;
     overflow: hidden;
     background: var(--warm-btn);
-    border: 1px solid rgba(224,122,34,0.45);
+    border: 1px solid rgba(208,98,16,0.45);
     border-radius: 14px;
     color: #ffffff;
     font-weight: 600;
     letter-spacing: 0.01em;
-    box-shadow: 0 8px 24px rgba(224,122,34,0.32), inset 0 1px 0 rgba(255,255,255,0.28);
+    box-shadow: 0 8px 24px rgba(208,98,16,0.32), inset 0 1px 0 rgba(255,255,255,0.28);
     transition: all 0.22s ease;
   }
   .btn-glass-primary::before {
@@ -106,8 +106,8 @@
     pointer-events: none;
   }
   .btn-glass-primary:hover {
-    background: linear-gradient(135deg, #F7A23C 0%, #D9741E 100%);
-    box-shadow: 0 12px 32px rgba(224,122,34,0.42), inset 0 1px 0 rgba(255,255,255,0.30);
+    background: linear-gradient(135deg, #EE8A1C 0%, #C25C0E 100%);
+    box-shadow: 0 12px 32px rgba(208,98,16,0.42), inset 0 1px 0 rgba(255,255,255,0.30);
     transform: translateY(-1px);
   }
   .btn-glass-primary:active { transform: scale(0.975); }
@@ -274,8 +274,8 @@ select.form-input option {
 
 /* ─── CTA BUTTON PULSE ───────────────────────────────────────────────────── */
 @keyframes cta-glow-pulse {
-  0%, 100% { box-shadow: 0 4px 16px rgba(224,122,34,0.30), inset 0 1px 0 rgba(255,255,255,0.18); }
-  50%       { box-shadow: 0 4px 32px rgba(224,122,34,0.55), 0 0 0 4px rgba(239,142,54,0.14), inset 0 1px 0 rgba(255,255,255,0.24); }
+  0%, 100% { box-shadow: 0 4px 16px rgba(208,98,16,0.30), inset 0 1px 0 rgba(255,255,255,0.18); }
+  50%       { box-shadow: 0 4px 32px rgba(208,98,16,0.55), 0 0 0 4px rgba(234,110,20,0.14), inset 0 1px 0 rgba(255,255,255,0.24); }
 }
 .cta-pulse { animation: cta-glow-pulse 2.8s ease-in-out infinite; }
 

@@ -93,12 +93,12 @@ export default async function PartnersPage({ params: { locale } }: Props) {
               <div
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold"
                 style={{
-                  background: "rgba(239,142,54,0.08)",
-                  border: "1px solid rgba(239,142,54,0.25)",
-                  color: "#E8852C",
+                  background: "rgba(234,110,20,0.08)",
+                  border: "1px solid rgba(234,110,20,0.25)",
+                  color: "#DE7216",
                 }}
               >
-                <Star size={16} fill="#E8852C" />
+                <Star size={16} fill="#DE7216" />
                 <span className="font-bold text-white" style={{ fontSize: "20px" }}>{featuredCount}</span>
                 {t("strategic")}
               </div>

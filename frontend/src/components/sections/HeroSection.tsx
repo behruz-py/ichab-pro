@@ -110,7 +110,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
             <br />
             <span
               style={{
-                background: "linear-gradient(135deg, #E8852C 0%, #F2972F 45%, #F9B23D 100%)",
+                background: "linear-gradient(135deg, #DE7216 0%, #EC7A18 45%, #F09A24 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -134,8 +134,8 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
                 href={`/${locale}/contact`}
                 className="inline-flex items-center justify-center px-8 py-4 rounded-2xl text-base font-semibold text-white"
                 style={{
-                  background: "linear-gradient(135deg, #F2982F 0%, #E07A22 100%)",
-                  boxShadow: "0 8px 28px rgba(224,122,34,0.38), inset 0 1px 0 rgba(255,255,255,0.18)",
+                  background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)",
+                  boxShadow: "0 8px 28px rgba(208,98,16,0.38), inset 0 1px 0 rgba(255,255,255,0.18)",
                 }}
               >
                 {ctaPrimary}

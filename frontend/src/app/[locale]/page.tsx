@@ -122,7 +122,7 @@ export default async function HomePage({ params: { locale } }: Props) {
                 style={{ background: "radial-gradient(ellipse, rgba(47,94,148,0.14) 0%, transparent 70%)" }} />
               {/* Bottom glow */}
               <div className="absolute -bottom-10 left-1/4 w-[300px] h-[150px] rounded-full pointer-events-none"
-                style={{ background: "radial-gradient(ellipse, rgba(239,142,54,0.06) 0%, transparent 70%)" }} />
+                style={{ background: "radial-gradient(ellipse, rgba(234,110,20,0.06) 0%, transparent 70%)" }} />
 
               <div className="relative">
                 <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-4" style={{ color: "#2F5E94" }}>
@@ -141,8 +141,8 @@ export default async function HomePage({ params: { locale } }: Props) {
                   href={`/${locale}/contact`}
                   className="inline-flex items-center gap-2 px-10 py-4 rounded-2xl font-semibold text-base text-white transition-all duration-200 hover:scale-[1.03] hover:-translate-y-0.5"
                   style={{
-                    background: "linear-gradient(135deg, #F2982F 0%, #E07A22 100%)",
-                    boxShadow:  "0 8px 28px rgba(224,122,34,0.38), inset 0 1px 0 rgba(255,255,255,0.18)",
+                    background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)",
+                    boxShadow:  "0 8px 28px rgba(208,98,16,0.38), inset 0 1px 0 rgba(255,255,255,0.18)",
                   }}
                 >
                   {tHero("cta_primary")}

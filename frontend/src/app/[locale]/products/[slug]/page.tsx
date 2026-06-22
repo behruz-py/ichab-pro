@@ -201,9 +201,9 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
               href={`/${locale}/contact?product=${encodeURIComponent(product.name)}`}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-opacity hover:opacity-90"
               style={{
-                background: "linear-gradient(135deg, #F2982F 0%, #E07A22 100%)",
+                background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)",
                 color: "#fff",
-                boxShadow: "0 6px 22px rgba(224,122,34,0.30)",
+                boxShadow: "0 6px 22px rgba(208,98,16,0.30)",
               }}
             >
               <Send size={16} />
