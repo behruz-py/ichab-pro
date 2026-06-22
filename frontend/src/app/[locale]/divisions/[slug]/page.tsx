@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowLeft, ArrowRight, Phone, Mail } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { mediaUrl } from "@/lib/utils";
@@ -85,7 +86,7 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
             className="inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 hover:gap-3"
             style={{ color: "rgba(147,197,253,0.80)" }}
           >
-            ← {t("title")}
+            <ArrowLeft size={16} /> {t("title")}
           </Link>
         </div>
 
@@ -188,7 +189,7 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
                 color: "#60A5FA",
               }}
             >
-              ← {t("title")}
+              <ArrowLeft size={16} /> {t("title")}
             </Link>
           </div>
 
@@ -274,7 +275,7 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
                           fontSize: "14px",
                         }}
                       >
-                        ✆
+                        <Phone size={15} />
                       </span>
                       <span className="group-hover:text-blue-400 transition-colors duration-200">
                         {div.contact_phone}
@@ -296,7 +297,7 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
                           fontSize: "13px",
                         }}
                       >
-                        @
+                        <Mail size={14} />
                       </span>
                       <span className="group-hover:text-blue-400 transition-colors duration-200 truncate">
                         {div.contact_email}
@@ -316,7 +317,7 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
                 boxShadow: "0 8px 32px rgba(59,130,246,0.35), inset 0 1px 0 rgba(255,255,255,0.16)",
               }}
             >
-              Bog&apos;lanish <span>→</span>
+              Bog&apos;lanish <ArrowRight size={16} />
             </Link>
           </div>
         </div>

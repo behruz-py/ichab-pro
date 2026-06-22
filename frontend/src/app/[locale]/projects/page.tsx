@@ -2,6 +2,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Factory } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { mediaUrl, formatDate } from "@/lib/utils";
@@ -47,8 +48,8 @@ export default async function ProjectsPage({ params: { locale } }: Props) {
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-accent/10 to-transparent flex items-center justify-center text-5xl text-accent/30">
-                  🏭
+                <div className="w-full h-full bg-gradient-to-br from-accent/10 to-transparent flex items-center justify-center text-accent/30">
+                  <Factory size={48} strokeWidth={1.5} />
                 </div>
               )}
             </div>

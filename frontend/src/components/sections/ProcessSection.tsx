@@ -1,26 +1,29 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ClipboardList, Search, Settings, Rocket, type LucideIcon } from "lucide-react";
 import { staggerContainer, fadeUp, VIEWPORT } from "@/lib/motion";
 
-const STEPS: Record<string, { title: string; desc: string; icon: string }[]> = {
+const STEP_ICONS: LucideIcon[] = [ClipboardList, Search, Settings, Rocket];
+
+const STEPS: Record<string, { title: string; desc: string }[]> = {
   uz: [
-    { icon: "📋", title: "Murojaat",         desc: "Bizga murojaat qiling va loyihangiz haqida ma'lumot bering. Konsultatsiya bepul." },
-    { icon: "🔍", title: "Tahlil",            desc: "Mutaxassislarimiz ob'ektni o'rganib, texnik talablarni aniqlaydi." },
-    { icon: "⚙️", title: "Ishlab chiqish",    desc: "Moslashtirilgan avtomatika yechimi va texnik loyiha tayyorlanadi." },
-    { icon: "🚀", title: "Ishga tushirish",   desc: "Tizim o'rnatiladi, sozlanadi va to'liq qo'llab-quvvatlanadi." },
+    { title: "Murojaat",         desc: "Bizga murojaat qiling va loyihangiz haqida ma'lumot bering. Konsultatsiya bepul." },
+    { title: "Tahlil",            desc: "Mutaxassislarimiz ob'ektni o'rganib, texnik talablarni aniqlaydi." },
+    { title: "Ishlab chiqish",    desc: "Moslashtirilgan avtomatika yechimi va texnik loyiha tayyorlanadi." },
+    { title: "Ishga tushirish",   desc: "Tizim o'rnatiladi, sozlanadi va to'liq qo'llab-quvvatlanadi." },
   ],
   ru: [
-    { icon: "📋", title: "Обращение",   desc: "Свяжитесь с нами и расскажите о проекте. Консультация бесплатна." },
-    { icon: "🔍", title: "Анализ",      desc: "Специалисты изучают объект и определяют технические требования." },
-    { icon: "⚙️", title: "Разработка",  desc: "Разрабатывается индивидуальное решение и технический проект." },
-    { icon: "🚀", title: "Запуск",      desc: "Система монтируется, настраивается и полностью поддерживается." },
+    { title: "Обращение",   desc: "Свяжитесь с нами и расскажите о проекте. Консультация бесплатна." },
+    { title: "Анализ",      desc: "Специалисты изучают объект и определяют технические требования." },
+    { title: "Разработка",  desc: "Разрабатывается индивидуальное решение и технический проект." },
+    { title: "Запуск",      desc: "Система монтируется, настраивается и полностью поддерживается." },
   ],
   en: [
-    { icon: "📋", title: "Inquiry",     desc: "Contact us and share your project details. Consultation is free." },
-    { icon: "🔍", title: "Analysis",    desc: "Our specialists study the site and identify technical requirements." },
-    { icon: "⚙️", title: "Development", desc: "A custom automation solution and technical design are prepared." },
-    { icon: "🚀", title: "Launch",      desc: "The system is installed, configured and fully supported." },
+    { title: "Inquiry",     desc: "Contact us and share your project details. Consultation is free." },
+    { title: "Analysis",    desc: "Our specialists study the site and identify technical requirements." },
+    { title: "Development", desc: "A custom automation solution and technical design are prepared." },
+    { title: "Launch",      desc: "The system is installed, configured and fully supported." },
   ],
 };
 
@@ -99,7 +102,7 @@ export function ProcessSection({ locale }: Props) {
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
                   style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.10) 0%, transparent 70%)" }} />
 
-                {/* Step number badge (centered, doubles as connector node) */}
+                {/* Step icon badge (centered, doubles as connector node) */}
                 <div className="flex items-center justify-center mb-5">
                   <div
                     className="w-[52px] h-[52px] rounded-2xl flex items-center justify-center relative"
@@ -109,7 +112,19 @@ export function ProcessSection({ locale }: Props) {
                       boxShadow:  "0 0 20px rgba(59,130,246,0.28), 0 4px 12px rgba(0,0,0,0.30)",
                     }}
                   >
-                    <span style={{ fontSize: "11px", fontWeight: 800, letterSpacing: "0.06em", color: "#EDF2FF", fontFamily: "monospace" }}>
+                    {(() => {
+                      const Icon = STEP_ICONS[i % STEP_ICONS.length];
+                      return <Icon size={24} color="#EDF2FF" strokeWidth={1.8} />;
+                    })()}
+                    {/* Step number chip */}
+                    <span
+                      className="absolute -top-2 -right-2 w-[22px] h-[22px] rounded-full flex items-center justify-center"
+                      style={{
+                        fontSize: "10px", fontWeight: 800, letterSpacing: "0.02em",
+                        color: "#EDF2FF", fontFamily: "monospace",
+                        background: "#0B1733", border: "1px solid rgba(96,165,250,0.45)",
+                      }}
+                    >
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>

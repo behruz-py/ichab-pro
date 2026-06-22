@@ -2,6 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { HeroSection }       from "@/components/sections/HeroSection";
@@ -145,7 +146,7 @@ export default async function HomePage({ params: { locale } }: Props) {
                   }}
                 >
                   {tHero("cta_primary")}
-                  <span>→</span>
+                  <ArrowRight size={18} />
                 </Link>
               </div>
             </div>

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { staggerContainer, fadeUp, fadeIn } from "@/lib/motion";
 
 interface Props {
@@ -149,9 +150,10 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
               >
                 {ctaSecondary}
                 <motion.span
+                  className="inline-flex"
                   animate={{ x: [0, 4, 0] }}
                   transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-                >→</motion.span>
+                ><ArrowRight size={18} /></motion.span>
               </Link>
             </motion.div>
           </motion.div>

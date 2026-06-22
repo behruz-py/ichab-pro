@@ -2,6 +2,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowLeft, Send, FileDown } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
@@ -205,9 +206,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
                 boxShadow: "0 6px 24px rgba(59,130,246,0.28)",
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-              </svg>
+              <Send size={16} />
               {t("request_quote")}
             </Link>
 
@@ -219,11 +218,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-colors"
                 style={{ border: "1px solid rgba(59,130,246,0.3)", color: "#60A5FA" }}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
+                <FileDown size={16} />
                 {t("catalog_pdf")}
               </a>
             )}
@@ -272,7 +267,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
         className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-blue-300"
         style={{ color: "#60A5FA" }}
       >
-        ← {t("back_to_catalog")}
+        <ArrowLeft size={16} /> {t("back_to_catalog")}
       </Link>
     </div>
   );

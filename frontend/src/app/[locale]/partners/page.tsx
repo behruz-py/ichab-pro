@@ -1,5 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
+import { Star } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { PartnerGrid } from "@/components/sections/PartnerGrid";
@@ -97,7 +98,7 @@ export default async function PartnersPage({ params: { locale } }: Props) {
                   color: "#FB923C",
                 }}
               >
-                <span>★</span>
+                <Star size={16} fill="#FB923C" />
                 <span className="font-bold text-white" style={{ fontSize: "20px" }}>{featuredCount}</span>
                 {t("strategic")}
               </div>

@@ -1,6 +1,7 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Factory } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 
@@ -59,7 +60,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
 
         {pages.length === 0 && (
           <div className="glass-card rounded-2xl border border-border-subtle p-12 text-center text-content-muted">
-            <p className="text-4xl mb-4">🏭</p>
+            <Factory size={40} strokeWidth={1.5} className="mx-auto mb-4" />
             <p>ICHAB — Ishlab chiqarishni avtomatlashtirish boshqarmasi</p>
           </div>
         )}

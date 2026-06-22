@@ -2,6 +2,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { FileText } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { mediaUrl, formatDate } from "@/lib/utils";
@@ -66,7 +67,7 @@ export default async function CertificatesPage({ params: { locale } }: Props) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 mt-3 text-accent text-xs font-medium hover:underline"
                 >
-                  📄 PDF
+                  <FileText size={14} /> PDF
                 </a>
               )}
             </div>

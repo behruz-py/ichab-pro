@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import type { Division } from "@/types/api";
 import { mediaUrl } from "@/lib/utils";
 import { fadeLeft, VIEWPORT } from "@/lib/motion";
@@ -62,7 +63,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold shrink-0 transition-all duration-200 hover:gap-3"
               style={{ background: "rgba(59,130,246,0.10)", border: "1px solid rgba(59,130,246,0.25)", color: "#60A5FA" }}
             >
-              {viewAll} →
+              {viewAll} <ArrowRight size={16} />
             </Link>
           </motion.div>
         </div>
@@ -164,9 +165,9 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                       {div.leader_name}
                     </p>
                   ) : <span />}
-                  <span className="text-xs font-bold transition-all duration-200 group-hover:translate-x-0.5"
+                  <span className="inline-flex items-center gap-1 text-xs font-bold transition-all duration-200 group-hover:translate-x-0.5"
                     style={{ color: "#60A5FA" }}>
-                    {viewDetail} →
+                    {viewDetail} <ArrowRight size={13} />
                   </span>
                 </div>
               </div>

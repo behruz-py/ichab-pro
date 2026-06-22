@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
+import { ArrowRight } from "lucide-react";
 import type { Product, ProductCategory } from "@/types/api";
 
 interface Props {
@@ -147,7 +148,7 @@ export function ProductsClient({ products, categories }: Props) {
                   className="text-xs font-semibold flex items-center gap-1 group-hover:gap-2 transition-all duration-200"
                   style={{ color: "#60A5FA" }}
                 >
-                  {t("view_detail")} →
+                  {t("view_detail")} <ArrowRight size={13} />
                 </span>
               </div>
             </Link>

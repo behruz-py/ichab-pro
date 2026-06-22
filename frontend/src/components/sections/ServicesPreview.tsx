@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import type { Service } from "@/types/api";
 import { staggerContainer, fadeUp, VIEWPORT } from "@/lib/motion";
 import { MeshBlobs } from "@/components/ui/MeshBlobs";
@@ -88,14 +89,14 @@ export function ServicesPreview({ services, locale, title, subtitle, learnMore }
                       className="inline-flex items-center gap-1.5 text-xs font-semibold transition-all duration-200 group-hover:gap-3"
                       style={{ color: "#3B82F6" }}
                     >
-                      {learnMore} <span>→</span>
+                      {learnMore} <ArrowRight size={14} />
                     </span>
                     {/* Arrow circle */}
                     <div
                       className="w-7 h-7 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0"
                       style={{ background: "rgba(59,130,246,0.15)", border: "1px solid rgba(59,130,246,0.30)" }}
                     >
-                      <span style={{ color: "#60A5FA", fontSize: "11px" }}>→</span>
+                      <ArrowRight size={13} style={{ color: "#60A5FA" }} />
                     </div>
                   </div>
                 </Link>

@@ -2,6 +2,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { mediaUrl } from "@/lib/utils";
@@ -66,7 +67,7 @@ export default async function ServicesPage({ params: { locale } }: Props) {
               )}
               <span className="inline-flex items-center gap-1 mt-4 text-accent text-xs font-medium">
                 {t("learn_more")}
-                <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </div>
           </Link>

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { Handshake, Building2, ArrowUpRight, Star } from "lucide-react";
 import type { Partner } from "@/types/api";
 import { mediaUrl } from "@/lib/utils";
 
@@ -13,7 +14,7 @@ export function PartnerGrid({ partners, visitSite }: Props) {
   if (partners.length === 0) {
     return (
       <div className="text-center py-24" style={{ color: "#344768" }}>
-        <div style={{ fontSize: "56px", marginBottom: "20px", opacity: 0.4 }}>🤝</div>
+        <Handshake size={56} strokeWidth={1.5} style={{ margin: "0 auto 20px", opacity: 0.4 }} />
         <p className="text-lg font-medium">Hamkorlar hali qo&apos;shilmagan</p>
       </div>
     );
@@ -61,7 +62,7 @@ function PartnerCard({ partner, visitSite }: { partner: Partner; visitSite: stri
             sizes="(max-width:640px) 45vw, 200px"
           />
         ) : (
-          <div style={{ fontSize: "44px", opacity: 0.22 }}>🏢</div>
+          <Building2 size={44} strokeWidth={1.5} style={{ opacity: 0.22, color: "#1e3a5f" }} />
         )}
 
         {/* Top blue accent line that slides in on hover */}
@@ -103,7 +104,7 @@ function PartnerCard({ partner, visitSite }: { partner: Partner; visitSite: stri
             }}
           >
             {visitSite}
-            <span style={{ fontSize: "11px" }}>↗</span>
+            <ArrowUpRight size={14} />
           </a>
         )}
       </div>
@@ -120,7 +121,7 @@ function PartnerCard({ partner, visitSite }: { partner: Partner; visitSite: stri
           }}
           title="Strategik hamkor"
         >
-          ★
+          <Star size={12} fill="#FB923C" />
         </div>
       )}
     </div>

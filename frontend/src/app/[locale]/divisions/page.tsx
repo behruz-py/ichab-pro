@@ -2,6 +2,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { Settings, ArrowRight } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { mediaUrl } from "@/lib/utils";
@@ -104,7 +105,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         {divisions.length === 0 ? (
           <div className="text-center py-24" style={{ color: "#344768" }}>
-            <p className="text-5xl mb-4 opacity-30">⚙</p>
+            <Settings size={48} strokeWidth={1.5} className="mx-auto mb-4 opacity-30" />
             <p className="text-lg font-medium">Laboratoriyalar hali qo&apos;shilmagan</p>
           </div>
         ) : (
@@ -141,7 +142,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                         ].join(", "),
                       }}
                     >
-                      <span style={{ fontSize: "72px", opacity: 0.06 }}>⚙</span>
+                      <Settings size={72} strokeWidth={1.2} style={{ opacity: 0.06 }} />
                     </div>
                   )}
                 </div>
@@ -236,10 +237,10 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                     )}
 
                     <span
-                      className="text-xs font-bold transition-all duration-200 group-hover:translate-x-1"
+                      className="inline-flex items-center gap-1 text-xs font-bold transition-all duration-200 group-hover:translate-x-1"
                       style={{ color: "#60A5FA" }}
                     >
-                      Batafsil →
+                      Batafsil <ArrowRight size={13} />
                     </span>
                   </div>
                 </div>

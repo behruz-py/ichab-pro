@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { CheckCircle2 } from "lucide-react";
 import { api } from "@/lib/api-client";
 import type { LeadCreate } from "@/types/api";
 
@@ -51,7 +52,7 @@ export function ContactForm({ locale }: { locale: string }) {
   if (status === "success") {
     return (
       <div className="glass-card rounded-2xl border border-accent/30 p-10 text-center">
-        <p className="text-5xl mb-4">✅</p>
+        <CheckCircle2 size={48} className="mx-auto mb-4 text-accent" />
         <p className="text-content font-semibold text-lg">{t("success")}</p>
       </div>
     );

@@ -1,16 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ShieldCheck } from "lucide-react";
 
 const ITEMS = [
-  { icon: "◆", text: "ISO 9001:2015" },
-  { icon: "◆", text: "25+ yil tajriba" },
-  { icon: "◆", text: "150+ bajarilgan loyiha" },
-  { icon: "◆", text: "PLC · SCADA · HMI" },
-  { icon: "◆", text: "24/7 texnik yordam" },
-  { icon: "◆", text: "Xalqaro standartlar" },
-  { icon: "◆", text: "O'zbekiston bo'ylab xizmat" },
-  { icon: "◆", text: "Sertifikatlangan mutaxassislar" },
+  { text: "ISO 9001:2015" },
+  { text: "25+ yil tajriba" },
+  { text: "150+ bajarilgan loyiha" },
+  { text: "PLC · SCADA · HMI" },
+  { text: "24/7 texnik yordam" },
+  { text: "Xalqaro standartlar" },
+  { text: "O'zbekiston bo'ylab xizmat" },
+  { text: "Sertifikatlangan mutaxassislar" },
 ];
 
 // Duplicate for infinite loop
@@ -33,7 +34,7 @@ export function TrustStrip() {
       >
         {TRACK.map((item, i) => (
           <span key={i} className="inline-flex items-center gap-3 px-6">
-            <span style={{ color: "#3B82F6", fontSize: "7px" }}>{item.icon}</span>
+            <ShieldCheck size={13} style={{ color: "#3B82F6", flexShrink: 0 }} />
             <span
               style={{
                 color: i % (ITEMS.length * 2) < ITEMS.length ? "#7B93B8" : "#60A5FA",

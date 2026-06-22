@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
+import { MapPin, Phone, Mail, Heart } from "lucide-react";
 import { LogoBadge } from "@/components/shared/LogoBadge";
 
 const QUICK_LINKS = [
@@ -96,7 +97,7 @@ export async function Footer() {
             </h3>
             <ul className="space-y-3.5">
               <li className="flex items-start gap-3 text-sm" style={{ color: "#7B93B8" }}>
-                <span className="mt-0.5 flex-shrink-0 text-blue-500">⌖</span>
+                <MapPin size={16} className="mt-0.5 flex-shrink-0 text-blue-500" />
                 <span className="leading-relaxed">{tFooter("address")}</span>
               </li>
               <li>
@@ -105,7 +106,7 @@ export async function Footer() {
                   className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-blue-400 group"
                   style={{ color: "#7B93B8" }}
                 >
-                  <span className="text-blue-500 flex-shrink-0">✆</span>
+                  <Phone size={16} className="text-blue-500 flex-shrink-0" />
                   {tFooter("phone")}
                 </a>
               </li>
@@ -115,7 +116,7 @@ export async function Footer() {
                   className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-blue-400"
                   style={{ color: "#7B93B8" }}
                 >
-                  <span className="text-blue-500 flex-shrink-0">@</span>
+                  <Mail size={16} className="text-blue-500 flex-shrink-0" />
                   {tFooter("email")}
                 </a>
               </li>
@@ -133,7 +134,7 @@ export async function Footer() {
           </p>
           <p className="text-xs" style={{ color: "#344768" }}>
             {tFooter("made_with")}{" "}
-            <span style={{ color: "#3B82F6" }}>♥</span>
+            <Heart size={12} fill="#3B82F6" style={{ color: "#3B82F6", display: "inline", verticalAlign: "middle" }} />
           </p>
         </div>
       </div>
