@@ -25,12 +25,16 @@ const C = {
   sky:     "#3E6A99",   // muted steel blue (primary accent)
   skyDeep: "#2D5279",   // deeper steel blue
   teal:    "#5A8B8E",   // muted teal-slate (sparingly)
-  grad:    "linear-gradient(135deg, #3E6A99 0%, #2D5279 100%)",  // calm mono-blue
+  // 3-stop blue gradient — lighter top-left adds a subtle premium sheen
+  grad:    "linear-gradient(135deg, #517FB0 0%, #3E6A99 48%, #2A4E75 100%)",
+  // Subtle card surface gradient — barely lighter at top-left = soft depth
+  cardBg:  "linear-gradient(165deg, #FCFDFE 0%, #F2F6FB 100%)",
   // Warm complementary accent — used sparingly for highlights / featured
-  warm:    "linear-gradient(135deg, #EF8E36 0%, #F9C04D 100%)",
+  warm:    "linear-gradient(135deg, #F2972F 0%, #F9C04D 100%)",
   warmSolid: "#E8852C",
   warmTint:  "rgba(239,142,54,0.12)",
-  cardShadow: "0 1px 2px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.05)",
+  // Card shadow with a faint steel-blue tint = premium floating depth
+  cardShadow: "0 1px 2px rgba(15,23,42,0.04), 0 12px 30px rgba(45,82,121,0.08)",
 };
 
 export default function StylePreviewPage() {
@@ -72,8 +76,15 @@ export default function StylePreviewPage() {
       </header>
 
       {/* ── Hero ── */}
-      <section style={{ maxWidth: 1240, margin: "0 auto", padding: "72px 24px 48px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 48, alignItems: "center" }}>
+      <section style={{ position: "relative", maxWidth: 1240, margin: "0 auto", padding: "72px 24px 48px" }}>
+        {/* Soft radial glow — premium depth, very low opacity */}
+        <div aria-hidden style={{
+          position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden",
+          background:
+            "radial-gradient(620px 380px at 18% 28%, rgba(62,106,153,0.10), transparent 70%)," +
+            "radial-gradient(520px 360px at 88% 72%, rgba(239,142,54,0.07), transparent 70%)",
+        }} />
+        <div style={{ position: "relative", zIndex: 1, display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 48, alignItems: "center" }}>
           <div>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.14em", color: C.sky, background: "rgba(62,106,153,0.10)", padding: "6px 14px", borderRadius: 999 }}>
               <ShieldCheck size={14} /> Sanoat avtomatizatsiyasi
@@ -103,7 +114,7 @@ export default function StylePreviewPage() {
           </div>
 
           {/* Hero visual card */}
-          <div style={{ background: C.surface, borderRadius: 24, border: `1px solid ${C.border}`, boxShadow: C.cardShadow, padding: 28 }}>
+          <div style={{ background: C.cardBg, borderRadius: 24, border: `1px solid ${C.border}`, boxShadow: C.cardShadow, padding: 28 }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
               {[
                 { Icon: Cpu, label: "PLC tizimlari", val: "120+", warm: false },
@@ -147,7 +158,7 @@ export default function StylePreviewPage() {
             { Icon: Gauge, title: "ASUTP — Avtomatlashtirish", desc: "Texnologik jarayonlarni avtomatik boshqarish tizimlari.", featured: false },
             { Icon: Settings, title: "MOP — Modernizatsiya", desc: "Eski uskunalarni zamonaviy darajaga yangilash.", featured: false },
           ].map(({ Icon, title, desc, featured }, i) => (
-            <div key={i} style={{ position: "relative", background: C.surface, borderRadius: 18, border: `1px solid ${C.border}`, boxShadow: C.cardShadow, padding: 24, transition: "transform .2s, box-shadow .2s" }}
+            <div key={i} style={{ position: "relative", background: C.cardBg, borderRadius: 18, border: `1px solid ${C.border}`, boxShadow: C.cardShadow, padding: 24, transition: "transform .2s, box-shadow .2s" }}
               className="preview-card">
               {featured && (
                 <span style={{ position: "absolute", top: 16, right: 16, display: "inline-flex", alignItems: "center", gap: 5, fontSize: 11, fontWeight: 700, color: "#fff", background: C.warm, padding: "4px 11px", borderRadius: 999, boxShadow: "0 3px 10px rgba(239,142,54,0.35)" }}>
@@ -168,7 +179,7 @@ export default function StylePreviewPage() {
       {/* ── Product detail mock: gallery + info + spec table ── */}
       <section style={{ maxWidth: 1240, margin: "0 auto", padding: "8px 24px 56px" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 36, marginBottom: 32 }}>
-          <div style={{ background: C.surface, borderRadius: 20, border: `1px solid ${C.border}`, boxShadow: C.cardShadow, aspectRatio: "4/3", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ background: C.cardBg, borderRadius: 20, border: `1px solid ${C.border}`, boxShadow: C.cardShadow, aspectRatio: "4/3", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Factory size={64} strokeWidth={1.2} color={C.muted} />
           </div>
           <div>
@@ -229,7 +240,7 @@ export default function StylePreviewPage() {
 
       {/* ── CTA band ── */}
       <section style={{ maxWidth: 1240, margin: "0 auto 56px", padding: "0 24px" }}>
-        <div style={{ background: C.grad, borderRadius: 24, padding: "48px 40px", textAlign: "center", boxShadow: "0 16px 48px rgba(62,106,153,0.30)" }}>
+        <div style={{ background: `radial-gradient(120% 140% at 50% -20%, rgba(255,255,255,0.18), transparent 55%), ${C.grad}`, borderRadius: 24, padding: "48px 40px", textAlign: "center", boxShadow: "0 16px 48px rgba(45,82,121,0.30)" }}>
           <h2 style={{ fontSize: 30, fontWeight: 800, color: "#fff", marginBottom: 12 }}>Loyihangizni boshlaymizmi?</h2>
           <p style={{ fontSize: 16, color: "rgba(255,255,255,0.9)", marginBottom: 24, maxWidth: 520, marginInline: "auto" }}>
             Bepul konsultatsiya oling — mutaxassislarimiz texnik talablarni aniqlaydi.
