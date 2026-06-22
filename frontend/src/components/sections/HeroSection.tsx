@@ -47,15 +47,15 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
         />
         {/* Left edge — fades into page background */}
         <div className="absolute inset-0" style={{
-          background: "linear-gradient(to right, rgba(5,10,23,1) 0%, rgba(5,10,23,0.50) 18%, rgba(5,10,23,0.08) 40%, transparent 58%)",
+          background: "linear-gradient(to right, rgba(229,234,241,1) 0%, rgba(229,234,241,0.50) 18%, rgba(229,234,241,0.08) 40%, transparent 58%)",
         }} />
         {/* Right edge */}
         <div className="absolute inset-0" style={{
-          background: "linear-gradient(to left, rgba(5,10,23,0.90) 0%, transparent 18%)",
+          background: "linear-gradient(to left, rgba(229,234,241,0.90) 0%, transparent 18%)",
         }} />
         {/* Top + bottom */}
         <div className="absolute inset-0" style={{
-          background: "linear-gradient(to bottom, rgba(5,10,23,0.65) 0%, transparent 20%, transparent 78%, rgba(5,10,23,0.70) 100%)",
+          background: "linear-gradient(to bottom, rgba(229,234,241,0.65) 0%, transparent 20%, transparent 78%, rgba(229,234,241,0.70) 100%)",
         }} />
       </motion.div>
 
@@ -63,7 +63,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "radial-gradient(rgba(59,130,246,0.18) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(rgba(62,106,153,0.18) 1px, transparent 1px)",
           backgroundSize: "40px 40px",
           opacity: 0.28,
           maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
@@ -90,11 +90,11 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
           <motion.div variants={fadeIn} className="mb-8">
             <span
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium"
-              style={{ background: "rgba(59,130,246,0.08)", border: "1px solid rgba(59,130,246,0.24)", color: "#60A5FA" }}
+              style={{ background: "rgba(62,106,153,0.08)", border: "1px solid rgba(62,106,153,0.24)", color: "#3E6A99" }}
             >
               <motion.span
                 className="w-2 h-2 rounded-full flex-shrink-0"
-                style={{ background: "#60A5FA" }}
+                style={{ background: "#3E6A99" }}
                 animate={{ scale: [1, 1.7, 1], opacity: [1, 0.35, 1] }}
                 transition={{ duration: 2.2, repeat: Infinity }}
               />
@@ -111,7 +111,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
             <br />
             <span
               style={{
-                background: "linear-gradient(135deg, #2563EB 0%, #3B82F6 45%, #38BDF8 100%)",
+                background: "linear-gradient(135deg, #2563EB 0%, #3E6A99 45%, #517FB0 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -124,7 +124,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
           <motion.p
             variants={fadeUp}
             className="text-lg leading-relaxed mb-10"
-            style={{ color: "#7B93B8" }}
+            style={{ color: "#475569" }}
           >
             {subtitle}
           </motion.p>
@@ -135,8 +135,8 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
                 href={`/${locale}/contact`}
                 className="inline-flex items-center justify-center px-8 py-4 rounded-2xl text-base font-semibold text-white"
                 style={{
-                  background: "linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%)",
-                  boxShadow: "0 8px 32px rgba(59,130,246,0.38), inset 0 1px 0 rgba(255,255,255,0.18)",
+                  background: "linear-gradient(135deg, #2D5279 0%, #3E6A99 100%)",
+                  boxShadow: "0 8px 32px rgba(62,106,153,0.38), inset 0 1px 0 rgba(255,255,255,0.18)",
                 }}
               >
                 {ctaPrimary}
@@ -146,7 +146,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
               <Link
                 href={`/${locale}/projects`}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-semibold"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "#7B93B8" }}
+                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "#475569" }}
               >
                 {ctaSecondary}
                 <motion.span
@@ -166,7 +166,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.0 + i * 0.07, duration: 0.35 }}
                 className="px-3 py-1 rounded-lg text-xs font-mono font-semibold"
-                style={{ background: "rgba(59,130,246,0.07)", border: "1px solid rgba(59,130,246,0.20)", color: "#60A5FA" }}
+                style={{ background: "rgba(62,106,153,0.07)", border: "1px solid rgba(62,106,153,0.20)", color: "#3E6A99" }}
               >
                 {tag}
               </motion.span>
@@ -186,11 +186,11 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
           className="w-5 h-8 rounded-full flex items-start justify-center pt-1.5"
-          style={{ border: "1.5px solid rgba(59,130,246,0.35)" }}
+          style={{ border: "1.5px solid rgba(62,106,153,0.35)" }}
         >
-          <div className="w-1 h-2.5 rounded-full" style={{ background: "rgba(96,165,250,0.70)" }} />
+          <div className="w-1 h-2.5 rounded-full" style={{ background: "rgba(62,106,153,0.70)" }} />
         </motion.div>
-        <span className="text-[10px] font-medium tracking-wider uppercase" style={{ color: "#344768" }}>
+        <span className="text-[10px] font-medium tracking-wider uppercase" style={{ color: "#94A3B8" }}>
           {scrollHint}
         </span>
       </motion.div>

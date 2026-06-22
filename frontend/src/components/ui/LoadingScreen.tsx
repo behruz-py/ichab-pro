@@ -89,7 +89,7 @@ export function LoadingScreen({ onComplete }: Props) {
 
               {/* Logo image or fallback */}
               <div className="w-20 h-20 flex items-center justify-center"
-                style={{ filter: "drop-shadow(0 0 18px rgba(59,130,246,0.55)) drop-shadow(0 0 8px rgba(249,115,22,0.25))" }}
+                style={{ filter: "drop-shadow(0 0 18px rgba(62,106,153,0.55)) drop-shadow(0 0 8px rgba(239,142,54,0.25))" }}
               >
                 {!logoError ? (
                   <Image

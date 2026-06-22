@@ -126,18 +126,18 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
       />
 
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm mb-8 flex-wrap" style={{ color: "#344768" }}>
+      <nav className="flex items-center gap-2 text-sm mb-8 flex-wrap" style={{ color: "#94A3B8" }}>
         <Link href={`/${locale}/products`} className="transition-colors hover:text-blue-400">
           {t("title")}
         </Link>
         <span>/</span>
         {product.category && (
           <>
-            <span style={{ color: "#7B93B8" }}>{product.category.name}</span>
+            <span style={{ color: "#475569" }}>{product.category.name}</span>
             <span>/</span>
           </>
         )}
-        <span style={{ color: "#E2EAF4" }}>{product.name}</span>
+        <span style={{ color: "#1E293B" }}>{product.name}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-12">
@@ -151,14 +151,14 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
         {/* ── Info ── */}
         <div className="flex flex-col gap-4">
           {product.category && (
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#3B82F6" }}>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#3E6A99" }}>
               {product.category.name}
             </span>
           )}
 
           <h1
             className="font-display font-bold leading-tight"
-            style={{ fontSize: "clamp(22px,3vw,36px)", color: "#E2EAF4" }}
+            style={{ fontSize: "clamp(22px,3vw,36px)", color: "#1E293B" }}
           >
             {product.name || slug}
           </h1>
@@ -166,13 +166,13 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
           {/* SKU / brand / availability */}
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
             {product.sku && (
-              <span style={{ color: "#7B93B8" }}>
-                {t("sku")}: <span style={{ color: "#E2EAF4", fontWeight: 600 }}>{product.sku}</span>
+              <span style={{ color: "#475569" }}>
+                {t("sku")}: <span style={{ color: "#1E293B", fontWeight: 600 }}>{product.sku}</span>
               </span>
             )}
             {product.brand && (
-              <span style={{ color: "#7B93B8" }}>
-                {t("brand")}: <span style={{ color: "#E2EAF4", fontWeight: 600 }}>{product.brand}</span>
+              <span style={{ color: "#475569" }}>
+                {t("brand")}: <span style={{ color: "#1E293B", fontWeight: 600 }}>{product.brand}</span>
               </span>
             )}
             <span
@@ -184,15 +184,15 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
           </div>
 
           {product.description ? (
-            <p className="leading-relaxed whitespace-pre-line" style={{ color: "#7B93B8", fontSize: "15px" }}>
+            <p className="leading-relaxed whitespace-pre-line" style={{ color: "#475569", fontSize: "15px" }}>
               {product.description}
             </p>
           ) : product.short_description ? (
-            <p className="leading-relaxed" style={{ color: "#7B93B8", fontSize: "15px" }}>
+            <p className="leading-relaxed" style={{ color: "#475569", fontSize: "15px" }}>
               {product.short_description}
             </p>
           ) : (
-            <p className="text-sm italic" style={{ color: "#344768" }}>{t("no_description")}</p>
+            <p className="text-sm italic" style={{ color: "#94A3B8" }}>{t("no_description")}</p>
           )}
 
           <div className="flex flex-wrap gap-3 mt-1">
@@ -201,9 +201,9 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
               href={`/${locale}/contact?product=${encodeURIComponent(product.name)}`}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-opacity hover:opacity-90"
               style={{
-                background: "linear-gradient(135deg, #1D4ED8, #3B82F6)",
+                background: "linear-gradient(135deg, #2D5279, #3E6A99)",
                 color: "#fff",
-                boxShadow: "0 6px 24px rgba(59,130,246,0.28)",
+                boxShadow: "0 6px 24px rgba(62,106,153,0.28)",
               }}
             >
               <Send size={16} />
@@ -216,7 +216,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-colors"
-                style={{ border: "1px solid rgba(59,130,246,0.3)", color: "#60A5FA" }}
+                style={{ border: "1px solid rgba(62,106,153,0.3)", color: "#3E6A99" }}
               >
                 <FileDown size={16} />
                 {t("catalog_pdf")}
@@ -229,10 +229,10 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
       {/* ── Simple specs ── */}
       {specs.length > 0 && (
         <div className="rounded-2xl overflow-hidden mb-10"
-          style={{ border: "1px solid rgba(59,130,246,0.14)" }}>
+          style={{ border: "1px solid rgba(62,106,153,0.14)" }}>
           <div className="px-6 py-4"
-            style={{ background: "rgba(59,130,246,0.06)", borderBottom: "1px solid rgba(59,130,246,0.14)" }}>
-            <h2 className="font-display font-bold text-lg" style={{ color: "#E2EAF4" }}>
+            style={{ background: "rgba(62,106,153,0.06)", borderBottom: "1px solid rgba(62,106,153,0.14)" }}>
+            <h2 className="font-display font-bold text-lg" style={{ color: "#1E293B" }}>
               {t("specs_title")}
             </h2>
           </div>
@@ -242,11 +242,11 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
                 <tr key={spec.id}
                   style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "transparent" }}>
                   <td className="px-6 py-3 text-sm font-medium w-1/2"
-                    style={{ color: "#7B93B8", borderBottom: "1px solid rgba(59,130,246,0.08)" }}>
+                    style={{ color: "#475569", borderBottom: "1px solid rgba(62,106,153,0.08)" }}>
                     {spec.label}
                   </td>
                   <td className="px-6 py-3 text-sm font-semibold w-1/2"
-                    style={{ color: "#E2EAF4", borderBottom: "1px solid rgba(59,130,246,0.08)" }}>
+                    style={{ color: "#1E293B", borderBottom: "1px solid rgba(62,106,153,0.08)" }}>
                     {spec.value}{spec.unit ? ` ${spec.unit}` : ""}
                   </td>
                 </tr>
@@ -265,7 +265,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
       <Link
         href={`/${locale}/products`}
         className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-blue-300"
-        style={{ color: "#60A5FA" }}
+        style={{ color: "#3E6A99" }}
       >
         <ArrowLeft size={16} /> {t("back_to_catalog")}
       </Link>

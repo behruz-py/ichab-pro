@@ -50,12 +50,12 @@ export function ProcessSection({ locale }: Props) {
 
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0" style={{ background: "rgba(7,14,31,0.45)" }} />
-        <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(59,130,246,0.22) 50%,transparent)" }} />
-        <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(59,130,246,0.22) 50%,transparent)" }} />
+        <div className="absolute inset-0" style={{ background: "rgba(237,241,246,0.45)" }} />
+        <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(62,106,153,0.22) 50%,transparent)" }} />
+        <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(62,106,153,0.22) 50%,transparent)" }} />
         {/* Ambient glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] rounded-full"
-          style={{ background: "radial-gradient(ellipse, rgba(59,130,246,0.06) 0%, transparent 70%)", filter: "blur(30px)" }} />
+          style={{ background: "radial-gradient(ellipse, rgba(62,106,153,0.06) 0%, transparent 70%)", filter: "blur(30px)" }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -65,7 +65,7 @@ export function ProcessSection({ locale }: Props) {
           variants={fadeUp} initial="hidden" whileInView="visible" viewport={VIEWPORT}
           className="text-center mb-16"
         >
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3" style={{ color: "#3B82F6" }}>
+          <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3" style={{ color: "#3E6A99" }}>
             {badge}
           </span>
           <h2 className="font-display font-bold text-content" style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}>
@@ -80,7 +80,7 @@ export function ProcessSection({ locale }: Props) {
         >
           {/* Connector line (desktop only) */}
           <div className="hidden lg:block absolute top-[42px] left-[12.5%] right-[12.5%] h-px pointer-events-none z-0"
-            style={{ background: "linear-gradient(90deg, transparent 0%, rgba(59,130,246,0.30) 15%, rgba(59,130,246,0.30) 85%, transparent 100%)" }} />
+            style={{ background: "linear-gradient(90deg, transparent 0%, rgba(62,106,153,0.30) 15%, rgba(62,106,153,0.30) 85%, transparent 100%)" }} />
 
           {steps.map((step, i) => (
             <motion.div
@@ -91,8 +91,8 @@ export function ProcessSection({ locale }: Props) {
               <div
                 className="group relative p-6 rounded-2xl h-full transition-all duration-350 hover:translate-y-[-4px]"
                 style={{
-                  background:           "rgba(9,18,42,0.70)",
-                  border:               "1px solid rgba(59,130,246,0.12)",
+                  background:           "rgba(247,249,252,0.70)",
+                  border:               "1px solid rgba(62,106,153,0.12)",
                   backdropFilter:       "blur(18px)",
                   WebkitBackdropFilter: "blur(18px)",
                   boxShadow:            "0 4px 24px rgba(0,0,0,0.25)",
@@ -100,29 +100,29 @@ export function ProcessSection({ locale }: Props) {
               >
                 {/* Hover glow */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
-                  style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.10) 0%, transparent 70%)" }} />
+                  style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(62,106,153,0.10) 0%, transparent 70%)" }} />
 
                 {/* Step icon badge (centered, doubles as connector node) */}
                 <div className="flex items-center justify-center mb-5">
                   <div
                     className="w-[52px] h-[52px] rounded-2xl flex items-center justify-center relative"
                     style={{
-                      background: "linear-gradient(135deg, rgba(29,78,216,0.70) 0%, rgba(59,130,246,0.60) 100%)",
-                      border:     "1px solid rgba(96,165,250,0.40)",
-                      boxShadow:  "0 0 20px rgba(59,130,246,0.28), 0 4px 12px rgba(0,0,0,0.30)",
+                      background: "linear-gradient(135deg, rgba(45,82,121,0.70) 0%, rgba(62,106,153,0.60) 100%)",
+                      border:     "1px solid rgba(62,106,153,0.40)",
+                      boxShadow:  "0 0 20px rgba(62,106,153,0.28), 0 4px 12px rgba(0,0,0,0.30)",
                     }}
                   >
                     {(() => {
                       const Icon = STEP_ICONS[i % STEP_ICONS.length];
-                      return <Icon size={24} color="#EDF2FF" strokeWidth={1.8} />;
+                      return <Icon size={24} color="#1E293B" strokeWidth={1.8} />;
                     })()}
                     {/* Step number chip */}
                     <span
                       className="absolute -top-2 -right-2 w-[22px] h-[22px] rounded-full flex items-center justify-center"
                       style={{
                         fontSize: "10px", fontWeight: 800, letterSpacing: "0.02em",
-                        color: "#EDF2FF", fontFamily: "monospace",
-                        background: "#0B1733", border: "1px solid rgba(96,165,250,0.45)",
+                        color: "#1E293B", fontFamily: "monospace",
+                        background: "#0B1733", border: "1px solid rgba(62,106,153,0.45)",
                       }}
                     >
                       {String(i + 1).padStart(2, "0")}
@@ -133,13 +133,13 @@ export function ProcessSection({ locale }: Props) {
                 <h3 className="font-display font-bold text-content text-center mb-2 transition-colors duration-200 group-hover:text-blue-400">
                   {step.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-center" style={{ color: "#7B93B8" }}>
+                <p className="text-sm leading-relaxed text-center" style={{ color: "#475569" }}>
                   {step.desc}
                 </p>
 
                 {/* Bottom glow on hover */}
                 <div className="absolute bottom-0 inset-x-8 h-px rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-                  style={{ background: "linear-gradient(90deg, transparent, rgba(59,130,246,0.55), transparent)" }} />
+                  style={{ background: "linear-gradient(90deg, transparent, rgba(62,106,153,0.55), transparent)" }} />
               </div>
             </motion.div>
           ))}

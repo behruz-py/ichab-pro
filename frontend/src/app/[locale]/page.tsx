@@ -110,22 +110,22 @@ export default async function HomePage({ params: { locale } }: Props) {
             <div
               className="rounded-3xl p-12 relative overflow-hidden"
               style={{
-                background:           "rgba(9,18,42,0.70)",
-                border:               "1px solid rgba(59,130,246,0.20)",
+                background:           "rgba(247,249,252,0.70)",
+                border:               "1px solid rgba(62,106,153,0.20)",
                 backdropFilter:       "blur(20px)",
                 WebkitBackdropFilter: "blur(20px)",
-                boxShadow:            "0 8px 48px rgba(0,0,0,0.30), 0 0 80px rgba(59,130,246,0.05)",
+                boxShadow:            "0 8px 48px rgba(0,0,0,0.30), 0 0 80px rgba(62,106,153,0.05)",
               }}
             >
               {/* Glow top */}
               <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[400px] h-[200px] rounded-full pointer-events-none"
-                style={{ background: "radial-gradient(ellipse, rgba(59,130,246,0.14) 0%, transparent 70%)" }} />
+                style={{ background: "radial-gradient(ellipse, rgba(62,106,153,0.14) 0%, transparent 70%)" }} />
               {/* Bottom glow */}
               <div className="absolute -bottom-10 left-1/4 w-[300px] h-[150px] rounded-full pointer-events-none"
-                style={{ background: "radial-gradient(ellipse, rgba(249,115,22,0.06) 0%, transparent 70%)" }} />
+                style={{ background: "radial-gradient(ellipse, rgba(239,142,54,0.06) 0%, transparent 70%)" }} />
 
               <div className="relative">
-                <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-4" style={{ color: "#3B82F6" }}>
+                <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-4" style={{ color: "#3E6A99" }}>
                   Biz bilan bog&apos;laning
                 </span>
                 <h2
@@ -134,15 +134,15 @@ export default async function HomePage({ params: { locale } }: Props) {
                 >
                   {tHero("cta_primary")}?
                 </h2>
-                <p className="mb-10 max-w-lg mx-auto" style={{ color: "#7B93B8" }}>
+                <p className="mb-10 max-w-lg mx-auto" style={{ color: "#475569" }}>
                   {tHero("subtitle")}
                 </p>
                 <Link
                   href={`/${locale}/contact`}
                   className="inline-flex items-center gap-2 px-10 py-4 rounded-2xl font-semibold text-base text-white transition-all duration-200 hover:scale-[1.03] hover:-translate-y-0.5"
                   style={{
-                    background: "linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%)",
-                    boxShadow:  "0 8px 32px rgba(59,130,246,0.40), inset 0 1px 0 rgba(255,255,255,0.18)",
+                    background: "linear-gradient(135deg, #2D5279 0%, #3E6A99 100%)",
+                    boxShadow:  "0 8px 32px rgba(62,106,153,0.40), inset 0 1px 0 rgba(255,255,255,0.18)",
                   }}
                 >
                   {tHero("cta_primary")}

@@ -35,7 +35,7 @@ export default async function PartnersPage({ params: { locale } }: Props) {
         {/* Ambient radial glow */}
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 65%)" }}
+          style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(62,106,153,0.12) 0%, transparent 65%)" }}
         />
         {/* Subtle grid overlay */}
         <div
@@ -43,20 +43,20 @@ export default async function PartnersPage({ params: { locale } }: Props) {
           style={{
             opacity: 0.03,
             backgroundImage:
-              "linear-gradient(rgba(99,179,237,1) 1px,transparent 1px),linear-gradient(90deg,rgba(99,179,237,1) 1px,transparent 1px)",
+              "linear-gradient(rgba(62,106,153,1) 1px,transparent 1px),linear-gradient(90deg,rgba(62,106,153,1) 1px,transparent 1px)",
             backgroundSize: "60px 60px",
           }}
         />
         {/* Bottom separator */}
         <div
           className="absolute bottom-0 inset-x-0 h-px"
-          style={{ background: "linear-gradient(90deg,transparent,rgba(59,130,246,0.28) 50%,transparent)" }}
+          style={{ background: "linear-gradient(90deg,transparent,rgba(62,106,153,0.28) 50%,transparent)" }}
         />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span
             className="inline-block text-xs font-bold uppercase tracking-[0.22em] mb-5"
-            style={{ color: "#3B82F6" }}
+            style={{ color: "#3E6A99" }}
           >
             {t("badge")}
           </span>
@@ -70,7 +70,7 @@ export default async function PartnersPage({ params: { locale } }: Props) {
 
           <p
             className="max-w-2xl mx-auto mb-10"
-            style={{ fontSize: "18px", color: "#7B93B8", lineHeight: "1.65" }}
+            style={{ fontSize: "18px", color: "#475569", lineHeight: "1.65" }}
           >
             {t("subtitle")}
           </p>
@@ -80,9 +80,9 @@ export default async function PartnersPage({ params: { locale } }: Props) {
             <div
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold"
               style={{
-                background: "rgba(59,130,246,0.10)",
-                border: "1px solid rgba(59,130,246,0.25)",
-                color: "#60A5FA",
+                background: "rgba(62,106,153,0.10)",
+                border: "1px solid rgba(62,106,153,0.25)",
+                color: "#3E6A99",
               }}
             >
               <span className="font-bold text-white" style={{ fontSize: "20px" }}>{partners.length}</span>
@@ -93,12 +93,12 @@ export default async function PartnersPage({ params: { locale } }: Props) {
               <div
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold"
                 style={{
-                  background: "rgba(249,115,22,0.08)",
-                  border: "1px solid rgba(249,115,22,0.25)",
-                  color: "#FB923C",
+                  background: "rgba(239,142,54,0.08)",
+                  border: "1px solid rgba(239,142,54,0.25)",
+                  color: "#E8852C",
                 }}
               >
-                <Star size={16} fill="#FB923C" />
+                <Star size={16} fill="#E8852C" />
                 <span className="font-bold text-white" style={{ fontSize: "20px" }}>{featuredCount}</span>
                 {t("strategic")}
               </div>
@@ -116,12 +116,12 @@ export default async function PartnersPage({ params: { locale } }: Props) {
       {partners.length > 0 && (
         <div
           className="py-12"
-          style={{ borderTop: "1px solid rgba(59,130,246,0.10)" }}
+          style={{ borderTop: "1px solid rgba(62,106,153,0.10)" }}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p
               style={{
-                color: "#344768",
+                color: "#94A3B8",
                 fontSize: "12px",
                 letterSpacing: "0.10em",
                 textTransform: "uppercase",

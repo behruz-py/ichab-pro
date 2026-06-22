@@ -31,26 +31,26 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
       <div className="relative overflow-hidden" style={{ paddingTop: "110px", paddingBottom: "72px" }}>
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 65%)" }}
+          style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(62,106,153,0.12) 0%, transparent 65%)" }}
         />
         {/* Terminal scan lines */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             opacity: 0.022,
-            backgroundImage: "repeating-linear-gradient(0deg, rgba(99,179,237,1) 0px, transparent 1px, transparent 30px)",
+            backgroundImage: "repeating-linear-gradient(0deg, rgba(62,106,153,1) 0px, transparent 1px, transparent 30px)",
           }}
         />
         <div
           className="absolute bottom-0 inset-x-0 h-px"
-          style={{ background: "linear-gradient(90deg,transparent,rgba(59,130,246,0.28) 50%,transparent)" }}
+          style={{ background: "linear-gradient(90deg,transparent,rgba(62,106,153,0.28) 50%,transparent)" }}
         />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-xs font-bold uppercase tracking-[0.22em]" style={{ color: "#3B82F6" }}>
+                <span className="text-xs font-bold uppercase tracking-[0.22em]" style={{ color: "#3E6A99" }}>
                   Laboratoriyalar
                 </span>
                 {/* Pulsing green dot */}
@@ -73,7 +73,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
               >
                 {t("title")}
               </h1>
-              <p className="max-w-xl" style={{ fontSize: "18px", color: "#7B93B8", lineHeight: "1.65" }}>
+              <p className="max-w-xl" style={{ fontSize: "18px", color: "#475569", lineHeight: "1.65" }}>
                 {t("subtitle")}
               </p>
             </div>
@@ -82,19 +82,19 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
             <div
               className="inline-flex items-center gap-4 px-5 py-4 rounded-2xl flex-shrink-0"
               style={{
-                background: "rgba(9,18,42,0.70)",
-                border: "1px solid rgba(59,130,246,0.16)",
+                background: "rgba(247,249,252,0.70)",
+                border: "1px solid rgba(62,106,153,0.16)",
                 backdropFilter: "blur(16px)",
               }}
             >
               <div className="text-center">
-                <p className="font-mono font-bold text-2xl" style={{ color: "#3B82F6" }}>{divisions.length}</p>
-                <p className="text-[11px] uppercase tracking-wider" style={{ color: "#4A6485" }}>Laboratoriya</p>
+                <p className="font-mono font-bold text-2xl" style={{ color: "#3E6A99" }}>{divisions.length}</p>
+                <p className="text-[11px] uppercase tracking-wider" style={{ color: "#64748B" }}>Laboratoriya</p>
               </div>
-              <div className="w-px h-10 self-center" style={{ background: "rgba(59,130,246,0.18)" }} />
+              <div className="w-px h-10 self-center" style={{ background: "rgba(62,106,153,0.18)" }} />
               <div className="text-center">
                 <p className="font-mono font-bold text-2xl" style={{ color: "#22C55E" }}>AKTIV</p>
-                <p className="text-[11px] uppercase tracking-wider" style={{ color: "#4A6485" }}>Status</p>
+                <p className="text-[11px] uppercase tracking-wider" style={{ color: "#64748B" }}>Status</p>
               </div>
             </div>
           </div>
@@ -104,7 +104,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
       {/* ── Lab card grid ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         {divisions.length === 0 ? (
-          <div className="text-center py-24" style={{ color: "#344768" }}>
+          <div className="text-center py-24" style={{ color: "#94A3B8" }}>
             <Settings size={48} strokeWidth={1.5} className="mx-auto mb-4 opacity-30" />
             <p className="text-lg font-medium">Laboratoriyalar hali qo&apos;shilmagan</p>
           </div>
@@ -117,7 +117,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                 className="group relative block rounded-2xl overflow-hidden lab-card-scan"
                 style={{
                   height: i === 0 ? "380px" : "320px",
-                  border: "1px solid rgba(59,130,246,0.13)",
+                  border: "1px solid rgba(62,106,153,0.13)",
                 }}
               >
                 {/* Background */}
@@ -136,9 +136,9 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                       className="w-full h-full flex items-center justify-center"
                       style={{
                         backgroundImage: [
-                          "linear-gradient(135deg, rgba(29,78,216,0.20) 0%, rgba(14,165,233,0.07) 50%, rgba(5,10,23,0.96) 100%)",
-                          "repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(59,130,246,0.04) 28px, rgba(59,130,246,0.04) 29px)",
-                          "repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(59,130,246,0.04) 28px, rgba(59,130,246,0.04) 29px)",
+                          "linear-gradient(135deg, rgba(45,82,121,0.20) 0%, rgba(62,106,153,0.07) 50%, rgba(5,10,23,0.96) 100%)",
+                          "repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(62,106,153,0.04) 28px, rgba(62,106,153,0.04) 29px)",
+                          "repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(62,106,153,0.04) 28px, rgba(62,106,153,0.04) 29px)",
                         ].join(", "),
                       }}
                     >
@@ -162,8 +162,8 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                   style={{
                     top: 0,
                     background:
-                      "linear-gradient(90deg, transparent 0%, rgba(59,130,246,0) 5%, rgba(59,130,246,0.9) 40%, rgba(56,189,248,1) 50%, rgba(59,130,246,0.9) 60%, rgba(59,130,246,0) 95%, transparent 100%)",
-                    boxShadow: "0 0 14px rgba(56,189,248,0.65)",
+                      "linear-gradient(90deg, transparent 0%, rgba(62,106,153,0) 5%, rgba(62,106,153,0.9) 40%, rgba(81,127,176,1) 50%, rgba(62,106,153,0.9) 60%, rgba(62,106,153,0) 95%, transparent 100%)",
+                    boxShadow: "0 0 14px rgba(81,127,176,0.65)",
                   }}
                 />
 
@@ -172,12 +172,12 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                   className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-xl"
                   style={{
                     background: "rgba(5,10,23,0.82)",
-                    border: "1px solid rgba(59,130,246,0.35)",
+                    border: "1px solid rgba(62,106,153,0.35)",
                     backdropFilter: "blur(8px)",
                   }}
                 >
                   <span className="w-1.5 h-1.5 rounded-full lab-active-dot" style={{ background: "#22C55E" }} />
-                  <span className="font-mono text-[11px] font-bold tracking-widest" style={{ color: "#60A5FA" }}>
+                  <span className="font-mono text-[11px] font-bold tracking-widest" style={{ color: "#3E6A99" }}>
                     LAB · {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
@@ -199,14 +199,14 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                 {/* Top border hover line */}
                 <div
                   className="absolute top-0 inset-x-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{ background: "linear-gradient(90deg, transparent, #1D4ED8, #3B82F6, #38BDF8, #3B82F6, transparent)" }}
+                  style={{ background: "linear-gradient(90deg, transparent, #2D5279, #3E6A99, #517FB0, #3E6A99, transparent)" }}
                 />
 
                 {/* Bottom content */}
                 <div className="absolute bottom-0 inset-x-0 p-5">
                   <h2
                     className="font-display font-bold text-lg leading-snug mb-1.5 group-hover:text-blue-300 transition-colors duration-200"
-                    style={{ color: "#EDF2FF" }}
+                    style={{ color: "#1E293B" }}
                   >
                     {div.name}
                   </h2>
@@ -221,14 +221,14 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                         <div
                           className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0"
                           style={{
-                            background: "rgba(59,130,246,0.25)",
-                            border: "1px solid rgba(59,130,246,0.40)",
-                            color: "#93C5FD",
+                            background: "rgba(62,106,153,0.25)",
+                            border: "1px solid rgba(62,106,153,0.40)",
+                            color: "#3E6A99",
                           }}
                         >
                           {div.leader_name.charAt(0).toUpperCase()}
                         </div>
-                        <span className="text-xs" style={{ color: "rgba(147,197,253,0.80)" }}>
+                        <span className="text-xs" style={{ color: "rgba(81,127,176,0.80)" }}>
                           {div.leader_name}
                         </span>
                       </div>
@@ -238,7 +238,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
 
                     <span
                       className="inline-flex items-center gap-1 text-xs font-bold transition-all duration-200 group-hover:translate-x-1"
-                      style={{ color: "#60A5FA" }}
+                      style={{ color: "#3E6A99" }}
                     >
                       Batafsil <ArrowRight size={13} />
                     </span>
@@ -248,7 +248,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                 {/* Hover glow ring */}
                 <div
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{ boxShadow: "inset 0 0 0 1px rgba(59,130,246,0.45), 0 12px 48px rgba(59,130,246,0.15)" }}
+                  style={{ boxShadow: "inset 0 0 0 1px rgba(62,106,153,0.45), 0 12px 48px rgba(62,106,153,0.15)" }}
                 />
               </Link>
             ))}

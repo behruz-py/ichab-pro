@@ -19,11 +19,11 @@ interface Props {
 
 function PlaceholderBg({ index }: { index: number }) {
   const gradients = [
-    "radial-gradient(circle at 30% 40%, rgba(29,78,216,0.40) 0%, rgba(5,9,24,0.98) 65%)",
-    "radial-gradient(circle at 70% 30%, rgba(14,165,233,0.30) 0%, rgba(5,9,24,0.98) 65%)",
-    "radial-gradient(circle at 50% 70%, rgba(99,102,241,0.28) 0%, rgba(5,9,24,0.98) 65%)",
-    "radial-gradient(circle at 20% 60%, rgba(6,182,212,0.28) 0%, rgba(5,9,24,0.98) 65%)",
-    "radial-gradient(circle at 80% 50%, rgba(59,130,246,0.28) 0%, rgba(5,9,24,0.98) 65%)",
+    "radial-gradient(circle at 30% 40%, rgba(45,82,121,0.40) 0%, rgba(5,9,24,0.98) 65%)",
+    "radial-gradient(circle at 70% 30%, rgba(62,106,153,0.30) 0%, rgba(5,9,24,0.98) 65%)",
+    "radial-gradient(circle at 50% 70%, rgba(62,106,153,0.28) 0%, rgba(5,9,24,0.98) 65%)",
+    "radial-gradient(circle at 20% 60%, rgba(62,106,153,0.28) 0%, rgba(5,9,24,0.98) 65%)",
+    "radial-gradient(circle at 80% 50%, rgba(62,106,153,0.28) 0%, rgba(5,9,24,0.98) 65%)",
   ];
   return <div className="absolute inset-0" style={{ background: gradients[index % gradients.length] }} />;
 }
@@ -37,31 +37,31 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
       <div className="absolute inset-0 pointer-events-none" style={{
         opacity: 0.018,
         backgroundImage:
-          "repeating-linear-gradient(0deg,rgba(99,179,237,1) 0px,transparent 1px,transparent 38px)," +
-          "repeating-linear-gradient(90deg,rgba(99,179,237,1) 0px,transparent 1px,transparent 38px)",
+          "repeating-linear-gradient(0deg,rgba(62,106,153,1) 0px,transparent 1px,transparent 38px)," +
+          "repeating-linear-gradient(90deg,rgba(62,106,153,1) 0px,transparent 1px,transparent 38px)",
       }} />
-      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(59,130,246,0.22) 50%,transparent)" }} />
-      <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(59,130,246,0.12) 50%,transparent)" }} />
+      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(62,106,153,0.22) 50%,transparent)" }} />
+      <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(62,106,153,0.12) 50%,transparent)" }} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-5">
           <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" viewport={VIEWPORT}>
-            <span className="inline-block text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#3B82F6" }}>
+            <span className="inline-block text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#3E6A99" }}>
               Bo&apos;linmalar
             </span>
             <h2 className="font-display font-bold text-content leading-tight" style={{ fontSize: "clamp(28px,3.5vw,44px)" }}>
               {title}
             </h2>
-            <p className="mt-3 max-w-lg" style={{ color: "#7B93B8" }}>{subtitle}</p>
+            <p className="mt-3 max-w-lg" style={{ color: "#475569" }}>{subtitle}</p>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={VIEWPORT} transition={{ duration: 0.5, delay: 0.2 }}>
             <Link
               href={`/${locale}/divisions`}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold shrink-0 transition-all duration-200 hover:gap-3"
-              style={{ background: "rgba(59,130,246,0.10)", border: "1px solid rgba(59,130,246,0.25)", color: "#60A5FA" }}
+              style={{ background: "rgba(62,106,153,0.10)", border: "1px solid rgba(62,106,153,0.25)", color: "#3E6A99" }}
             >
               {viewAll} <ArrowRight size={16} />
             </Link>
@@ -83,7 +83,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
               className="group relative block rounded-2xl overflow-hidden"
               style={{
                 aspectRatio: "16/9",
-                border: "1px solid rgba(59,130,246,0.16)",
+                border: "1px solid rgba(62,106,153,0.16)",
               }}
             >
               {/* ── Image — fills 16:9 card exactly, zero crop ── */}
@@ -120,15 +120,15 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
 
               {/* ── Hover top accent line ── */}
               <div className="absolute top-0 inset-x-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                style={{ background: "linear-gradient(90deg, transparent, #3B82F6 30%, #38BDF8 50%, #3B82F6 70%, transparent)" }} />
+                style={{ background: "linear-gradient(90deg, transparent, #3E6A99 30%, #517FB0 50%, #3E6A99 70%, transparent)" }} />
 
               {/* ── LAB badge + logo ── */}
               <div className="absolute top-3 left-3 flex items-center gap-2 z-10">
                 <span className="font-mono text-[11px] font-bold tracking-widest px-2.5 py-1 rounded-lg"
                   style={{
                     background: "rgba(3,8,20,0.75)",
-                    border: "1px solid rgba(59,130,246,0.45)",
-                    color: "#60A5FA",
+                    border: "1px solid rgba(62,106,153,0.45)",
+                    color: "#3E6A99",
                     backdropFilter: "blur(8px)",
                     WebkitBackdropFilter: "blur(8px)",
                   }}>
@@ -161,12 +161,12 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                 </h3>
                 <div className="flex items-center justify-between">
                   {div.leader_name ? (
-                    <p className="text-xs" style={{ color: "rgba(147,197,253,0.75)" }}>
+                    <p className="text-xs" style={{ color: "rgba(81,127,176,0.75)" }}>
                       {div.leader_name}
                     </p>
                   ) : <span />}
                   <span className="inline-flex items-center gap-1 text-xs font-bold transition-all duration-200 group-hover:translate-x-0.5"
-                    style={{ color: "#60A5FA" }}>
+                    style={{ color: "#3E6A99" }}>
                     {viewDetail} <ArrowRight size={13} />
                   </span>
                 </div>
@@ -174,7 +174,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
 
               {/* ── Hover glow ring ── */}
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                style={{ boxShadow: "inset 0 0 0 1px rgba(59,130,246,0.52)" }} />
+                style={{ boxShadow: "inset 0 0 0 1px rgba(62,106,153,0.52)" }} />
             </Link>
           ))}
         </motion.div>

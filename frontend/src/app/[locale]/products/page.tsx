@@ -36,7 +36,7 @@ export default async function ProductsPage({ params: { locale } }: Props) {
           style={{ fontSize: "clamp(28px, 4vw, 48px)" }}>
           {t("title")}
         </h1>
-        <p style={{ color: "#7B93B8", fontSize: "17px" }}>{t("subtitle")}</p>
+        <p style={{ color: "#475569", fontSize: "17px" }}>{t("subtitle")}</p>
       </div>
 
       <ProductsClient products={products} categories={categories} />

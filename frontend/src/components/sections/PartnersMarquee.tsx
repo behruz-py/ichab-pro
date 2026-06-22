@@ -24,8 +24,8 @@ function cfOpacity(t: number) { return 1.00 - t * 0.80; }
 function cfBlur   (t: number) { return t * t * t * 10; }
 
 const SHADOW_ACTIVE = [
-  "0 0 0 2.5px rgba(59,130,246,0.72)",
-  "0 0 28px rgba(59,130,246,0.32)",
+  "0 0 0 2.5px rgba(62,106,153,0.72)",
+  "0 0 28px rgba(62,106,153,0.32)",
   "0 8px 40px rgba(0,0,0,0.55)",
 ].join(", ");
 
@@ -118,7 +118,7 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={VIEWPORT}>
           <span
             className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3"
-            style={{ color: "#3B82F6" }}
+            style={{ color: "#3E6A99" }}
           >
             Hamkorlar
           </span>
@@ -128,7 +128,7 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
           >
             {title}
           </h2>
-          <p className="mt-3 max-w-xl mx-auto" style={{ color: "#7B93B8" }}>
+          <p className="mt-3 max-w-xl mx-auto" style={{ color: "#475569" }}>
             {subtitle}
           </p>
         </motion.div>
@@ -142,11 +142,11 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
         {/* Edge fades */}
         <div
           className="pointer-events-none absolute left-0 top-0 h-full w-56 z-20"
-          style={{ background: "linear-gradient(to right, #050A17 10%, transparent 100%)" }}
+          style={{ background: "linear-gradient(to right, #E5EAF1 10%, transparent 100%)" }}
         />
         <div
           className="pointer-events-none absolute right-0 top-0 h-full w-56 z-20"
-          style={{ background: "linear-gradient(to left, #050A17 10%, transparent 100%)" }}
+          style={{ background: "linear-gradient(to left, #E5EAF1 10%, transparent 100%)" }}
         />
 
         {/* Spotlight glow line under center card */}
@@ -155,7 +155,7 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
           style={{
             width:        `${CARD_W + 60}px`,
             height:       "6px",
-            background:   "radial-gradient(ellipse, rgba(59,130,246,0.55) 0%, transparent 75%)",
+            background:   "radial-gradient(ellipse, rgba(62,106,153,0.55) 0%, transparent 75%)",
             borderRadius: "3px",
             filter:       "blur(2px)",
           }}
@@ -215,12 +215,12 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
         viewport={VIEWPORT}
         className="mt-8 flex items-center justify-center gap-5"
       >
-        <div style={{ height: "1px", width: "60px", background: "rgba(59,130,246,0.20)" }} />
-        <p style={{ color: "#344768", fontSize: "12px", fontWeight: 500, letterSpacing: "0.06em" }}>
-          <span style={{ color: "#60A5FA", fontWeight: 700, fontSize: "14px" }}>{count}</span>
+        <div style={{ height: "1px", width: "60px", background: "rgba(62,106,153,0.20)" }} />
+        <p style={{ color: "#94A3B8", fontSize: "12px", fontWeight: 500, letterSpacing: "0.06em" }}>
+          <span style={{ color: "#3E6A99", fontWeight: 700, fontSize: "14px" }}>{count}</span>
           {" "}ta ishonchli hamkor kompaniya
         </p>
-        <div style={{ height: "1px", width: "60px", background: "rgba(59,130,246,0.20)" }} />
+        <div style={{ height: "1px", width: "60px", background: "rgba(62,106,153,0.20)" }} />
       </motion.div>
 
     </section>

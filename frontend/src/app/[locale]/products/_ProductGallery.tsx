@@ -26,14 +26,14 @@ export function ProductGallery({ images, productName, locale, noImageText }: Pro
     return (
       <div
         className="relative rounded-2xl overflow-hidden flex flex-col items-center justify-center gap-3"
-        style={{ aspectRatio: "4/3", background: "rgba(5,9,24,0.8)", border: "1px solid rgba(59,130,246,0.14)" }}
+        style={{ aspectRatio: "4/3", background: "rgba(247,249,252,0.8)", border: "1px solid rgba(62,106,153,0.14)" }}
       >
         <svg width="52" height="52" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" strokeWidth="1" style={{ color: "#1e3a5f" }}>
+          stroke="currentColor" strokeWidth="1" style={{ color: "#94A3B8" }}>
           <rect x="2" y="3" width="20" height="14" rx="2" />
           <path d="M8 21h8M12 17v4" />
         </svg>
-        <span className="text-xs" style={{ color: "#344768" }}>{noImageText}</span>
+        <span className="text-xs" style={{ color: "#94A3B8" }}>{noImageText}</span>
       </div>
     );
   }
@@ -43,7 +43,7 @@ export function ProductGallery({ images, productName, locale, noImageText }: Pro
       {/* Main image */}
       <div
         className="relative rounded-2xl overflow-hidden"
-        style={{ aspectRatio: "4/3", background: "rgba(5,9,24,0.8)", border: "1px solid rgba(59,130,246,0.14)" }}
+        style={{ aspectRatio: "4/3", background: "rgba(247,249,252,0.8)", border: "1px solid rgba(62,106,153,0.14)" }}
       >
         <Image
           src={active.image}
@@ -67,8 +67,8 @@ export function ProductGallery({ images, productName, locale, noImageText }: Pro
                 width: "80px",
                 height: "60px",
                 border: img.id === active.id
-                  ? "2px solid rgba(59,130,246,0.70)"
-                  : "1px solid rgba(59,130,246,0.20)",
+                  ? "2px solid rgba(62,106,153,0.70)"
+                  : "1px solid rgba(62,106,153,0.20)",
                 opacity: img.id === active.id ? 1 : 0.55,
               }}
               aria-label={altOf(img)}

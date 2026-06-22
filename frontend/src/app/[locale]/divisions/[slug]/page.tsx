@@ -56,9 +56,9 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
             className="absolute inset-0"
             style={{
               backgroundImage: [
-                "linear-gradient(135deg, rgba(29,78,216,0.22) 0%, rgba(14,165,233,0.10) 50%, rgba(5,10,23,1) 100%)",
-                "repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(59,130,246,0.04) 28px, rgba(59,130,246,0.04) 29px)",
-                "repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(59,130,246,0.04) 28px, rgba(59,130,246,0.04) 29px)",
+                "linear-gradient(135deg, rgba(45,82,121,0.22) 0%, rgba(62,106,153,0.10) 50%, rgba(5,10,23,1) 100%)",
+                "repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(62,106,153,0.04) 28px, rgba(62,106,153,0.04) 29px)",
+                "repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(62,106,153,0.04) 28px, rgba(62,106,153,0.04) 29px)",
               ].join(", "),
             }}
           />
@@ -84,7 +84,7 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
           <Link
             href={`/${locale}/divisions`}
             className="inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 hover:gap-3"
-            style={{ color: "rgba(147,197,253,0.80)" }}
+            style={{ color: "rgba(81,127,176,0.80)" }}
           >
             <ArrowLeft size={16} /> {t("title")}
           </Link>
@@ -119,12 +119,12 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
                 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl mb-3"
                 style={{
                   background: "rgba(5,10,23,0.82)",
-                  border: "1px solid rgba(59,130,246,0.38)",
+                  border: "1px solid rgba(62,106,153,0.38)",
                   backdropFilter: "blur(8px)",
                 }}
               >
                 <span className="w-1.5 h-1.5 rounded-full lab-active-dot" style={{ background: "#22C55E" }} />
-                <span className="font-mono text-[11px] font-bold tracking-widest" style={{ color: "#60A5FA" }}>
+                <span className="font-mono text-[11px] font-bold tracking-widest" style={{ color: "#3E6A99" }}>
                   LABORATORIYA · AKTIV
                 </span>
               </div>
@@ -149,13 +149,13 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
             <div
               className="rounded-2xl p-6 mb-8"
               style={{
-                background: "rgba(9,18,42,0.70)",
-                border: "1px solid rgba(59,130,246,0.16)",
+                background: "rgba(247,249,252,0.70)",
+                border: "1px solid rgba(62,106,153,0.16)",
                 backdropFilter: "blur(16px)",
-                borderLeft: "3px solid rgba(59,130,246,0.60)",
+                borderLeft: "3px solid rgba(62,106,153,0.60)",
               }}
             >
-              <p className="text-base leading-relaxed" style={{ color: "#C2D4EE", fontSize: "17px" }}>
+              <p className="text-base leading-relaxed" style={{ color: "#475569", fontSize: "17px" }}>
                 {div.short_description}
               </p>
             </div>
@@ -165,14 +165,14 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
               <div
                 className="rounded-2xl p-6 mb-8"
                 style={{
-                  background: "rgba(9,18,42,0.55)",
-                  border: "1px solid rgba(59,130,246,0.10)",
+                  background: "rgba(247,249,252,0.55)",
+                  border: "1px solid rgba(62,106,153,0.10)",
                   backdropFilter: "blur(16px)",
                 }}
               >
                 <p
                   className="text-sm leading-[1.85] whitespace-pre-line"
-                  style={{ color: "#7B93B8" }}
+                  style={{ color: "#475569" }}
                 >
                   {div.full_description}
                 </p>
@@ -184,9 +184,9 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
               href={`/${locale}/divisions`}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:gap-3"
               style={{
-                background: "rgba(59,130,246,0.10)",
-                border: "1px solid rgba(59,130,246,0.25)",
-                color: "#60A5FA",
+                background: "rgba(62,106,153,0.10)",
+                border: "1px solid rgba(62,106,153,0.25)",
+                color: "#3E6A99",
               }}
             >
               <ArrowLeft size={16} /> {t("title")}
@@ -201,22 +201,22 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
               <div
                 className="rounded-2xl p-5 overflow-hidden relative"
                 style={{
-                  background: "rgba(9,18,42,0.80)",
-                  border: "1px solid rgba(59,130,246,0.18)",
+                  background: "rgba(247,249,252,0.80)",
+                  border: "1px solid rgba(62,106,153,0.18)",
                   backdropFilter: "blur(18px)",
                 }}
               >
                 {/* Glow top */}
                 <div
                   className="absolute top-0 inset-x-0 h-16 pointer-events-none"
-                  style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 70%)" }}
+                  style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(62,106,153,0.12) 0%, transparent 70%)" }}
                 />
                 <div className="absolute top-0 inset-x-0 h-px"
-                  style={{ background: "linear-gradient(90deg, transparent, rgba(59,130,246,0.50) 50%, transparent)" }} />
+                  style={{ background: "linear-gradient(90deg, transparent, rgba(62,106,153,0.50) 50%, transparent)" }} />
 
                 <p
                   className="text-[10px] font-bold uppercase tracking-[0.18em] mb-4 relative"
-                  style={{ color: "rgba(59,130,246,0.55)" }}
+                  style={{ color: "rgba(62,106,153,0.55)" }}
                 >
                   Laboratoriya Rahbari
                 </p>
@@ -225,17 +225,17 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
                   <div
                     className="w-12 h-12 rounded-2xl flex items-center justify-center text-lg font-bold flex-shrink-0"
                     style={{
-                      background: "linear-gradient(135deg, rgba(29,78,216,0.35) 0%, rgba(59,130,246,0.20) 100%)",
-                      border: "1px solid rgba(59,130,246,0.35)",
-                      color: "#60A5FA",
+                      background: "linear-gradient(135deg, rgba(45,82,121,0.35) 0%, rgba(62,106,153,0.20) 100%)",
+                      border: "1px solid rgba(62,106,153,0.35)",
+                      color: "#3E6A99",
                     }}
                   >
                     {div.leader_name.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <p className="font-semibold" style={{ color: "#E2EAF4" }}>{div.leader_name}</p>
+                    <p className="font-semibold" style={{ color: "#1E293B" }}>{div.leader_name}</p>
                     {div.leader_position && (
-                      <p className="text-xs mt-0.5" style={{ color: "#5A7499" }}>{div.leader_position}</p>
+                      <p className="text-xs mt-0.5" style={{ color: "#64748B" }}>{div.leader_position}</p>
                     )}
                   </div>
                 </div>
@@ -247,14 +247,14 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
               <div
                 className="rounded-2xl p-5"
                 style={{
-                  background: "rgba(9,18,42,0.70)",
-                  border: "1px solid rgba(59,130,246,0.14)",
+                  background: "rgba(247,249,252,0.70)",
+                  border: "1px solid rgba(62,106,153,0.14)",
                   backdropFilter: "blur(16px)",
                 }}
               >
                 <p
                   className="text-[10px] font-bold uppercase tracking-[0.18em] mb-4"
-                  style={{ color: "rgba(59,130,246,0.55)" }}
+                  style={{ color: "rgba(62,106,153,0.55)" }}
                 >
                   Aloqa
                 </p>
@@ -264,14 +264,14 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
                     <a
                       href={`tel:${div.contact_phone}`}
                       className="flex items-center gap-3 text-sm group transition-colors duration-200"
-                      style={{ color: "#7B93B8" }}
+                      style={{ color: "#475569" }}
                     >
                       <span
                         className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-105"
                         style={{
-                          background: "rgba(59,130,246,0.12)",
-                          border: "1px solid rgba(59,130,246,0.22)",
-                          color: "#60A5FA",
+                          background: "rgba(62,106,153,0.12)",
+                          border: "1px solid rgba(62,106,153,0.22)",
+                          color: "#3E6A99",
                           fontSize: "14px",
                         }}
                       >
@@ -286,14 +286,14 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
                     <a
                       href={`mailto:${div.contact_email}`}
                       className="flex items-center gap-3 text-sm group transition-colors duration-200"
-                      style={{ color: "#7B93B8" }}
+                      style={{ color: "#475569" }}
                     >
                       <span
                         className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-105"
                         style={{
-                          background: "rgba(59,130,246,0.12)",
-                          border: "1px solid rgba(59,130,246,0.22)",
-                          color: "#60A5FA",
+                          background: "rgba(62,106,153,0.12)",
+                          border: "1px solid rgba(62,106,153,0.22)",
+                          color: "#3E6A99",
                           fontSize: "13px",
                         }}
                       >
@@ -313,8 +313,8 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
               href={`/${locale}/contact`}
               className="flex items-center justify-center gap-2 w-full py-3.5 px-5 rounded-2xl font-semibold text-sm text-white transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5"
               style={{
-                background: "linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%)",
-                boxShadow: "0 8px 32px rgba(59,130,246,0.35), inset 0 1px 0 rgba(255,255,255,0.16)",
+                background: "linear-gradient(135deg, #2D5279 0%, #3E6A99 100%)",
+                boxShadow: "0 8px 32px rgba(62,106,153,0.35), inset 0 1px 0 rgba(255,255,255,0.16)",
               }}
             >
               Bog&apos;lanish <ArrowRight size={16} />

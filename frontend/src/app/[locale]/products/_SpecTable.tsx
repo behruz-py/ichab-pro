@@ -12,16 +12,16 @@ export function SpecTable({ table, title, paramHeader }: Props) {
   return (
     <div
       className="rounded-2xl overflow-hidden mb-10"
-      style={{ border: "1px solid rgba(59,130,246,0.14)" }}
+      style={{ border: "1px solid rgba(62,106,153,0.14)" }}
     >
       <div
         className="px-6 py-4"
         style={{
-          background: "rgba(59,130,246,0.06)",
-          borderBottom: "1px solid rgba(59,130,246,0.14)",
+          background: "rgba(62,106,153,0.06)",
+          borderBottom: "1px solid rgba(62,106,153,0.14)",
         }}
       >
-        <h2 className="font-display font-bold text-lg" style={{ color: "#E2EAF4" }}>
+        <h2 className="font-display font-bold text-lg" style={{ color: "#1E293B" }}>
           {title}
         </h2>
       </div>
@@ -29,10 +29,10 @@ export function SpecTable({ table, title, paramHeader }: Props) {
       <div className="overflow-x-auto">
         <table className="w-full min-w-max">
           <thead>
-            <tr style={{ background: "rgba(59,130,246,0.08)" }}>
+            <tr style={{ background: "rgba(62,106,153,0.08)" }}>
               <th
                 className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider"
-                style={{ color: "#7B93B8", borderBottom: "1px solid rgba(59,130,246,0.14)", minWidth: "200px" }}
+                style={{ color: "#475569", borderBottom: "1px solid rgba(62,106,153,0.14)", minWidth: "200px" }}
               >
                 {paramHeader}
               </th>
@@ -40,7 +40,7 @@ export function SpecTable({ table, title, paramHeader }: Props) {
                 <th
                   key={i}
                   className="px-4 py-3 text-center text-xs font-bold uppercase tracking-wider whitespace-nowrap"
-                  style={{ color: "#60A5FA", borderBottom: "1px solid rgba(59,130,246,0.14)", minWidth: "100px" }}
+                  style={{ color: "#3E6A99", borderBottom: "1px solid rgba(62,106,153,0.14)", minWidth: "100px" }}
                 >
                   {code}
                 </th>
@@ -55,16 +55,16 @@ export function SpecTable({ table, title, paramHeader }: Props) {
               >
                 <td
                   className="px-5 py-3 text-sm font-medium"
-                  style={{ color: "#7B93B8", borderBottom: "1px solid rgba(59,130,246,0.08)" }}
+                  style={{ color: "#475569", borderBottom: "1px solid rgba(62,106,153,0.08)" }}
                 >
                   {row.label}
-                  {row.unit ? <span style={{ color: "#344768" }}>, {row.unit}</span> : null}
+                  {row.unit ? <span style={{ color: "#94A3B8" }}>, {row.unit}</span> : null}
                 </td>
                 {table.variants.map((_, ci) => (
                   <td
                     key={ci}
                     className="px-4 py-3 text-sm font-semibold text-center"
-                    style={{ color: "#E2EAF4", borderBottom: "1px solid rgba(59,130,246,0.08)" }}
+                    style={{ color: "#1E293B", borderBottom: "1px solid rgba(62,106,153,0.08)" }}
                   >
                     {row.values[ci]?.trim() ? row.values[ci] : "—"}
                   </td>
