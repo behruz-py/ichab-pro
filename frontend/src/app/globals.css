@@ -149,6 +149,25 @@
     background-clip: text;
   }
 
+  /* Animated gradient heading with a soft light sheen sweeping through */
+  .title-sheen {
+    background: linear-gradient(100deg,
+      #2F5E94 0%, #2F5E94 28%, #6EA3D6 44%, #DCEBFA 50%, #6EA3D6 56%, #2F5E94 72%, #EA6E14 100%);
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: title-sheen-move 7s linear infinite;
+  }
+  @keyframes title-sheen-move {
+    0%   { background-position: 160% center; }
+    100% { background-position: -90% center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .title-sheen { animation: none; }
+  }
+
   .container-section {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
