@@ -274,10 +274,10 @@ select.form-input option {
 
 /* ─── CTA BUTTON PULSE ───────────────────────────────────────────────────── */
 @keyframes cta-glow-pulse {
-  0%, 100% { box-shadow: 0 4px 16px rgba(208,98,16,0.30), inset 0 1px 0 rgba(255,255,255,0.18); }
-  50%       { box-shadow: 0 4px 32px rgba(208,98,16,0.55), 0 0 0 4px rgba(234,110,20,0.14), inset 0 1px 0 rgba(255,255,255,0.24); }
+  0%, 100% { box-shadow: 0 6px 22px rgba(208,98,16,0.22), inset 0 1px 0 rgba(255,255,255,0.20); }
+  50%      { box-shadow: 0 10px 32px rgba(208,98,16,0.36), inset 0 1px 0 rgba(255,255,255,0.20); }
 }
-.cta-pulse { animation: cta-glow-pulse 2.8s ease-in-out infinite; }
+.cta-pulse { animation: cta-glow-pulse 4.2s ease-in-out infinite; }
 
 /* ─── CTA FLOWING GRADIENT BORDER (the "AI" traveling line) ───────────────── */
 @property --flow-angle {
