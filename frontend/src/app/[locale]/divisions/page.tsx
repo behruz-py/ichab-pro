@@ -153,7 +153,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                       }}>
                       <span className="w-1.5 h-1.5 rounded-full lab-active-dot" style={{ background: "#22C55E" }} />
                       <span className="font-mono text-[11px] font-bold tracking-widest" style={{ color: "#2F5E94" }}>
-                        LAB · {String(i + 1).padStart(2, "0")}
+                        Laboratoriya · {String(i + 1).padStart(2, "0")}
                       </span>
                     </div>
                   </div>

@@ -166,7 +166,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                       style={{ background: "linear-gradient(to top, rgba(15,23,42,0.45) 0%, rgba(15,23,42,0.10) 45%, transparent 70%)", opacity: on ? 0.4 : 1 }} />
                     <span className="absolute bottom-2 left-1/2 -translate-x-1/2 font-mono text-[10px] font-bold px-2 py-0.5 rounded"
                       style={{ background: "rgba(255,255,255,0.94)", color: "#2F5E94" }}>
-                      LAB · {String(i + 1).padStart(2, "0")}
+                      Laboratoriya · {String(i + 1).padStart(2, "0")}
                     </span>
                   </Link>
                 </div>
@@ -187,7 +187,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                   <motion.div key={act.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.22 }} className="px-8 flex flex-col items-center">
                     <span className="font-mono text-[10px] font-bold tracking-widest mb-2" style={{ color: "#EA6E14" }}>
-                      LAB · {String((active ?? 0) + 1).padStart(2, "0")}
+                      Laboratoriya · {String((active ?? 0) + 1).padStart(2, "0")}
                     </span>
                     <h3 className="font-display font-bold leading-snug mb-2.5 line-clamp-3 first-letter:uppercase" style={{ fontSize: 15, color: "#1E293B" }}>
                       {act.name}
@@ -233,7 +233,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                   )}
                   <span className="absolute top-3 left-3 font-mono text-[11px] font-bold tracking-widest px-2.5 py-1 rounded-lg"
                     style={{ background: "rgba(255,255,255,0.92)", border: "1px solid rgba(47,94,148,0.25)", color: "#2F5E94" }}>
-                    LAB · {String(i + 1).padStart(2, "0")}
+                    Laboratoriya · {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
                 <div className="flex flex-col flex-1 p-4">

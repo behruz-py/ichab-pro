@@ -135,7 +135,8 @@
       "Bash(vercel alias *)",
       "Bash(cp hero-visual.png hero-visual-uz.png)",
       "Bash(cp hero-visual.png hero-visual-ru.png)",
-      "Bash(cp hero-visual.png hero-visual-en.png)"
+      "Bash(cp hero-visual.png hero-visual-en.png)",
+      "Bash(grep -vE \"LABORATORIYA|//|/\\\\*\")"
     ],
     "additionalDirectories": [
       "d:\\Document\\developing\\Web\\ichab_pro\\frontend\\src\\app\\[locale]\\products"
