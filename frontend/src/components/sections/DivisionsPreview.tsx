@@ -21,18 +21,25 @@ interface Props {
 const EYEBROW: Record<string, string> = { uz: "Bo'linmalar", ru: "Подразделения", en: "Divisions" };
 const PLACEHOLDER_ICONS: LucideIcon[] = [FlaskConical, Cpu, Gauge, Activity, Cog, Zap];
 
-const BOX = 760;          // diagram canvas
+const BOX = 720;          // diagram canvas
 const C = BOX / 2;        // center
-const R = 282;            // node orbit radius
-const NODE_W = 200;       // node width  (5:3, soft-oval rect)
-const NODE_H = 120;       // node height
-const NODE_RAD = 34;      // node corner radius
-const HUB = 300;          // center content circle diameter
+const R = 272;            // node orbit radius
+const NODE_W = 200;       // node width (5:3 soft-oval rect)
+const NODE_H = 120;
+const NODE_RAD = 34;
+const HUB_W = 248;        // center OVAL width
+const HUB_H = 188;        // center OVAL height
+const COG_RX = HUB_W / 2 + 13;
+const COG_RY = HUB_H / 2 + 13;
 
 const rad = (i: number, n: number) => (-90 + (360 / n) * i) * (Math.PI / 180);
 const nodePos = (i: number, n: number) => ({ x: C + R * Math.cos(rad(i, n)), y: C + R * Math.sin(rad(i, n)) });
-// connector start at the rim of the hub so lines don't cross under it
-const hubEdge = (i: number, n: number) => ({ x: C + (HUB / 2 + 18) * Math.cos(rad(i, n)), y: C + (HUB / 2 + 18) * Math.sin(rad(i, n)) });
+// start the connector at the oval rim so it doesn't run under the hub
+function hubEdge(i: number, n: number) {
+  const a = rad(i, n), rx = COG_RX + 9, ry = COG_RY + 9;
+  const er = (rx * ry) / Math.sqrt((ry * Math.cos(a)) ** 2 + (rx * Math.sin(a)) ** 2);
+  return { x: C + er * Math.cos(a), y: C + er * Math.sin(a) };
+}
 
 function NodeMedia({ div, Icon }: { div: Division; Icon: LucideIcon }) {
   return div.cover_image ? (
@@ -76,7 +83,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
           </motion.div>
         </div>
 
-        {/* ── Desktop: gear hub & spoke ── */}
+        {/* ── Desktop: oval gear hub & spoke ── */}
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -88,69 +95,67 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
           <div className="relative" style={{ width: BOX, height: BOX }}>
             {/* Soft backdrop glow */}
             <div className="absolute rounded-full pointer-events-none" style={{
-              inset: 60,
+              inset: 90,
               background: "radial-gradient(circle at 50% 50%, rgba(47,94,148,0.10) 0%, rgba(234,110,20,0.05) 45%, transparent 70%)",
               filter: "blur(8px)",
             }} />
 
             {/* Orbit ring through node centers */}
-            <div className="absolute rounded-full pointer-events-none" style={{ inset: C - R, border: "1px dashed rgba(47,94,148,0.14)" }} />
+            <div className="absolute rounded-full pointer-events-none" style={{ inset: C - R, border: "1px dashed rgba(47,94,148,0.13)" }} />
 
-            {/* Connector lines */}
+            {/* Connectors + oval cog mechanism */}
             <svg className="absolute inset-0" width={BOX} height={BOX} viewBox={`0 0 ${BOX} ${BOX}`}>
+              {/* connector lines */}
               {shown.map((_, i) => {
                 const s = hubEdge(i, n), p = nodePos(i, n);
                 const on = active === i;
                 return (
                   <line key={i} x1={s.x} y1={s.y} x2={p.x} y2={p.y}
-                    stroke={on ? "#EA6E14" : "rgba(47,94,148,0.30)"} strokeWidth={on ? 2.6 : 1.5}
+                    stroke={on ? "#EA6E14" : "rgba(47,94,148,0.30)"} strokeWidth={on ? 2.4 : 1.4}
                     strokeDasharray="3 8" strokeLinecap="round"
                     style={{ animation: "flow-dash 0.8s linear infinite", transition: "stroke 0.3s, stroke-width 0.3s" }} />
                 );
               })}
+              {/* oval cog — flowing dashes (no wobble) */}
+              <ellipse cx={C} cy={C} rx={COG_RX} ry={COG_RY} fill="none" stroke="rgba(47,94,148,0.18)" strokeWidth="12"
+                strokeDasharray="8 16" strokeLinecap="round" style={{ animation: "flow-dash 1.1s linear infinite" }} />
+              <ellipse cx={C} cy={C} rx={COG_RX - 9} ry={COG_RY - 9} fill="none" stroke="rgba(234,110,20,0.16)" strokeWidth="6"
+                strokeDasharray="8 16" strokeLinecap="round" style={{ animation: "flow-dash 1.1s linear infinite reverse" }} />
             </svg>
 
-            {/* ── Mechanism: rotating cog rings around hub ── */}
-            <motion.div className="absolute rounded-full pointer-events-none"
-              style={{ inset: C - (HUB / 2 + 34), border: "16px dashed rgba(47,94,148,0.14)" }}
-              animate={{ rotate: 360 }} transition={{ duration: 55, repeat: Infinity, ease: "linear" }} />
-            <motion.div className="absolute rounded-full pointer-events-none"
-              style={{ inset: C - (HUB / 2 + 14), border: "8px dashed rgba(234,110,20,0.13)" }}
-              animate={{ rotate: -360 }} transition={{ duration: 40, repeat: Infinity, ease: "linear" }} />
-
-            {/* ── Center hub / info ── */}
-            <div className="absolute rounded-full flex items-center justify-center text-center overflow-hidden"
+            {/* ── Center OVAL hub / info ── */}
+            <div className="absolute flex items-center justify-center text-center overflow-hidden"
               style={{
-                left: C - HUB / 2, top: C - HUB / 2, width: HUB, height: HUB,
-                background: "radial-gradient(circle at 50% 38%, #FFFFFF 0%, #F2F6FB 75%)",
+                left: C - HUB_W / 2, top: C - HUB_H / 2, width: HUB_W, height: HUB_H, borderRadius: "50%",
+                background: "radial-gradient(circle at 50% 36%, #FFFFFF 0%, #F2F6FB 78%)",
                 border: "1px solid rgba(47,94,148,0.16)",
-                boxShadow: "0 30px 70px rgba(36,76,119,0.18), inset 0 2px 4px rgba(255,255,255,0.9), 0 0 0 10px rgba(255,255,255,0.55)",
+                boxShadow: "0 22px 50px rgba(36,76,119,0.16), inset 0 2px 4px rgba(255,255,255,0.9), 0 0 0 8px rgba(255,255,255,0.5)",
                 zIndex: 20,
               }}>
               <AnimatePresence mode="wait">
                 {act ? (
-                  <motion.div key={act.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.25 }} className="px-9 flex flex-col items-center">
-                    <span className="font-mono text-[11px] font-bold tracking-widest mb-2.5" style={{ color: "#EA6E14" }}>
+                  <motion.div key={act.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.22 }} className="px-8 flex flex-col items-center">
+                    <span className="font-mono text-[10px] font-bold tracking-widest mb-2" style={{ color: "#EA6E14" }}>
                       LAB · {String((active ?? 0) + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="font-display font-bold leading-snug mb-3 line-clamp-3 first-letter:uppercase" style={{ fontSize: 18, color: "#1E293B" }}>
+                    <h3 className="font-display font-bold leading-snug mb-2.5 line-clamp-3 first-letter:uppercase" style={{ fontSize: 15, color: "#1E293B" }}>
                       {act.name}
                     </h3>
-                    <span className="inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg"
-                      style={{ background: "linear-gradient(135deg,#EE8418,#D2630E)", color: "#fff", boxShadow: "0 8px 20px rgba(208,98,16,0.30)" }}>
-                      {viewDetail} <ArrowRight size={15} />
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-lg"
+                      style={{ background: "linear-gradient(135deg,#EE8418,#D2630E)", color: "#fff", boxShadow: "0 6px 16px rgba(208,98,16,0.28)" }}>
+                      {viewDetail} <ArrowRight size={13} />
                     </span>
                   </motion.div>
                 ) : (
-                  <motion.div key="hub" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}
+                  <motion.div key="hub" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.22 }}
                     className="flex flex-col items-center">
-                    <motion.div animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-                      style={{ filter: "drop-shadow(0 6px 22px rgba(47,94,148,0.42))" }}>
-                      <Image src="/logo-icon.png" alt="ICHAB" width={120} height={120} className="object-contain" priority />
+                    <motion.div animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+                      style={{ filter: "drop-shadow(0 5px 18px rgba(47,94,148,0.4))" }}>
+                      <Image src="/logo-icon.png" alt="ICHAB" width={84} height={84} className="object-contain" priority />
                     </motion.div>
-                    <span className="font-display font-bold tracking-[0.22em] mt-3" style={{ fontSize: 26, color: "#1E293B" }}>ICHAB</span>
-                    <span className="text-[10px] uppercase tracking-[0.16em] mt-1.5" style={{ color: "#94A3B8" }}>
+                    <span className="font-display font-bold tracking-[0.2em] mt-2" style={{ fontSize: 20, color: "#1E293B" }}>ICHAB</span>
+                    <span className="text-[9px] uppercase tracking-[0.14em] mt-1" style={{ color: "#94A3B8" }}>
                       {EYEBROW[locale] ?? EYEBROW.uz}
                     </span>
                   </motion.div>
