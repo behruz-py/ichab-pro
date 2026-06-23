@@ -298,6 +298,17 @@ select.form-input option {
 }
 .cta-pulse { animation: cta-glow-pulse 4.2s ease-in-out infinite; }
 
+/* ─── DIVISIONS ORBIT (gentle rotation, pauses on hover) ──────────────────── */
+@keyframes orbit-cw  { to { transform: rotate(360deg); } }
+@keyframes orbit-ccw { to { transform: rotate(-360deg); } }
+.orbit-spin     { animation: orbit-cw 110s linear infinite;  transform-origin: center; }
+.orbit-spin-rev { animation: orbit-ccw 110s linear infinite; transform-origin: center; }
+.orbit-host:hover .orbit-spin,
+.orbit-host:hover .orbit-spin-rev { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .orbit-spin, .orbit-spin-rev { animation: none; }
+}
+
 /* ─── CTA FLOWING GRADIENT BORDER (the "AI" traveling line) ───────────────── */
 @property --flow-angle {
   syntax: '<angle>';
