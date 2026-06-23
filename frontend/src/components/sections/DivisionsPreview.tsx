@@ -4,7 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, FlaskConical, Cpu, Gauge, Activity, Cog, Zap, type LucideIcon } from "lucide-react";
+import {
+  ArrowRight, FlaskConical, Cpu, Gauge, Activity, Cog, Zap, CircuitBoard, Bot,
+  type LucideIcon,
+} from "lucide-react";
 import type { Division } from "@/types/api";
 import { mediaUrl } from "@/lib/utils";
 import { fadeLeft, VIEWPORT } from "@/lib/motion";
@@ -23,12 +26,11 @@ const PLACEHOLDER_ICONS: LucideIcon[] = [FlaskConical, Cpu, Gauge, Activity, Cog
 
 const BOX = 760;
 const C = BOX / 2;
-const R = 285;             // node orbit radius
-const CIRC = 2 * Math.PI * R;
-const NODE_W = 236;        // bigger 5:3 soft-oval cards
+const R = 285;
+const NODE_W = 236;
 const NODE_H = 142;
 const NODE_RAD = 36;
-const HUB_W = 250;         // center oval
+const HUB_W = 250;
 const HUB_H = 190;
 const COG_RX = HUB_W / 2 + 13;
 const COG_RY = HUB_H / 2 + 13;
@@ -40,6 +42,16 @@ function hubEdge(i: number, n: number) {
   const er = (rx * ry) / Math.sqrt((ry * Math.cos(a)) ** 2 + (rx * Math.sin(a)) ** 2);
   return { x: C + er * Math.cos(a), y: C + er * Math.sin(a) };
 }
+
+// Faint automation icons scattered in the background
+const BG_ICONS: { Icon: LucideIcon; style: React.CSSProperties }[] = [
+  { Icon: Cpu,          style: { top: "8%",  left: "4%",  width: 96 } },
+  { Icon: Cog,          style: { top: "62%", left: "2%",  width: 120 } },
+  { Icon: CircuitBoard, style: { top: "14%", right: "5%", width: 110 } },
+  { Icon: Gauge,        style: { top: "70%", right: "4%", width: 92 } },
+  { Icon: Bot,          style: { bottom: "4%", left: "44%", width: 88 } },
+  { Icon: Activity,     style: { top: "2%",  left: "46%", width: 80 } },
+];
 
 function NodeMedia({ div, Icon }: { div: Division; Icon: LucideIcon }) {
   return div.cover_image ? (
@@ -63,6 +75,18 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
     <section className="relative py-16 overflow-hidden">
       <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(47,94,148,0.22) 50%,transparent)" }} />
 
+      {/* Faint automation background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
+        <div className="absolute inset-0" style={{
+          opacity: 0.03,
+          backgroundImage: "radial-gradient(rgba(47,94,148,1) 1px, transparent 1px)",
+          backgroundSize: "34px 34px",
+        }} />
+        {BG_ICONS.map(({ Icon, style }, i) => (
+          <Icon key={i} className="absolute" strokeWidth={1} style={{ color: "#2F5E94", opacity: 0.045, ...style }} />
+        ))}
+      </div>
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
@@ -83,96 +107,73 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
           </motion.div>
         </div>
 
-        {/* ── Desktop: orbiting oval gear hub & spoke ── */}
+        {/* ── Desktop: oval gear hub & spoke ── */}
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={VIEWPORT}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="hidden lg:flex justify-center orbit-host"
+          className="hidden lg:flex justify-center"
           onMouseLeave={() => setActive(null)}
         >
           <div className="relative" style={{ width: BOX, height: BOX }}>
-            {/* Soft backdrop glow (fixed) */}
+            {/* Soft backdrop glow */}
             <div className="absolute rounded-full pointer-events-none" style={{
               inset: 110,
               background: "radial-gradient(circle at 50% 50%, rgba(47,94,148,0.10) 0%, rgba(234,110,20,0.05) 45%, transparent 70%)",
               filter: "blur(8px)",
             }} />
 
-            {/* ── Rotating orbit layer (track + lines + comet + nodes) ── */}
-            <div className="orbit-spin absolute inset-0">
-              <svg className="absolute inset-0" width={BOX} height={BOX} viewBox={`0 0 ${BOX} ${BOX}`}>
-                <defs>
-                  <linearGradient id="comet" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#2F5E94" />
-                    <stop offset="100%" stopColor="#EA6E14" />
-                  </linearGradient>
-                </defs>
-                {/* orbit track */}
-                <circle cx={C} cy={C} r={R} fill="none" stroke="rgba(47,94,148,0.13)" strokeWidth="1" strokeDasharray="2 7" />
-                {/* connector lines */}
-                {shown.map((_, i) => {
-                  const s = hubEdge(i, n), p = nodePos(i, n);
-                  const on = active === i;
-                  return (
-                    <line key={i} x1={s.x} y1={s.y} x2={p.x} y2={p.y}
-                      stroke={on ? "#EA6E14" : "rgba(47,94,148,0.30)"} strokeWidth={on ? 2.4 : 1.4}
-                      strokeDasharray="3 8" strokeLinecap="round"
-                      style={{ animation: "flow-dash 0.8s linear infinite", transition: "stroke 0.3s, stroke-width 0.3s" }} />
-                  );
-                })}
-                {/* AI comet — bright arc traveling around the orbit */}
-                <motion.circle
-                  cx={C} cy={C} r={R} fill="none" stroke="url(#comet)" strokeWidth="3.5" strokeLinecap="round"
-                  strokeDasharray={`90 ${CIRC - 90}`}
-                  animate={{ strokeDashoffset: [0, -CIRC] }}
-                  transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
-                  style={{ filter: "drop-shadow(0 0 6px rgba(234,110,20,0.7))" }}
-                />
-              </svg>
-
-              {/* Nodes (each counter-rotated to stay upright) */}
-              {shown.map((div, i) => {
-                const p = nodePos(i, n);
-                const Icon = PLACEHOLDER_ICONS[i % PLACEHOLDER_ICONS.length];
+            {/* Connectors + cog */}
+            <svg className="absolute inset-0 pointer-events-none" width={BOX} height={BOX} viewBox={`0 0 ${BOX} ${BOX}`}>
+              <circle cx={C} cy={C} r={R} fill="none" stroke="rgba(47,94,148,0.12)" strokeWidth="1" strokeDasharray="2 8" />
+              {shown.map((_, i) => {
+                const s = hubEdge(i, n), p = nodePos(i, n);
                 const on = active === i;
                 return (
-                  <div key={div.id} className="absolute" style={{ left: p.x, top: p.y, width: 0, height: 0 }}>
-                    <div className="orbit-spin-rev absolute" style={{ left: -NODE_W / 2, top: -NODE_H / 2, width: NODE_W, height: NODE_H }}>
-                      <Link href={`/${locale}/divisions/${div.slug}`} onMouseEnter={() => setActive(i)}
-                        className="block w-full h-full overflow-hidden"
-                        style={{
-                          borderRadius: NODE_RAD,
-                          boxShadow: on
-                            ? "0 0 0 4px #EA6E14, 0 24px 50px rgba(234,110,20,0.32)"
-                            : "0 0 0 3px rgba(255,255,255,0.95), 0 16px 36px rgba(36,76,119,0.20)",
-                          transform: on ? "scale(1.06)" : "scale(1)",
-                          transition: "transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s",
-                        }}>
-                        <NodeMedia div={div} Icon={Icon} />
-                        <span className="absolute inset-0 pointer-events-none transition-opacity duration-300"
-                          style={{ background: "linear-gradient(to top, rgba(15,23,42,0.45) 0%, rgba(15,23,42,0.10) 45%, transparent 70%)", opacity: on ? 0.4 : 1 }} />
-                        <span className="absolute bottom-2 left-1/2 -translate-x-1/2 font-mono text-[10px] font-bold px-2 py-0.5 rounded"
-                          style={{ background: "rgba(255,255,255,0.94)", color: "#2F5E94" }}>
-                          LAB · {String(i + 1).padStart(2, "0")}
-                        </span>
-                      </Link>
-                    </div>
-                  </div>
+                  <line key={i} x1={s.x} y1={s.y} x2={p.x} y2={p.y}
+                    stroke={on ? "#EA6E14" : "rgba(47,94,148,0.30)"} strokeWidth={on ? 2.4 : 1.4}
+                    strokeDasharray="3 8" strokeLinecap="round"
+                    style={{ animation: "flow-dash 0.8s linear infinite", transition: "stroke 0.3s, stroke-width 0.3s" }} />
                 );
               })}
-            </div>
-
-            {/* ── Fixed oval cog mechanism ── */}
-            <svg className="absolute inset-0 pointer-events-none" width={BOX} height={BOX} viewBox={`0 0 ${BOX} ${BOX}`}>
               <ellipse cx={C} cy={C} rx={COG_RX} ry={COG_RY} fill="none" stroke="rgba(47,94,148,0.18)" strokeWidth="12"
                 strokeDasharray="8 16" strokeLinecap="round" style={{ animation: "flow-dash 1.1s linear infinite" }} />
               <ellipse cx={C} cy={C} rx={COG_RX - 9} ry={COG_RY - 9} fill="none" stroke="rgba(234,110,20,0.16)" strokeWidth="6"
                 strokeDasharray="8 16" strokeLinecap="round" style={{ animation: "flow-dash 1.1s linear infinite reverse" }} />
             </svg>
 
-            {/* ── Fixed center OVAL hub / info ── */}
+            {/* Nodes — each with rotating AI gradient border */}
+            {shown.map((div, i) => {
+              const p = nodePos(i, n);
+              const Icon = PLACEHOLDER_ICONS[i % PLACEHOLDER_ICONS.length];
+              const on = active === i;
+              return (
+                <div key={div.id} className="ai-border absolute"
+                  style={{
+                    left: p.x - NODE_W / 2, top: p.y - NODE_H / 2, width: NODE_W, height: NODE_H, zIndex: 10,
+                    boxShadow: on ? "0 24px 50px rgba(234,110,20,0.28)" : "0 16px 36px rgba(36,76,119,0.20)",
+                    transform: on ? "scale(1.05)" : "scale(1)",
+                    transition: "transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s",
+                  }}>
+                  <Link href={`/${locale}/divisions/${div.slug}`} onMouseEnter={() => setActive(i)}
+                    className="group relative block w-full h-full overflow-hidden" style={{ borderRadius: NODE_RAD }}>
+                    <NodeMedia div={div} Icon={Icon} />
+                    {/* shine sweep */}
+                    <span className="absolute inset-y-0 -left-1/3 w-1/3 pointer-events-none skew-x-12 -translate-x-[120%] group-hover:translate-x-[420%] transition-transform duration-[850ms] ease-out"
+                      style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent)" }} />
+                    <span className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+                      style={{ background: "linear-gradient(to top, rgba(15,23,42,0.45) 0%, rgba(15,23,42,0.10) 45%, transparent 70%)", opacity: on ? 0.4 : 1 }} />
+                    <span className="absolute bottom-2 left-1/2 -translate-x-1/2 font-mono text-[10px] font-bold px-2 py-0.5 rounded"
+                      style={{ background: "rgba(255,255,255,0.94)", color: "#2F5E94" }}>
+                      LAB · {String(i + 1).padStart(2, "0")}
+                    </span>
+                  </Link>
+                </div>
+              );
+            })}
+
+            {/* Center OVAL hub / info */}
             <div className="absolute flex items-center justify-center text-center overflow-hidden"
               style={{
                 left: C - HUB_W / 2, top: C - HUB_H / 2, width: HUB_W, height: HUB_H, borderRadius: "50%",

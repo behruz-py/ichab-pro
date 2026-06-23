@@ -309,6 +309,23 @@ select.form-input option {
   .orbit-spin, .orbit-spin-rev { animation: none; }
 }
 
+/* ─── AI ROTATING GRADIENT BORDER (per-card, smooth sheen) ────────────────── */
+@property --ai-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+.ai-border {
+  border-radius: 38px;
+  padding: 2.5px;
+  background: conic-gradient(from var(--ai-angle),
+    rgba(47,94,148,0.16) 0deg, rgba(47,94,148,0.16) 55deg,
+    #3D72AD 92deg, #2F5E94 116deg, #EA6E14 148deg, #F4A52C 166deg, #2F5E94 198deg, #3D72AD 224deg,
+    rgba(47,94,148,0.16) 268deg, rgba(47,94,148,0.16) 360deg);
+  animation: ai-border-spin 6s linear infinite;
+}
+@keyframes ai-border-spin { to { --ai-angle: 360deg; } }
+@supports not (background: conic-gradient(from var(--ai-angle), red, blue)) {
+  .ai-border { background: linear-gradient(120deg, #2F5E94, #EA6E14); }
+}
+@media (prefers-reduced-motion: reduce) { .ai-border { animation: none; } }
+
 /* ─── CTA FLOWING GRADIENT BORDER (the "AI" traveling line) ───────────────── */
 @property --flow-angle {
   syntax: '<angle>';
