@@ -21,10 +21,12 @@ interface Props {
 const EYEBROW: Record<string, string> = { uz: "Bo'linmalar", ru: "Подразделения", en: "Divisions" };
 const PLACEHOLDER_ICONS: LucideIcon[] = [FlaskConical, Cpu, Gauge, Activity, Cog, Zap];
 
-const BOX = 720;          // diagram canvas
+const BOX = 760;          // diagram canvas
 const C = BOX / 2;        // center
-const R = 270;            // node orbit radius
-const NODE = 128;         // node diameter
+const R = 282;            // node orbit radius
+const NODE_W = 200;       // node width  (5:3, soft-oval rect)
+const NODE_H = 120;       // node height
+const NODE_RAD = 34;      // node corner radius
 const HUB = 300;          // center content circle diameter
 
 const rad = (i: number, n: number) => (-90 + (360 / n) * i) * (Math.PI / 180);
@@ -34,7 +36,7 @@ const hubEdge = (i: number, n: number) => ({ x: C + (HUB / 2 + 18) * Math.cos(ra
 
 function NodeMedia({ div, Icon }: { div: Division; Icon: LucideIcon }) {
   return div.cover_image ? (
-    <Image src={mediaUrl(div.cover_image)} alt={div.name} fill className="object-cover" sizes="128px" />
+    <Image src={mediaUrl(div.cover_image)} alt={div.name} fill className="object-cover" sizes="200px" />
   ) : (
     <div className="absolute inset-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg,#3D72AD,#244C77)" }}>
       <Icon size={40} strokeWidth={1.3} color="rgba(255,255,255,0.85)" />
@@ -163,21 +165,21 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
               const on = active === i;
               return (
                 <Link key={div.id} href={`/${locale}/divisions/${div.slug}`} onMouseEnter={() => setActive(i)}
-                  className="absolute rounded-full overflow-hidden block"
+                  className="absolute overflow-hidden block"
                   style={{
-                    left: p.x - NODE / 2, top: p.y - NODE / 2, width: NODE, height: NODE, zIndex: 10,
+                    left: p.x - NODE_W / 2, top: p.y - NODE_H / 2, width: NODE_W, height: NODE_H, borderRadius: NODE_RAD, zIndex: 10,
                     boxShadow: on
-                      ? "0 0 0 4px #EA6E14, 0 18px 40px rgba(234,110,20,0.34)"
-                      : "0 0 0 3px rgba(255,255,255,0.95), 0 12px 28px rgba(36,76,119,0.20)",
-                    transform: on ? "scale(1.14)" : "scale(1)",
+                      ? "0 0 0 4px #EA6E14, 0 22px 46px rgba(234,110,20,0.32)"
+                      : "0 0 0 3px rgba(255,255,255,0.95), 0 14px 32px rgba(36,76,119,0.20)",
+                    transform: on ? "scale(1.07)" : "scale(1)",
                     transition: "transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s",
                   }}>
                   <NodeMedia div={div} Icon={Icon} />
                   <span className="absolute inset-0 pointer-events-none transition-opacity duration-300"
-                    style={{ background: "rgba(15,23,42,0.16)", opacity: on ? 0 : 1 }} />
-                  <span className="absolute bottom-1.5 left-1/2 -translate-x-1/2 font-mono text-[10px] font-bold px-1.5 py-0.5 rounded"
+                    style={{ background: "linear-gradient(to top, rgba(15,23,42,0.45) 0%, rgba(15,23,42,0.10) 45%, transparent 70%)", opacity: on ? 0.4 : 1 }} />
+                  <span className="absolute bottom-2 left-1/2 -translate-x-1/2 font-mono text-[10px] font-bold px-2 py-0.5 rounded"
                     style={{ background: "rgba(255,255,255,0.94)", color: "#2F5E94" }}>
-                    {String(i + 1).padStart(2, "0")}
+                    LAB · {String(i + 1).padStart(2, "0")}
                   </span>
                 </Link>
               );
