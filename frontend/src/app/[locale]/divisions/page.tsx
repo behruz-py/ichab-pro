@@ -2,12 +2,14 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Settings, ArrowRight } from "lucide-react";
+import { Settings, ArrowRight, FlaskConical, Cpu, Gauge, Activity, Cog, Zap, type LucideIcon } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { mediaUrl } from "@/lib/utils";
 
 type Props = { params: { locale: string } };
+
+const PLACEHOLDER_ICONS: LucideIcon[] = [FlaskConical, Cpu, Gauge, Activity, Cog, Zap];
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -110,148 +112,77 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {divisions.map((div, i) => (
-              <Link
-                key={div.id}
-                href={`/${locale}/divisions/${div.slug}`}
-                className="group relative block rounded-2xl overflow-hidden lab-card-scan"
-                style={{
-                  height: i === 0 ? "380px" : "320px",
-                  border: "1px solid rgba(47,94,148,0.13)",
-                }}
-              >
-                {/* Background */}
-                <div className="absolute inset-0">
-                  {div.cover_image ? (
-                    <Image
-                      src={mediaUrl(div.cover_image)}
-                      alt={div.name}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                      sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,33vw"
-                      priority={i < 3}
-                    />
-                  ) : (
-                    <div
-                      className="w-full h-full flex items-center justify-center"
-                      style={{
-                        backgroundImage: [
-                          "linear-gradient(135deg, rgba(36,76,119,0.20) 0%, rgba(47,94,148,0.07) 50%, rgba(5,10,23,0.96) 100%)",
-                          "repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(47,94,148,0.04) 28px, rgba(47,94,148,0.04) 29px)",
-                          "repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(47,94,148,0.04) 28px, rgba(47,94,148,0.04) 29px)",
-                        ].join(", "),
-                      }}
-                    >
-                      <Settings size={72} strokeWidth={1.2} style={{ opacity: 0.06 }} />
-                    </div>
-                  )}
-                </div>
-
-                {/* Dark gradient overlay */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
+            {divisions.map((div, i) => {
+              const Icon = PLACEHOLDER_ICONS[i % PLACEHOLDER_ICONS.length];
+              return (
+                <Link
+                  key={div.id}
+                  href={`/${locale}/divisions/${div.slug}`}
+                  className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
                   style={{
-                    background:
-                      "linear-gradient(to bottom, rgba(5,10,23,0.10) 0%, rgba(5,10,23,0.45) 45%, rgba(5,10,23,0.92) 100%)",
-                  }}
-                />
-
-                {/* Scan beam */}
-                <div
-                  className="lab-scan-beam absolute inset-x-0 h-[2px] pointer-events-none"
-                  style={{
-                    top: 0,
-                    background:
-                      "linear-gradient(90deg, transparent 0%, rgba(47,94,148,0) 5%, rgba(47,94,148,0.9) 40%, rgba(61,114,173,1) 50%, rgba(47,94,148,0.9) 60%, rgba(47,94,148,0) 95%, transparent 100%)",
-                    boxShadow: "0 0 14px rgba(61,114,173,0.65)",
-                  }}
-                />
-
-                {/* Top-left: LAB badge */}
-                <div
-                  className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-xl"
-                  style={{
-                    background: "rgba(5,10,23,0.82)",
-                    border: "1px solid rgba(47,94,148,0.35)",
-                    backdropFilter: "blur(8px)",
+                    background: "var(--card-bg)",
+                    border: "1px solid var(--glass-border)",
+                    boxShadow: "var(--card-shadow)",
                   }}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full lab-active-dot" style={{ background: "#22C55E" }} />
-                  <span className="font-mono text-[11px] font-bold tracking-widest" style={{ color: "#2F5E94" }}>
-                    LAB · {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
-
-                {/* Top-right: logo */}
-                {div.logo && (
-                  <div
-                    className="absolute top-4 right-4 w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{
-                      background: "rgba(255,255,255,0.10)",
-                      border: "1px solid rgba(255,255,255,0.14)",
-                      backdropFilter: "blur(6px)",
-                    }}
-                  >
-                    <Image src={mediaUrl(div.logo)} alt={div.name} width={28} height={28} className="object-contain" />
-                  </div>
-                )}
-
-                {/* Top border hover line */}
-                <div
-                  className="absolute top-0 inset-x-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{ background: "linear-gradient(90deg, transparent, #244C77, #2F5E94, #3D72AD, #2F5E94, transparent)" }}
-                />
-
-                {/* Bottom content */}
-                <div className="absolute bottom-0 inset-x-0 p-5">
-                  <h2
-                    className="font-display font-bold text-lg leading-snug mb-1.5 group-hover:text-[#244C77] transition-colors duration-200"
-                    style={{ color: "#1E293B" }}
-                  >
-                    {div.name}
-                  </h2>
-
-                  <p className="text-sm line-clamp-2 mb-3" style={{ color: "rgba(194,212,238,0.65)" }}>
-                    {div.short_description}
-                  </p>
-
-                  <div className="flex items-center justify-between">
-                    {div.leader_name ? (
-                      <div className="flex items-center gap-2">
-                        <div
-                          className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0"
-                          style={{
-                            background: "rgba(47,94,148,0.25)",
-                            border: "1px solid rgba(47,94,148,0.40)",
-                            color: "#2F5E94",
-                          }}
-                        >
-                          {div.leader_name.charAt(0).toUpperCase()}
-                        </div>
-                        <span className="text-xs" style={{ color: "rgba(61,114,173,0.80)" }}>
-                          {div.leader_name}
-                        </span>
-                      </div>
+                  {/* ── Image / placeholder — 16:9 ── */}
+                  <div className="relative overflow-hidden" style={{ aspectRatio: "16/9" }}>
+                    {div.cover_image ? (
+                      <Image
+                        src={mediaUrl(div.cover_image)}
+                        alt={div.name}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                        sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,33vw"
+                        priority={i < 3}
+                      />
                     ) : (
-                      <div />
+                      <div className="absolute inset-0 flex items-center justify-center"
+                        style={{ background: "linear-gradient(135deg, rgba(47,94,148,0.12) 0%, rgba(47,94,148,0.03) 100%)" }}>
+                        <Icon size={48} strokeWidth={1.3} style={{ color: "rgba(47,94,148,0.42)" }} />
+                      </div>
+                    )}
+
+                    {/* LAB badge — light chip with status dot */}
+                    <div className="absolute top-3 left-3 flex items-center gap-2 px-2.5 py-1 rounded-lg"
+                      style={{
+                        background: "rgba(255,255,255,0.92)",
+                        border: "1px solid rgba(47,94,148,0.25)",
+                        backdropFilter: "blur(6px)",
+                        WebkitBackdropFilter: "blur(6px)",
+                      }}>
+                      <span className="w-1.5 h-1.5 rounded-full lab-active-dot" style={{ background: "#22C55E" }} />
+                      <span className="font-mono text-[11px] font-bold tracking-widest" style={{ color: "#2F5E94" }}>
+                        LAB · {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* ── Body ── */}
+                  <div className="flex flex-col flex-1 p-5">
+                    <h2
+                      className="font-display font-bold text-base leading-snug mb-2 line-clamp-2 first-letter:uppercase group-hover:text-[#2F5E94] transition-colors duration-200"
+                      style={{ color: "#1E293B" }}
+                    >
+                      {div.name}
+                    </h2>
+
+                    {div.short_description && (
+                      <p className="text-sm leading-relaxed line-clamp-2 mb-4 flex-1" style={{ color: "#475569" }}>
+                        {div.short_description}
+                      </p>
                     )}
 
                     <span
-                      className="inline-flex items-center gap-1 text-xs font-bold transition-all duration-200 group-hover:translate-x-1"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold mt-auto transition-all duration-200 group-hover:gap-2.5"
                       style={{ color: "#2F5E94" }}
                     >
-                      Batafsil <ArrowRight size={13} />
+                      Batafsil <ArrowRight size={14} />
                     </span>
                   </div>
-                </div>
-
-                {/* Hover glow ring */}
-                <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{ boxShadow: "inset 0 0 0 1px rgba(47,94,148,0.45), 0 12px 48px rgba(47,94,148,0.15)" }}
-                />
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         )}
       </div>
