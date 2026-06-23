@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { mediaUrl } from "@/lib/utils";
+import { ServiceGroups } from "@/components/sections/ServiceGroups";
 
 type Props = { params: { locale: string } };
 
@@ -32,7 +33,12 @@ export default async function ServicesPage({ params: { locale } }: Props) {
         <p className="text-content-secondary text-lg max-w-2xl">{t("subtitle")}</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      {/* ── Grouped service catalogue ── */}
+      <ServiceGroups locale={locale} />
+
+      {/* ── Additional (admin-managed) services, if any ── */}
+      {services.length > 0 && (
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-12">
         {services.map((svc) => (
           <Link
             key={svc.id}
@@ -73,6 +79,7 @@ export default async function ServicesPage({ params: { locale } }: Props) {
           </Link>
         ))}
       </div>
+      )}
     </div>
   );
 }
