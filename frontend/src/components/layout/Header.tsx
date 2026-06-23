@@ -23,6 +23,12 @@ const FULL_NAME: Record<string, string> = {
   en: "MANUFACTURING AUTOMATION DEPARTMENT",
 };
 
+const CTA_LABEL: Record<string, string> = {
+  uz: "Bog'lanish",
+  ru: "Связаться",
+  en: "Contact us",
+};
+
 const DROPDOWN_ITEMS = [
   { key: "about",        path: "/about",        Icon: Info },
   { key: "divisions",    path: "/divisions",    Icon: LayoutGrid },
@@ -153,7 +159,7 @@ export function Header() {
               >
                 <button
                   className={cn(
-                    "relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12.5px] font-medium transition-colors duration-200 whitespace-nowrap",
+                    "relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[14px] font-medium transition-colors duration-200 whitespace-nowrap",
                     isDropdownActive() || dropdownOpen ? "text-[#2F5E94]" : "text-content-secondary hover:text-content"
                   )}
                 >
@@ -224,7 +230,7 @@ export function Header() {
                             <Link
                               href={`/${locale}${item.path}`}
                               className={cn(
-                                "flex items-center gap-3 mx-1.5 my-0.5 px-3 py-2.5 rounded-xl text-[12.5px] font-medium transition-all duration-150 group",
+                                "flex items-center gap-3 mx-1.5 my-0.5 px-3 py-2.5 rounded-xl text-[13.5px] font-medium transition-all duration-150 group",
                                 active
                                   ? "text-[#2F5E94] bg-blue-500/10"
                                   : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
@@ -254,7 +260,7 @@ export function Header() {
                     <Link
                       href={`/${locale}${path}`}
                       className={cn(
-                        "relative flex items-center px-3 py-1.5 rounded-xl text-[12.5px] font-medium transition-colors duration-200 whitespace-nowrap",
+                        "relative flex items-center px-3.5 py-2 rounded-xl text-[14px] font-medium transition-colors duration-200 whitespace-nowrap",
                         active ? "text-[#2F5E94]" : "text-content-secondary hover:text-content"
                       )}
                     >
@@ -292,14 +298,14 @@ export function Header() {
               {/* CTA — pulsing glow */}
               <Link
                 href={`/${locale}/contact`}
-                className="hidden lg:inline-flex items-center px-4 py-1.5 rounded-xl text-[12px] font-semibold transition-colors duration-200 ml-1 cta-pulse"
+                className="hidden lg:inline-flex items-center px-5 py-2 rounded-xl text-[13.5px] font-semibold transition-colors duration-200 ml-1 cta-pulse"
                 style={{
                   background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)",
                   border:     "1px solid rgba(208,98,16,0.45)",
                   color:      "#fff",
                 }}
               >
-                Bog&apos;lanish
+                {CTA_LABEL[locale] ?? CTA_LABEL.uz}
               </Link>
 
               {/* Hamburger */}
@@ -447,7 +453,7 @@ export function Header() {
                   className="flex items-center justify-center w-full py-2.5 rounded-xl text-sm font-semibold text-white"
                   style={{ background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)", boxShadow: "0 4px 16px rgba(208,98,16,0.34)" }}
                 >
-                  Bog&apos;lanish
+                  {CTA_LABEL[locale] ?? CTA_LABEL.uz}
                 </Link>
               </div>
             </motion.div>
