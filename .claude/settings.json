@@ -132,7 +132,10 @@
       "Bash(sed -i 's/0 4px 16px rgba\\(47,94,148,0.30\\)/0 4px 16px rgba\\(224,122,34,0.34\\)/' components/layout/Header.tsx)",
       "Bash(python -)",
       "Bash(vercel env *)",
-      "Bash(vercel alias *)"
+      "Bash(vercel alias *)",
+      "Bash(cp hero-visual.png hero-visual-uz.png)",
+      "Bash(cp hero-visual.png hero-visual-ru.png)",
+      "Bash(cp hero-visual.png hero-visual-en.png)"
     ],
     "additionalDirectories": [
       "d:\\Document\\developing\\Web\\ichab_pro\\frontend\\src\\app\\[locale]\\products"

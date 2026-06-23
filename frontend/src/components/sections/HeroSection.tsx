@@ -37,7 +37,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
         style={{ width: "58%" }}
       >
         <Image
-          src="/hero-visual.png"
+          src={`/hero-visual-${locale}.png`}
           alt=""
           fill
           className="object-cover object-center"

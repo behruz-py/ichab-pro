@@ -111,11 +111,11 @@ export function Header() {
                 className="hidden sm:block font-display font-bold tracking-[0.08em] transition-all duration-200"
                 style={{
                   fontSize: "30px",
-                  background: "linear-gradient(135deg, #1E293B 0%, #2F5E94 100%)",
+                  background: "linear-gradient(120deg, #1E293B 0%, #2F5E94 70%, #EA6E14 130%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
-                  filter: "drop-shadow(0 0 10px rgba(47,94,148,0.40))",
+                  filter: "drop-shadow(0 1px 6px rgba(47,94,148,0.18))",
                 }}
               >
                 {BRAND_NAME[locale] ?? "ICHAB"}
@@ -162,18 +162,13 @@ export function Header() {
                     <motion.span
                       layoutId="nav-hover-pill"
                       className="absolute inset-0 rounded-xl"
-                      style={{ background: "rgba(255,255,255,0.06)" }}
+                      style={{ background: "rgba(47,94,148,0.07)" }}
                       transition={{ type: "spring", stiffness: 480, damping: 36 }}
                     />
                   )}
-                  {/* Active bg */}
-                  {(isDropdownActive() || dropdownOpen) && (
-                    <motion.span
-                      layoutId="nav-active-bg"
-                      className="absolute inset-0 rounded-xl"
-                      style={{ background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.22)" }}
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
+                  {/* Open-state subtle bg */}
+                  {dropdownOpen && (
+                    <span className="absolute inset-0 rounded-xl" style={{ background: "rgba(47,94,148,0.08)" }} />
                   )}
                   <span className="relative z-10">{t("company")}</span>
                   <motion.span
@@ -183,6 +178,15 @@ export function Header() {
                   >
                     <ChevronDown size={13} strokeWidth={2} />
                   </motion.span>
+                  {/* Sliding gradient underline — active indicator */}
+                  {isDropdownActive() && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute left-2.5 right-2.5 -bottom-0.5 h-[2.5px] rounded-full"
+                      style={{ background: "linear-gradient(90deg, #2F5E94 0%, #EA6E14 100%)" }}
+                      transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                    />
+                  )}
                 </button>
 
                 {/* Dropdown panel */}
@@ -259,20 +263,20 @@ export function Header() {
                         <motion.span
                           layoutId="nav-hover-pill"
                           className="absolute inset-0 rounded-xl"
-                          style={{ background: "rgba(255,255,255,0.06)" }}
+                          style={{ background: "rgba(47,94,148,0.07)" }}
                           transition={{ type: "spring", stiffness: 480, damping: 36 }}
                         />
                       )}
-                      {/* Active bg */}
+                      <span className="relative z-10">{t(key)}</span>
+                      {/* Sliding gradient underline — active indicator */}
                       {active && (
                         <motion.span
-                          layoutId="nav-active-bg"
-                          className="absolute inset-0 rounded-xl"
-                          style={{ background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.22)" }}
-                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          layoutId="nav-underline"
+                          className="absolute left-2.5 right-2.5 -bottom-0.5 h-[2.5px] rounded-full"
+                          style={{ background: "linear-gradient(90deg, #2F5E94 0%, #EA6E14 100%)" }}
+                          transition={{ type: "spring", stiffness: 400, damping: 32 }}
                         />
                       )}
-                      <span className="relative z-10">{t(key)}</span>
                     </Link>
                   </div>
                 );
