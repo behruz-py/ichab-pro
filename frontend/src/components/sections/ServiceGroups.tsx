@@ -103,25 +103,35 @@ export function ServiceGroups({ locale }: { locale: string }) {
             variants={fadeUp}
             className="group relative flex flex-col rounded-2xl p-6 overflow-hidden transition-transform duration-300 hover:-translate-y-1.5"
             style={{
-              background: "var(--card-bg)",
+              background: `linear-gradient(155deg, ${a.tint} 0%, rgba(255,255,255,0) 52%), var(--card-bg)`,
               border: "1px solid var(--glass-border)",
               boxShadow: "var(--card-shadow)",
             }}
           >
-            {/* Decorative watermark icon */}
-            <Icon
-              className="absolute pointer-events-none transition-all duration-500 group-hover:scale-110 group-hover:opacity-[0.09]"
-              style={{ right: -18, bottom: -18, width: 128, height: 128, color: a.solid, opacity: 0.05 }}
-              strokeWidth={1}
-            />
+            {/* Always-on top accent bar */}
+            <span className="absolute top-0 inset-x-0 h-[3px]" style={{ background: a.grad }} />
 
-            {/* Top accent line — appears on hover */}
-            <span className="absolute top-0 left-6 right-6 h-[2.5px] rounded-b-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              style={{ background: a.grad }} />
+            {/* Floating decorative watermark icon */}
+            <motion.div
+              className="absolute pointer-events-none"
+              style={{ right: -18, bottom: -18 }}
+              animate={{ y: [0, -7, 0], rotate: [0, 5, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Icon
+                className="transition-all duration-500 group-hover:scale-110 group-hover:opacity-[0.12]"
+                style={{ width: 130, height: 130, color: a.solid, opacity: 0.07 }}
+                strokeWidth={1}
+              />
+            </motion.div>
+
+            {/* Hover shine sweep */}
+            <span className="absolute inset-y-0 left-0 w-1/2 pointer-events-none skew-x-12 -translate-x-[160%] group-hover:translate-x-[320%] transition-transform duration-[850ms] ease-out"
+              style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)" }} />
 
             {/* Hover ring + glow */}
             <span className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-              style={{ boxShadow: `inset 0 0 0 1px ${a.ring}, 0 18px 40px ${a.glow}` }} />
+              style={{ boxShadow: `inset 0 0 0 1px ${a.ring}, 0 18px 44px ${a.glow}` }} />
 
             {/* Header */}
             <div className="relative flex items-center gap-3 mb-5">
@@ -130,8 +140,7 @@ export function ServiceGroups({ locale }: { locale: string }) {
                 <Icon size={24} color="#fff" strokeWidth={1.7} />
               </div>
               <div className="min-w-0">
-                <h3 className="font-display font-bold leading-snug transition-colors duration-200"
-                  style={{ fontSize: 16.5, color: "#1E293B" }}>
+                <h3 className="font-display font-bold leading-snug" style={{ fontSize: 16.5, color: a.solid }}>
                   {tr(g.title, locale)}
                 </h3>
                 <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-[10.5px] font-bold uppercase tracking-wide"
