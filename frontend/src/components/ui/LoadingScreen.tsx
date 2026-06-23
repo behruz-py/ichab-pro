@@ -8,20 +8,20 @@ interface Props {
   onComplete?: () => void;
 }
 
+const R = 140;                       // ring radius
+const CIRC = 2 * Math.PI * R;        // circumference
+
 export function LoadingScreen({ onComplete }: Props) {
   const [progress, setProgress] = useState(0);
   const [visible, setVisible] = useState(true);
   const [logoError, setLogoError] = useState(false);
 
   useEffect(() => {
-    // Animate progress 0 → 100 over ~1.8s with easing
     const duration = 1800;
     const start = performance.now();
-
     const tick = (now: number) => {
       const elapsed = Math.min((now - start) / duration, 1);
-      // ease-out quart
-      const eased = 1 - Math.pow(1 - elapsed, 3);
+      const eased = 1 - Math.pow(1 - elapsed, 3); // ease-out
       setProgress(Math.round(eased * 100));
       if (elapsed < 1) {
         requestAnimationFrame(tick);
@@ -50,108 +50,114 @@ export function LoadingScreen({ onComplete }: Props) {
           {/* Background glow */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <motion.div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full"
-              style={{ background: "var(--accent-glow)", filter: "blur(80px)" }}
-              animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28rem] h-[28rem] rounded-full"
+              style={{ background: "var(--accent-glow)", filter: "blur(90px)" }}
+              animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.55, 0.3] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
 
-          {/* Scan line */}
-          <motion.div
-            className="absolute left-0 right-0 h-px opacity-20 pointer-events-none"
-            style={{ background: "linear-gradient(90deg, transparent, var(--accent), transparent)" }}
-            animate={{ top: ["0%", "100%"] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-          />
-
           {/* Content */}
-          <div className="relative z-10 flex flex-col items-center gap-8">
-            {/* Logo */}
+          <div className="relative z-10 flex flex-col items-center gap-9">
+
+            {/* ── Logo + circular progress ring ── */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.7, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="relative"
+              className="relative flex items-center justify-center"
+              style={{ width: 300, height: 300 }}
             >
-              {/* Outer ring */}
+              {/* Outer dashed deco ring — slow spin */}
               <motion.div
-                className="absolute -inset-4 rounded-full border border-accent/30"
+                className="absolute rounded-full border border-dashed"
+                style={{ inset: -10, borderColor: "rgba(47,94,148,0.16)" }}
                 animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              />
-              {/* Inner ring */}
-              <motion.div
-                className="absolute -inset-2 rounded-full border border-dashed border-accent/20"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               />
 
-              {/* Logo image or fallback */}
-              <div className="w-20 h-20 flex items-center justify-center"
-                style={{ filter: "drop-shadow(0 0 18px rgba(47,94,148,0.55)) drop-shadow(0 0 8px rgba(234,110,20,0.25))" }}
+              {/* Progress ring */}
+              <svg width="300" height="300" viewBox="0 0 300 300" className="absolute inset-0 -rotate-90">
+                <defs>
+                  <linearGradient id="ichab-load" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#3D72AD" />
+                    <stop offset="60%" stopColor="#2F5E94" />
+                    <stop offset="100%" stopColor="#EA6E14" />
+                  </linearGradient>
+                </defs>
+                {/* Track */}
+                <circle cx="150" cy="150" r={R} fill="none" stroke="rgba(47,94,148,0.12)" strokeWidth="5" />
+                {/* Fill */}
+                <circle
+                  cx="150" cy="150" r={R} fill="none"
+                  stroke="url(#ichab-load)" strokeWidth="5" strokeLinecap="round"
+                  strokeDasharray={CIRC}
+                  strokeDashoffset={CIRC * (1 - progress / 100)}
+                  style={{ filter: "drop-shadow(0 0 7px rgba(47,94,148,0.45))", transition: "stroke-dashoffset 0.12s linear" }}
+                />
+              </svg>
+
+              {/* Logo — gentle breathing pulse */}
+              <motion.div
+                className="relative flex items-center justify-center"
+                style={{
+                  width: 200, height: 200,
+                  filter: "drop-shadow(0 0 24px rgba(47,94,148,0.45)) drop-shadow(0 0 12px rgba(234,110,20,0.22))",
+                }}
+                animate={{ scale: [1, 1.045, 1] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
               >
                 {!logoError ? (
                   <Image
                     src="/logo-icon.png"
                     alt="ICHAB"
-                    width={80}
-                    height={80}
+                    width={200}
+                    height={200}
                     className="object-contain w-full h-full"
                     onError={() => setLogoError(true)}
                     priority
                   />
                 ) : (
-                  <span className="font-display font-bold text-2xl text-accent">IC</span>
+                  <span className="font-display font-bold text-6xl text-accent">IC</span>
                 )}
-              </div>
+              </motion.div>
             </motion.div>
 
-            {/* Company name */}
+            {/* ── Company name ── */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
               className="text-center"
             >
-              <h1 className="font-display font-bold text-3xl text-content tracking-[0.2em] uppercase">
+              <h1 className="font-display font-bold text-4xl text-content tracking-[0.22em] uppercase">
                 ICHAB
               </h1>
-              <p className="text-content-muted text-xs tracking-[0.15em] uppercase mt-1">
+              <p className="text-content-muted text-xs tracking-[0.15em] uppercase mt-1.5">
                 Ishlab chiqarishni avtomatlashtirish
               </p>
             </motion.div>
 
-            {/* Progress bar */}
+            {/* ── Big percentage ── */}
             <motion.div
-              initial={{ opacity: 0, width: 0 }}
-              animate={{ opacity: 1, width: "100%" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.4 }}
-              className="w-64"
+              className="flex flex-col items-center gap-1"
             >
-              <div className="flex justify-between text-xs text-content-muted mb-2 font-mono">
-                <span>Initializing</span>
-                <span>{progress}%</span>
-              </div>
-
-              {/* Track */}
-              <div className="h-1 rounded-full bg-surface-secondary overflow-hidden">
-                <motion.div
-                  className="h-full rounded-full relative overflow-hidden"
-                  style={{
-                    width: `${progress}%`,
-                    background: "var(--accent-gradient)",
-                  }}
-                  transition={{ duration: 0.05 }}
-                >
-                  {/* Shimmer */}
-                  <motion.div
-                    className="absolute inset-y-0 w-8 bg-white/30"
-                    animate={{ left: ["-100%", "200%"] }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  />
-                </motion.div>
-              </div>
+              <span
+                className="font-display font-bold tabular-nums"
+                style={{
+                  fontSize: 34, lineHeight: 1,
+                  background: "linear-gradient(120deg, #2F5E94 0%, #EA6E14 120%)",
+                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+                }}
+              >
+                {progress}%
+              </span>
+              <span className="font-mono text-[11px] tracking-[0.2em] uppercase" style={{ color: "#94A3B8" }}>
+                Initializing
+              </span>
             </motion.div>
           </div>
         </motion.div>
