@@ -1,17 +1,41 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Cpu, Wrench, Gauge, Wind, ShieldCheck, KeyRound, Check, type LucideIcon } from "lucide-react";
+import { staggerContainer, fadeUp, VIEWPORT } from "@/lib/motion";
 
 type Loc = Record<string, string>;
 const tr = (o: Loc, locale: string) => o[locale] ?? o.uz;
+
+const UNIT: Loc = { uz: "xizmat", ru: "услуги", en: "services" };
+
+interface Accent {
+  grad: string;   // icon badge gradient
+  solid: string;  // check + title hover color
+  tint: string;   // check chip bg
+  ring: string;   // hover inset ring (rgba)
+  glow: string;   // hover outer glow (rgba)
+}
 
 interface Group {
   Icon: LucideIcon;
   title: Loc;
   items: Loc[];
+  accent: Accent;
 }
+
+const A = {
+  blue:   { grad: "linear-gradient(135deg,#3D72AD,#244C77)", solid: "#2F5E94", tint: "rgba(47,94,148,0.12)",  ring: "rgba(47,94,148,0.35)",  glow: "rgba(47,94,148,0.20)" },
+  teal:   { grad: "linear-gradient(135deg,#1AA6AE,#0E7C86)", solid: "#0E8A93", tint: "rgba(14,138,147,0.12)", ring: "rgba(14,138,147,0.35)", glow: "rgba(14,138,147,0.20)" },
+  indigo: { grad: "linear-gradient(135deg,#7B7DEC,#4F46E5)", solid: "#5B5BD6", tint: "rgba(91,91,214,0.12)",  ring: "rgba(91,91,214,0.35)",  glow: "rgba(91,91,214,0.20)" },
+  cyan:   { grad: "linear-gradient(135deg,#28BBD9,#0891B2)", solid: "#0E96B8", tint: "rgba(14,150,184,0.12)", ring: "rgba(14,150,184,0.35)", glow: "rgba(14,150,184,0.20)" },
+  green:  { grad: "linear-gradient(135deg,#1FB87C,#059669)", solid: "#0E9F6E", tint: "rgba(14,159,110,0.12)", ring: "rgba(14,159,110,0.35)", glow: "rgba(14,159,110,0.20)" },
+  orange: { grad: "linear-gradient(135deg,#F2982F,#DE7216)", solid: "#DE7216", tint: "rgba(222,114,22,0.13)", ring: "rgba(222,114,22,0.38)",  glow: "rgba(222,114,22,0.22)" },
+} satisfies Record<string, Accent>;
 
 const GROUPS: Group[] = [
   {
-    Icon: Cpu,
+    Icon: Cpu, accent: A.blue,
     title: { uz: "Avtomatlashtirish va injiniring", ru: "Автоматизация и инжиниринг", en: "Automation & Engineering" },
     items: [
       { uz: "Konstruktorlik hujjatlari va elektr sxemalarini ishlab chiqish", ru: "Разработка конструкторской документации и электрических схем", en: "Design documentation and electrical schematics" },
@@ -20,7 +44,7 @@ const GROUPS: Group[] = [
     ],
   },
   {
-    Icon: Wrench,
+    Icon: Wrench, accent: A.teal,
     title: { uz: "Ta'mirlash va sozlash", ru: "Ремонт и наладка", en: "Repair & Commissioning" },
     items: [
       { uz: "Avtomatlashtirilgan elektroprivod va elektroavtomatika tizimlarini ta'mirlash va sozlash", ru: "Ремонт и наладка систем автоматизированного электропривода и электроавтоматики", en: "Repair and commissioning of automated electric drive and electro-automation systems" },
@@ -29,7 +53,7 @@ const GROUPS: Group[] = [
     ],
   },
   {
-    Icon: Gauge,
+    Icon: Gauge, accent: A.indigo,
     title: { uz: "Metrologiya", ru: "Метрология", en: "Metrology" },
     items: [
       { uz: "Nazorat-o'lchov uskunalari va o'lchov tizimlarini metrologik ta'minlash", ru: "Метрологическое обеспечение контрольно-измерительного оборудования и измерительных систем", en: "Metrological support of instrumentation and measuring systems" },
@@ -37,14 +61,14 @@ const GROUPS: Group[] = [
     ],
   },
   {
-    Icon: Wind,
+    Icon: Wind, accent: A.cyan,
     title: { uz: "Ventilyatsiya va iqlim", ru: "Вентиляция и климат", en: "Ventilation & HVAC" },
     items: [
       { uz: "Texnologik jarayon va xonalarda qo'llaniladigan ventilyatsiya va konditsionerlash tizimlarini sinash va sozlash", ru: "Испытание и наладка систем вентиляции и кондиционирования воздуха в технологических процессах и помещениях", en: "Testing and commissioning of ventilation and air-conditioning systems in processes and facilities" },
     ],
   },
   {
-    Icon: ShieldCheck,
+    Icon: ShieldCheck, accent: A.green,
     title: { uz: "Xavfsizlik tizimlari", ru: "Системы безопасности", en: "Security systems" },
     items: [
       { uz: "Qo'riqlash-yong'in signalizatsiyasi (ОПС): montaj, sozlash, texnik xizmat va ta'mir", ru: "Охранно-пожарная сигнализация (ОПС): монтаж, наладка, обслуживание и ремонт", en: "Fire & security alarm (FSA): installation, commissioning, maintenance and repair" },
@@ -53,7 +77,7 @@ const GROUPS: Group[] = [
     ],
   },
   {
-    Icon: KeyRound,
+    Icon: KeyRound, accent: A.orange,
     title: { uz: "«Kalit topshirish» loyihalari", ru: "Проекты «под ключ»", en: "Turnkey projects" },
     items: [
       { uz: "Texnologik jarayon va ishlab chiqarishni avtomatlashtirish loyihalarini (ASUTP) «kalit topshirish» asosida ishlab chiqish va joriy etish — bosh pudratchi sifatida", ru: "Разработка и внедрение проектов автоматизации технологических процессов и производств (АСУТП) «под ключ» — генеральный подряд", en: "Development and implementation of turnkey process automation projects (ACS TP) — as general contractor" },
@@ -63,41 +87,67 @@ const GROUPS: Group[] = [
 
 export function ServiceGroups({ locale }: { locale: string }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <motion.div
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={VIEWPORT}
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+    >
       {GROUPS.map((g, i) => {
         const Icon = g.Icon;
+        const a = g.accent;
         return (
-          <div
+          <motion.div
             key={i}
-            className="flex flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"
+            variants={fadeUp}
+            className="group relative flex flex-col rounded-2xl p-6 overflow-hidden transition-transform duration-300 hover:-translate-y-1.5"
             style={{
               background: "var(--card-bg)",
               border: "1px solid var(--glass-border)",
               boxShadow: "var(--card-shadow)",
             }}
           >
+            {/* Decorative watermark icon */}
+            <Icon
+              className="absolute pointer-events-none transition-all duration-500 group-hover:scale-110 group-hover:opacity-[0.09]"
+              style={{ right: -18, bottom: -18, width: 128, height: 128, color: a.solid, opacity: 0.05 }}
+              strokeWidth={1}
+            />
+
+            {/* Top accent line — appears on hover */}
+            <span className="absolute top-0 left-6 right-6 h-[2.5px] rounded-b-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ background: a.grad }} />
+
+            {/* Hover ring + glow */}
+            <span className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+              style={{ boxShadow: `inset 0 0 0 1px ${a.ring}, 0 18px 40px ${a.glow}` }} />
+
             {/* Header */}
-            <div className="flex items-center gap-3 mb-5">
-              <div className="flex items-center justify-center rounded-xl flex-shrink-0"
-                style={{
-                  width: 46, height: 46,
-                  background: "var(--accent-gradient)",
-                  boxShadow: "0 6px 16px rgba(36,76,119,0.22)",
-                }}>
-                <Icon size={23} color="#fff" strokeWidth={1.7} />
+            <div className="relative flex items-center gap-3 mb-5">
+              <div className="flex items-center justify-center rounded-xl flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6"
+                style={{ width: 48, height: 48, background: a.grad, boxShadow: `0 8px 20px ${a.glow}` }}>
+                <Icon size={24} color="#fff" strokeWidth={1.7} />
               </div>
-              <h3 className="font-display font-bold leading-snug" style={{ fontSize: 16.5, color: "#1E293B" }}>
-                {tr(g.title, locale)}
-              </h3>
+              <div className="min-w-0">
+                <h3 className="font-display font-bold leading-snug transition-colors duration-200"
+                  style={{ fontSize: 16.5, color: "#1E293B" }}>
+                  {tr(g.title, locale)}
+                </h3>
+                <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-[10.5px] font-bold uppercase tracking-wide"
+                  style={{ background: a.tint, color: a.solid }}>
+                  {g.items.length} {tr(UNIT, locale)}
+                </span>
+              </div>
             </div>
 
             {/* Checklist */}
-            <ul className="flex flex-col gap-3">
+            <ul className="relative flex flex-col gap-3">
               {g.items.map((item, j) => (
                 <li key={j} className="flex items-start gap-2.5">
-                  <span className="flex items-center justify-center rounded-md flex-shrink-0 mt-0.5"
-                    style={{ width: 18, height: 18, background: "rgba(234,110,20,0.12)" }}>
-                    <Check size={12} color="#DE7216" strokeWidth={3} />
+                  <span className="flex items-center justify-center rounded-md flex-shrink-0 mt-0.5 transition-transform duration-200 group-hover:scale-110"
+                    style={{ width: 18, height: 18, background: a.tint }}>
+                    <Check size={12} color={a.solid} strokeWidth={3} />
                   </span>
                   <span className="leading-relaxed" style={{ fontSize: 13.5, color: "#475569" }}>
                     {tr(item, locale)}
@@ -105,9 +155,9 @@ export function ServiceGroups({ locale }: { locale: string }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         );
       })}
-    </div>
+    </motion.div>
   );
 }
