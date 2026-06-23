@@ -2,7 +2,7 @@
   "nav": {
     "home": "Bosh sahifa",
     "company": "Kompaniya",
-    "about": "Korporatsiya haqida",
+    "about": "Korxona haqida",
     "divisions": "Bo'linmalar",
     "services": "Xizmatlar",
     "products": "Mahsulotlar",
@@ -122,8 +122,8 @@
     "description": "O'zbekiston sanoatini zamonaviy avtomatizatsiya yechimlari bilan ta'minlovchi yetakchi kompaniya.",
     "quick_links": "Tezkor havolalar",
     "contact_info": "Kontakt",
-    "address": "Toshkent sh., Mirzo Ulug'bek tumani, Universitet ko'chasi, 2-uy",
-    "phone": "+998 71 200-01-00",
+    "address": "Toshkent sh., Namuna ko’chasi, 1-uy",
+    "phone": "+998 71 000-00-00",
     "email": "info@ichab.uz",
     "copyright": "© {year} ICHAB. Barcha huquqlar himoyalangan.",
     "made_with": "Ishlab chiqarilgan"
