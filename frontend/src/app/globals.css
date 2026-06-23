@@ -279,6 +279,58 @@ select.form-input option {
 }
 .cta-pulse { animation: cta-glow-pulse 2.8s ease-in-out infinite; }
 
+/* ─── CTA FLOWING GRADIENT BORDER (the "AI" traveling line) ───────────────── */
+@property --flow-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.cta-flow-border {
+  position: relative;
+  border-radius: 26px;
+  padding: 1.5px;
+  background:
+    conic-gradient(
+      from var(--flow-angle),
+      rgba(47,94,148,0.14) 0deg,
+      rgba(47,94,148,0.14) 70deg,
+      #2F5E94 105deg,
+      #3D72AD 122deg,
+      #EA6E14 140deg,
+      #F4A52C 156deg,
+      #3D72AD 174deg,
+      #2F5E94 192deg,
+      rgba(47,94,148,0.14) 230deg,
+      rgba(47,94,148,0.14) 360deg
+    );
+  animation: flow-spin 4.5s linear infinite;
+  box-shadow: 0 8px 48px rgba(36,76,119,0.10);
+}
+@keyframes flow-spin { to { --flow-angle: 360deg; } }
+/* graceful fallback where @property isn't supported */
+@supports not (background: conic-gradient(from var(--flow-angle), red, blue)) {
+  .cta-flow-border { background: linear-gradient(120deg, #2F5E94, #EA6E14); }
+}
+
+/* ─── BUTTON SHINE SWEEP ──────────────────────────────────────────────────── */
+.btn-shine { position: relative; overflow: hidden; }
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -160%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.50) 50%, transparent 100%);
+  transform: skewX(-20deg);
+  animation: btn-shine-sweep 4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes btn-shine-sweep {
+  0%, 55% { left: -160%; }
+  100%    { left: 160%; }
+}
+
 /* ─── GRADIENT BG ────────────────────────────────────────────────────────── */
 .gradient-bg {
   background: var(--gradient);

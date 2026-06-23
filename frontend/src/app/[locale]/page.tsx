@@ -107,47 +107,48 @@ export default async function HomePage({ params: { locale } }: Props) {
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Reveal variant="scale">
-            <div
-              className="rounded-3xl p-12 relative overflow-hidden"
-              style={{
-                background:           "rgba(247,249,252,0.70)",
-                border:               "1px solid rgba(47,94,148,0.20)",
-                backdropFilter:       "blur(20px)",
-                WebkitBackdropFilter: "blur(20px)",
-                boxShadow:            "0 8px 48px rgba(36,76,119,0.10), 0 0 80px rgba(47,94,148,0.05)",
-              }}
-            >
-              {/* Glow top */}
-              <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[400px] h-[200px] rounded-full pointer-events-none"
-                style={{ background: "radial-gradient(ellipse, rgba(47,94,148,0.14) 0%, transparent 70%)" }} />
-              {/* Bottom glow */}
-              <div className="absolute -bottom-10 left-1/4 w-[300px] h-[150px] rounded-full pointer-events-none"
-                style={{ background: "radial-gradient(ellipse, rgba(234,110,20,0.06) 0%, transparent 70%)" }} />
+            <div className="cta-flow-border">
+              <div
+                className="rounded-3xl p-12 relative overflow-hidden"
+                style={{
+                  background:           "var(--card-bg)",
+                  backdropFilter:       "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
+                }}
+              >
+                {/* Glow top */}
+                <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[400px] h-[200px] rounded-full pointer-events-none"
+                  style={{ background: "radial-gradient(ellipse, rgba(47,94,148,0.14) 0%, transparent 70%)" }} />
+                {/* Bottom glow */}
+                <div className="absolute -bottom-10 left-1/4 w-[300px] h-[150px] rounded-full pointer-events-none"
+                  style={{ background: "radial-gradient(ellipse, rgba(234,110,20,0.08) 0%, transparent 70%)" }} />
 
-              <div className="relative">
-                <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-4" style={{ color: "#2F5E94" }}>
-                  Biz bilan bog&apos;laning
-                </span>
-                <h2
-                  className="font-display font-bold text-content mb-4"
-                  style={{ fontSize: "clamp(26px, 3.5vw, 42px)" }}
-                >
-                  {tHero("cta_primary")}?
-                </h2>
-                <p className="mb-10 max-w-lg mx-auto" style={{ color: "#475569" }}>
-                  {tHero("subtitle")}
-                </p>
-                <Link
-                  href={`/${locale}/contact`}
-                  className="inline-flex items-center gap-2 px-10 py-4 rounded-2xl font-semibold text-base text-white transition-all duration-200 hover:scale-[1.03] hover:-translate-y-0.5"
-                  style={{
-                    background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)",
-                    boxShadow:  "0 8px 28px rgba(208,98,16,0.38), inset 0 1px 0 rgba(255,255,255,0.18)",
-                  }}
-                >
-                  {tHero("cta_primary")}
-                  <ArrowRight size={18} />
-                </Link>
+                <div className="relative">
+                  <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-4" style={{ color: "#2F5E94" }}>
+                    Biz bilan bog&apos;laning
+                  </span>
+                  <h2
+                    className="font-display font-bold text-content mb-4"
+                    style={{ fontSize: "clamp(26px, 3.5vw, 42px)" }}
+                  >
+                    {tHero("cta_primary")}?
+                  </h2>
+                  <p className="mb-10 max-w-lg mx-auto" style={{ color: "#475569" }}>
+                    {tHero("subtitle")}
+                  </p>
+                  <Link
+                    href={`/${locale}/contact`}
+                    className="group btn-shine cta-pulse inline-flex items-center gap-2 px-10 py-4 rounded-2xl font-semibold text-base text-white transition-transform duration-200 hover:scale-[1.04] hover:-translate-y-0.5"
+                    style={{
+                      background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)",
+                    }}
+                  >
+                    {tHero("cta_primary")}
+                    <span className="inline-flex transition-transform duration-200 group-hover:translate-x-1">
+                      <ArrowRight size={18} />
+                    </span>
+                  </Link>
+                </div>
               </div>
             </div>
           </Reveal>
