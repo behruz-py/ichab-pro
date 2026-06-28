@@ -18,10 +18,10 @@ interface Props {
 
 export function ServicesPreview({ services, locale, title, subtitle, learnMore }: Props) {
   return (
-    <section className="relative py-24 overflow-hidden" style={{ background: "rgba(237,241,246,0.50)" }}>
+    <section className="relative py-24 overflow-hidden" style={{ background: "rgba(var(--surface-2-rgb),0.50)" }}>
       <MeshBlobs variant="services" />
 
-      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(47,94,148,0.20) 50%,transparent)" }} />
+      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(var(--accent-rgb),0.20) 50%,transparent)" }} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -30,11 +30,11 @@ export function ServicesPreview({ services, locale, title, subtitle, learnMore }
           variants={fadeUp} initial="hidden" whileInView="visible" viewport={VIEWPORT}
           className="text-center mb-14"
         >
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3" style={{ color: "#2F5E94" }}>Xizmatlar</span>
+          <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3" style={{ color: "var(--accent)" }}>Xizmatlar</span>
           <h2 className="font-display font-bold text-content" style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}>
             {title}
           </h2>
-          <p className="mt-3 max-w-xl mx-auto" style={{ color: "#475569" }}>{subtitle}</p>
+          <p className="mt-3 max-w-xl mx-auto" style={{ color: "var(--content-secondary)" }}>{subtitle}</p>
         </motion.div>
 
         {/* Grid */}
@@ -61,42 +61,42 @@ export function ServicesPreview({ services, locale, title, subtitle, learnMore }
                     {svc.icon ? (
                       <div
                         className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-                        style={{ background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.22)" }}
+                        style={{ background: "rgba(var(--accent-rgb),0.10)", border: "1px solid rgba(var(--accent-rgb),0.22)" }}
                       >
-                        <DynamicIcon name={svc.icon} size={22} className="text-[#2F5E94]" />
+                        <DynamicIcon name={svc.icon} size={22} className="text-[var(--accent)]" />
                       </div>
                     ) : <div />}
 
-                    <span className="text-[11px] font-bold font-mono" style={{ color: "rgba(47,94,148,0.35)" }}>
+                    <span className="text-[11px] font-bold font-mono" style={{ color: "rgba(var(--accent-rgb),0.35)" }}>
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
 
-                  <h3 className="font-display font-semibold text-content mb-2 transition-colors duration-200 group-hover:text-[#244C77]">
+                  <h3 className="font-display font-semibold text-content mb-2 transition-colors duration-200 group-hover:text-[var(--accent-secondary)]">
                     {svc.name}
                   </h3>
-                  <p className="text-sm line-clamp-3 leading-relaxed mb-5 flex-1" style={{ color: "#475569" }}>
+                  <p className="text-sm line-clamp-3 leading-relaxed mb-5 flex-1" style={{ color: "var(--content-secondary)" }}>
                     {svc.short_description}
                   </p>
 
                   {svc.price_from && (
-                    <p className="text-xs font-medium mb-4" style={{ color: "#2F5E94" }}>{svc.price_from}</p>
+                    <p className="text-xs font-medium mb-4" style={{ color: "var(--accent)" }}>{svc.price_from}</p>
                   )}
 
                   {/* Learn more — slides on hover */}
                   <div className="flex items-center justify-between">
                     <span
                       className="inline-flex items-center gap-1.5 text-xs font-semibold transition-all duration-200 group-hover:gap-3"
-                      style={{ color: "#2F5E94" }}
+                      style={{ color: "var(--accent)" }}
                     >
                       {learnMore} <ArrowRight size={14} />
                     </span>
                     {/* Arrow circle */}
                     <div
                       className="w-7 h-7 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0"
-                      style={{ background: "rgba(47,94,148,0.15)", border: "1px solid rgba(47,94,148,0.30)" }}
+                      style={{ background: "rgba(var(--accent-rgb),0.15)", border: "1px solid rgba(var(--accent-rgb),0.30)" }}
                     >
-                      <ArrowRight size={13} style={{ color: "#2F5E94" }} />
+                      <ArrowRight size={13} style={{ color: "var(--accent)" }} />
                     </div>
                   </div>
                 </Link>

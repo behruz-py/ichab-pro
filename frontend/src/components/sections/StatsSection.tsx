@@ -39,10 +39,10 @@ interface Props { stats: Statistic[]; title: string; }
 
 // Accent colors per card index (blue variants)
 const ACCENTS = [
-  { border: "rgba(47,94,148,0.35)",  glow: "rgba(47,94,148,0.15)",  icon: "rgba(47,94,148,0.18)"  },
-  { border: "rgba(47,94,148,0.30)",  glow: "rgba(47,94,148,0.12)",  icon: "rgba(47,94,148,0.14)"  },
-  { border: "rgba(61,114,173,0.30)",  glow: "rgba(61,114,173,0.12)",  icon: "rgba(61,114,173,0.14)"  },
-  { border: "rgba(47,94,148,0.35)",  glow: "rgba(47,94,148,0.15)",  icon: "rgba(47,94,148,0.18)"  },
+  { border: "rgba(var(--accent-rgb),0.35)",  glow: "rgba(var(--accent-rgb),0.15)",  icon: "rgba(var(--accent-rgb),0.18)"  },
+  { border: "rgba(var(--accent-rgb),0.30)",  glow: "rgba(var(--accent-rgb),0.12)",  icon: "rgba(var(--accent-rgb),0.14)"  },
+  { border: "rgba(var(--accent-rgb),0.30)",  glow: "rgba(var(--accent-rgb),0.12)",  icon: "rgba(var(--accent-rgb),0.14)"  },
+  { border: "rgba(var(--accent-rgb),0.35)",  glow: "rgba(var(--accent-rgb),0.15)",  icon: "rgba(var(--accent-rgb),0.18)"  },
 ];
 
 export function StatsSection({ stats, title }: Props) {
@@ -50,13 +50,13 @@ export function StatsSection({ stats, title }: Props) {
     <section className="relative py-24 overflow-hidden">
 
       {/* Top/bottom lines */}
-      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(47,94,148,0.30) 50%,transparent)" }} />
-      <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(47,94,148,0.30) 50%,transparent)" }} />
+      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(var(--accent-rgb),0.30) 50%,transparent)" }} />
+      <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(var(--accent-rgb),0.30) 50%,transparent)" }} />
 
       {/* Wide ambient glow */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[400px] rounded-full"
-          style={{ background: "radial-gradient(ellipse, rgba(47,94,148,0.07) 0%, transparent 70%)", filter: "blur(30px)" }} />
+          style={{ background: "radial-gradient(ellipse, rgba(var(--accent-rgb),0.07) 0%, transparent 70%)", filter: "blur(30px)" }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -66,7 +66,7 @@ export function StatsSection({ stats, title }: Props) {
           initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={VIEWPORT} transition={{ duration: 0.5 }}
           className="text-center text-xs font-bold uppercase tracking-[0.22em] mb-12"
-          style={{ color: "#94A3B8" }}
+          style={{ color: "var(--content-muted)" }}
         >
           {title}
         </motion.p>
@@ -88,7 +88,7 @@ export function StatsSection({ stats, title }: Props) {
                   border:               `1px solid ${accent.border}`,
                   backdropFilter:       "blur(20px)",
                   WebkitBackdropFilter: "blur(20px)",
-                  boxShadow:            `0 1px 2px rgba(15,23,42,0.04), 0 10px 28px rgba(36,76,119,0.08)`,
+                  boxShadow:            `0 1px 2px rgba(15,23,42,0.04), 0 10px 28px rgba(var(--accent-2-rgb),0.08)`,
                 }}
               >
                 {/* Hover top glow */}
@@ -104,7 +104,7 @@ export function StatsSection({ stats, title }: Props) {
                   <div className="flex justify-center mb-4">
                     <div className="w-11 h-11 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
                       style={{ background: accent.icon, border: `1px solid ${accent.border}` }}>
-                      <DynamicIcon name={stat.icon} size={20} className="text-[#2F5E94]" />
+                      <DynamicIcon name={stat.icon} size={20} className="text-[var(--accent)]" />
                     </div>
                   </div>
                 )}
@@ -113,7 +113,7 @@ export function StatsSection({ stats, title }: Props) {
                 <div className="relative font-display font-bold leading-none mb-2 tabular-nums"
                   style={{
                     fontSize: "clamp(48px, 5vw, 72px)",
-                    background: "linear-gradient(135deg, #DE7216 0%, #EC7A18 55%, #F09A24 100%)",
+                    background: "var(--hero-accent-gradient)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -123,7 +123,7 @@ export function StatsSection({ stats, title }: Props) {
                 </div>
 
                 {/* Label */}
-                <div className="text-[13px] font-medium leading-snug" style={{ color: "#475569" }}>
+                <div className="text-[13px] font-medium leading-snug" style={{ color: "var(--content-secondary)" }}>
                   {stat.label}
                 </div>
 

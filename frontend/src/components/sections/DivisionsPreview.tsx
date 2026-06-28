@@ -57,7 +57,7 @@ function NodeMedia({ div, Icon }: { div: Division; Icon: LucideIcon }) {
   return div.cover_image ? (
     <Image src={mediaUrl(div.cover_image)} alt={div.name} fill className="object-cover" sizes="236px" />
   ) : (
-    <div className="absolute inset-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg,#3D72AD,#244C77)" }}>
+    <div className="absolute inset-0 flex items-center justify-center" style={{ background: "var(--accent-gradient)" }}>
       <Icon size={46} strokeWidth={1.3} color="rgba(255,255,255,0.85)" />
     </div>
   );
@@ -73,17 +73,17 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
 
   return (
     <section className="relative py-16 overflow-hidden">
-      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(47,94,148,0.22) 50%,transparent)" }} />
+      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(var(--accent-rgb),0.22) 50%,transparent)" }} />
 
       {/* Faint automation background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
         <div className="absolute inset-0" style={{
           opacity: 0.03,
-          backgroundImage: "radial-gradient(rgba(47,94,148,1) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(rgba(var(--accent-rgb),1) 1px, transparent 1px)",
           backgroundSize: "34px 34px",
         }} />
         {BG_ICONS.map(({ Icon, style }, i) => (
-          <Icon key={i} className="absolute" strokeWidth={1} style={{ color: "#2F5E94", opacity: 0.045, ...style }} />
+          <Icon key={i} className="absolute" strokeWidth={1} style={{ color: "var(--accent)", opacity: 0.045, ...style }} />
         ))}
       </div>
 
@@ -92,16 +92,16 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-2 gap-5">
           <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" viewport={VIEWPORT}>
-            <span className="inline-block text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "#2F5E94" }}>
+            <span className="inline-block text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "var(--accent)" }}>
               {EYEBROW[locale] ?? EYEBROW.uz}
             </span>
             <h2 className="font-display font-bold text-content leading-tight" style={{ fontSize: "clamp(28px,3.5vw,44px)" }}>{title}</h2>
-            <p className="mt-3 max-w-lg" style={{ color: "#475569" }}>{subtitle}</p>
+            <p className="mt-3 max-w-lg" style={{ color: "var(--content-secondary)" }}>{subtitle}</p>
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={VIEWPORT} transition={{ duration: 0.5, delay: 0.2 }}>
             <Link href={`/${locale}/divisions`}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold shrink-0 transition-all duration-200 hover:gap-3"
-              style={{ background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.25)", color: "#2F5E94" }}>
+              style={{ background: "rgba(var(--accent-rgb),0.10)", border: "1px solid rgba(var(--accent-rgb),0.25)", color: "var(--accent)" }}>
               {viewAll} <ArrowRight size={16} />
             </Link>
           </motion.div>
@@ -120,26 +120,26 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
             {/* Soft backdrop glow */}
             <div className="absolute rounded-full pointer-events-none" style={{
               inset: 110,
-              background: "radial-gradient(circle at 50% 50%, rgba(47,94,148,0.10) 0%, rgba(234,110,20,0.05) 45%, transparent 70%)",
+              background: "radial-gradient(circle at 50% 50%, rgba(var(--accent-rgb),0.10) 0%, rgba(var(--warm-glow),0.05) 45%, transparent 70%)",
               filter: "blur(8px)",
             }} />
 
             {/* Connectors + cog */}
             <svg className="absolute inset-0 pointer-events-none" width={BOX} height={BOX} viewBox={`0 0 ${BOX} ${BOX}`}>
-              <circle cx={C} cy={C} r={R} fill="none" stroke="rgba(47,94,148,0.12)" strokeWidth="1" strokeDasharray="2 8" />
+              <circle cx={C} cy={C} r={R} fill="none" stroke="rgba(var(--accent-rgb),0.12)" strokeWidth="1" strokeDasharray="2 8" />
               {shown.map((_, i) => {
                 const s = hubEdge(i, n), p = nodePos(i, n);
                 const on = active === i;
                 return (
                   <line key={i} x1={s.x} y1={s.y} x2={p.x} y2={p.y}
-                    stroke={on ? "#EA6E14" : "rgba(47,94,148,0.30)"} strokeWidth={on ? 2.4 : 1.4}
+                    stroke={on ? "var(--warm-solid)" : "rgba(var(--accent-rgb),0.30)"} strokeWidth={on ? 2.4 : 1.4}
                     strokeDasharray="3 8" strokeLinecap="round"
                     style={{ animation: "flow-dash 0.8s linear infinite", transition: "stroke 0.3s, stroke-width 0.3s" }} />
                 );
               })}
-              <ellipse cx={C} cy={C} rx={COG_RX} ry={COG_RY} fill="none" stroke="rgba(47,94,148,0.18)" strokeWidth="12"
+              <ellipse cx={C} cy={C} rx={COG_RX} ry={COG_RY} fill="none" stroke="rgba(var(--accent-rgb),0.18)" strokeWidth="12"
                 strokeDasharray="8 16" strokeLinecap="round" style={{ animation: "flow-dash 1.1s linear infinite" }} />
-              <ellipse cx={C} cy={C} rx={COG_RX - 9} ry={COG_RY - 9} fill="none" stroke="rgba(234,110,20,0.16)" strokeWidth="6"
+              <ellipse cx={C} cy={C} rx={COG_RX - 9} ry={COG_RY - 9} fill="none" stroke="rgba(var(--warm-glow),0.16)" strokeWidth="6"
                 strokeDasharray="8 16" strokeLinecap="round" style={{ animation: "flow-dash 1.1s linear infinite reverse" }} />
             </svg>
 
@@ -152,7 +152,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                 <div key={div.id} className="ai-border absolute"
                   style={{
                     left: p.x - NODE_W / 2, top: p.y - NODE_H / 2, width: NODE_W, height: NODE_H, zIndex: 10,
-                    boxShadow: on ? "0 24px 50px rgba(234,110,20,0.28)" : "0 16px 36px rgba(36,76,119,0.20)",
+                    boxShadow: on ? "0 24px 50px rgba(var(--warm-glow),0.28)" : "0 16px 36px rgba(var(--accent-2-rgb),0.20)",
                     transform: on ? "scale(1.05)" : "scale(1)",
                     transition: "transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s",
                   }}>
@@ -165,7 +165,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                     <span className="absolute inset-0 pointer-events-none transition-opacity duration-300"
                       style={{ background: "linear-gradient(to top, rgba(15,23,42,0.45) 0%, rgba(15,23,42,0.10) 45%, transparent 70%)", opacity: on ? 0.4 : 1 }} />
                     <span className="absolute bottom-2 left-1/2 -translate-x-1/2 font-mono text-[10px] font-bold px-2 py-0.5 rounded"
-                      style={{ background: "rgba(255,255,255,0.94)", color: "#2F5E94" }}>
+                      style={{ background: "rgba(255,255,255,0.94)", color: "var(--accent)" }}>
                       Laboratoriya · {String(i + 1).padStart(2, "0")}
                     </span>
                   </Link>
@@ -177,23 +177,23 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
             <div className="absolute flex items-center justify-center text-center overflow-hidden"
               style={{
                 left: C - HUB_W / 2, top: C - HUB_H / 2, width: HUB_W, height: HUB_H, borderRadius: "50%",
-                background: "radial-gradient(circle at 50% 36%, #FFFFFF 0%, #F2F6FB 78%)",
-                border: "1px solid rgba(47,94,148,0.16)",
-                boxShadow: "0 22px 50px rgba(36,76,119,0.16), inset 0 2px 4px rgba(255,255,255,0.9), 0 0 0 8px rgba(255,255,255,0.5)",
+                background: "radial-gradient(circle at 50% 36%, var(--surface-elevated) 0%, var(--surface-card) 78%)",
+                border: "1px solid rgba(var(--accent-rgb),0.16)",
+                boxShadow: "0 22px 50px rgba(var(--accent-2-rgb),0.16), inset 0 2px 4px rgba(255,255,255,0.5), 0 0 0 8px rgba(var(--accent-rgb),0.10)",
                 zIndex: 20,
               }}>
               <AnimatePresence mode="wait">
                 {act ? (
                   <motion.div key={act.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.22 }} className="px-8 flex flex-col items-center">
-                    <span className="font-mono text-[10px] font-bold tracking-widest mb-2" style={{ color: "#EA6E14" }}>
+                    <span className="font-mono text-[10px] font-bold tracking-widest mb-2" style={{ color: "var(--warm-solid)" }}>
                       Laboratoriya · {String((active ?? 0) + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="font-display font-bold leading-snug mb-2.5 line-clamp-3 first-letter:uppercase" style={{ fontSize: 15, color: "#1E293B" }}>
+                    <h3 className="font-display font-bold leading-snug mb-2.5 line-clamp-3 first-letter:uppercase" style={{ fontSize: 15, color: "var(--content)" }}>
                       {act.name}
                     </h3>
                     <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-lg"
-                      style={{ background: "linear-gradient(135deg,#EE8418,#D2630E)", color: "#fff", boxShadow: "0 6px 16px rgba(208,98,16,0.28)" }}>
+                      style={{ background: "var(--warm-btn)", color: "#fff", boxShadow: "0 6px 16px rgba(var(--warm-glow),0.28)" }}>
                       {viewDetail} <ArrowRight size={13} />
                     </span>
                   </motion.div>
@@ -201,11 +201,11 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                   <motion.div key="hub" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.22 }}
                     className="flex flex-col items-center">
                     <motion.div animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-                      style={{ filter: "drop-shadow(0 5px 18px rgba(47,94,148,0.4))" }}>
+                      style={{ filter: "drop-shadow(0 5px 18px rgba(var(--accent-rgb),0.4))" }}>
                       <Image src="/logo-icon.png" alt="ICHAB" width={84} height={84} className="object-contain" priority />
                     </motion.div>
-                    <span className="font-display font-bold tracking-[0.2em] mt-2" style={{ fontSize: 20, color: "#1E293B" }}>ICHAB</span>
-                    <span className="text-[9px] uppercase tracking-[0.14em] mt-1" style={{ color: "#94A3B8" }}>
+                    <span className="font-display font-bold tracking-[0.2em] mt-2" style={{ fontSize: 20, color: "var(--content)" }}>ICHAB</span>
+                    <span className="text-[9px] uppercase tracking-[0.14em] mt-1" style={{ color: "var(--content-muted)" }}>
                       {EYEBROW[locale] ?? EYEBROW.uz}
                     </span>
                   </motion.div>
@@ -227,21 +227,21 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                   {div.cover_image ? (
                     <Image src={mediaUrl(div.cover_image)} alt={div.name} fill className="object-cover" sizes="(max-width:1024px) 100vw, 50vw" priority={i < 2} />
                   ) : (
-                    <div className="absolute inset-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg,#3D72AD,#244C77)" }}>
+                    <div className="absolute inset-0 flex items-center justify-center" style={{ background: "var(--accent-gradient)" }}>
                       <Icon size={44} color="rgba(255,255,255,0.85)" strokeWidth={1.3} />
                     </div>
                   )}
                   <span className="absolute top-3 left-3 font-mono text-[11px] font-bold tracking-widest px-2.5 py-1 rounded-lg"
-                    style={{ background: "rgba(255,255,255,0.92)", border: "1px solid rgba(47,94,148,0.25)", color: "#2F5E94" }}>
+                    style={{ background: "rgba(255,255,255,0.92)", border: "1px solid rgba(var(--accent-rgb),0.25)", color: "var(--accent)" }}>
                     Laboratoriya · {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
                 <div className="flex flex-col flex-1 p-4">
-                  <h3 className="font-display font-bold text-base leading-snug mb-2 line-clamp-2 first-letter:uppercase" style={{ color: "#1E293B" }}>{div.name}</h3>
+                  <h3 className="font-display font-bold text-base leading-snug mb-2 line-clamp-2 first-letter:uppercase" style={{ color: "var(--content)" }}>{div.name}</h3>
                   {div.short_description && (
-                    <p className="text-sm leading-relaxed line-clamp-2 mb-4 flex-1" style={{ color: "#475569" }}>{div.short_description}</p>
+                    <p className="text-sm leading-relaxed line-clamp-2 mb-4 flex-1" style={{ color: "var(--content-secondary)" }}>{div.short_description}</p>
                   )}
-                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold mt-auto" style={{ color: "#2F5E94" }}>{viewDetail} <ArrowRight size={14} /></span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold mt-auto" style={{ color: "var(--accent)" }}>{viewDetail} <ArrowRight size={14} /></span>
                 </div>
               </Link>
             );

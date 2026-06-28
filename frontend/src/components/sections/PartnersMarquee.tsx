@@ -24,12 +24,12 @@ function cfOpacity(t: number) { return 1.00 - t * 0.80; }
 function cfBlur   (t: number) { return t * t * t * 10; }
 
 const SHADOW_ACTIVE = [
-  "0 0 0 2.5px rgba(47,94,148,0.72)",
-  "0 0 28px rgba(47,94,148,0.32)",
-  "0 8px 40px rgba(36,76,119,0.14)",
+  "0 0 0 2.5px rgba(var(--accent-rgb),0.72)",
+  "0 0 28px rgba(var(--accent-rgb),0.32)",
+  "0 8px 40px rgba(var(--accent-2-rgb),0.14)",
 ].join(", ");
 
-const SHADOW_NORMAL = "0 4px 24px rgba(36,76,119,0.10), 0 1px 4px rgba(36,76,119,0.06)";
+const SHADOW_NORMAL = "0 4px 24px rgba(var(--accent-2-rgb),0.10), 0 1px 4px rgba(var(--accent-2-rgb),0.06)";
 
 interface Props {
   partners: Partner[];
@@ -118,7 +118,7 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={VIEWPORT}>
           <span
             className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3"
-            style={{ color: "#2F5E94" }}
+            style={{ color: "var(--accent)" }}
           >
             Hamkorlar
           </span>
@@ -128,7 +128,7 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
           >
             {title}
           </h2>
-          <p className="mt-3 max-w-xl mx-auto" style={{ color: "#475569" }}>
+          <p className="mt-3 max-w-xl mx-auto" style={{ color: "var(--content-secondary)" }}>
             {subtitle}
           </p>
         </motion.div>
@@ -142,11 +142,11 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
         {/* Edge fades */}
         <div
           className="pointer-events-none absolute left-0 top-0 h-full w-56 z-20"
-          style={{ background: "linear-gradient(to right, #E5EAF1 10%, transparent 100%)" }}
+          style={{ background: "linear-gradient(to right, rgba(var(--surface-rgb),1) 10%, transparent 100%)" }}
         />
         <div
           className="pointer-events-none absolute right-0 top-0 h-full w-56 z-20"
-          style={{ background: "linear-gradient(to left, #E5EAF1 10%, transparent 100%)" }}
+          style={{ background: "linear-gradient(to left, rgba(var(--surface-rgb),1) 10%, transparent 100%)" }}
         />
 
         {/* Spotlight glow line under center card */}
@@ -155,7 +155,7 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
           style={{
             width:        `${CARD_W + 60}px`,
             height:       "6px",
-            background:   "radial-gradient(ellipse, rgba(47,94,148,0.55) 0%, transparent 75%)",
+            background:   "radial-gradient(ellipse, rgba(var(--accent-rgb),0.55) 0%, transparent 75%)",
             borderRadius: "3px",
             filter:       "blur(2px)",
           }}
@@ -197,7 +197,7 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
                     draggable={false}
                   />
                 ) : (
-                  <span style={{ color: "#1e293b", fontWeight: 700, fontSize: "15px", textAlign: "center" }}>
+                  <span style={{ color: "var(--content)", fontWeight: 700, fontSize: "15px", textAlign: "center" }}>
                     {partner.name}
                   </span>
                 )}
@@ -215,12 +215,12 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
         viewport={VIEWPORT}
         className="mt-8 flex items-center justify-center gap-5"
       >
-        <div style={{ height: "1px", width: "60px", background: "rgba(47,94,148,0.20)" }} />
-        <p style={{ color: "#94A3B8", fontSize: "12px", fontWeight: 500, letterSpacing: "0.06em" }}>
-          <span style={{ color: "#2F5E94", fontWeight: 700, fontSize: "14px" }}>{count}</span>
+        <div style={{ height: "1px", width: "60px", background: "rgba(var(--accent-rgb),0.20)" }} />
+        <p style={{ color: "var(--content-muted)", fontSize: "12px", fontWeight: 500, letterSpacing: "0.06em" }}>
+          <span style={{ color: "var(--accent)", fontWeight: 700, fontSize: "14px" }}>{count}</span>
           {" "}ta ishonchli hamkor kompaniya
         </p>
-        <div style={{ height: "1px", width: "60px", background: "rgba(47,94,148,0.20)" }} />
+        <div style={{ height: "1px", width: "60px", background: "rgba(var(--accent-rgb),0.20)" }} />
       </motion.div>
 
     </section>

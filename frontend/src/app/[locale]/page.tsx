@@ -118,13 +118,13 @@ export default async function HomePage({ params: { locale } }: Props) {
               >
                 {/* Glow top */}
                 <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[400px] h-[200px] rounded-full pointer-events-none"
-                  style={{ background: "radial-gradient(ellipse, rgba(47,94,148,0.14) 0%, transparent 70%)" }} />
+                  style={{ background: "radial-gradient(ellipse, rgba(var(--accent-rgb),0.14) 0%, transparent 70%)" }} />
                 {/* Bottom glow */}
                 <div className="absolute -bottom-10 left-1/4 w-[300px] h-[150px] rounded-full pointer-events-none"
-                  style={{ background: "radial-gradient(ellipse, rgba(234,110,20,0.08) 0%, transparent 70%)" }} />
+                  style={{ background: "radial-gradient(ellipse, rgba(var(--warm-glow),0.08) 0%, transparent 70%)" }} />
 
                 <div className="relative">
-                  <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-4" style={{ color: "#2F5E94" }}>
+                  <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-4" style={{ color: "var(--accent)" }}>
                     Biz bilan bog&apos;laning
                   </span>
                   <h2
@@ -133,14 +133,14 @@ export default async function HomePage({ params: { locale } }: Props) {
                   >
                     {tHero("cta_primary")}?
                   </h2>
-                  <p className="mb-10 max-w-lg mx-auto" style={{ color: "#475569" }}>
+                  <p className="mb-10 max-w-lg mx-auto" style={{ color: "var(--content-secondary)" }}>
                     {tHero("subtitle")}
                   </p>
                   <Link
                     href={`/${locale}/contact`}
                     className="group btn-shine cta-pulse inline-flex items-center gap-2 px-10 py-4 rounded-2xl font-semibold text-base text-white transition-transform duration-200 hover:scale-[1.04] hover:-translate-y-0.5"
                     style={{
-                      background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)",
+                      background: "var(--warm-btn)",
                     }}
                   >
                     {tHero("cta_primary")}

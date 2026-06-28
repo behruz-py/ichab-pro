@@ -53,6 +53,10 @@
   --panel-border:       rgba(47, 94, 148, 0.18);
   --brand-gradient:     linear-gradient(120deg, #1E293B 0%, #2F5E94 70%, #EA6E14 130%);
   --hero-accent-gradient: linear-gradient(135deg, #DE7216 0%, #EC7A18 45%, #F09A24 100%);
+  --accent-rgb:         47, 94, 148;     /* steel blue */
+  --accent-2-rgb:       36, 76, 119;     /* deep blue (shadows) */
+  --surface-2-rgb:      237, 241, 246;   /* section tint */
+  --panel-rgb:          247, 249, 252;   /* raised panel */
 }
 
 /* ─── THEME: Aurora Glass (dark cinematic + frosted accents) ─────────────────
@@ -105,6 +109,10 @@
   --panel-border:       rgba(56, 189, 248, 0.20);
   --brand-gradient:     linear-gradient(120deg, #EAF2FF 0%, #38BDF8 70%, #34D399 130%);
   --hero-accent-gradient: linear-gradient(135deg, #22D3EE 0%, #34D399 100%);
+  --accent-rgb:         56, 189, 248;    /* sky/cyan */
+  --accent-2-rgb:       34, 211, 238;    /* cyan (shadows/glow) */
+  --surface-2-rgb:      8, 22, 46;       /* section tint (deep navy) */
+  --panel-rgb:          9, 22, 45;       /* raised panel */
 }
 
 /* ─── BASE ───────────────────────────────────────────────────────────────── */
