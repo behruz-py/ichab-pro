@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 import { notFound } from "next/navigation";
@@ -39,6 +39,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
   setRequestLocale(locale);
 
   const messages = await getMessages();
+  const t = await getTranslations({ locale, namespace: "common" });
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -49,6 +50,9 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="noise-overlay">
+        <a href="#main-content" className="skip-link">
+          {t("skip_to_content")}
+        </a>
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="midnight"
@@ -62,7 +66,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
               <AppLoader>
                 <Header />
                 <PageTransition>
-                  <main>{children}</main>
+                  <main id="main-content" tabIndex={-1}>{children}</main>
                 </PageTransition>
                 <Footer />
               </AppLoader>

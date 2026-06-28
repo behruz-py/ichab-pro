@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { CheckCircle2 } from "lucide-react";
-import { api } from "@/lib/api-client";
+import { api, ApiError } from "@/lib/api-client";
+import { Button } from "@/components/ui/Button";
 import type { LeadCreate } from "@/types/api";
 
 const SUBJECTS = [
@@ -28,14 +29,20 @@ export function ContactForm({ locale }: { locale: string }) {
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  // True when the "phone OR email" rule fails — highlights both fields.
+  const [contactInvalid, setContactInvalid] = useState(false);
 
   function set(field: keyof LeadCreate, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
+    if ((field === "phone" || field === "email") && contactInvalid) {
+      setContactInvalid(false);
+    }
   }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.phone && !form.email) {
+      setContactInvalid(true);
       setErrorMsg(t("required_either"));
       return;
     }
@@ -44,14 +51,29 @@ export function ContactForm({ locale }: { locale: string }) {
     try {
       await api.leads.create(form);
       setStatus("success");
-    } catch {
+    } catch (err) {
       setStatus("error");
+      if (err instanceof ApiError) {
+        if (err.status === 429) {
+          setErrorMsg(t("rate_limited"));
+        } else {
+          const detail =
+            err.data && typeof err.data === "object" && "detail" in err.data
+              ? String((err.data as { detail: unknown }).detail)
+              : "";
+          if (detail) setErrorMsg(detail);
+        }
+      }
     }
   }
 
   if (status === "success") {
     return (
-      <div className="glass-card rounded-2xl border border-accent/30 p-10 text-center">
+      <div
+        className="glass-card rounded-2xl border border-accent/30 p-10 text-center"
+        role="status"
+        aria-live="polite"
+      >
         <CheckCircle2 size={48} className="mx-auto mb-4 text-accent" />
         <p className="text-content font-semibold text-lg">{t("success")}</p>
       </div>
@@ -61,6 +83,7 @@ export function ContactForm({ locale }: { locale: string }) {
   return (
     <form
       onSubmit={submit}
+      noValidate
       className="glass-card rounded-2xl border border-border-subtle p-8 space-y-5"
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -86,6 +109,7 @@ export function ContactForm({ locale }: { locale: string }) {
             type="tel"
             value={form.phone}
             onChange={(e) => set("phone", e.target.value)}
+            aria-invalid={contactInvalid}
             className="form-input"
           />
         </Field>
@@ -94,6 +118,7 @@ export function ContactForm({ locale }: { locale: string }) {
             type="email"
             value={form.email}
             onChange={(e) => set("email", e.target.value)}
+            aria-invalid={contactInvalid}
             className="form-input"
           />
         </Field>
@@ -121,20 +146,21 @@ export function ContactForm({ locale }: { locale: string }) {
         />
       </Field>
 
-      {errorMsg && (
-        <p className="text-red-400 text-sm">{errorMsg}</p>
-      )}
-      {status === "error" && (
-        <p className="text-red-400 text-sm">{t("error")}</p>
+      {(errorMsg || status === "error") && (
+        <p className="text-red-500 text-sm" role="alert" aria-live="assertive">
+          {errorMsg || t("error")}
+        </p>
       )}
 
-      <button
+      <Button
         type="submit"
-        disabled={status === "loading"}
-        className="w-full py-4 rounded-xl bg-accent text-surface font-semibold text-lg shadow-glow hover:opacity-90 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+        variant="primary"
+        size="lg"
+        loading={status === "loading"}
+        className="w-full btn-shine"
       >
         {status === "loading" ? t("submitting") : t("submit")}
-      </button>
+      </Button>
     </form>
   );
 }

@@ -47,6 +47,7 @@ export function Header() {
   const locale   = useLocale();
   const pathname = usePathname();
   const t        = useTranslations("nav");
+  const tc       = useTranslations("common");
   const { mobileMenuOpen, toggleMobileMenu, setMobileMenuOpen } = useUIStore();
 
   const [scrolled,     setScrolled]     = useState(false);
@@ -374,6 +375,7 @@ export function Header() {
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
+                  aria-label={tc("close")}
                   className="w-8 h-8 rounded-lg flex items-center justify-center text-content-muted hover:text-content hover:bg-black/[0.04] transition-all"
                 >
                   <X size={14} strokeWidth={2} />

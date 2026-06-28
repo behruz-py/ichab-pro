@@ -150,6 +150,12 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
     ],
+    # Throttling is applied selectively (see apps.leads.views) — NOT globally,
+    # because all SSR read traffic originates from the Next.js server's single IP
+    # and a global AnonRateThrottle would throttle the whole site.
+    "DEFAULT_THROTTLE_RATES": {
+        "lead": "10/hour",
+    },
 }
 
 # ─── JWT ───────────────────────────────────────────────────────────────────────

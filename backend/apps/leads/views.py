@@ -1,5 +1,6 @@
 from rest_framework import viewsets, mixins, filters, permissions, status
 from rest_framework.response import Response
+from rest_framework.throttling import ScopedRateThrottle
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Lead
 from .serializers import LeadCreateSerializer, LeadAdminSerializer
@@ -25,6 +26,15 @@ class LeadViewSet(
         if self.action == "create":
             return [permissions.AllowAny()]
         return [permissions.IsAdminUser()]
+
+    def get_throttles(self):
+        # Rate-limit only the public, unauthenticated create endpoint (anti-spam).
+        # Keyed by client IP — safe because the contact form submits from the
+        # browser, not the SSR server. Admin actions stay unthrottled.
+        if self.action == "create":
+            self.throttle_scope = "lead"
+            return [ScopedRateThrottle()]
+        return super().get_throttles()
 
     def get_serializer_class(self):
         if self.action == "create":

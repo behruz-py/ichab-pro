@@ -96,6 +96,7 @@
       "submitting": "Yuborilmoqda...",
       "success": "Murojaatingiz qabul qilindi! Tez orada bog'lanamiz.",
       "error": "Xatolik yuz berdi. Qaytadan urinib ko'ring.",
+      "rate_limited": "Juda ko'p urinish bo'ldi. Iltimos, bir ozdan so'ng qayta urinib ko'ring.",
       "required_either": "Telefon yoki email kiritish majburiy."
     }
   },
@@ -106,6 +107,7 @@
     "back": "Orqaga",
     "read_more": "Batafsil o'qish",
     "close": "Yopish",
+    "skip_to_content": "Asosiy kontentga o'tish",
     "theme": {
       "toggle": "Tema almashtirish",
       "midnight": "Midnight Industrial",

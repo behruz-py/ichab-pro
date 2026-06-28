@@ -106,5 +106,5 @@ cd frontend && npm run lint && npm run type-check
 | Database  | PostgreSQL 16, Redis 7                                  |
 | Frontend  | Next.js 14 (App Router), TypeScript, Tailwind CSS       |
 | UI/UX     | Framer Motion, Zustand, TanStack Query, next-intl       |
-| Themes    | Midnight Industrial / Pure Light / Cyber Aurora         |
-| Infra     | Docker, docker-compose, Nginx, Gunicorn                 |
+| Theme     | Light "Soft Slate" (steel-blue + deep-orange action accent) |
+| Infra     | Docker, docker-compose, Nginx, Gunicorn, Railway        |

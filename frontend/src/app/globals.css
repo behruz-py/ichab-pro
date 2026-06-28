@@ -173,21 +173,56 @@
   }
 }
 
+/* ─── SKIP TO CONTENT (a11y) ─────────────────────────────────────────────── */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -120%);
+  z-index: 100;
+  padding: 10px 20px;
+  border-radius: 0 0 12px 12px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 8px 24px rgba(36,76,119,0.28);
+  transition: transform 0.2s ease;
+}
+.skip-link:focus {
+  transform: translate(-50%, 0);
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+}
+
 /* ─── FORM INPUTS ────────────────────────────────────────────────────────── */
 .form-input {
-  @apply w-full px-4 py-3 rounded-xl border border-border-subtle text-content transition-colors;
+  @apply w-full px-4 py-3 rounded-xl border border-border-subtle text-content;
   background: var(--glass);
   backdrop-filter: blur(12px);
   outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 .form-input::placeholder { color: var(--content-muted); }
 .form-input:focus {
   border-color: rgba(47,94,148,0.50);
   box-shadow: 0 0 0 3px rgba(47,94,148,0.10);
+  transform: translateY(-1px);
+}
+/* Invalid field — clear red ring on the specific offending input */
+.form-input[aria-invalid="true"] {
+  border-color: rgba(220,38,38,0.55);
+}
+.form-input[aria-invalid="true"]:focus {
+  border-color: rgba(220,38,38,0.65);
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.12);
 }
 select.form-input option {
   background: var(--surface-secondary);
   color: var(--content);
+}
+@media (prefers-reduced-motion: reduce) {
+  .form-input:focus { transform: none; }
 }
 
 /* ─── MARQUEE ────────────────────────────────────────────────────────────── */
