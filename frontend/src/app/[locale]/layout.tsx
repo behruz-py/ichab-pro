@@ -55,8 +55,8 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
         </a>
         <ThemeProvider
           attribute="data-theme"
-          defaultTheme="midnight"
-          themes={["midnight", "light"]}
+          defaultTheme="light"
+          themes={["light", "aurora"]}
           enableSystem={false}
           storageKey="ichab-theme"
         >

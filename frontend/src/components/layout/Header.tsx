@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Info, LayoutGrid, Award, Users, ChevronDown, X } from "lucide-react";
 import { LangSwitcher } from "@/components/shared/LangSwitcher";
+import { ThemeSwitcher } from "@/components/shared/ThemeSwitcher";
 import { useUIStore } from "@/store/ui.store";
 import { cn } from "@/lib/utils";
 import { LogoBadge } from "@/components/shared/LogoBadge";
@@ -88,7 +89,7 @@ export function Header() {
               : "shadow-[0_0_0_1px_rgba(47,94,148,0.10)]"
           )}
           style={{
-            background:           scrolled ? "rgba(247,249,252,0.92)" : "rgba(247,249,252,0.70)",
+            background:           scrolled ? "var(--header-bg-scrolled)" : "var(--header-bg)",
             backdropFilter:       "blur(24px)",
             WebkitBackdropFilter: "blur(24px)",
           }}
@@ -118,7 +119,7 @@ export function Header() {
                 className="hidden sm:block font-display font-bold tracking-[0.08em] transition-all duration-200"
                 style={{
                   fontSize: "30px",
-                  background: "linear-gradient(120deg, #1E293B 0%, #2F5E94 70%, #EA6E14 130%)",
+                  background: "var(--brand-gradient)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -208,10 +209,10 @@ export function Header() {
                       onMouseLeave={closeDropdown}
                       className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 w-56 rounded-2xl z-50 py-2 overflow-hidden"
                       style={{
-                        background:           "rgba(247,249,252,0.97)",
+                        background:           "var(--panel-bg)",
                         backdropFilter:       "blur(28px)",
                         WebkitBackdropFilter: "blur(28px)",
-                        border:               "1px solid rgba(47,94,148,0.18)",
+                        border:               "1px solid var(--panel-border)",
                         boxShadow:            "0 16px 56px rgba(0,0,0,0.60), 0 0 0 1px rgba(47,94,148,0.06)",
                       }}
                     >
@@ -292,6 +293,7 @@ export function Header() {
 
             {/* ── Right controls ────────────────────────────────────────── */}
             <div className="flex items-center gap-2 flex-shrink-0">
+              <ThemeSwitcher className="hidden sm:flex" />
               <div className="hidden sm:block">
                 <LangSwitcher />
               </div>
@@ -301,8 +303,8 @@ export function Header() {
                 href={`/${locale}/contact`}
                 className="hidden lg:inline-flex items-center px-5 py-2 rounded-xl text-[13.5px] font-semibold transition-colors duration-200 ml-1 cta-pulse"
                 style={{
-                  background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)",
-                  border:     "1px solid rgba(208,98,16,0.45)",
+                  background: "var(--warm-btn)",
+                  border:     "1px solid rgba(var(--warm-glow),0.45)",
                   color:      "#fff",
                 }}
               >
@@ -348,10 +350,10 @@ export function Header() {
               transition={{ type: "spring", stiffness: 340, damping: 34 }}
               className="fixed right-0 top-0 h-full w-[280px] z-50 xl:hidden flex flex-col"
               style={{
-                background:           "rgba(247,249,252,0.97)",
+                background:           "var(--panel-bg)",
                 backdropFilter:       "blur(24px)",
                 WebkitBackdropFilter: "blur(24px)",
-                borderLeft:           "1px solid rgba(47,94,148,0.12)",
+                borderLeft:           "1px solid var(--panel-border)",
                 boxShadow:            "-12px 0 48px rgba(36,76,119,0.16)",
               }}
             >
@@ -364,7 +366,7 @@ export function Header() {
                     className="font-display font-bold tracking-[0.08em]"
                     style={{
                       fontSize: "20px",
-                      background: "linear-gradient(135deg, #1E293B 0%, #2F5E94 100%)",
+                      background: "var(--brand-gradient)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
@@ -448,12 +450,15 @@ export function Header() {
               <div className="px-5 py-5 border-t border-black/[0.06] space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] text-content-muted font-semibold uppercase tracking-[0.1em]">Til</span>
-                  <LangSwitcher />
+                  <div className="flex items-center gap-2">
+                    <ThemeSwitcher />
+                    <LangSwitcher />
+                  </div>
                 </div>
                 <Link
                   href={`/${locale}/contact`}
                   className="flex items-center justify-center w-full py-2.5 rounded-xl text-sm font-semibold text-white"
-                  style={{ background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)", boxShadow: "0 4px 16px rgba(208,98,16,0.34)" }}
+                  style={{ background: "var(--warm-btn)", boxShadow: "0 4px 16px rgba(var(--warm-glow),0.34)" }}
                 >
                   {CTA_LABEL[locale] ?? CTA_LABEL.uz}
                 </Link>
