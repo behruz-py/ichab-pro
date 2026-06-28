@@ -2,10 +2,10 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { staggerContainer, fadeUp, fadeIn } from "@/lib/motion";
+import { HeroVisual } from "./HeroVisual";
 
 interface Props {
   locale: string;
@@ -34,34 +34,10 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
         style={{ top: "8%", right: "6%", width: "min(46vw, 620px)", height: "min(46vw, 620px)" }}
       />
 
-      {/* ── Hero visual — right side image ── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.6, ease: "easeOut" }}
-        className="absolute inset-y-0 right-0 pointer-events-none"
-        style={{ width: "58%" }}
-      >
-        <Image
-          src={`/hero-visual-${locale}.png`}
-          alt=""
-          fill
-          className="object-cover object-center hero-img"
-          priority
-        />
-        {/* Left edge — fades into page background */}
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to right, rgba(var(--surface-rgb),1) 0%, rgba(var(--surface-rgb),0.45) 16%, rgba(var(--surface-rgb),0.06) 38%, transparent 56%)",
-        }} />
-        {/* Right edge */}
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to left, rgba(var(--surface-rgb),0.85) 0%, transparent 16%)",
-        }} />
-        {/* Top + bottom */}
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to bottom, rgba(var(--surface-rgb),0.55) 0%, transparent 18%, transparent 80%, rgba(var(--surface-rgb),0.60) 100%)",
-        }} />
-      </motion.div>
+      {/* ── Hero visual — right side (code-built "live automation cockpit") ── */}
+      <div className="absolute inset-y-0 right-0 pointer-events-none" style={{ width: "58%" }}>
+        <HeroVisual />
+      </div>
 
       {/* Dot grid */}
       <div
