@@ -12,7 +12,7 @@ const fmt = (n: number) => n.toLocaleString("ru-RU");
 
 // elliptical 3D donut geometry (with room around it for outside labels)
 const W = 250, H = 224, CX = 125, CY = 98;
-const RX = 82, RY = 63, IRX = 49, IRY = 37, DEPTH = 15;
+const RX = 82, RY = 63, IRX = 49, IRY = 37, DEPTH = 16, LAYERS = 18;
 
 const ept = (cx: number, cy: number, ex: number, ey: number, a: number): [number, number] => [cx + ex * Math.cos(a), cy + ey * Math.sin(a)];
 function sector(cy: number, a0: number, a1: number) {
@@ -75,8 +75,13 @@ export function DonutChart({ title, total, unit, segments, showPct = false }: { 
                 </linearGradient>
               ))}
             </defs>
-            {/* 3D side (extruded base) */}
-            <g>{segs.map((s, i) => <path key={i} d={sector(CY + DEPTH, s.a0, s.a1)} fill={`rgb(${darken(s.rgb, 0.48)})`} />)}</g>
+            {/* 3D extruded side wall — stacked layers (bottom → top), darker at the base */}
+            {Array.from({ length: LAYERS }).map((_, li) => {
+              const tt = li / (LAYERS - 1);
+              const cy = CY + DEPTH * (1 - tt);
+              const f = 0.4 + tt * 0.18;
+              return <g key={li}>{segs.map((s, i) => <path key={i} d={sector(cy, s.a0, s.a1)} fill={`rgb(${darken(s.rgb, f)})`} />)}</g>;
+            })}
             {/* top face */}
             <g style={{ filter: "drop-shadow(0 6px 14px rgba(0,0,0,0.35))" }}>
               {segs.map((s, i) => <path key={i} d={sector(CY, s.a0, s.a1)} fill={`url(#dg-${uid}-${i})`} stroke="rgba(255,255,255,0.14)" strokeWidth="1" />)}
