@@ -10,8 +10,9 @@ const lighten = (rgb: string, f: number) => rgb.split(",").map((n) => Math.round
 const darken  = (rgb: string, f: number) => rgb.split(",").map((n) => Math.round(+n * f)).join(",");
 const fmt = (n: number) => n.toLocaleString("ru-RU");
 
-// elliptical 3D donut geometry
-const CX = 112, CY = 92, RX = 96, RY = 74, IRX = 58, IRY = 45, DEPTH = 17, W = 224, H = 200;
+// elliptical 3D donut geometry (with room around it for outside labels)
+const W = 250, H = 224, CX = 125, CY = 98;
+const RX = 82, RY = 63, IRX = 49, IRY = 37, DEPTH = 15;
 
 const ept = (cx: number, cy: number, ex: number, ey: number, a: number): [number, number] => [cx + ex * Math.cos(a), cy + ey * Math.sin(a)];
 function sector(cy: number, a0: number, a1: number) {
@@ -51,8 +52,10 @@ export function DonutChart({ title, total, unit, segments }: { title: string; to
   const segs = segments.map((s, i) => {
     const a0 = acc, a1 = acc + (s.value / total) * Math.PI * 2;
     acc = a1;
-    return { ...s, a0, a1, rgb: PALETTE[i % PALETTE.length], pct: Math.round((s.value / total) * 100) };
+    return { ...s, a0, a1, mid: (a0 + a1) / 2, rgb: PALETTE[i % PALETTE.length], pct: (s.value / total) * 100 };
   });
+
+  let outIdx = 0; // stagger radius for small outside labels so they don't overlap
 
   return (
     <div ref={ref} className="glass-card rounded-2xl p-5 flex flex-col h-full" style={{ boxShadow: "var(--card-shadow)" }}>
@@ -76,13 +79,42 @@ export function DonutChart({ title, total, unit, segments }: { title: string; to
             <g style={{ filter: "drop-shadow(0 6px 14px rgba(0,0,0,0.35))" }}>
               {segs.map((s, i) => <path key={i} d={sector(CY, s.a0, s.a1)} fill={`url(#dg-${uid}-${i})`} stroke="rgba(255,255,255,0.14)" strokeWidth="1" />)}
             </g>
+            {/* segment value labels */}
+            <g>
+              {segs.map((s, i) => {
+                if (s.pct >= 8) {
+                  // on the colored band
+                  const [lx, ly] = ept(CX, CY, (RX + IRX) / 2, (RY + IRY) / 2, s.mid);
+                  return (
+                    <text key={i} x={lx} y={ly + 4} textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff"
+                      stroke="rgba(8,16,30,0.55)" strokeWidth="3.5" strokeLinejoin="round" style={{ paintOrder: "stroke" }}>
+                      {fmt(s.value)}
+                    </text>
+                  );
+                }
+                // small slice → outside with a leader line (staggered outward)
+                const off = 12 + outIdx * 16; outIdx++;
+                const [ox, oy] = ept(CX, CY, RX + 1, RY + 1, s.mid);
+                const [lx, ly] = ept(CX, CY, RX + off, RY + off, s.mid);
+                const anchor = Math.cos(s.mid) > 0.25 ? "start" : Math.cos(s.mid) < -0.25 ? "end" : "middle";
+                const dx = anchor === "start" ? 4 : anchor === "end" ? -4 : 0;
+                return (
+                  <g key={i}>
+                    <line x1={ox} y1={oy} x2={lx} y2={ly} stroke={`rgba(${s.rgb},0.7)`} strokeWidth="1.2" />
+                    <text x={lx + dx} y={ly + 3.5} textAnchor={anchor} fontSize="11" fontWeight="700" fill={`rgb(${lighten(s.rgb, 0.22)})`}>
+                      {fmt(s.value)}
+                    </text>
+                  </g>
+                );
+              })}
+            </g>
           </svg>
         </motion.div>
 
         {/* center total */}
         <div className="absolute flex flex-col items-center justify-center text-center pointer-events-none"
           style={{ left: CX, top: CY, transform: "translate(-50%,-50%)", width: IRX * 1.8 }}>
-          <span className="font-display font-extrabold tabular-nums leading-none" style={{ fontSize: 19, color: "var(--content)" }}>{fmt(totalV)}</span>
+          <span className="font-display font-extrabold tabular-nums leading-none" style={{ fontSize: 18, color: "var(--content)" }}>{fmt(totalV)}</span>
           <span className="mt-0.5 font-semibold" style={{ fontSize: 9.5, color: "var(--content-muted)" }}>{unit}</span>
         </div>
       </div>
