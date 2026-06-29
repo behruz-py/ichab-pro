@@ -9,6 +9,7 @@ import { CostEstimateTable } from "@/components/sections/charts/CostEstimateTabl
 import { DivisionsShare2025 } from "@/components/sections/charts/DivisionsShare2025";
 import { DivisionsSharePlan2026 } from "@/components/sections/charts/DivisionsSharePlan2026";
 import { LocalizationGrowthChart } from "@/components/sections/charts/LocalizationGrowthChart";
+import { LocalizedProducts2026 } from "@/components/sections/charts/LocalizedProducts2026";
 
 type Props = { params: { locale: string } };
 type Loc = Record<string, string>;
@@ -48,6 +49,7 @@ export default async function StatisticsPage({ params: { locale } }: Props) {
         <DivisionsShare2025 locale={locale} />
         <DivisionsSharePlan2026 locale={locale} />
         <LocalizationGrowthChart locale={locale} />
+        <LocalizedProducts2026 locale={locale} />
         {/* Further charts are added here as data is provided. */}
       </div>
     </div>
