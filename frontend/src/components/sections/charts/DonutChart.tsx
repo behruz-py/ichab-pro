@@ -86,14 +86,15 @@ export function DonutChart({ title, total, unit, segments }: { title: string; to
                   // on the colored band
                   const [lx, ly] = ept(CX, CY, (RX + IRX) / 2, (RY + IRY) / 2, s.mid);
                   return (
-                    <text key={i} x={lx} y={ly + 4} textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff"
+                    <text key={i} x={lx} y={ly - 2} textAnchor="middle" fontWeight="700" fill="#fff"
                       stroke="rgba(8,16,30,0.55)" strokeWidth="3.5" strokeLinejoin="round" style={{ paintOrder: "stroke" }}>
-                      {fmt(s.value)}
+                      <tspan x={lx} fontSize="12">{fmt(s.value)}</tspan>
+                      <tspan x={lx} dy="10" fontSize="8" fillOpacity="0.9">{unit}</tspan>
                     </text>
                   );
                 }
                 // small slice → outside with a leader line (staggered outward)
-                const off = 12 + outIdx * 16; outIdx++;
+                const off = 12 + outIdx * 18; outIdx++;
                 const [ox, oy] = ept(CX, CY, RX + 1, RY + 1, s.mid);
                 const [lx, ly] = ept(CX, CY, RX + off, RY + off, s.mid);
                 const anchor = Math.cos(s.mid) > 0.25 ? "start" : Math.cos(s.mid) < -0.25 ? "end" : "middle";
@@ -101,8 +102,9 @@ export function DonutChart({ title, total, unit, segments }: { title: string; to
                 return (
                   <g key={i}>
                     <line x1={ox} y1={oy} x2={lx} y2={ly} stroke={`rgba(${s.rgb},0.7)`} strokeWidth="1.2" />
-                    <text x={lx + dx} y={ly + 3.5} textAnchor={anchor} fontSize="11" fontWeight="700" fill={`rgb(${lighten(s.rgb, 0.22)})`}>
-                      {fmt(s.value)}
+                    <text x={lx + dx} y={ly - 1} textAnchor={anchor} fontWeight="700" fill={`rgb(${lighten(s.rgb, 0.22)})`}>
+                      <tspan x={lx + dx} fontSize="11">{fmt(s.value)}</tspan>
+                      <tspan x={lx + dx} dy="9.5" fontSize="7.5" fillOpacity="0.82">{unit}</tspan>
                     </text>
                   </g>
                 );
@@ -125,7 +127,7 @@ export function DonutChart({ title, total, unit, segments }: { title: string; to
           <li key={i} className="flex items-start gap-2.5">
             <span className="mt-1 w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: `rgb(${s.rgb})`, boxShadow: `0 0 8px rgba(${s.rgb},0.6)` }} />
             <span className="flex-1 leading-snug" style={{ fontSize: 11.5, color: "var(--content-secondary)" }}>{s.label}</span>
-            <span className="font-bold tabular-nums whitespace-nowrap" style={{ fontSize: 11.5, color: `rgb(${lighten(s.rgb, 0.18)})` }}>{fmt(s.value)}</span>
+            <span className="font-bold tabular-nums whitespace-nowrap" style={{ fontSize: 11.5, color: `rgb(${lighten(s.rgb, 0.18)})` }}>{fmt(s.value)} {unit}</span>
           </li>
         ))}
       </ul>
