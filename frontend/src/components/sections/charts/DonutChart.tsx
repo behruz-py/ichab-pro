@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
-export interface Seg { label: string; value: number }
+export interface Seg { label: string; value: number; pctLabel?: string }
 
 const PALETTE = ["56,189,248", "139,92,246", "245,158,11", "16,185,129", "236,72,153", "59,130,246"];
 const lighten = (rgb: string, f: number) => rgb.split(",").map((n) => Math.round(+n + (255 - +n) * f)).join(",");
@@ -42,7 +42,7 @@ function useCountUp(target: number, run: boolean, dur = 1400) {
   return v;
 }
 
-export function DonutChart({ title, total, unit, segments }: { title: string; total: number; unit: string; segments: Seg[] }) {
+export function DonutChart({ title, total, unit, segments, showPct = false }: { title: string; total: number; unit: string; segments: Seg[]; showPct?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const totalV = useCountUp(total, inView);
@@ -52,14 +52,16 @@ export function DonutChart({ title, total, unit, segments }: { title: string; to
   const segs = segments.map((s, i) => {
     const a0 = acc, a1 = acc + (s.value / total) * Math.PI * 2;
     acc = a1;
-    return { ...s, a0, a1, mid: (a0 + a1) / 2, rgb: PALETTE[i % PALETTE.length], pct: (s.value / total) * 100 };
+    const pct = (s.value / total) * 100;
+    return { ...s, a0, a1, mid: (a0 + a1) / 2, rgb: PALETTE[i % PALETTE.length], pct, pctText: s.pctLabel ?? String(Math.round(pct)) };
   });
+  const unitLine = (s: { pctText: string }) => (showPct ? `${unit} · ${s.pctText}%` : unit);
 
   let outIdx = 0; // stagger radius for small outside labels so they don't overlap
 
   return (
     <div ref={ref} className="glass-card rounded-2xl p-5 flex flex-col h-full" style={{ boxShadow: "var(--card-shadow)" }}>
-      <h4 className="font-display font-bold text-content leading-snug mb-3" style={{ fontSize: 13.5, minHeight: 58 }}>{title}</h4>
+      {title && <h4 className="font-display font-bold text-content leading-snug mb-3" style={{ fontSize: 13.5, minHeight: 58 }}>{title}</h4>}
 
       <div className="relative mx-auto" style={{ width: W, height: H }}>
         <motion.div initial={{ opacity: 0, scale: 0.82, rotate: -12 }} animate={inView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
@@ -89,7 +91,7 @@ export function DonutChart({ title, total, unit, segments }: { title: string; to
                     <text key={i} x={lx} y={ly - 2} textAnchor="middle" fontWeight="700" fill="#fff"
                       stroke="rgba(8,16,30,0.55)" strokeWidth="3.5" strokeLinejoin="round" style={{ paintOrder: "stroke" }}>
                       <tspan x={lx} fontSize="12">{fmt(s.value)}</tspan>
-                      <tspan x={lx} dy="10" fontSize="8" fillOpacity="0.9">{unit}</tspan>
+                      <tspan x={lx} dy="10" fontSize="8" fillOpacity="0.9">{unitLine(s)}</tspan>
                     </text>
                   );
                 }
@@ -104,7 +106,7 @@ export function DonutChart({ title, total, unit, segments }: { title: string; to
                     <line x1={ox} y1={oy} x2={lx} y2={ly} stroke={`rgba(${s.rgb},0.7)`} strokeWidth="1.2" />
                     <text x={lx + dx} y={ly - 1} textAnchor={anchor} fontWeight="700" fill={`rgb(${lighten(s.rgb, 0.22)})`}>
                       <tspan x={lx + dx} fontSize="11">{fmt(s.value)}</tspan>
-                      <tspan x={lx + dx} dy="9.5" fontSize="7.5" fillOpacity="0.82">{unit}</tspan>
+                      <tspan x={lx + dx} dy="9.5" fontSize="7.5" fillOpacity="0.82">{unitLine(s)}</tspan>
                     </text>
                   </g>
                 );
@@ -127,7 +129,7 @@ export function DonutChart({ title, total, unit, segments }: { title: string; to
           <li key={i} className="flex items-start gap-2.5">
             <span className="mt-1 w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: `rgb(${s.rgb})`, boxShadow: `0 0 8px rgba(${s.rgb},0.6)` }} />
             <span className="flex-1 leading-snug" style={{ fontSize: 11.5, color: "var(--content-secondary)" }}>{s.label}</span>
-            <span className="font-bold tabular-nums whitespace-nowrap" style={{ fontSize: 11.5, color: `rgb(${lighten(s.rgb, 0.18)})` }}>{fmt(s.value)} {unit}</span>
+            <span className="font-bold tabular-nums whitespace-nowrap" style={{ fontSize: 11.5, color: `rgb(${lighten(s.rgb, 0.18)})` }}>{fmt(s.value)} {unitLine(s)}</span>
           </li>
         ))}
       </ul>
