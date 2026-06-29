@@ -1,6 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, Printer, Globe } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { ContactForm } from "./ContactForm";
 
@@ -31,11 +31,14 @@ export default async function ContactPage({ params: { locale } }: Props) {
         {/* Contact info */}
         <div className="lg:col-span-2 space-y-4">
           {[
-            { Icon: MapPin, label: "Manzil", value: tFooter("address") },
-            { Icon: Phone, label: "Telefon", value: tFooter("phone"), href: `tel:${tFooter("phone").replace(/\s/g, "")}` },
-            { Icon: Mail, label: "Email", value: tFooter("email"), href: `mailto:${tFooter("email")}` },
-          ].map(({ Icon, label, value, href }) => (
-            <div key={label} className="glass-card rounded-2xl border border-border-subtle p-5 flex gap-4">
+            { Icon: MapPin, label: tFooter("address_label"), value: tFooter("address"), href: "https://maps.app.goo.gl/Y4XXTG9fBjgRpwsK6" },
+            { Icon: Phone, label: tFooter("phone_label"), value: tFooter("phone"), href: `tel:${tFooter("phone").replace(/[\s-]/g, "")}` },
+            { Icon: Phone, label: tFooter("phone_label"), value: tFooter("phone2"), href: `tel:${tFooter("phone2").replace(/[\s-]/g, "")}` },
+            { Icon: Printer, label: tFooter("fax_label"), value: tFooter("fax") },
+            { Icon: Mail, label: tFooter("email_label"), value: tFooter("email"), href: `mailto:${tFooter("email")}` },
+            { Icon: Globe, label: tFooter("website_label"), value: tFooter("website"), href: "https://www.ngmk.uz" },
+          ].map(({ Icon, label, value, href }, i) => (
+            <div key={i} className="glass-card rounded-2xl border border-border-subtle p-5 flex gap-4">
               <Icon size={20} className="text-accent shrink-0 mt-0.5" />
               <div>
                 <p className="text-content-muted text-xs uppercase tracking-wider mb-1">{label}</p>

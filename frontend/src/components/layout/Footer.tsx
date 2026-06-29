@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { MapPin, Phone, Mail, Heart, Clock, ArrowRight } from "lucide-react";
+import { MapPin, Phone, Mail, Heart, Clock, ArrowRight, Printer, Globe } from "lucide-react";
 import { LogoBadge } from "@/components/shared/LogoBadge";
 
 const COMPANY = [
@@ -124,13 +124,27 @@ export async function Footer() {
                 </a>
               </li>
               <li>
-                <a href={`tel:${phone.replace(/\s/g, "")}`} className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-[var(--accent-secondary)]" style={{ color: "var(--content-secondary)" }}>
+                <a href={`tel:${phone.replace(/[\s-]/g, "")}`} className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-[var(--accent-secondary)]" style={{ color: "var(--content-secondary)" }}>
                   <Phone size={17} className="text-[var(--accent)] flex-shrink-0" /> {phone}
                 </a>
               </li>
               <li>
+                <a href={`tel:${tFooter("phone2").replace(/[\s-]/g, "")}`} className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-[var(--accent-secondary)]" style={{ color: "var(--content-secondary)" }}>
+                  <Phone size={17} className="text-transparent flex-shrink-0" /> {tFooter("phone2")}
+                </a>
+              </li>
+              <li className="flex items-center gap-3 text-sm" style={{ color: "var(--content-secondary)" }}>
+                <Printer size={17} className="text-[var(--accent)] flex-shrink-0" />
+                <span><span className="text-content-muted">{tFooter("fax_label")}: </span>{tFooter("fax")}</span>
+              </li>
+              <li>
                 <a href={`mailto:${email}`} className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-[var(--accent-secondary)]" style={{ color: "var(--content-secondary)" }}>
                   <Mail size={17} className="text-[var(--accent)] flex-shrink-0" /> {email}
+                </a>
+              </li>
+              <li>
+                <a href="https://www.ngmk.uz" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-[var(--accent-secondary)]" style={{ color: "var(--content-secondary)" }}>
+                  <Globe size={17} className="text-[var(--accent)] flex-shrink-0" /> {tFooter("website")}
                 </a>
               </li>
               <li className="flex items-start gap-3 text-sm" style={{ color: "var(--content-secondary)" }}>
