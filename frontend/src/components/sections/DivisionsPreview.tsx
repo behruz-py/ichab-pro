@@ -54,12 +54,18 @@ const BG_ICONS: { Icon: LucideIcon; style: React.CSSProperties }[] = [
 ];
 
 function NodeMedia({ div, Icon }: { div: Division; Icon: LucideIcon }) {
-  return div.cover_image ? (
-    <Image src={mediaUrl(div.cover_image)} alt={div.name} fill className="object-cover" sizes="236px" />
-  ) : (
-    <div className="absolute inset-0 flex items-center justify-center" style={{ background: "var(--accent-gradient)" }}>
-      <Icon size={46} strokeWidth={1.3} color="rgba(255,255,255,0.85)" />
-    </div>
+  // Always paint a branded gradient + icon underneath, so a missing or
+  // failed-to-load cover image degrades gracefully instead of exposing the
+  // rotating border behind the (transparent) card.
+  return (
+    <>
+      <div className="absolute inset-0 flex items-center justify-center" style={{ background: "var(--accent-gradient)" }}>
+        <Icon size={46} strokeWidth={1.3} color="rgba(255,255,255,0.85)" />
+      </div>
+      {div.cover_image && (
+        <Image src={mediaUrl(div.cover_image)} alt={div.name} fill className="object-cover" sizes="236px" />
+      )}
+    </>
   );
 }
 
@@ -224,12 +230,11 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                 className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
                 style={{ background: "var(--card-bg)", border: "1px solid var(--glass-border)", boxShadow: "var(--card-shadow)" }}>
                 <div className="relative overflow-hidden" style={{ aspectRatio: "16/9" }}>
-                  {div.cover_image ? (
+                  <div className="absolute inset-0 flex items-center justify-center" style={{ background: "var(--accent-gradient)" }}>
+                    <Icon size={44} color="rgba(255,255,255,0.85)" strokeWidth={1.3} />
+                  </div>
+                  {div.cover_image && (
                     <Image src={mediaUrl(div.cover_image)} alt={div.name} fill className="object-cover" sizes="(max-width:1024px) 100vw, 50vw" priority={i < 2} />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center" style={{ background: "var(--accent-gradient)" }}>
-                      <Icon size={44} color="rgba(255,255,255,0.85)" strokeWidth={1.3} />
-                    </div>
                   )}
                   <span className="absolute top-3 left-3 font-mono text-[11px] font-bold tracking-widest px-2.5 py-1 rounded-lg"
                     style={{ background: "rgba(255,255,255,0.92)", border: "1px solid rgba(var(--accent-rgb),0.25)", color: "var(--accent)" }}>
