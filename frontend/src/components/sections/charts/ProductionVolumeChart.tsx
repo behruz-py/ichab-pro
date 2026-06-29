@@ -23,7 +23,7 @@ const DATA: Row[] = [
   { year: 2026, prod: 82000, forecast: true },
 ];
 
-const AXIS_MAX = 90000;
+const AXIS_MAX = 100000;
 const STEP = 10000;
 const PLOT_H = 350;
 const CHART_H = PLOT_H + 36;   // headroom so the tallest bars' value labels aren't clipped
