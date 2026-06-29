@@ -2,6 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { locales } from "@/i18n/request";
 import { ProductionVolumeChart } from "@/components/sections/charts/ProductionVolumeChart";
+import { ProductBreakdown2026 } from "@/components/sections/charts/ProductBreakdown2026";
 
 type Props = { params: { locale: string } };
 type Loc = Record<string, string>;
@@ -34,6 +35,7 @@ export default async function StatisticsPage({ params: { locale } }: Props) {
 
       <div className="space-y-10">
         <ProductionVolumeChart locale={locale} />
+        <ProductBreakdown2026 locale={locale} />
         {/* Further charts are added here as data is provided. */}
       </div>
     </div>
