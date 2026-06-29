@@ -134,9 +134,9 @@ export function ServiceGroups({ locale }: { locale: string }) {
               />
             </motion.div>
 
-            {/* Hover shine sweep */}
-            <span className="absolute inset-y-0 left-0 w-1/2 pointer-events-none skew-x-12 -translate-x-[160%] group-hover:translate-x-[320%] transition-transform duration-[850ms] ease-out"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)" }} />
+            {/* Hover shine sweep (subtle) */}
+            <span className="absolute inset-y-0 left-0 w-1/3 pointer-events-none skew-x-12 -translate-x-[160%] group-hover:translate-x-[420%] transition-transform duration-[900ms] ease-out"
+              style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)" }} />
 
             {/* Hover ring + glow */}
             <span className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
