@@ -18,6 +18,17 @@ const CATALOG = [
   { key: "contact",  path: "/contact" },
 ] as const;
 
+const MAP_URL = "https://maps.app.goo.gl/Y4XXTG9fBjgRpwsK6";
+const TELEGRAM = "https://t.me/ichab_bot";
+
+function TelegramIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M21.94 4.3 18.6 19.11c-.25 1.1-.92 1.37-1.86.85l-5.13-3.78-2.48 2.39c-.27.27-.5.5-1.03.5l.37-5.26 9.56-8.64c.42-.37-.09-.58-.64-.21L4.99 11.9.71 10.56c-.93-.29-.95-.93.2-1.38l16.74-6.45c.78-.29 1.46.18 1.29 1.57Z" />
+    </svg>
+  );
+}
+
 export async function Footer() {
   const locale  = await getLocale();
   const tNav    = await getTranslations("nav");
@@ -74,6 +85,15 @@ export async function Footer() {
                 {tFooter("cta_btn")} <ArrowRight size={16} />
               </Link>
             </div>
+
+            {/* Socials */}
+            <div className="mt-7 flex items-center gap-3">
+              <a href={TELEGRAM} target="_blank" rel="noopener noreferrer" aria-label="Telegram"
+                className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 hover:text-white"
+                style={{ background: "rgba(var(--accent-rgb),0.10)", border: "1px solid rgba(var(--accent-rgb),0.28)", color: "var(--accent)" }}>
+                <TelegramIcon />
+              </a>
+            </div>
           </div>
 
           {/* Company links */}
@@ -97,7 +117,7 @@ export async function Footer() {
             <ColHeader>{tFooter("contact_info")}</ColHeader>
             <ul className="space-y-4">
               <li>
-                <a href={`https://maps.google.com/?q=${encodeURIComponent(address)}`} target="_blank" rel="noopener noreferrer"
+                <a href={MAP_URL} target="_blank" rel="noopener noreferrer"
                   className="group flex items-start gap-3 text-sm transition-colors duration-200 hover:text-[var(--accent-secondary)]" style={{ color: "var(--content-secondary)" }}>
                   <MapPin size={17} className="mt-0.5 flex-shrink-0 text-[var(--accent)]" />
                   <span className="leading-relaxed">{address}</span>
