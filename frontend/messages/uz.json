@@ -129,6 +129,12 @@
     "phone": "+998 94 521 67 75",
     "email": "info@ichab.uz",
     "copyright": "© {year} ICHAB. Barcha huquqlar himoyalangan.",
-    "made_with": "Ishlab chiqarilgan"
+    "made_with": "Mehr bilan ishlab chiqilgan",
+    "company_col": "Kompaniya",
+    "catalog_col": "Xizmat va mahsulotlar",
+    "working_hours": "Ish vaqti",
+    "hours_value": "Dushanba–Juma, 9:00–18:00",
+    "cta_text": "Loyihangizni birga muhokama qilamizmi?",
+    "cta_btn": "Bepul konsultatsiya"
   }
 }

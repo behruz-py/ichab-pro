@@ -129,6 +129,12 @@
     "phone": "+998 94 521 67 75",
     "email": "info@ichab.uz",
     "copyright": "© {year} ICHAB. All rights reserved.",
-    "made_with": "Made with"
+    "made_with": "Made with care",
+    "company_col": "Company",
+    "catalog_col": "Services & Products",
+    "working_hours": "Working hours",
+    "hours_value": "Monday–Friday, 9:00–18:00",
+    "cta_text": "Let's discuss your project together?",
+    "cta_btn": "Free consultation"
   }
 }
