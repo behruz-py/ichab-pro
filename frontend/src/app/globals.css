@@ -57,6 +57,10 @@
   --accent-2-rgb:       36, 76, 119;     /* deep blue (shadows) */
   --surface-2-rgb:      237, 241, 246;   /* section tint */
   --panel-rgb:          247, 249, 252;   /* raised panel */
+  --footer-bg:          linear-gradient(180deg, #EDF1F6 0%, #E4E9F0 100%);
+  --footer-border:      rgba(15, 23, 42, 0.08);
+  --grad-warm-a:        #EA6E14;         /* decorative AI-border warm stops */
+  --grad-warm-b:        #F4A52C;
 }
 
 /* ─── THEME: Aurora Glass (dark cinematic + frosted accents) ─────────────────
@@ -113,6 +117,10 @@
   --accent-2-rgb:       34, 211, 238;    /* cyan (shadows/glow) */
   --surface-2-rgb:      8, 22, 46;       /* section tint (deep navy) */
   --panel-rgb:          9, 22, 45;       /* raised panel */
+  --footer-bg:          linear-gradient(180deg, #061831 0%, #02101F 100%);
+  --footer-border:      rgba(193, 232, 255, 0.10);
+  --grad-warm-a:        #22D3EE;         /* decorative AI-border → cyan/mint */
+  --grad-warm-b:        #34D399;
 }
 
 /* ─── BASE ───────────────────────────────────────────────────────────────── */
@@ -422,14 +430,14 @@ select.form-input option {
   border-radius: 38px;
   padding: 2.5px;
   background: conic-gradient(from var(--ai-angle),
-    rgba(47,94,148,0.16) 0deg, rgba(47,94,148,0.16) 55deg,
-    #3D72AD 92deg, #2F5E94 116deg, #EA6E14 148deg, #F4A52C 166deg, #2F5E94 198deg, #3D72AD 224deg,
-    rgba(47,94,148,0.16) 268deg, rgba(47,94,148,0.16) 360deg);
+    rgba(var(--accent-rgb),0.16) 0deg, rgba(var(--accent-rgb),0.16) 55deg,
+    var(--accent) 92deg, var(--accent-secondary) 116deg, var(--grad-warm-a) 148deg, var(--grad-warm-b) 166deg, var(--accent-secondary) 198deg, var(--accent) 224deg,
+    rgba(var(--accent-rgb),0.16) 268deg, rgba(var(--accent-rgb),0.16) 360deg);
   animation: ai-border-spin 6s linear infinite;
 }
 @keyframes ai-border-spin { to { --ai-angle: 360deg; } }
 @supports not (background: conic-gradient(from var(--ai-angle), red, blue)) {
-  .ai-border { background: linear-gradient(120deg, #2F5E94, #EA6E14); }
+  .ai-border { background: linear-gradient(120deg, var(--accent-secondary), var(--grad-warm-a)); }
 }
 @media (prefers-reduced-motion: reduce) { .ai-border { animation: none; } }
 
@@ -446,24 +454,24 @@ select.form-input option {
   background:
     conic-gradient(
       from var(--flow-angle),
-      rgba(47,94,148,0.14) 0deg,
-      rgba(47,94,148,0.14) 70deg,
-      #2F5E94 105deg,
-      #3D72AD 122deg,
-      #EA6E14 140deg,
-      #F4A52C 156deg,
-      #3D72AD 174deg,
-      #2F5E94 192deg,
-      rgba(47,94,148,0.14) 230deg,
-      rgba(47,94,148,0.14) 360deg
+      rgba(var(--accent-rgb),0.14) 0deg,
+      rgba(var(--accent-rgb),0.14) 70deg,
+      var(--accent-secondary) 105deg,
+      var(--accent) 122deg,
+      var(--grad-warm-a) 140deg,
+      var(--grad-warm-b) 156deg,
+      var(--accent) 174deg,
+      var(--accent-secondary) 192deg,
+      rgba(var(--accent-rgb),0.14) 230deg,
+      rgba(var(--accent-rgb),0.14) 360deg
     );
   animation: flow-spin 4.5s linear infinite;
-  box-shadow: 0 8px 48px rgba(36,76,119,0.10);
+  box-shadow: 0 8px 48px rgba(var(--accent-2-rgb),0.10);
 }
 @keyframes flow-spin { to { --flow-angle: 360deg; } }
 /* graceful fallback where @property isn't supported */
 @supports not (background: conic-gradient(from var(--flow-angle), red, blue)) {
-  .cta-flow-border { background: linear-gradient(120deg, #2F5E94, #EA6E14); }
+  .cta-flow-border { background: linear-gradient(120deg, var(--accent-secondary), var(--grad-warm-a)); }
 }
 
 /* ─── BUTTON SHINE SWEEP ──────────────────────────────────────────────────── */

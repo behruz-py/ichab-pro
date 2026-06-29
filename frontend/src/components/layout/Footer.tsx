@@ -22,14 +22,14 @@ export async function Footer() {
     <footer
       className="relative mt-20 overflow-hidden"
       style={{
-        background: "linear-gradient(180deg, #EDF1F6 0%, #E4E9F0 100%)",
-        borderTop: "1px solid rgba(15,23,42,0.08)",
+        background: "var(--footer-bg)",
+        borderTop: "1px solid var(--footer-border)",
       }}
     >
       {/* Top gradient line */}
       <div
         className="absolute top-0 inset-x-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent 0%, rgba(47,94,148,0.45) 30%, rgba(47,94,148,0.65) 50%, rgba(47,94,148,0.45) 70%, transparent 100%)" }}
+        style={{ background: "linear-gradient(90deg, transparent 0%, rgba(var(--accent-rgb),0.45) 30%, rgba(var(--accent-rgb),0.65) 50%, rgba(var(--accent-rgb),0.45) 70%, transparent 100%)" }}
       />
 
       {/* Background orb */}
@@ -45,7 +45,7 @@ export async function Footer() {
             <Link href={`/${locale}`} className="flex items-center gap-3 mb-5 group w-fit">
               <LogoBadge size={38} />
               <div className="flex flex-col leading-none gap-1">
-                <span className="font-display font-bold text-lg text-content group-hover:text-[#244C77] transition-colors">
+                <span className="font-display font-bold text-lg text-content group-hover:text-[var(--accent-secondary)] transition-colors">
                   ICHAB Pro
                 </span>
                 <span className="text-[9px] text-content-muted font-medium uppercase tracking-[0.12em]">
@@ -53,7 +53,7 @@ export async function Footer() {
                 </span>
               </div>
             </Link>
-            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "#475569" }}>
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--content-secondary)" }}>
               {tFooter("description")}
             </p>
           </div>
@@ -62,7 +62,7 @@ export async function Footer() {
           <div>
             <h3
               className="text-xs font-bold uppercase tracking-[0.18em] mb-5"
-              style={{ color: "#2F5E94" }}
+              style={{ color: "var(--accent)" }}
             >
               {tFooter("quick_links")}
             </h3>
@@ -72,13 +72,13 @@ export async function Footer() {
                   <Link
                     href={`/${locale}${path}`}
                     className="text-sm transition-colors duration-200 inline-flex items-center gap-1.5 group"
-                    style={{ color: "#475569" }}
+                    style={{ color: "var(--content-secondary)" }}
                   >
                     <span
                       className="w-1 h-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{ background: "#2F5E94" }}
+                      style={{ background: "var(--accent)" }}
                     />
-                    <span className="group-hover:text-[#244C77] transition-colors">
+                    <span className="group-hover:text-[var(--accent-secondary)] transition-colors">
                       {tNav(key)}
                     </span>
                   </Link>
@@ -91,32 +91,32 @@ export async function Footer() {
           <div>
             <h3
               className="text-xs font-bold uppercase tracking-[0.18em] mb-5"
-              style={{ color: "#2F5E94" }}
+              style={{ color: "var(--accent)" }}
             >
               {tFooter("contact_info")}
             </h3>
             <ul className="space-y-3.5">
-              <li className="flex items-start gap-3 text-sm" style={{ color: "#475569" }}>
-                <MapPin size={16} className="mt-0.5 flex-shrink-0 text-[#2F5E94]" />
+              <li className="flex items-start gap-3 text-sm" style={{ color: "var(--content-secondary)" }}>
+                <MapPin size={16} className="mt-0.5 flex-shrink-0 text-[var(--accent)]" />
                 <span className="leading-relaxed">{tFooter("address")}</span>
               </li>
               <li>
                 <a
                   href={`tel:${tFooter("phone").replace(/\s/g, "")}`}
-                  className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-[#244C77] group"
-                  style={{ color: "#475569" }}
+                  className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-[var(--accent-secondary)] group"
+                  style={{ color: "var(--content-secondary)" }}
                 >
-                  <Phone size={16} className="text-[#2F5E94] flex-shrink-0" />
+                  <Phone size={16} className="text-[var(--accent)] flex-shrink-0" />
                   {tFooter("phone")}
                 </a>
               </li>
               <li>
                 <a
                   href={`mailto:${tFooter("email")}`}
-                  className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-[#244C77]"
-                  style={{ color: "#475569" }}
+                  className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-[var(--accent-secondary)]"
+                  style={{ color: "var(--content-secondary)" }}
                 >
-                  <Mail size={16} className="text-[#2F5E94] flex-shrink-0" />
+                  <Mail size={16} className="text-[var(--accent)] flex-shrink-0" />
                   {tFooter("email")}
                 </a>
               </li>
@@ -127,14 +127,14 @@ export async function Footer() {
         {/* Bottom bar */}
         <div
           className="pt-7 flex flex-col sm:flex-row items-center justify-between gap-3"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+          style={{ borderTop: "1px solid var(--border-subtle)" }}
         >
-          <p className="text-xs" style={{ color: "#94A3B8" }}>
+          <p className="text-xs" style={{ color: "var(--content-muted)" }}>
             {tFooter("copyright", { year })}
           </p>
-          <p className="text-xs" style={{ color: "#94A3B8" }}>
+          <p className="text-xs" style={{ color: "var(--content-muted)" }}>
             {tFooter("made_with")}{" "}
-            <Heart size={12} fill="#2F5E94" style={{ color: "#2F5E94", display: "inline", verticalAlign: "middle" }} />
+            <Heart size={12} fill="var(--accent)" style={{ color: "var(--accent)", display: "inline", verticalAlign: "middle" }} />
           </p>
         </div>
       </div>
