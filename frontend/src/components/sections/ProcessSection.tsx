@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ClipboardList, Search, Settings, Rocket, type LucideIcon } from "lucide-react";
+import { ClipboardList, Search, Settings, Rocket, ChevronRight, type LucideIcon } from "lucide-react";
 import { staggerContainer, fadeUp, VIEWPORT } from "@/lib/motion";
 
 const STEP_ICONS: LucideIcon[] = [ClipboardList, Search, Settings, Rocket];
@@ -78,18 +78,29 @@ export function ProcessSection({ locale }: Props) {
           variants={staggerContainer} initial="hidden" whileInView="visible" viewport={VIEWPORT}
           className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {/* Connector line (desktop only) */}
-          <div className="hidden lg:block absolute top-[42px] left-[12.5%] right-[12.5%] h-px pointer-events-none z-0"
-            style={{ background: "linear-gradient(90deg, transparent 0%, rgba(var(--accent-rgb),0.30) 15%, rgba(var(--accent-rgb),0.30) 85%, transparent 100%)" }} />
+          {/* Connector line (desktop only) — runs behind the icon row */}
+          <div className="hidden lg:block absolute top-[52px] left-[12.5%] right-[12.5%] h-px pointer-events-none z-0"
+            style={{ background: "linear-gradient(90deg, transparent 0%, rgba(var(--accent-rgb),0.35) 12%, rgba(var(--accent-rgb),0.35) 88%, transparent 100%)" }} />
 
-          {steps.map((step, i) => (
+          {steps.map((step, i) => {
+            const Icon = STEP_ICONS[i % STEP_ICONS.length];
+            const isLast = i === steps.length - 1;
+            return (
             <motion.div
               key={i}
               variants={fadeUp}
               className="relative z-10"
             >
+              {/* Directional arrow into the next step (desktop) */}
+              {!isLast && (
+                <div className="hidden lg:flex absolute top-[39px] -right-[15px] z-20 w-[26px] h-[26px] items-center justify-center rounded-full pointer-events-none"
+                  style={{ background: "var(--surface)", border: "1px solid rgba(var(--accent-rgb),0.30)" }}>
+                  <ChevronRight size={15} style={{ color: "var(--accent)" }} />
+                </div>
+              )}
+
               <div
-                className="group relative p-6 rounded-2xl h-full transition-all duration-350 hover:translate-y-[-4px]"
+                className="group relative p-6 rounded-2xl h-full overflow-hidden transition-all duration-350 hover:translate-y-[-4px] hover:border-accent/40"
                 style={{
                   background:           "rgba(var(--panel-rgb),0.70)",
                   border:               "1px solid rgba(var(--accent-rgb),0.12)",
@@ -98,42 +109,40 @@ export function ProcessSection({ locale }: Props) {
                   boxShadow:            "0 4px 24px rgba(var(--accent-2-rgb),0.09)",
                 }}
               >
+                {/* Big ghost step number — communicates sequence at a glance */}
+                <span
+                  className="absolute -top-1 right-3 font-display font-extrabold pointer-events-none select-none leading-none"
+                  style={{ fontSize: 70, color: "rgba(var(--accent-rgb),0.08)" }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                {/* Top accent line */}
+                <div className="absolute top-0 inset-x-10 h-px"
+                  style={{ background: "linear-gradient(90deg, transparent, rgba(var(--accent-rgb),0.40), transparent)" }} />
+
                 {/* Hover glow */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
-                  style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(var(--accent-rgb),0.10) 0%, transparent 70%)" }} />
+                  style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(var(--accent-rgb),0.12) 0%, transparent 70%)" }} />
 
-                {/* Step icon badge (centered, doubles as connector node) */}
-                <div className="flex items-center justify-center mb-5">
+                {/* Step icon badge (centered, sits on the connector) */}
+                <div className="relative flex items-center justify-center mb-5">
                   <div
-                    className="w-[52px] h-[52px] rounded-2xl flex items-center justify-center relative"
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center relative transition-transform duration-300 group-hover:scale-110"
                     style={{
-                      background: "linear-gradient(135deg, rgba(var(--accent-2-rgb),0.70) 0%, rgba(var(--accent-rgb),0.60) 100%)",
-                      border:     "1px solid rgba(var(--accent-rgb),0.40)",
-                      boxShadow:  "0 0 20px rgba(var(--accent-rgb),0.28), 0 4px 12px rgba(var(--accent-2-rgb),0.10)",
+                      background: "linear-gradient(135deg, rgba(var(--accent-rgb),0.85) 0%, rgba(var(--accent-2-rgb),0.55) 100%)",
+                      border:     "1px solid rgba(var(--accent-rgb),0.45)",
+                      boxShadow:  "0 0 24px rgba(var(--accent-rgb),0.30), inset 0 1px 0 rgba(255,255,255,0.25)",
                     }}
                   >
-                    {(() => {
-                      const Icon = STEP_ICONS[i % STEP_ICONS.length];
-                      return <Icon size={24} color="var(--content)" strokeWidth={1.8} />;
-                    })()}
-                    {/* Step number chip */}
-                    <span
-                      className="absolute -top-2 -right-2 w-[22px] h-[22px] rounded-full flex items-center justify-center"
-                      style={{
-                        fontSize: "10px", fontWeight: 800, letterSpacing: "0.02em",
-                        color: "var(--content)", fontFamily: "monospace",
-                        background: "#0B1733", border: "1px solid rgba(var(--accent-rgb),0.45)",
-                      }}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
+                    <Icon size={26} color="#ffffff" strokeWidth={1.9} />
                   </div>
                 </div>
 
-                <h3 className="font-display font-bold text-content text-center mb-2 transition-colors duration-200 group-hover:text-[var(--accent-secondary)]">
+                <h3 className="relative font-display font-bold text-content text-center mb-2 transition-colors duration-200 group-hover:text-[var(--accent)]">
                   {step.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-center" style={{ color: "var(--content-secondary)" }}>
+                <p className="relative text-sm leading-relaxed text-center" style={{ color: "var(--content-secondary)" }}>
                   {step.desc}
                 </p>
 
@@ -142,7 +151,7 @@ export function ProcessSection({ locale }: Props) {
                   style={{ background: "linear-gradient(90deg, transparent, rgba(var(--accent-rgb),0.55), transparent)" }} />
               </div>
             </motion.div>
-          ))}
+          );})}
         </motion.div>
       </div>
     </section>
