@@ -7,6 +7,7 @@ import { EnergyEfficiencyTable } from "@/components/sections/charts/EnergyEffici
 import { MainIndicatorsTable } from "@/components/sections/charts/MainIndicatorsTable";
 import { CostEstimateTable } from "@/components/sections/charts/CostEstimateTable";
 import { DivisionsShare2025 } from "@/components/sections/charts/DivisionsShare2025";
+import { DivisionsSharePlan2026 } from "@/components/sections/charts/DivisionsSharePlan2026";
 
 type Props = { params: { locale: string } };
 type Loc = Record<string, string>;
@@ -44,6 +45,7 @@ export default async function StatisticsPage({ params: { locale } }: Props) {
         <EnergyEfficiencyTable locale={locale} />
         <CostEstimateTable locale={locale} />
         <DivisionsShare2025 locale={locale} />
+        <DivisionsSharePlan2026 locale={locale} />
         {/* Further charts are added here as data is provided. */}
       </div>
     </div>
