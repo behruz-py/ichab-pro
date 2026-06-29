@@ -26,6 +26,7 @@ const DATA: Row[] = [
 const AXIS_MAX = 90000;
 const STEP = 10000;
 const PLOT_H = 350;
+const CHART_H = PLOT_H + 36;   // headroom so the tallest bars' value labels aren't clipped
 const COL_W = 74;
 const BAR_W = 42;
 
@@ -36,7 +37,7 @@ const PROD_GLOW     = "rgba(34,211,238,0.45)";
 const HELIO_GLASS   = "linear-gradient(to top, rgba(245,158,11,0.55) 0%, rgba(250,204,21,0.78) 100%)";
 const HELIO_SOLID   = "linear-gradient(to top, #F59E0B 0%, #FACC15 100%)";
 const HELIO_GLOW    = "rgba(245,179,11,0.5)";
-const FORECAST_GLASS = "linear-gradient(to top, rgba(52,211,153,0.10) 0%, rgba(52,211,153,0.24) 100%)";
+const FORECAST_GLASS = "linear-gradient(to top, rgba(52,211,153,0.18) 0%, rgba(52,211,153,0.42) 100%)";
 
 const fmt = (n: number) => n.toLocaleString("ru-RU");
 
@@ -80,7 +81,7 @@ function Column({ d, i, inView, locale }: { d: Row; i: number; inView: boolean; 
 
   return (
     <div className="group flex flex-col items-center" style={{ width: COL_W }}>
-      <div className="relative w-full" style={{ height: PLOT_H }}>
+      <div className="relative w-full" style={{ height: CHART_H }}>
         {/* empty glass slot */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-lg" style={{ width: BAR_W, height: PLOT_H, background: "rgba(var(--accent-rgb),0.05)", border: "1px solid rgba(var(--accent-rgb),0.07)" }} />
 
@@ -123,7 +124,9 @@ function Column({ d, i, inView, locale }: { d: Row; i: number; inView: boolean; 
             borderBottom: "none",
             borderRadius: stacked ? "0 0 6px 6px" : "8px 8px 6px 6px",
             backdropFilter: "blur(3px)", WebkitBackdropFilter: "blur(3px)",
-            boxShadow: d.forecast ? `0 0 22px ${PROD_GLOW}` : `0 0 22px ${PROD_GLOW}, inset 0 1.5px 0 rgba(255,255,255,0.5)`,
+            boxShadow: d.forecast
+              ? `0 0 26px rgba(52,211,153,0.55), inset 0 1.5px 0 rgba(255,255,255,0.4), inset 0 0 22px rgba(52,211,153,0.18)`
+              : `0 0 22px ${PROD_GLOW}, inset 0 1.5px 0 rgba(255,255,255,0.5)`,
           }} />
         </motion.div>
       </div>
@@ -152,7 +155,7 @@ export function ProductionVolumeChart({ locale }: { locale: string }) {
       <div className="overflow-x-auto pb-2">
         <div className="flex" style={{ minWidth: 900 }}>
           {/* Y axis */}
-          <div className="relative flex-shrink-0" style={{ width: 56, height: PLOT_H }}>
+          <div className="relative flex-shrink-0" style={{ width: 56, height: CHART_H }}>
             {steps.map((v) => (
               <span key={v} className="absolute right-2 -translate-y-1/2 tabular-nums" style={{ bottom: (v / AXIS_MAX) * PLOT_H, fontSize: 10.5, color: "var(--content-muted)" }}>
                 {v === 0 ? "0" : `${v / 1000}k`}
@@ -166,7 +169,7 @@ export function ProductionVolumeChart({ locale }: { locale: string }) {
               <div key={v} className="absolute inset-x-0 h-px" style={{ bottom: (v / AXIS_MAX) * PLOT_H, background: "rgba(148,180,220,0.10)" }} />
             ))}
             <div className="absolute inset-x-0" style={{ bottom: 0, height: 2, background: "rgba(var(--accent-rgb),0.35)" }} />
-            <div className="relative flex items-end justify-around" style={{ height: PLOT_H }}>
+            <div className="relative flex items-end justify-around" style={{ height: CHART_H }}>
               {DATA.map((d, i) => <Column key={d.year} d={d} i={i} inView={inView} locale={locale} />)}
             </div>
           </div>
