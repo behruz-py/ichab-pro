@@ -6,6 +6,7 @@ import { Factory } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { mediaUrl, formatDate } from "@/lib/utils";
+import { CompletedProjectsTimeline } from "@/components/sections/CompletedProjectsTimeline";
 
 type Props = { params: { locale: string } };
 
@@ -85,6 +86,8 @@ export default async function ProjectsPage({ params: { locale } }: Props) {
           </div>
         ))}
       </div>
+
+      <CompletedProjectsTimeline locale={locale} />
     </div>
   );
 }
