@@ -38,10 +38,11 @@ const DROPDOWN_ITEMS = [
 ] as const;
 
 const MAIN_NAV = [
-  { key: "services",  path: "/services"  },
-  { key: "products",  path: "/products"  },
-  { key: "projects",  path: "/projects"  },
-  { key: "contact",   path: "/contact"   },
+  { key: "services",   path: "/services"   },
+  { key: "products",   path: "/products"   },
+  { key: "projects",   path: "/projects"   },
+  { key: "statistics", path: "/statistics" },
+  { key: "contact",    path: "/contact"    },
 ] as const;
 
 export function Header() {
