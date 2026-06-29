@@ -29,7 +29,7 @@ const darken = (rgb: string, f: number) => rgb.split(",").map((n) => Math.round(
 const fmt = (n: number) => n.toLocaleString("ru-RU");
 
 // big donut geometry
-const W = 420, H = 380, CX = 210, CY = 168, RX = 162, RY = 126, IRX = 100, IRY = 78, DEPTH = 24;
+const W = 420, H = 380, CX = 210, CY = 162, RX = 162, RY = 126, IRX = 100, IRY = 78, DEPTH = 26, LAYERS = 28;
 const ept = (cy: number, ex: number, ey: number, a: number): [number, number] => [CX + ex * Math.cos(a), cy + ey * Math.sin(a)];
 function sector(cy: number, a0: number, a1: number) {
   const large = a1 - a0 > Math.PI ? 1 : 0;
@@ -92,8 +92,15 @@ export function DivisionsShare2025({ locale }: { locale: string }) {
                     </linearGradient>
                   ))}
                 </defs>
-                {/* 3D extruded side */}
-                <g>{segs.map((s, i) => <path key={i} d={sector(CY + DEPTH, s.a0, s.a1)} fill={`rgb(${darken(s.rgb, 0.42)})`} />)}</g>
+                {/* 3D extruded side wall — stacked layers (bottom → top), darker at the bottom */}
+                {Array.from({ length: LAYERS }).map((_, li) => {
+                  const tt = li / (LAYERS - 1);          // 0 = bottom, 1 = top
+                  const cy = CY + DEPTH * (1 - tt);
+                  const f = 0.38 + tt * 0.18;            // darken factor (darkest at bottom)
+                  return (
+                    <g key={li}>{segs.map((s, i) => <path key={i} d={sector(cy, s.a0, s.a1)} fill={`rgb(${darken(s.rgb, f)})`} />)}</g>
+                  );
+                })}
                 {/* glass top face + neon edge + glow */}
                 <g style={{ filter: "drop-shadow(0 10px 22px rgba(0,0,0,0.4))" }}>
                   {segs.map((s, i) => (
