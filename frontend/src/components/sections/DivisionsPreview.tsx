@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ArrowRight, FlaskConical, Cpu, Gauge, Activity, Cog, Zap,
   type LucideIcon,
@@ -24,31 +24,52 @@ interface Props {
 const EYEBROW: Record<string, string> = { uz: "Bo'linmalar", ru: "Подразделения", en: "Divisions" };
 const LAB: Record<string, string> = { uz: "Laboratoriya", ru: "Лаборатория", en: "Laboratory" };
 const ICONS: LucideIcon[] = [FlaskConical, Cpu, Gauge, Activity, Cog, Zap];
-const COLORS = ["59,130,246", "139,92,246", "16,185,129", "245,158,11", "236,72,153", "6,182,212"];
 
-// ── Radial geometry (desktop) ───────────────────────────────────────────────
-const STAGE = 600;
-const C     = STAGE / 2;
-const HUB_R = 112;
-const ORBIT = 224;
-const NR    = 50;                 // node radius
-const ang   = (i: number, n: number) => (-90 + (360 / n) * i) * (Math.PI / 180);
-const node  = (i: number, n: number) => ({ x: C + ORBIT * Math.cos(ang(i, n)), y: C + ORBIT * Math.sin(ang(i, n)) });
+// Vibrant neon hues (rgb triples) — cyan, purple, green, amber, pink, blue
+const NEON = ["0,229,255", "181,84,255", "0,235,140", "255,170,40", "255,77,141", "56,189,248"];
 
-/** Circular avatar: cover image with an onError fallback to a branded color + icon. */
-function NodeAvatar({ div, Icon, c }: { div: Division; Icon: LucideIcon; c: string }) {
+// ── Stage geometry (desktop) — 3 cards left, hub center, 3 cards right ───────
+const W = 900, H = 520;
+const HUBX = 450, HUBY = 260, HUB_R = 78;
+const CW = 288, CH = 96;
+const LEFT_X = 18, RIGHT_X = W - 18 - CW;        // 18 / 594
+const ROWS_Y = [94, 260, 426];                   // top / middle / bottom centers
+// i → which side + row (alternating: L,R,L,R,L,R top→bottom)
+const LAYOUT = [
+  { side: "left",  row: 0 }, { side: "right", row: 0 },
+  { side: "left",  row: 1 }, { side: "right", row: 1 },
+  { side: "left",  row: 2 }, { side: "right", row: 2 },
+] as const;
+
+function cardRect(i: number) {
+  const { side, row } = LAYOUT[i];
+  const x = side === "left" ? LEFT_X : RIGHT_X;
+  const yc = ROWS_Y[row];
+  return { x, y: yc - CH / 2, yc, side };
+}
+// connector: from hub edge to the card edge that faces the hub
+function connector(i: number) {
+  const { x, yc, side } = cardRect(i);
+  const tx = side === "left" ? x + CW : x;       // inner edge of card
+  const ty = yc;
+  const a = Math.atan2(ty - HUBY, tx - HUBX);
+  return { sx: HUBX + HUB_R * Math.cos(a), sy: HUBY + HUB_R * Math.sin(a), tx, ty };
+}
+
+/** Circular avatar: cover image with an onError fallback to a neon color + icon. */
+function Avatar({ div, Icon, c, size }: { div: Division; Icon: LucideIcon; c: string; size: number }) {
   const [ok, setOk] = useState(true);
   return (
-    <>
+    <div className="relative rounded-full overflow-hidden flex-shrink-0"
+      style={{ width: size, height: size, border: `2px solid rgb(${c})`, boxShadow: `0 0 14px rgba(${c},0.55)` }}>
       <div className="absolute inset-0 flex items-center justify-center"
         style={{ background: `linear-gradient(135deg, rgba(${c},0.95) 0%, rgba(${c},0.5) 100%)` }}>
-        <Icon size={32} color="rgba(255,255,255,0.92)" strokeWidth={1.4} />
+        <Icon size={size * 0.42} color="#fff" strokeWidth={1.5} />
       </div>
       {div.cover_image && ok && (
-        <Image src={mediaUrl(div.cover_image)} alt="" fill sizes="110px"
-          className="object-cover" onError={() => setOk(false)} />
+        <Image src={mediaUrl(div.cover_image)} alt="" fill sizes="64px" className="object-cover" onError={() => setOk(false)} />
       )}
-    </>
+    </div>
   );
 }
 
@@ -56,23 +77,20 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
   const shown = divisions.slice(0, 6);
   const [active, setActive] = useState<number | null>(null);
   if (!shown.length) return null;
-
-  const n   = shown.length;
-  const act = active !== null ? shown[active] : null;
   const lab = LAB[locale] ?? LAB.uz;
 
   return (
     <section className="relative py-20 overflow-hidden">
       <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(var(--accent-rgb),0.22) 50%,transparent)" }} />
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] rounded-full"
-          style={{ background: "radial-gradient(ellipse, rgba(var(--accent-rgb),0.08) 0%, transparent 70%)", filter: "blur(40px)" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[520px] rounded-full"
+          style={{ background: "radial-gradient(ellipse, rgba(var(--accent-rgb),0.10) 0%, transparent 70%)", filter: "blur(50px)" }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-5">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-5">
           <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" viewport={VIEWPORT}>
             <span className="inline-block text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "var(--accent)" }}>
               {EYEBROW[locale] ?? EYEBROW.uz}
@@ -89,117 +107,101 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
           </motion.div>
         </div>
 
-        {/* ── Desktop: radial hub & spoke ── */}
+        {/* ── Desktop: neon mind-map ── */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.94 }} whileInView={{ opacity: 1, scale: 1 }} viewport={VIEWPORT}
+          initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={VIEWPORT}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="hidden lg:flex justify-center"
+          className="hidden lg:block relative mx-auto"
+          style={{ width: W, height: H }}
           onMouseLeave={() => setActive(null)}
         >
-          <div className="relative" style={{ width: STAGE, height: STAGE }}>
-            {/* Connectors + rings */}
-            <svg className="absolute inset-0 pointer-events-none" width={STAGE} height={STAGE} viewBox={`0 0 ${STAGE} ${STAGE}`}>
-              <circle cx={C} cy={C} r={ORBIT} fill="none" stroke="rgba(var(--accent-rgb),0.12)" strokeWidth="1" strokeDasharray="2 7" />
-              {shown.map((_, i) => {
-                const on = active === i;
-                const c  = COLORS[i % COLORS.length];
-                const a  = ang(i, n);
-                const sx = C + (HUB_R + 4) * Math.cos(a), sy = C + (HUB_R + 4) * Math.sin(a);
-                const ex = C + (ORBIT - NR - 2) * Math.cos(a), ey = C + (ORBIT - NR - 2) * Math.sin(a);
-                return (
-                  <line key={i} x1={sx} y1={sy} x2={ex} y2={ey}
-                    stroke={on ? `rgb(${c})` : "rgba(var(--accent-rgb),0.28)"}
-                    strokeWidth={on ? 2.6 : 1.4} strokeDasharray="4 7" strokeLinecap="round"
-                    style={{ animation: "flow-dash 0.8s linear infinite", transition: "stroke 0.3s, stroke-width 0.3s" }} />
-                );
-              })}
-              <circle cx={C} cy={C} r={HUB_R + 16} fill="none" stroke="rgba(var(--accent-rgb),0.16)" strokeWidth="9"
-                strokeDasharray="6 14" strokeLinecap="round" style={{ animation: "flow-dash 1.1s linear infinite" }} />
-            </svg>
-
-            {/* Nodes */}
-            {shown.map((div, i) => {
-              const p    = node(i, n);
-              const Icon = ICONS[i % ICONS.length];
-              const c    = COLORS[i % COLORS.length];
-              const on   = active === i;
+          {/* Connector lines (neon, glowing) */}
+          <svg className="absolute inset-0 pointer-events-none" width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
+            {shown.map((_, i) => {
+              const { sx, sy, tx, ty } = connector(i);
+              const c = NEON[i % NEON.length];
+              const on = active === i;
               return (
-                <Link key={div.id} href={`/${locale}/divisions/${div.slug}`} title={div.name}
-                  onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)}
-                  className="absolute block rounded-full overflow-hidden"
+                <line key={i} x1={sx} y1={sy} x2={tx} y2={ty}
+                  stroke={`rgb(${c})`} strokeWidth={on ? 3 : 1.8} strokeLinecap="round"
+                  strokeDasharray="5 7" opacity={on ? 1 : 0.7}
                   style={{
-                    left: p.x - NR, top: p.y - NR, width: NR * 2, height: NR * 2, zIndex: 10,
-                    border: `2px solid rgba(${c},${on ? 0.95 : 0.6})`,
-                    boxShadow: on
-                      ? `0 0 0 4px rgba(${c},0.18), 0 16px 36px rgba(${c},0.36)`
-                      : "0 10px 24px rgba(2,12,30,0.35)",
-                    transform: on ? "scale(1.12)" : "scale(1)",
-                    transition: "transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s, border-color 0.3s",
-                  }}>
-                  <NodeAvatar div={div} Icon={Icon} c={c} />
-                  <span className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(2,10,26,0.45), transparent 62%)" }} />
-                  <span className="absolute bottom-1.5 left-1/2 -translate-x-1/2 font-mono text-[10px] font-bold px-1.5 py-0.5 rounded pointer-events-none"
-                    style={{ background: "rgba(255,255,255,0.92)", color: `rgb(${c})` }}>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </Link>
+                    animation: "flow-dash 0.8s linear infinite",
+                    filter: `drop-shadow(0 0 ${on ? 6 : 3}px rgba(${c},0.9))`,
+                    transition: "stroke-width 0.3s, opacity 0.3s, filter 0.3s",
+                  }} />
               );
             })}
+            {/* joint dots at the hub */}
+            {shown.map((_, i) => {
+              const { sx, sy } = connector(i);
+              const c = NEON[i % NEON.length];
+              return <circle key={`d${i}`} cx={sx} cy={sy} r={3.5} fill={`rgb(${c})`} style={{ filter: `drop-shadow(0 0 4px rgb(${c}))` }} />;
+            })}
+          </svg>
 
-            {/* Center hub */}
-            <div className="absolute flex items-center justify-center text-center rounded-full"
-              style={{
-                left: C - HUB_R, top: C - HUB_R, width: HUB_R * 2, height: HUB_R * 2, zIndex: 20,
-                background: "radial-gradient(circle at 50% 36%, var(--surface-elevated) 0%, var(--surface-card) 80%)",
-                border: "1px solid rgba(var(--accent-rgb),0.18)",
-                boxShadow: "0 22px 50px rgba(2,12,30,0.40), inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 8px rgba(var(--accent-rgb),0.06)",
-              }}>
-              <AnimatePresence mode="wait">
-                {act ? (
-                  <motion.div key={act.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.22 }} className="px-7 flex flex-col items-center">
-                    <span className="font-mono text-[10px] font-bold tracking-widest mb-2" style={{ color: `rgb(${COLORS[(active ?? 0) % COLORS.length]})` }}>
-                      {lab} · {String((active ?? 0) + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="font-display font-bold leading-snug mb-3 line-clamp-4 first-letter:uppercase" style={{ fontSize: 13.5, color: "var(--content)" }}>
-                      {act.name}
-                    </h3>
-                    <span className="inline-flex items-center gap-1.5 text-[11px] font-bold" style={{ color: `rgb(${COLORS[(active ?? 0) % COLORS.length]})` }}>
-                      {viewDetail} <ArrowRight size={12} />
-                    </span>
-                  </motion.div>
-                ) : (
-                  <motion.div key="hub" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.22 }}
-                    className="flex flex-col items-center">
-                    <motion.div animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-                      style={{ filter: "drop-shadow(0 5px 18px rgba(var(--accent-rgb),0.4))" }}>
-                      <Image src="/logo-icon.png" alt="ICHAB" width={72} height={72} className="object-contain" priority />
-                    </motion.div>
-                    <span className="font-display font-bold tracking-[0.2em] mt-2" style={{ fontSize: 18, color: "var(--content)" }}>ICHAB</span>
-                    <span className="text-[9px] uppercase tracking-[0.14em] mt-1" style={{ color: "var(--content-muted)" }}>
-                      {EYEBROW[locale] ?? EYEBROW.uz}
-                    </span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+          {/* Cards */}
+          {shown.map((div, i) => {
+            const { x, y, side } = cardRect(i);
+            const c = NEON[i % NEON.length];
+            const Icon = ICONS[i % ICONS.length];
+            const on = active === i;
+            return (
+              <Link key={div.id} href={`/${locale}/divisions/${div.slug}`} title={div.name}
+                onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)}
+                className="absolute flex items-center gap-3 rounded-[28px] px-3.5"
+                style={{
+                  left: x, top: y, width: CW, height: CH, zIndex: 10,
+                  flexDirection: side === "right" ? "row" : "row",
+                  background: "var(--card-bg)",
+                  border: `1.5px solid rgba(${c},${on ? 1 : 0.65})`,
+                  boxShadow: on
+                    ? `0 0 22px rgba(${c},0.65), 0 0 46px rgba(${c},0.30), inset 0 0 18px rgba(${c},0.12)`
+                    : `0 0 14px rgba(${c},0.30), inset 0 0 12px rgba(${c},0.06)`,
+                  transform: on ? "scale(1.04)" : "scale(1)",
+                  transition: "transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s, border-color 0.3s",
+                }}>
+                <Avatar div={div} Icon={Icon} c={c} size={62} />
+                <div className="min-w-0 flex-1">
+                  <span className="block font-mono text-[10px] font-bold tracking-widest mb-0.5" style={{ color: `rgb(${c})` }}>
+                    {lab} · {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="font-display font-bold text-[13.5px] leading-snug line-clamp-2 first-letter:uppercase text-content">
+                    {div.name}
+                  </h3>
+                </div>
+              </Link>
+            );
+          })}
+
+          {/* Center hub */}
+          <div className="absolute flex flex-col items-center justify-center rounded-full"
+            style={{
+              left: HUBX - HUB_R, top: HUBY - HUB_R, width: HUB_R * 2, height: HUB_R * 2, zIndex: 20,
+              background: "radial-gradient(circle at 50% 36%, var(--surface-elevated) 0%, var(--surface-card) 82%)",
+              border: "1.5px solid rgba(var(--accent-rgb),0.55)",
+              boxShadow: "0 0 26px rgba(var(--accent-rgb),0.45), 0 0 60px rgba(var(--accent-rgb),0.20), inset 0 1px 0 rgba(255,255,255,0.12)",
+            }}>
+            <motion.div animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+              style={{ filter: "drop-shadow(0 4px 16px rgba(var(--accent-rgb),0.5))" }}>
+              <Image src="/logo-icon.png" alt="ICHAB" width={64} height={64} className="object-contain" priority />
+            </motion.div>
+            <span className="font-display font-bold tracking-[0.2em] mt-1.5" style={{ fontSize: 17, color: "var(--content)" }}>ICHAB</span>
           </div>
         </motion.div>
 
-        {/* ── Mobile / tablet: clean list ── */}
+        {/* ── Mobile / tablet: list ── */}
         <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={VIEWPORT}
-          className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+          className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
           {shown.map((div, i) => {
             const Icon = ICONS[i % ICONS.length];
-            const c    = COLORS[i % COLORS.length];
+            const c = NEON[i % NEON.length];
             return (
               <motion.div key={div.id} variants={fadeUp}>
                 <Link href={`/${locale}/divisions/${div.slug}`}
                   className="flex items-center gap-4 p-3 rounded-2xl transition-transform duration-200 active:scale-[0.98]"
-                  style={{ background: "var(--card-bg)", border: `1px solid rgba(${c},0.20)`, boxShadow: "var(--card-shadow)" }}>
-                  <div className="relative rounded-xl overflow-hidden flex-shrink-0" style={{ width: 64, height: 64, border: `1px solid rgba(${c},0.3)` }}>
-                    <NodeAvatar div={div} Icon={Icon} c={c} />
-                  </div>
+                  style={{ background: "var(--card-bg)", border: `1.5px solid rgba(${c},0.55)`, boxShadow: `0 0 14px rgba(${c},0.25)` }}>
+                  <Avatar div={div} Icon={Icon} c={c} size={60} />
                   <div className="min-w-0 flex-1">
                     <span className="font-mono text-[10px] font-bold" style={{ color: `rgb(${c})` }}>
                       {lab} · {String(i + 1).padStart(2, "0")}
