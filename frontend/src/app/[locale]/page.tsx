@@ -111,7 +111,7 @@ export default async function HomePage({ params: { locale } }: Props) {
               <div
                 className="rounded-3xl p-12 relative overflow-hidden"
                 style={{
-                  background:           "var(--card-bg)",
+                  background:           "var(--card-solid)",
                   backdropFilter:       "blur(20px)",
                   WebkitBackdropFilter: "blur(20px)",
                 }}

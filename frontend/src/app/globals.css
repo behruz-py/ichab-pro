@@ -61,6 +61,9 @@
   --footer-border:      rgba(15, 23, 42, 0.08);
   --grad-warm-a:        #EA6E14;         /* decorative AI-border warm stops */
   --grad-warm-b:        #F4A52C;
+  /* near-opaque card surface — for cards that sit ON a decorative gradient
+     border (CTA banner), so the border stays an edge, not a fill */
+  --card-solid:         linear-gradient(165deg, #FCFDFE 0%, #F2F6FB 100%);
 }
 
 /* ─── THEME: Aurora Glass (dark cinematic + frosted accents) ─────────────────
@@ -121,6 +124,7 @@
   --footer-border:      rgba(193, 232, 255, 0.10);
   --grad-warm-a:        #22D3EE;         /* decorative AI-border → cyan/mint */
   --grad-warm-b:        #34D399;
+  --card-solid:         linear-gradient(165deg, rgba(10,24,48,0.93) 0%, rgba(7,18,38,0.95) 100%);
 }
 
 /* ─── BASE ───────────────────────────────────────────────────────────────── */
