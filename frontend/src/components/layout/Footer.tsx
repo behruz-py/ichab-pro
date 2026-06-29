@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { MapPin, Phone, Mail, Heart, Clock, ArrowRight, Printer, Globe } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, ArrowRight, Printer, Globe } from "lucide-react";
 import { LogoBadge } from "@/components/shared/LogoBadge";
 
 const COMPANY = [
@@ -158,10 +158,7 @@ export async function Footer() {
         {/* Bottom bar */}
         <div className="pt-7 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: "1px solid var(--border-subtle)" }}>
           <p className="text-xs" style={{ color: "var(--content-muted)" }}>{tFooter("copyright", { year })}</p>
-          <p className="text-xs inline-flex items-center gap-1.5" style={{ color: "var(--content-muted)" }}>
-            {tFooter("made_with")}
-            <Heart size={12} fill="var(--accent)" style={{ color: "var(--accent)" }} />
-          </p>
+          <p className="text-xs" style={{ color: "var(--content-muted)" }}>{tFooter("made_with")}</p>
         </div>
       </div>
     </footer>
