@@ -5,6 +5,7 @@ import { ProductionVolumeChart } from "@/components/sections/charts/ProductionVo
 import { ProductBreakdown2026 } from "@/components/sections/charts/ProductBreakdown2026";
 import { EnergyEfficiencyTable } from "@/components/sections/charts/EnergyEfficiencyTable";
 import { MainIndicatorsTable } from "@/components/sections/charts/MainIndicatorsTable";
+import { CostEstimateTable } from "@/components/sections/charts/CostEstimateTable";
 
 type Props = { params: { locale: string } };
 type Loc = Record<string, string>;
@@ -40,6 +41,7 @@ export default async function StatisticsPage({ params: { locale } }: Props) {
         <ProductBreakdown2026 locale={locale} />
         <MainIndicatorsTable locale={locale} />
         <EnergyEfficiencyTable locale={locale} />
+        <CostEstimateTable locale={locale} />
         {/* Further charts are added here as data is provided. */}
       </div>
     </div>
