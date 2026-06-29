@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Sun } from "lucide-react";
+import { Sun, Target } from "lucide-react";
 
 type Loc = Record<string, string>;
 const tr = (o: Loc, l: string) => o[l] ?? o.uz;
@@ -27,12 +27,16 @@ const AXIS_MAX = 90000;
 const STEP = 10000;
 const PLOT_H = 350;
 const COL_W = 74;
-const BAR_W = 40;
+const BAR_W = 42;
 
-const PROD_GRAD  = "linear-gradient(to top, rgba(59,130,246,0.92) 0%, rgba(34,211,238,0.96) 58%, rgba(52,211,153,1) 100%)";
-const PROD_GLOW  = "rgba(34,211,238,0.45)";
-const HELIO_GRAD = "linear-gradient(to top, rgba(245,158,11,0.95) 0%, rgba(250,204,21,1) 100%)";
-const HELIO_GLOW = "rgba(245,179,11,0.5)";
+// Glass (translucent) fills for the bars + solid versions for the legend swatches
+const PROD_GLASS    = "linear-gradient(to top, rgba(59,130,246,0.34) 0%, rgba(34,211,238,0.46) 58%, rgba(52,211,153,0.60) 100%)";
+const PROD_SOLID    = "linear-gradient(to top, #3B82F6 0%, #22D3EE 58%, #34D399 100%)";
+const PROD_GLOW     = "rgba(34,211,238,0.45)";
+const HELIO_GLASS   = "linear-gradient(to top, rgba(245,158,11,0.55) 0%, rgba(250,204,21,0.78) 100%)";
+const HELIO_SOLID   = "linear-gradient(to top, #F59E0B 0%, #FACC15 100%)";
+const HELIO_GLOW    = "rgba(245,179,11,0.5)";
+const FORECAST_GLASS = "linear-gradient(to top, rgba(52,211,153,0.10) 0%, rgba(52,211,153,0.24) 100%)";
 
 const fmt = (n: number) => n.toLocaleString("ru-RU");
 
@@ -67,21 +71,34 @@ function useCountUp(target: number, run: boolean, dur = 1500) {
 }
 
 function Column({ d, i, inView, locale }: { d: Row; i: number; inView: boolean; locale: string }) {
-  const prodH  = (d.prod / AXIS_MAX) * PLOT_H;
-  const helioH = d.helio ? (d.helio / AXIS_MAX) * PLOT_H : 0;
-  const totalH = prodH + helioH;
-  const total  = useCountUp(d.prod + (d.helio ?? 0), inView);
-  const helioV = useCountUp(d.helio ?? 0, inView);
+  const prodH   = (d.prod / AXIS_MAX) * PLOT_H;
+  const helioH  = d.helio ? (d.helio / AXIS_MAX) * PLOT_H : 0;
+  const totalH  = prodH + helioH;
+  const prodV   = useCountUp(d.prod, inView);
+  const helioV  = useCountUp(d.helio ?? 0, inView);
+  const stacked = helioH > 0;
 
   return (
     <div className="group flex flex-col items-center" style={{ width: COL_W }}>
       <div className="relative w-full" style={{ height: PLOT_H }}>
-        {/* slot track */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-t-lg" style={{ width: BAR_W, height: PLOT_H, background: "rgba(var(--accent-rgb),0.05)" }} />
+        {/* empty glass slot */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-lg" style={{ width: BAR_W, height: PLOT_H, background: "rgba(var(--accent-rgb),0.05)", border: "1px solid rgba(var(--accent-rgb),0.07)" }} />
 
-        {/* value label */}
-        <div className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-center pointer-events-none" style={{ bottom: totalH + 10 }}>
-          <span className="font-display font-bold tabular-nums" style={{ fontSize: 13, color: "var(--content)" }}>{fmt(total)}</span>
+        {/* helio value (above the amber top) */}
+        {stacked && (
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1 whitespace-nowrap pointer-events-none" style={{ bottom: totalH + 8 }}>
+            <Sun size={11} style={{ color: "#F5B30B" }} />
+            <span className="font-display font-bold tabular-nums" style={{ fontSize: 12.5, color: "#F5B30B" }}>{fmt(helioV)}</span>
+          </div>
+        )}
+
+        {/* production value */}
+        <div className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-center pointer-events-none flex items-center gap-1" style={{ bottom: stacked ? prodH - 22 : prodH + 8 }}>
+          {d.forecast && <Target size={12} style={{ color: "var(--accent)" }} />}
+          <span className="font-display font-bold tabular-nums"
+            style={{ fontSize: 13, color: d.forecast ? "var(--accent)" : stacked ? "#fff" : "var(--content)", textShadow: stacked ? "0 1px 3px rgba(0,0,0,0.45)" : "none" }}>
+            {fmt(prodV)}
+          </span>
         </div>
 
         {/* bar */}
@@ -91,22 +108,22 @@ function Column({ d, i, inView, locale }: { d: Row; i: number; inView: boolean; 
           initial={{ scaleY: 0 }} animate={inView ? { scaleY: 1 } : { scaleY: 0 }}
           transition={{ duration: 0.85, delay: 0.15 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* helio (amber) segment */}
-          {helioH > 0 && (
-            <div className="relative w-full rounded-t-lg" style={{ height: helioH, background: HELIO_GRAD, boxShadow: `0 0 18px ${HELIO_GLOW}, inset 0 1.5px 0 rgba(255,255,255,0.5)` }}>
-              <div className="absolute inset-0 flex items-center justify-center gap-0.5">
-                <Sun size={10} color="#fff" />
-                <span className="font-bold tabular-nums" style={{ fontSize: 10, color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.45)" }}>{fmt(helioV)}</span>
-              </div>
-            </div>
+          {stacked && (
+            <div className="w-full rounded-t-lg" style={{
+              height: helioH, background: HELIO_GLASS,
+              border: "1px solid rgba(255,255,255,0.28)", borderBottom: "none",
+              backdropFilter: "blur(3px)", WebkitBackdropFilter: "blur(3px)",
+              boxShadow: `0 0 20px ${HELIO_GLOW}, inset 0 1.5px 0 rgba(255,255,255,0.6)`,
+            }} />
           )}
-          {/* production segment */}
           <div className="w-full" style={{
             height: prodH,
-            background: d.forecast ? "rgba(52,211,153,0.18)" : PROD_GRAD,
-            border: d.forecast ? "2px dashed rgba(52,211,153,0.8)" : "none",
-            borderRadius: helioH > 0 ? "0 0 4px 4px" : "8px 8px 4px 4px",
-            boxShadow: d.forecast ? `0 0 18px ${PROD_GLOW}` : `0 0 18px ${PROD_GLOW}, inset 0 1.5px 0 rgba(255,255,255,0.45)`,
+            background: d.forecast ? FORECAST_GLASS : PROD_GLASS,
+            border: d.forecast ? "2px dashed rgba(52,211,153,0.85)" : "1px solid rgba(255,255,255,0.24)",
+            borderBottom: "none",
+            borderRadius: stacked ? "0 0 6px 6px" : "8px 8px 6px 6px",
+            backdropFilter: "blur(3px)", WebkitBackdropFilter: "blur(3px)",
+            boxShadow: d.forecast ? `0 0 22px ${PROD_GLOW}` : `0 0 22px ${PROD_GLOW}, inset 0 1.5px 0 rgba(255,255,255,0.5)`,
           }} />
         </motion.div>
       </div>
@@ -159,11 +176,11 @@ export function ProductionVolumeChart({ locale }: { locale: string }) {
       {/* Legend */}
       <div className="flex flex-wrap items-center gap-x-7 gap-y-2 mt-6 pl-14">
         <span className="inline-flex items-center gap-2 text-sm" style={{ color: "var(--content-secondary)" }}>
-          <span className="w-4 h-4 rounded" style={{ background: PROD_GRAD, boxShadow: `0 0 10px ${PROD_GLOW}` }} />
+          <span className="w-4 h-4 rounded" style={{ background: PROD_SOLID, boxShadow: `0 0 10px ${PROD_GLOW}` }} />
           {tr(LEG_PROD, locale)}
         </span>
         <span className="inline-flex items-center gap-2 text-sm" style={{ color: "var(--content-secondary)" }}>
-          <span className="w-4 h-4 rounded" style={{ background: HELIO_GRAD, boxShadow: `0 0 10px ${HELIO_GLOW}` }} />
+          <span className="w-4 h-4 rounded" style={{ background: HELIO_SOLID, boxShadow: `0 0 10px ${HELIO_GLOW}` }} />
           {tr(LEG_HELIO, locale)}
         </span>
       </div>
