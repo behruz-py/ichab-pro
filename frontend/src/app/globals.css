@@ -367,7 +367,7 @@ select.form-input option {
     from var(--ring-angle),
     transparent 20%,
     rgba(var(--accent-rgb), 0.85) 40%,
-    rgba(61, 114, 173, 1)   50%,
+    rgba(var(--accent-rgb), 1)   50%,
     rgba(var(--accent-rgb), 0.85) 60%,
     transparent 80%
   );

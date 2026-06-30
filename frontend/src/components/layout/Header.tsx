@@ -86,8 +86,8 @@ export function Header() {
           className={cn(
             "max-w-[1340px] mx-auto rounded-2xl pointer-events-auto transition-all duration-400 relative",
             scrolled
-              ? "shadow-[0_8px_40px_rgba(36,76,119,0.16),0_0_0_1px_rgba(47,94,148,0.18)]"
-              : "shadow-[0_0_0_1px_rgba(47,94,148,0.10)]"
+              ? "shadow-[0_8px_40px_rgba(var(--accent-2-rgb),0.16),0_0_0_1px_rgba(var(--accent-rgb),0.18)]"
+              : "shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.10)]"
           )}
           style={{
             background:           scrolled ? "var(--header-bg-scrolled)" : "var(--header-bg)",
@@ -98,7 +98,7 @@ export function Header() {
           {/* Blue top accent line */}
           <div
             className={cn("absolute top-0 left-6 right-6 h-px transition-opacity duration-400", scrolled ? "opacity-70" : "opacity-30")}
-            style={{ background: "linear-gradient(90deg, transparent 0%, rgba(47,94,148,0.7) 40%, rgba(47,94,148,0.9) 50%, rgba(47,94,148,0.7) 60%, transparent 100%)" }}
+            style={{ background: "linear-gradient(90deg, transparent 0%, rgba(var(--accent-rgb),0.7) 40%, rgba(var(--accent-rgb),0.9) 50%, rgba(var(--accent-rgb),0.7) 60%, transparent 100%)" }}
           />
 
           <div className="px-4 sm:px-5 h-[58px] flex items-center justify-between gap-3">
@@ -124,7 +124,7 @@ export function Header() {
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
-                  filter: "drop-shadow(0 1px 6px rgba(47,94,148,0.18))",
+                  filter: "drop-shadow(0 1px 6px rgba(var(--accent-rgb),0.18))",
                 }}
               >
                 {BRAND_NAME[locale] ?? "ICHAB"}
@@ -132,13 +132,13 @@ export function Header() {
 
               {/* ── Full name — current locale only ── */}
               <div className="hidden xl:flex items-stretch gap-3 ml-0.5">
-                <div className="w-px self-stretch" style={{ background: "rgba(47,94,148,0.22)" }} />
+                <div className="w-px self-stretch" style={{ background: "rgba(var(--accent-rgb),0.22)" }} />
                 <p
                   className="font-semibold uppercase self-center leading-[1.40]"
                   style={{
                     fontSize: "8px",
                     letterSpacing: "0.07em",
-                    color: "rgba(61,114,173,0.52)",
+                    color: "rgba(var(--accent-rgb),0.52)",
                     maxWidth: "110px",
                   }}
                 >
@@ -163,7 +163,7 @@ export function Header() {
                 <button
                   className={cn(
                     "relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[14px] font-medium transition-colors duration-200 whitespace-nowrap",
-                    isDropdownActive() || dropdownOpen ? "text-[#2F5E94]" : "text-content-secondary hover:text-content"
+                    isDropdownActive() || dropdownOpen ? "text-[var(--accent)]" : "text-content-secondary hover:text-content"
                   )}
                 >
                   {/* Shared hover pill */}
@@ -171,13 +171,13 @@ export function Header() {
                     <motion.span
                       layoutId="nav-hover-pill"
                       className="absolute inset-0 rounded-xl"
-                      style={{ background: "rgba(47,94,148,0.07)" }}
+                      style={{ background: "rgba(var(--accent-rgb),0.07)" }}
                       transition={{ type: "spring", stiffness: 480, damping: 36 }}
                     />
                   )}
                   {/* Open-state subtle bg */}
                   {dropdownOpen && (
-                    <span className="absolute inset-0 rounded-xl" style={{ background: "rgba(47,94,148,0.08)" }} />
+                    <span className="absolute inset-0 rounded-xl" style={{ background: "rgba(var(--accent-rgb),0.08)" }} />
                   )}
                   <span className="relative z-10">{t("company")}</span>
                   <motion.span
@@ -192,7 +192,7 @@ export function Header() {
                     <motion.span
                       layoutId="nav-underline"
                       className="absolute left-2.5 right-2.5 -bottom-0.5 h-[2.5px] rounded-full"
-                      style={{ background: "linear-gradient(90deg, #2F5E94 0%, #EA6E14 100%)" }}
+                      style={{ background: "linear-gradient(90deg, var(--accent) 0%, var(--warm-solid) 100%)" }}
                       transition={{ type: "spring", stiffness: 400, damping: 32 }}
                     />
                   )}
@@ -214,11 +214,11 @@ export function Header() {
                         backdropFilter:       "blur(28px)",
                         WebkitBackdropFilter: "blur(28px)",
                         border:               "1px solid var(--panel-border)",
-                        boxShadow:            "0 16px 56px rgba(0,0,0,0.60), 0 0 0 1px rgba(47,94,148,0.06)",
+                        boxShadow:            "0 16px 56px rgba(0,0,0,0.60), 0 0 0 1px rgba(var(--accent-rgb),0.06)",
                       }}
                     >
                       {/* Top accent line */}
-                      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(47,94,148,0.55) 50%, transparent)" }} />
+                      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(var(--accent-rgb),0.55) 50%, transparent)" }} />
 
                       {DROPDOWN_ITEMS.map((item, i) => {
                         const active = isActive(item.path);
@@ -235,11 +235,11 @@ export function Header() {
                               className={cn(
                                 "flex items-center gap-3 mx-1.5 my-0.5 px-3 py-2.5 rounded-xl text-[13.5px] font-medium transition-all duration-150 group",
                                 active
-                                  ? "text-[#2F5E94] bg-blue-500/10"
+                                  ? "text-[var(--accent)] bg-blue-500/10"
                                   : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
                               )}
                             >
-                              <Icon size={15} style={{ color: active ? "#2F5E94" : "rgba(47,94,148,0.50)" }} className="flex-shrink-0" />
+                              <Icon size={15} style={{ color: active ? "var(--accent)" : "rgba(var(--accent-rgb),0.50)" }} className="flex-shrink-0" />
                               <span className="flex-1">{t(item.key)}</span>
                               {active && <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
                             </Link>
@@ -264,7 +264,7 @@ export function Header() {
                       href={`/${locale}${path}`}
                       className={cn(
                         "relative flex items-center px-3.5 py-2 rounded-xl text-[14px] font-medium transition-colors duration-200 whitespace-nowrap",
-                        active ? "text-[#2F5E94]" : "text-content-secondary hover:text-content"
+                        active ? "text-[var(--accent)]" : "text-content-secondary hover:text-content"
                       )}
                     >
                       {/* Shared hover pill — slides between items */}
@@ -272,7 +272,7 @@ export function Header() {
                         <motion.span
                           layoutId="nav-hover-pill"
                           className="absolute inset-0 rounded-xl"
-                          style={{ background: "rgba(47,94,148,0.07)" }}
+                          style={{ background: "rgba(var(--accent-rgb),0.07)" }}
                           transition={{ type: "spring", stiffness: 480, damping: 36 }}
                         />
                       )}
@@ -282,7 +282,7 @@ export function Header() {
                         <motion.span
                           layoutId="nav-underline"
                           className="absolute left-2.5 right-2.5 -bottom-0.5 h-[2.5px] rounded-full"
-                          style={{ background: "linear-gradient(90deg, #2F5E94 0%, #EA6E14 100%)" }}
+                          style={{ background: "linear-gradient(90deg, var(--accent) 0%, var(--warm-solid) 100%)" }}
                           transition={{ type: "spring", stiffness: 400, damping: 32 }}
                         />
                       )}
@@ -355,10 +355,10 @@ export function Header() {
                 backdropFilter:       "blur(24px)",
                 WebkitBackdropFilter: "blur(24px)",
                 borderLeft:           "1px solid var(--panel-border)",
-                boxShadow:            "-12px 0 48px rgba(36,76,119,0.16)",
+                boxShadow:            "-12px 0 48px rgba(var(--accent-2-rgb),0.16)",
               }}
             >
-              <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(47,94,148,0.60) 50%, transparent)" }} />
+              <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(var(--accent-rgb),0.60) 50%, transparent)" }} />
 
               <div className="h-[72px] flex items-center justify-between px-5 border-b border-black/[0.06]">
                 <div className="flex items-center gap-3">
@@ -387,7 +387,7 @@ export function Header() {
 
               <nav className="flex-1 overflow-y-auto px-3 py-4">
                 <div className="mb-3">
-                  <p className="px-4 mb-1.5 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(47,94,148,0.55)" }}>
+                  <p className="px-4 mb-1.5 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(var(--accent-rgb),0.55)" }}>
                     {t("company")}
                   </p>
                   <div className="space-y-0.5">
@@ -405,11 +405,11 @@ export function Header() {
                             href={`/${locale}${item.path}`}
                             className={cn(
                               "flex items-center gap-3 px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200",
-                              active ? "text-[#2F5E94]" : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
+                              active ? "text-[var(--accent)]" : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
                             )}
-                            style={active ? { background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.20)" } : {}}
+                            style={active ? { background: "rgba(var(--accent-rgb),0.10)", border: "1px solid rgba(var(--accent-rgb),0.20)" } : {}}
                           >
-                            <Icon size={16} style={{ color: active ? "#2F5E94" : "rgba(47,94,148,0.45)" }} className="flex-shrink-0" />
+                            <Icon size={16} style={{ color: active ? "var(--accent)" : "rgba(var(--accent-rgb),0.45)" }} className="flex-shrink-0" />
                             {t(item.key)}
                             {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}
                           </Link>
@@ -435,9 +435,9 @@ export function Header() {
                           href={`/${locale}${path}`}
                           className={cn(
                             "flex items-center justify-between px-4 py-3 rounded-xl text-[13.5px] font-medium transition-all duration-200",
-                            active ? "text-[#2F5E94]" : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
+                            active ? "text-[var(--accent)]" : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
                           )}
-                          style={active ? { background: "rgba(47,94,148,0.10)", border: "1px solid rgba(47,94,148,0.20)" } : {}}
+                          style={active ? { background: "rgba(var(--accent-rgb),0.10)", border: "1px solid rgba(var(--accent-rgb),0.20)" } : {}}
                         >
                           {t(key)}
                           {active && <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />}

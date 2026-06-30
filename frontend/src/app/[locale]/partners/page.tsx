@@ -35,7 +35,7 @@ export default async function PartnersPage({ params: { locale } }: Props) {
         {/* Ambient radial glow */}
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(47,94,148,0.12) 0%, transparent 65%)" }}
+          style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(var(--accent-rgb),0.12) 0%, transparent 65%)" }}
         />
         {/* Subtle grid overlay */}
         <div
@@ -43,20 +43,20 @@ export default async function PartnersPage({ params: { locale } }: Props) {
           style={{
             opacity: 0.03,
             backgroundImage:
-              "linear-gradient(rgba(47,94,148,1) 1px,transparent 1px),linear-gradient(90deg,rgba(47,94,148,1) 1px,transparent 1px)",
+              "linear-gradient(rgba(var(--accent-rgb),1) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--accent-rgb),1) 1px,transparent 1px)",
             backgroundSize: "60px 60px",
           }}
         />
         {/* Bottom separator */}
         <div
           className="absolute bottom-0 inset-x-0 h-px"
-          style={{ background: "linear-gradient(90deg,transparent,rgba(47,94,148,0.28) 50%,transparent)" }}
+          style={{ background: "linear-gradient(90deg,transparent,rgba(var(--accent-rgb),0.28) 50%,transparent)" }}
         />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span
             className="inline-block text-xs font-bold uppercase tracking-[0.22em] mb-5"
-            style={{ color: "#2F5E94" }}
+            style={{ color: "var(--accent)" }}
           >
             {t("badge")}
           </span>
@@ -70,7 +70,7 @@ export default async function PartnersPage({ params: { locale } }: Props) {
 
           <p
             className="max-w-2xl mx-auto mb-10"
-            style={{ fontSize: "18px", color: "#475569", lineHeight: "1.65" }}
+            style={{ fontSize: "18px", color: "var(--content-secondary)", lineHeight: "1.65" }}
           >
             {t("subtitle")}
           </p>
@@ -80,9 +80,9 @@ export default async function PartnersPage({ params: { locale } }: Props) {
             <div
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold"
               style={{
-                background: "rgba(47,94,148,0.10)",
-                border: "1px solid rgba(47,94,148,0.25)",
-                color: "#2F5E94",
+                background: "rgba(var(--accent-rgb),0.10)",
+                border: "1px solid rgba(var(--accent-rgb),0.25)",
+                color: "var(--accent)",
               }}
             >
               <span className="font-bold text-white" style={{ fontSize: "20px" }}>{partners.length}</span>
@@ -93,12 +93,12 @@ export default async function PartnersPage({ params: { locale } }: Props) {
               <div
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold"
                 style={{
-                  background: "rgba(234,110,20,0.08)",
-                  border: "1px solid rgba(234,110,20,0.25)",
-                  color: "#DE7216",
+                  background: "rgba(var(--warm-glow),0.08)",
+                  border: "1px solid rgba(var(--warm-glow),0.25)",
+                  color: "var(--warm-solid)",
                 }}
               >
-                <Star size={16} fill="#DE7216" />
+                <Star size={16} fill="var(--warm-solid)" />
                 <span className="font-bold text-white" style={{ fontSize: "20px" }}>{featuredCount}</span>
                 {t("strategic")}
               </div>
@@ -116,12 +116,12 @@ export default async function PartnersPage({ params: { locale } }: Props) {
       {partners.length > 0 && (
         <div
           className="py-12"
-          style={{ borderTop: "1px solid rgba(47,94,148,0.10)" }}
+          style={{ borderTop: "1px solid rgba(var(--accent-rgb),0.10)" }}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p
               style={{
-                color: "#94A3B8",
+                color: "var(--content-muted)",
                 fontSize: "12px",
                 letterSpacing: "0.10em",
                 textTransform: "uppercase",

@@ -71,7 +71,7 @@ export function LoadingScreen({ onComplete }: Props) {
               {/* Outer dashed deco ring — slow spin */}
               <motion.div
                 className="absolute rounded-full border border-dashed"
-                style={{ inset: -10, borderColor: "rgba(47,94,148,0.16)" }}
+                style={{ inset: -10, borderColor: "rgba(var(--accent-rgb),0.16)" }}
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               />
@@ -80,20 +80,20 @@ export function LoadingScreen({ onComplete }: Props) {
               <svg width="300" height="300" viewBox="0 0 300 300" className="absolute inset-0 -rotate-90">
                 <defs>
                   <linearGradient id="ichab-load" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#3D72AD" />
-                    <stop offset="60%" stopColor="#2F5E94" />
-                    <stop offset="100%" stopColor="#EA6E14" />
+                    <stop offset="0%" stopColor="var(--accent)" />
+                    <stop offset="60%" stopColor="var(--accent)" />
+                    <stop offset="100%" stopColor="var(--warm-solid)" />
                   </linearGradient>
                 </defs>
                 {/* Track */}
-                <circle cx="150" cy="150" r={R} fill="none" stroke="rgba(47,94,148,0.12)" strokeWidth="5" />
+                <circle cx="150" cy="150" r={R} fill="none" stroke="rgba(var(--accent-rgb),0.12)" strokeWidth="5" />
                 {/* Fill */}
                 <circle
                   cx="150" cy="150" r={R} fill="none"
                   stroke="url(#ichab-load)" strokeWidth="5" strokeLinecap="round"
                   strokeDasharray={CIRC}
                   strokeDashoffset={CIRC * (1 - progress / 100)}
-                  style={{ filter: "drop-shadow(0 0 7px rgba(47,94,148,0.45))", transition: "stroke-dashoffset 0.12s linear" }}
+                  style={{ filter: "drop-shadow(0 0 7px rgba(var(--accent-rgb),0.45))", transition: "stroke-dashoffset 0.12s linear" }}
                 />
               </svg>
 
@@ -102,7 +102,7 @@ export function LoadingScreen({ onComplete }: Props) {
                 className="relative flex items-center justify-center"
                 style={{
                   width: 200, height: 200,
-                  filter: "drop-shadow(0 0 24px rgba(47,94,148,0.45)) drop-shadow(0 0 12px rgba(234,110,20,0.22))",
+                  filter: "drop-shadow(0 0 24px rgba(var(--accent-rgb),0.45)) drop-shadow(0 0 12px rgba(var(--warm-glow),0.22))",
                 }}
                 animate={{ scale: [1, 1.045, 1] }}
                 transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
@@ -149,13 +149,13 @@ export function LoadingScreen({ onComplete }: Props) {
                 className="font-display font-bold tabular-nums"
                 style={{
                   fontSize: 34, lineHeight: 1,
-                  background: "linear-gradient(120deg, #2F5E94 0%, #EA6E14 120%)",
+                  background: "linear-gradient(120deg, var(--accent) 0%, var(--warm-solid) 120%)",
                   WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
                 }}
               >
                 {progress}%
               </span>
-              <span className="font-mono text-[11px] tracking-[0.2em] uppercase" style={{ color: "#94A3B8" }}>
+              <span className="font-mono text-[11px] tracking-[0.2em] uppercase" style={{ color: "var(--content-muted)" }}>
                 Initializing
               </span>
             </motion.div>

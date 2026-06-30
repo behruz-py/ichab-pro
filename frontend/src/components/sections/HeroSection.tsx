@@ -43,7 +43,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "radial-gradient(rgba(47,94,148,0.18) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(rgba(var(--accent-rgb),0.18) 1px, transparent 1px)",
           backgroundSize: "40px 40px",
           opacity: 0.28,
           maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
