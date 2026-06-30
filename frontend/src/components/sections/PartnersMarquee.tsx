@@ -3,9 +3,15 @@
 import { useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useLocale } from "next-intl";
+import { ShieldCheck } from "lucide-react";
 import type { Partner } from "@/types/api";
 import { mediaUrl } from "@/lib/utils";
 import { fadeUp, VIEWPORT } from "@/lib/motion";
+
+type Loc = Record<string, string>;
+const EYEBROW: Loc = { uz: "Hamkorlar", ru: "Партнёры", en: "Partners" };
+const TRUST: Loc = { uz: "ishonchli hamkor kompaniya", ru: "надёжных компаний-партнёров", en: "trusted partner companies" };
 
 // ── Card dimensions ─────────────────────────────────────────────────────────
 const CARD_W  = 252;
@@ -38,6 +44,8 @@ interface Props {
 }
 
 export function PartnersMarquee({ partners, title, subtitle }: Props) {
+  const locale = useLocale();
+  const t = (o: Loc) => o[locale] ?? o.uz;
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef     = useRef<HTMLDivElement>(null);
   const offsetRef    = useRef(0);
@@ -83,10 +91,12 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
         const opacity = cfOpacity(t);
         const blur    = cfBlur(t);
 
+        // grayscale logo-wall: only cards near the centre stay in full colour
+        const gray = Math.min(1, t * 1.8);
         const el = cards[i] as HTMLElement;
         el.style.transform  = `scale(${scale.toFixed(3)})`;
         el.style.opacity    = opacity.toFixed(3);
-        el.style.filter     = blur > 0.15 ? `blur(${blur.toFixed(2)}px)` : "";
+        el.style.filter     = `grayscale(${gray.toFixed(2)})${blur > 0.15 ? ` blur(${blur.toFixed(2)}px)` : ""}`;
         el.style.zIndex     = String(Math.max(0, Math.round((1 - t) * 100)));
         el.style.boxShadow  = isActive ? SHADOW_ACTIVE : SHADOW_NORMAL;
       }
@@ -120,7 +130,7 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
             className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3"
             style={{ color: "var(--accent)" }}
           >
-            Hamkorlar
+            {t(EYEBROW)}
           </span>
           <h2
             className="font-display font-bold text-content"
@@ -139,6 +149,10 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
         className="relative w-full overflow-hidden"
         style={{ height: `${CARD_H + 52}px` }}
       >
+        {/* Center depth glow */}
+        <div className="pointer-events-none absolute inset-0 z-0"
+          style={{ background: "radial-gradient(ellipse 36% 130% at 50% 50%, rgba(var(--accent-rgb),0.12), transparent 70%)" }} />
+
         {/* Edge fades */}
         <div
           className="pointer-events-none absolute left-0 top-0 h-full w-56 z-20"
@@ -207,20 +221,22 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
         </div>
       </div>
 
-      {/* ── Trust indicator ─────────────────────────────────────────────── */}
+      {/* ── Trust badge ─────────────────────────────────────────────────── */}
       <motion.div
         variants={fadeUp}
         initial="hidden"
         whileInView="visible"
         viewport={VIEWPORT}
-        className="mt-8 flex items-center justify-center gap-5"
+        className="mt-10 flex items-center justify-center"
       >
-        <div style={{ height: "1px", width: "60px", background: "rgba(var(--accent-rgb),0.20)" }} />
-        <p style={{ color: "var(--content-muted)", fontSize: "12px", fontWeight: 500, letterSpacing: "0.06em" }}>
-          <span style={{ color: "var(--accent)", fontWeight: 700, fontSize: "14px" }}>{count}</span>
-          {" "}ta ishonchli hamkor kompaniya
-        </p>
-        <div style={{ height: "1px", width: "60px", background: "rgba(var(--accent-rgb),0.20)" }} />
+        <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass-card"
+          style={{ border: "1px solid rgba(var(--accent-rgb),0.25)", boxShadow: "var(--card-shadow)" }}>
+          <ShieldCheck size={18} style={{ color: "var(--accent)" }} />
+          <span style={{ color: "var(--content-secondary)", fontSize: "13.5px" }}>
+            <span className="font-display font-extrabold tabular-nums" style={{ color: "var(--content)", fontSize: "18px" }}>{count}+</span>
+            {" "}{t(TRUST)}
+          </span>
+        </div>
       </motion.div>
 
     </section>
