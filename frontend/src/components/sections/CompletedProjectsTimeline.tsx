@@ -15,12 +15,6 @@ const TYPE_META: Record<PType, { Icon: LucideIcon; rgb: string; label: Loc }> = 
 };
 const TYPE_ORDER: PType[] = ["construction", "acs", "implementation"];
 
-const HEADING: Loc = { uz: "Amalga oshirilgan loyihalar", ru: "Реализованные проекты", en: "Completed projects" };
-const SUB: Loc = {
-  uz: "Kon-metallurgiya sanoati uchun avtomatlashtirish va injiniring bo'yicha bajarilgan ishlar (2017–2022)",
-  ru: "Выполненные работы по автоматизации и инжинирингу для горно-металлургической промышленности (2017–2022)",
-  en: "Automation and engineering works delivered for the mining & metallurgy industry (2017–2022)",
-};
 const ALL: Loc = { uz: "Barchasi", ru: "Все", en: "All" };
 const K_PROJECTS: Loc = { uz: "Amalga oshirilgan loyiha", ru: "Реализованных проектов", en: "Completed projects" };
 const K_PERIOD: Loc = { uz: "Faoliyat davri", ru: "Период работ", en: "Period" };
@@ -108,13 +102,10 @@ export function CompletedProjectsTimeline({ locale }: { locale: string }) {
   }, [filter]);
 
   return (
-    <section className="mt-20">
-      {/* Header + KPI band */}
-      <div ref={headRef} className="mb-10">
-        <h2 className="font-display font-bold text-content leading-tight" style={{ fontSize: "clamp(28px,3.6vw,44px)" }}>{tr(HEADING, locale)}</h2>
-        <p className="mt-3 max-w-3xl text-base sm:text-lg" style={{ color: "var(--content-secondary)" }}>{tr(SUB, locale)}</p>
-
-        <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-8 max-w-2xl">
+    <section className="mt-2">
+      {/* KPI band */}
+      <div ref={headRef} className="mb-8">
+        <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-2xl">
           {[
             { Icon: CheckCircle2, big: `${totalCount}`, rgb: "56,189,248", label: tr(K_PROJECTS, locale) },
             { Icon: CalendarRange, big: "2017–2022", rgb: "16,185,129", label: tr(K_PERIOD, locale) },
