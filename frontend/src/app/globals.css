@@ -602,3 +602,33 @@ select.form-input option {
 /* Hero subject image — dimmed on the dark theme so its light-baked edges blend */
 .hero-img { opacity: 0.85; }
 [data-theme="aurora"] .hero-img { opacity: 0.42; }
+
+/* ─── Statistics page — ambience, spotlight, smooth anchor scroll ─────────── */
+html { scroll-behavior: smooth; }
+
+.stat-orb {
+  position: absolute;
+  width: 440px; height: 440px;
+  border-radius: 9999px;
+  filter: blur(70px);
+  animation: stat-float 22s ease-in-out infinite;
+}
+@keyframes stat-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(38px, -46px) scale(1.12); }
+  66%      { transform: translate(-26px, 34px) scale(0.94); }
+}
+@media (prefers-reduced-motion: reduce) { .stat-orb { animation: none; } }
+
+/* Cursor-following spotlight on the statistics glass cards (scoped) */
+.stats-page .glass-card { position: relative; }
+.stats-page .glass-card::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(240px circle at var(--mx, -300px) var(--my, -300px), rgba(255,255,255,0.06), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.stats-page .glass-card:hover::after { opacity: 1; }
