@@ -27,13 +27,21 @@ export default async function ProjectsPage({ params: { locale } }: Props) {
   const projects = res?.results ?? [];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="mb-12">
-        <h1 className="font-display text-4xl md:text-5xl font-bold text-content mb-4">{t("title")}</h1>
-        <p className="text-content-secondary text-lg max-w-2xl">{t("subtitle")}</p>
+    <div className="relative overflow-hidden">
+      {/* ambient orbs */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <div className="stat-orb" style={{ top: "2%", left: "-4%", background: "radial-gradient(circle, rgba(56,189,248,0.16), transparent 70%)" }} />
+        <div className="stat-orb" style={{ top: "44%", right: "-6%", background: "radial-gradient(circle, rgba(16,185,129,0.14), transparent 70%)", animationDelay: "-9s" }} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div className="mb-12">
+          <h1 className="font-display font-bold text-content mb-4 leading-tight" style={{ fontSize: "clamp(32px,4.5vw,56px)" }}>{t("title")}</h1>
+          <p className="max-w-2xl" style={{ color: "var(--content-secondary)", fontSize: "clamp(16px,2vw,19px)" }}>{t("subtitle")}</p>
+        </div>
+
+        {projects.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {projects.map((project) => (
           <div
             key={project.id}
@@ -85,9 +93,11 @@ export default async function ProjectsPage({ params: { locale } }: Props) {
             </div>
           </div>
         ))}
-      </div>
+        </div>
+        )}
 
-      <CompletedProjectsTimeline locale={locale} />
+        <CompletedProjectsTimeline locale={locale} />
+      </div>
     </div>
   );
 }
