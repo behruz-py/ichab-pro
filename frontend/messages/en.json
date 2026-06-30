@@ -58,7 +58,13 @@
     "availability_available": "In stock",
     "availability_on_order": "On order",
     "availability_discontinued": "Discontinued",
-    "request_quote": "Request a quote"
+    "request_quote": "Request a quote",
+    "results": "products",
+    "sort_label": "Sort",
+    "sort_default": "Default",
+    "sort_name_az": "Name (A–Z)",
+    "sort_name_za": "Name (Z–A)",
+    "related": "Related products"
   },
   "projects": {
     "title": "Completed Projects",

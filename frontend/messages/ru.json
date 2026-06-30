@@ -58,7 +58,13 @@
     "availability_available": "В наличии",
     "availability_on_order": "Под заказ",
     "availability_discontinued": "Снято с производства",
-    "request_quote": "Оставить заявку"
+    "request_quote": "Оставить заявку",
+    "results": "продукции",
+    "sort_label": "Сортировка",
+    "sort_default": "По умолчанию",
+    "sort_name_az": "Название (А–Я)",
+    "sort_name_za": "Название (Я–А)",
+    "related": "Похожие продукты"
   },
   "projects": {
     "title": "Выполненные проекты",

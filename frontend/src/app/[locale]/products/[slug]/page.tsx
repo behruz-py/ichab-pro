@@ -1,8 +1,9 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Send, FileDown } from "lucide-react";
+import { ArrowLeft, Send, FileDown, Package } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
@@ -78,6 +79,13 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
   const product = await api.products.detail(slug, locale).catch(() => notFound());
   const t = await getTranslations({ locale, namespace: "products" });
 
+  // Related products from the same category (best-effort)
+  const related = product.category
+    ? await api.products.list({ category: String(product.category.id) }, locale)
+        .then((r) => r.results.filter((p) => p.slug !== slug).slice(0, 4))
+        .catch(() => [])
+    : [];
+
   const images = product.images ?? [];
   const specs  = product.specs  ?? [];
   const table  = product.variant_table ?? null;
@@ -126,18 +134,18 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
       />
 
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm mb-8 flex-wrap" style={{ color: "#94A3B8" }}>
-        <Link href={`/${locale}/products`} className="transition-colors hover:text-[#244C77]">
+      <nav className="flex items-center gap-2 text-sm mb-8 flex-wrap" style={{ color: "var(--content-muted)" }}>
+        <Link href={`/${locale}/products`} className="transition-colors hover:text-[var(--accent-secondary)]">
           {t("title")}
         </Link>
         <span>/</span>
         {product.category && (
           <>
-            <span style={{ color: "#475569" }}>{product.category.name}</span>
+            <span style={{ color: "var(--content-secondary)" }}>{product.category.name}</span>
             <span>/</span>
           </>
         )}
-        <span style={{ color: "#1E293B" }}>{product.name}</span>
+        <span style={{ color: "var(--content)" }}>{product.name}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-12">
@@ -151,14 +159,14 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
         {/* ── Info ── */}
         <div className="flex flex-col gap-4">
           {product.category && (
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#2F5E94" }}>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "var(--accent)" }}>
               {product.category.name}
             </span>
           )}
 
           <h1
             className="font-display font-bold leading-tight"
-            style={{ fontSize: "clamp(22px,3vw,36px)", color: "#1E293B" }}
+            style={{ fontSize: "clamp(22px,3vw,36px)", color: "var(--content)" }}
           >
             {product.name || slug}
           </h1>
@@ -166,13 +174,13 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
           {/* SKU / brand / availability */}
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
             {product.sku && (
-              <span style={{ color: "#475569" }}>
-                {t("sku")}: <span style={{ color: "#1E293B", fontWeight: 600 }}>{product.sku}</span>
+              <span style={{ color: "var(--content-secondary)" }}>
+                {t("sku")}: <span style={{ color: "var(--content)", fontWeight: 600 }}>{product.sku}</span>
               </span>
             )}
             {product.brand && (
-              <span style={{ color: "#475569" }}>
-                {t("brand")}: <span style={{ color: "#1E293B", fontWeight: 600 }}>{product.brand}</span>
+              <span style={{ color: "var(--content-secondary)" }}>
+                {t("brand")}: <span style={{ color: "var(--content)", fontWeight: 600 }}>{product.brand}</span>
               </span>
             )}
             <span
@@ -184,15 +192,15 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
           </div>
 
           {product.description ? (
-            <p className="leading-relaxed whitespace-pre-line" style={{ color: "#475569", fontSize: "15px" }}>
+            <p className="leading-relaxed whitespace-pre-line" style={{ color: "var(--content-secondary)", fontSize: "15px" }}>
               {product.description}
             </p>
           ) : product.short_description ? (
-            <p className="leading-relaxed" style={{ color: "#475569", fontSize: "15px" }}>
+            <p className="leading-relaxed" style={{ color: "var(--content-secondary)", fontSize: "15px" }}>
               {product.short_description}
             </p>
           ) : (
-            <p className="text-sm italic" style={{ color: "#94A3B8" }}>{t("no_description")}</p>
+            <p className="text-sm italic" style={{ color: "var(--content-muted)" }}>{t("no_description")}</p>
           )}
 
           <div className="flex flex-wrap gap-3 mt-1">
@@ -201,9 +209,9 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
               href={`/${locale}/contact?product=${encodeURIComponent(product.name)}`}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-opacity hover:opacity-90"
               style={{
-                background: "linear-gradient(135deg, #EE8418 0%, #D2630E 100%)",
+                background: "var(--warm-btn)",
                 color: "#fff",
-                boxShadow: "0 6px 22px rgba(208,98,16,0.30)",
+                boxShadow: "0 6px 22px rgba(var(--warm-glow),0.30)",
               }}
             >
               <Send size={16} />
@@ -216,7 +224,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-colors"
-                style={{ border: "1px solid rgba(47,94,148,0.3)", color: "#2F5E94" }}
+                style={{ border: "1px solid rgba(var(--accent-rgb),0.3)", color: "var(--accent)" }}
               >
                 <FileDown size={16} />
                 {t("catalog_pdf")}
@@ -229,10 +237,10 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
       {/* ── Simple specs ── */}
       {specs.length > 0 && (
         <div className="rounded-2xl overflow-hidden mb-10"
-          style={{ border: "1px solid rgba(47,94,148,0.14)" }}>
+          style={{ border: "1px solid rgba(var(--accent-rgb),0.14)" }}>
           <div className="px-6 py-4"
-            style={{ background: "rgba(47,94,148,0.06)", borderBottom: "1px solid rgba(47,94,148,0.14)" }}>
-            <h2 className="font-display font-bold text-lg" style={{ color: "#1E293B" }}>
+            style={{ background: "rgba(var(--accent-rgb),0.06)", borderBottom: "1px solid rgba(var(--accent-rgb),0.14)" }}>
+            <h2 className="font-display font-bold text-lg" style={{ color: "var(--content)" }}>
               {t("specs_title")}
             </h2>
           </div>
@@ -240,13 +248,13 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
             <tbody>
               {specs.map((spec, i) => (
                 <tr key={spec.id}
-                  style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "transparent" }}>
+                  style={{ background: i % 2 === 0 ? "rgba(var(--accent-rgb),0.04)" : "transparent" }}>
                   <td className="px-6 py-3 text-sm font-medium w-1/2"
-                    style={{ color: "#475569", borderBottom: "1px solid rgba(47,94,148,0.08)" }}>
+                    style={{ color: "var(--content-secondary)", borderBottom: "1px solid rgba(var(--accent-rgb),0.08)" }}>
                     {spec.label}
                   </td>
                   <td className="px-6 py-3 text-sm font-semibold w-1/2"
-                    style={{ color: "#1E293B", borderBottom: "1px solid rgba(47,94,148,0.08)" }}>
+                    style={{ color: "var(--content)", borderBottom: "1px solid rgba(var(--accent-rgb),0.08)" }}>
                     {spec.value}{spec.unit ? ` ${spec.unit}` : ""}
                   </td>
                 </tr>
@@ -261,11 +269,36 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
         <SpecTable table={table} title={t("comparison_title")} paramHeader={t("param_header")} />
       )}
 
+      {/* ── Related products ── */}
+      {related.length > 0 && (
+        <div className="mb-12">
+          <h2 className="font-display font-bold text-content mb-5" style={{ fontSize: "clamp(20px,2.4vw,28px)" }}>{t("related")}</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            {related.map((p) => (
+              <Link key={p.id} href={`/${locale}/products/${p.slug}`}
+                className="group flex flex-col rounded-2xl overflow-hidden glass-card transition-transform duration-300 hover:-translate-y-1"
+                style={{ border: "1px solid rgba(56,189,248,0.16)", boxShadow: "var(--card-shadow)" }}>
+                <div className="relative overflow-hidden" style={{ aspectRatio: "4/3", background: "rgba(255,255,255,0.92)" }}>
+                  {p.main_image ? (
+                    <Image src={p.main_image} alt={p.name} fill className="object-contain p-3 transition-transform duration-500 group-hover:scale-105" sizes="(max-width:1024px) 50vw, 25vw" />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center" style={{ color: "rgba(56,189,248,0.4)" }}><Package size={36} strokeWidth={1.3} /></div>
+                  )}
+                </div>
+                <div className="p-4">
+                  <h3 className="font-display font-semibold text-sm leading-snug line-clamp-2 text-content group-hover:text-[var(--accent)] transition-colors">{p.name}</h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Back */}
       <Link
         href={`/${locale}/products`}
-        className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-[#244C77]"
-        style={{ color: "#2F5E94" }}
+        className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-[var(--accent-secondary)]"
+        style={{ color: "var(--accent)" }}
       >
         <ArrowLeft size={16} /> {t("back_to_catalog")}
       </Link>

@@ -58,7 +58,13 @@
     "availability_available": "Mavjud",
     "availability_on_order": "Buyurtma asosida",
     "availability_discontinued": "Ishlab chiqarishdan olingan",
-    "request_quote": "So'rov yuborish"
+    "request_quote": "So'rov yuborish",
+    "results": "mahsulot",
+    "sort_label": "Saralash",
+    "sort_default": "Standart",
+    "sort_name_az": "Nomi (A–Z)",
+    "sort_name_za": "Nomi (Z–A)",
+    "related": "O'xshash mahsulotlar"
   },
   "projects": {
     "title": "Bajarilgan loyihalar",
