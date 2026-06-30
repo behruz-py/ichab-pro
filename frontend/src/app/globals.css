@@ -6,64 +6,64 @@
 
 /* ─── THEME: Soft Slate (light) ───────────────────────────────────────────── */
 :root {
-  --surface:            #E5EAF1;
-  --surface-secondary:  #EDF1F6;
-  --surface-card:       #F7F9FC;
+  --surface:            #EEF4FA;
+  --surface-secondary:  #F4F8FC;
+  --surface-card:       #FFFFFF;
   --surface-elevated:   #FFFFFF;
 
-  --content:            #1E293B;
-  --content-secondary:  #475569;
-  --content-muted:      #94A3B8;
+  --content:            #0F2438;
+  --content-secondary:  #47596D;
+  --content-muted:      #8195A9;
 
-  --accent:             #2F5E94;
-  --accent-secondary:   #244C77;
-  --accent-glow:        rgba(47, 94, 148, 0.32);
-  --accent-glow-far:    rgba(47, 94, 148, 0.10);
-  --accent-gradient:    linear-gradient(135deg, #3D72AD 0%, #2F5E94 48%, #244C77 100%);
+  --accent:             #0EA5E9;
+  --accent-secondary:   #0284C7;
+  --accent-glow:        rgba(14, 165, 233, 0.30);
+  --accent-glow-far:    rgba(14, 165, 233, 0.10);
+  --accent-gradient:    linear-gradient(135deg, #2563EB 0%, #0EA5E9 50%, #10B981 100%);
 
   /* Warm complementary accent — the "action" signal: CTAs, featured, highlights */
-  --warm:               linear-gradient(135deg, #EC7A18 0%, #F4A52C 100%);
-  --warm-btn:           linear-gradient(135deg, #EE8418 0%, #D2630E 100%);
-  --warm-solid:         #DE7216;
-  --warm-tint:          rgba(234, 110, 20, 0.14);
+  --warm:               linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%);
+  --warm-btn:           linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%);
+  --warm-solid:         #0EA5E9;
+  --warm-tint:          rgba(14, 165, 233, 0.12);
 
-  --border:             rgba(15, 23, 42, 0.10);
-  --border-subtle:      rgba(15, 23, 42, 0.08);
+  --border:             rgba(8, 47, 73, 0.11);
+  --border-subtle:      rgba(8, 47, 73, 0.07);
 
   --gradient:
-    radial-gradient(ellipse 80% 60% at 80% -8%, rgba(47, 94, 148, 0.14) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 50% at 10% 108%, rgba(234, 110, 20, 0.08) 0%, transparent 45%),
-    linear-gradient(180deg, #E5EAF1 0%, #E9EDF3 60%, #DCE3EC 100%);
+    radial-gradient(ellipse 80% 60% at 80% -8%, rgba(14, 165, 233, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 10% 108%, rgba(16, 185, 129, 0.07) 0%, transparent 45%),
+    linear-gradient(180deg, #EEF4FA 0%, #F2F7FC 60%, #E5EEF7 100%);
 
-  --glass:              rgba(247, 249, 252, 0.80);
-  --glass-border:       rgba(15, 23, 42, 0.08);
+  --glass:              rgba(255, 255, 255, 0.72);
+  --glass-border:       rgba(8, 47, 73, 0.08);
 
   /* Premium card surface (subtle sheen) + floating shadow */
-  --card-bg:            linear-gradient(165deg, #FCFDFE 0%, #F2F6FB 100%);
-  --card-shadow:        0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 30px rgba(36, 76, 119, 0.08);
+  --card-bg:            linear-gradient(165deg, #FFFFFF 0%, #F3F8FC 100%);
+  --card-shadow:        0 1px 2px rgba(8, 47, 73, 0.05), 0 12px 30px rgba(2, 132, 199, 0.10);
 
   /* Tokenized accents so the alternate theme can re-skin shared utilities */
-  --surface-rgb:        229, 234, 241;
-  --warm-btn-hover:     linear-gradient(135deg, #EE8A1C 0%, #C25C0E 100%);
-  --warm-glow:          208, 98, 16;          /* rgb triple for glow shadows */
-  --header-bg:          rgba(247, 249, 252, 0.70);
-  --header-bg-scrolled: rgba(247, 249, 252, 0.92);
-  --header-border:      rgba(47, 94, 148, 0.10);
-  --panel-bg:           rgba(247, 249, 252, 0.97);
-  --panel-border:       rgba(47, 94, 148, 0.18);
-  --brand-gradient:     linear-gradient(120deg, #1E293B 0%, #2F5E94 70%, #EA6E14 130%);
-  --hero-accent-gradient: linear-gradient(135deg, #DE7216 0%, #EC7A18 45%, #F09A24 100%);
-  --accent-rgb:         47, 94, 148;     /* steel blue */
-  --accent-2-rgb:       36, 76, 119;     /* deep blue (shadows) */
-  --surface-2-rgb:      237, 241, 246;   /* section tint */
-  --panel-rgb:          247, 249, 252;   /* raised panel */
-  --footer-bg:          linear-gradient(180deg, #EDF1F6 0%, #E4E9F0 100%);
-  --footer-border:      rgba(15, 23, 42, 0.08);
-  --grad-warm-a:        #EA6E14;         /* decorative AI-border warm stops */
-  --grad-warm-b:        #F4A52C;
+  --surface-rgb:        238, 244, 250;
+  --warm-btn-hover:     linear-gradient(135deg, #0B96D6 0%, #0596B0 100%);
+  --warm-glow:          14, 165, 233;         /* rgb triple for glow shadows (sky) */
+  --header-bg:          rgba(255, 255, 255, 0.70);
+  --header-bg-scrolled: rgba(255, 255, 255, 0.90);
+  --header-border:      rgba(2, 132, 199, 0.10);
+  --panel-bg:           rgba(255, 255, 255, 0.97);
+  --panel-border:       rgba(2, 132, 199, 0.16);
+  --brand-gradient:     linear-gradient(120deg, #0F2438 0%, #0EA5E9 70%, #06B6D4 130%);
+  --hero-accent-gradient: linear-gradient(135deg, #0EA5E9 0%, #06B6D4 50%, #10B981 100%);
+  --accent-rgb:         14, 165, 233;    /* sky */
+  --accent-2-rgb:       2, 132, 199;     /* deep sky (shadows) */
+  --surface-2-rgb:      234, 242, 250;   /* section tint */
+  --panel-rgb:          248, 251, 254;   /* raised panel */
+  --footer-bg:          linear-gradient(180deg, #EDF3F9 0%, #E3ECF4 100%);
+  --footer-border:      rgba(8, 47, 73, 0.08);
+  --grad-warm-a:        #06B6D4;         /* decorative AI-border → cyan/mint */
+  --grad-warm-b:        #10B981;
   /* near-opaque card surface — for cards that sit ON a decorative gradient
      border (CTA banner), so the border stays an edge, not a fill */
-  --card-solid:         linear-gradient(165deg, #FCFDFE 0%, #F2F6FB 100%);
+  --card-solid:         linear-gradient(165deg, #FFFFFF 0%, #F3F8FC 100%);
 }
 
 /* ─── THEME: Aurora Glass (dark cinematic + frosted accents) ─────────────────
@@ -149,10 +149,10 @@
 
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--surface-secondary); }
-  ::-webkit-scrollbar-thumb { background: rgba(47,94,148,0.5); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(47,94,148,0.8); }
+  ::-webkit-scrollbar-thumb { background: rgba(var(--accent-rgb),0.5); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(var(--accent-rgb),0.8); }
 
-  ::selection { background: rgba(47,94,148,0.35); color: var(--content); }
+  ::selection { background: rgba(var(--accent-rgb),0.35); color: var(--content); }
 }
 
 /* ─── COMPONENT UTILITIES ────────────────────────────────────────────────── */
@@ -210,14 +210,14 @@
     color: var(--content-secondary);
     font-weight: 600;
     letter-spacing: 0.01em;
-    box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 6px 18px rgba(36,76,119,0.06);
+    box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 6px 18px rgba(var(--accent-2-rgb),0.06);
     transition: all 0.22s ease;
   }
   .btn-glass-secondary:hover {
-    background: rgba(47,94,148,0.08);
-    border-color: rgba(47,94,148,0.35);
+    background: rgba(var(--accent-rgb),0.08);
+    border-color: rgba(var(--accent-rgb),0.35);
     color: var(--content);
-    box-shadow: 0 6px 18px rgba(36,76,119,0.12), inset 0 1px 0 rgba(255,255,255,0.5);
+    box-shadow: 0 6px 18px rgba(var(--accent-2-rgb),0.12), inset 0 1px 0 rgba(255,255,255,0.5);
   }
   .btn-glass-secondary:active { transform: scale(0.975); }
 
@@ -236,7 +236,7 @@
   /* Animated gradient heading with a soft light sheen sweeping through */
   .title-sheen {
     background: linear-gradient(100deg,
-      #2F5E94 0%, #2F5E94 28%, #6EA3D6 44%, #DCEBFA 50%, #6EA3D6 56%, #2F5E94 72%, #EA6E14 100%);
+      #0EA5E9 0%, #0EA5E9 26%, #7DD3FC 44%, #E0F7FF 50%, #7DD3FC 56%, #06B6D4 72%, #10B981 100%);
     background-size: 220% auto;
     -webkit-background-clip: text;
     background-clip: text;
@@ -270,7 +270,7 @@
   color: #fff;
   font-weight: 600;
   font-size: 14px;
-  box-shadow: 0 8px 24px rgba(36,76,119,0.28);
+  box-shadow: 0 8px 24px rgba(var(--accent-2-rgb),0.28);
   transition: transform 0.2s ease;
 }
 .skip-link:focus {
@@ -289,8 +289,8 @@
 }
 .form-input::placeholder { color: var(--content-muted); }
 .form-input:focus {
-  border-color: rgba(47,94,148,0.50);
-  box-shadow: 0 0 0 3px rgba(47,94,148,0.10);
+  border-color: rgba(var(--accent-rgb),0.50);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb),0.10);
   transform: translateY(-1px);
 }
 /* Invalid field — clear red ring on the specific offending input */
@@ -349,10 +349,10 @@ select.form-input option {
   padding: 1px;
   background: conic-gradient(
     from var(--shimmer-angle),
-    rgba(47, 94, 148, 0) 70%,
-    rgba(47, 94, 148, calc(var(--shimmer-opacity, 0.20))) 83%,
-    rgba(47, 94, 148, calc(var(--shimmer-opacity, 0.22))) 89%,
-    rgba(47, 94, 148, 0) 96%
+    rgba(var(--accent-rgb), 0) 70%,
+    rgba(var(--accent-rgb), calc(var(--shimmer-opacity, 0.20))) 83%,
+    rgba(var(--accent-rgb), calc(var(--shimmer-opacity, 0.22))) 89%,
+    rgba(var(--accent-rgb), 0) 96%
   );
   animation: shimmer-spin var(--shimmer-speed, 6s) linear infinite;
 }
@@ -366,9 +366,9 @@ select.form-input option {
   background: conic-gradient(
     from var(--ring-angle),
     transparent 20%,
-    rgba(47, 94, 148, 0.85) 40%,
+    rgba(var(--accent-rgb), 0.85) 40%,
     rgba(61, 114, 173, 1)   50%,
-    rgba(47, 94, 148, 0.85) 60%,
+    rgba(var(--accent-rgb), 0.85) 60%,
     transparent 80%
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -508,8 +508,8 @@ select.form-input option {
   transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
 }
 .card-hover-glow:hover {
-  box-shadow: 0 0 30px rgba(47,94,148,0.18), 0 8px 32px rgba(36,76,119,0.10);
-  border-color: rgba(47,94,148,0.40) !important;
+  box-shadow: 0 0 30px rgba(var(--accent-rgb),0.18), 0 8px 32px rgba(var(--accent-2-rgb),0.10);
+  border-color: rgba(var(--accent-rgb),0.40) !important;
   transform: translateY(-3px);
 }
 
@@ -521,8 +521,8 @@ select.form-input option {
 
 /* ─── ICHAB CENTER HEX PULSE ─────────────────────────────────────────────── */
 @keyframes ichab-glow-pulse {
-  0%, 100% { filter: drop-shadow(0 0 20px rgba(47,94,148,0.68)) drop-shadow(0 0 42px rgba(47,94,148,0.30)); }
-  50%       { filter: drop-shadow(0 0 32px rgba(47,94,148,0.92)) drop-shadow(0 0 64px rgba(47,94,148,0.48)); }
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(var(--accent-rgb),0.68)) drop-shadow(0 0 42px rgba(var(--accent-rgb),0.30)); }
+  50%       { filter: drop-shadow(0 0 32px rgba(var(--accent-rgb),0.92)) drop-shadow(0 0 64px rgba(var(--accent-rgb),0.48)); }
 }
 
 /* ─── SVG SONAR RING FADE ─────────────────────────────────────────────────── */
