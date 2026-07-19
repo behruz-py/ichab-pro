@@ -21,13 +21,15 @@ export default async function ProductsPage({ params: { locale } }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "products" });
 
+  // Resilient to the backend being unavailable at build time — degrade to an
+  // empty catalogue instead of failing the whole static export.
   const [categoriesRes, productsRes] = await Promise.all([
-    api.products.categories(locale),
-    api.products.list({}, locale),
+    api.products.categories(locale).catch(() => null),
+    api.products.list({}, locale).catch(() => null),
   ]);
 
-  const categories = categoriesRes.results;
-  const products   = productsRes.results;
+  const categories = categoriesRes?.results ?? [];
+  const products   = productsRes?.results ?? [];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
