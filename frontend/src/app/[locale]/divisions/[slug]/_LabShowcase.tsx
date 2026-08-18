@@ -97,12 +97,15 @@ function StatCard({ s, rgb, inView, i }: { s: DivisionStat; rgb: string; inView:
   const ringProgress = Math.min(0.95, 0.55 + i * 0.08);
   return (
     <motion.div initial={{ opacity: 0, y: 18 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.1 + i * 0.09 }}
-      className="glass-card rounded-2xl p-4 sm:p-5" style={{ border: `1px solid rgba(${rgb},0.25)`, boxShadow: `var(--card-shadow), 0 0 24px rgba(${rgb},0.10)` }}>
-      <div className="relative w-8 h-8">
-        <ProgressRing progress={ringProgress} active={inView} size={32} strokeWidth={2} rgb={rgb} />
-        <DynamicIcon name={s.icon} size={16} className="absolute inset-0 m-auto" />
+      className="glass-card rounded-2xl p-4 flex items-center gap-3.5" style={{ border: `1px solid rgba(${rgb},0.25)`, boxShadow: `var(--card-shadow), 0 0 24px rgba(${rgb},0.10)` }}>
+      <div className="relative w-11 h-11 flex-shrink-0">
+        <ProgressRing progress={ringProgress} active={inView} size={44} strokeWidth={2.5} rgb={rgb} />
+        <DynamicIcon name={s.icon} size={18} className="absolute inset-0 m-auto" />
       </div>
-      <div className="font-display font-extrabold tabular-nums mt-2 leading-none" style={{ fontSize: "clamp(22px,2.6vw,32px)", color: "var(--content)" }}>{v}{s.suffix}</div>
+      <div className="min-w-0">
+        <div className="font-display font-extrabold tabular-nums leading-none" style={{ fontSize: "clamp(20px,2.4vw,26px)", color: "var(--content)" }}>{v}{s.suffix}</div>
+        <p className="text-[11px] mt-1.5 leading-snug truncate" style={{ color: "var(--content-muted)" }}>{s.label}</p>
+      </div>
     </motion.div>
   );
 }
@@ -219,10 +222,7 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
         {lab.stats.length > 0 && (
           <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {lab.stats.map((s, i) => (
-              <div key={s.id} className="relative">
-                <StatCard s={s} rgb={rgbAt(i)} inView={statsInView} i={i} />
-                <p className="text-[11px] mt-1.5 px-1 leading-snug" style={{ color: "var(--content-muted)" }}>{s.label}</p>
-              </div>
+              <StatCard key={s.id} s={s} rgb={rgbAt(i)} inView={statsInView} i={i} />
             ))}
           </div>
         )}
@@ -291,14 +291,15 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                 return (
                   <Reveal key={c.id} delay={i * 0.05}>
                     <TiltCard
-                      className="group glass-card rounded-2xl p-5 h-full relative overflow-hidden"
+                      className="group glass-card rounded-2xl p-4 h-full relative overflow-hidden flex items-center gap-4"
                       style={{ border: `1px solid rgba(${rgb},0.2)`, boxShadow: "var(--card-shadow)" }}
                       intensity={6}
                     >
-                      <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4 transition-transform duration-300 group-hover:scale-110" style={{ background: `rgba(${rgb},0.14)`, border: `1px solid rgba(${rgb},0.3)` }}>
-                        {(() => { const Icon = resolveIcon(c.icon) ?? Cog; return <Icon size={24} style={{ color: `rgb(${rgb})` }} />; })()}
+                      <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl flex-shrink-0 transition-transform duration-300 group-hover:scale-110" style={{ background: `rgba(${rgb},0.14)`, border: `1px solid rgba(${rgb},0.3)` }}>
+                        {(() => { const Icon = resolveIcon(c.icon) ?? Cog; return <Icon size={22} style={{ color: `rgb(${rgb})` }} />; })()}
                       </span>
-                      <p className="font-medium text-content leading-snug" style={{ fontSize: "15px" }}>{c.title}</p>
+                      <p className="font-medium text-content leading-snug flex-1" style={{ fontSize: "15px" }}>{c.title}</p>
+                      <ArrowRight size={16} className="flex-shrink-0 opacity-0 -translate-x-2 group-hover:opacity-70 group-hover:translate-x-0 transition-all duration-300" style={{ color: `rgb(${rgb})` }} />
                     </TiltCard>
                   </Reveal>
                 );
@@ -438,46 +439,40 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {lab.leaderName && (
                 <Reveal>
-                  <div className="flip-card h-56">
-                    <div className="flip-card-inner">
-                      <div className="flip-face glass-card rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-3" style={{ border: "1px solid rgba(var(--accent-rgb),0.25)", boxShadow: "var(--card-shadow)" }}>
-                        {lab.leaderPhoto ? (
-                          <div className="relative w-24 h-24 rounded-full overflow-hidden flex-shrink-0" style={{ border: "2px solid rgba(var(--accent-rgb),0.4)" }}>
-                            <Image src={lab.leaderPhoto} alt={lab.leaderName} fill className="object-cover" />
-                          </div>
-                        ) : (
-                          <div className="w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(var(--accent-2-rgb),0.35), rgba(var(--accent-rgb),0.2))", border: "2px solid rgba(var(--accent-rgb),0.4)", color: "var(--accent)" }}>{lab.leaderName.charAt(0).toUpperCase()}</div>
-                        )}
-                        <p className="font-semibold text-content">{lab.leaderName}</p>
+                  <TiltCard
+                    className="glass-card rounded-2xl p-5 flex flex-col items-center text-center gap-2"
+                    style={{ border: "1px solid rgba(var(--accent-rgb),0.25)", boxShadow: "var(--card-shadow)" }}
+                    intensity={5}
+                  >
+                    {lab.leaderPhoto ? (
+                      <div className="relative w-20 h-20 rounded-full overflow-hidden flex-shrink-0" style={{ border: "2px solid rgba(var(--accent-rgb),0.4)" }}>
+                        <Image src={lab.leaderPhoto} alt={lab.leaderName} fill className="object-cover" />
                       </div>
-                      <div className="flip-face flip-face-back rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2" style={{ background: "var(--warm-btn)", boxShadow: "var(--card-shadow)" }}>
-                        <Award size={30} className="text-white/90" />
-                        <p className="text-white font-semibold">{lab.leaderPosition || tr(T.leader, locale)}</p>
-                      </div>
-                    </div>
-                  </div>
+                    ) : (
+                      <div className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(var(--accent-2-rgb),0.35), rgba(var(--accent-rgb),0.2))", border: "2px solid rgba(var(--accent-rgb),0.4)", color: "var(--accent)" }}>{lab.leaderName.charAt(0).toUpperCase()}</div>
+                    )}
+                    <p className="font-semibold text-content">{lab.leaderName}</p>
+                    <p className="text-xs font-medium" style={{ color: "var(--accent)" }}>{lab.leaderPosition || tr(T.leader, locale)}</p>
+                  </TiltCard>
                 </Reveal>
               )}
               {lab.teamMembers.map((m, i) => (
                 <Reveal key={m.id} delay={(i + 1) * 0.06}>
-                  <div className="flip-card h-56">
-                    <div className="flip-card-inner">
-                      <div className="flip-face glass-card rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-3" style={{ boxShadow: "var(--card-shadow)" }}>
-                        {m.photo ? (
-                          <div className="relative w-24 h-24 rounded-full overflow-hidden flex-shrink-0" style={{ border: "2px solid rgba(var(--accent-rgb),0.25)" }}>
-                            <Image src={m.photo} alt={m.name || m.position} fill className="object-cover" />
-                          </div>
-                        ) : (
-                          <div className="w-24 h-24 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "rgba(var(--accent-rgb),0.12)", border: "2px solid rgba(var(--accent-rgb),0.2)" }}><User size={32} style={{ color: "var(--accent)" }} /></div>
-                        )}
-                        <p className="font-semibold" style={{ color: "var(--content-secondary)" }}>{m.name || "—"}</p>
+                  <TiltCard
+                    className="glass-card rounded-2xl p-5 flex flex-col items-center text-center gap-2"
+                    style={{ border: `1px solid rgba(${rgbAt(i)},0.2)`, boxShadow: "var(--card-shadow)" }}
+                    intensity={5}
+                  >
+                    {m.photo ? (
+                      <div className="relative w-20 h-20 rounded-full overflow-hidden flex-shrink-0" style={{ border: `2px solid rgba(${rgbAt(i)},0.35)` }}>
+                        <Image src={m.photo} alt={m.name || m.position} fill className="object-cover" />
                       </div>
-                      <div className="flip-face flip-face-back rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2" style={{ background: `rgba(${rgbAt(i)},0.16)`, border: `1px solid rgba(${rgbAt(i)},0.35)`, boxShadow: "var(--card-shadow)" }}>
-                        <User size={30} style={{ color: `rgb(${rgbAt(i)})` }} />
-                        <p className="font-semibold" style={{ color: `rgb(${rgbAt(i)})` }}>{m.position}</p>
-                      </div>
-                    </div>
-                  </div>
+                    ) : (
+                      <div className="w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: `rgba(${rgbAt(i)},0.14)`, border: `2px solid rgba(${rgbAt(i)},0.3)` }}><User size={28} style={{ color: `rgb(${rgbAt(i)})` }} /></div>
+                    )}
+                    <p className="font-semibold" style={{ color: "var(--content-secondary)" }}>{m.name || "—"}</p>
+                    <p className="text-xs font-medium" style={{ color: `rgb(${rgbAt(i)})` }}>{m.position}</p>
+                  </TiltCard>
                 </Reveal>
               ))}
             </div>

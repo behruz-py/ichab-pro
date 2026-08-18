@@ -676,26 +676,6 @@ html { scroll-behavior: smooth; }
 .group:hover .ken-burns-img { animation-play-state: running; }
 @media (prefers-reduced-motion: reduce) { .ken-burns-img { animation: none; } }
 
-/* 3D flip card (team members) */
-.flip-card { perspective: 1200px; }
-.flip-card-inner {
-  position: relative;
-  width: 100%; height: 100%;
-  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-  transform-style: preserve-3d;
-}
-.flip-card:hover .flip-card-inner,
-.flip-card:focus-within .flip-card-inner { transform: rotateY(180deg); }
-.flip-face {
-  position: absolute; inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-.flip-face-back { transform: rotateY(180deg); }
-@media (prefers-reduced-motion: reduce) {
-  .flip-card-inner { transition: none; }
-}
-
 /* Collapsible "read more" text block — animates height via the grid-rows trick
  * so we don't need to know the content's height ahead of time. */
 .desc-collapse {
