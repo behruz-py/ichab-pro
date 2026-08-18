@@ -17,6 +17,11 @@ class DivisionViewSet(PublicReadAdminWriteMixin, viewsets.ModelViewSet):
         qs = Division.objects.order_by("order")
         if not (self.request.user and self.request.user.is_staff):
             qs = qs.filter(is_active=True)
+        if self.action == "retrieve":
+            qs = qs.prefetch_related(
+                "stats", "capabilities", "equipment", "gallery", "standards",
+                "team_members", "projects", "projects__images",
+            )
         return qs
 
     def get_serializer_class(self):

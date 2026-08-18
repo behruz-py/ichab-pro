@@ -4,6 +4,17 @@ from rest_framework import serializers
 SUPPORTED_LANGS = ("uz", "ru", "en")
 
 
+def translate_plain(obj, field: str, lang: str) -> str:
+    """Translate a label_xx field on a plain (non-TranslatedModel) model,
+    with uz → ru → en fallback chain."""
+    lang = lang if lang in SUPPORTED_LANGS else "uz"
+    for l in (lang, "uz", "ru", "en"):
+        value = getattr(obj, f"{field}_{l}", None)
+        if value:
+            return value
+    return ""
+
+
 class TranslatedSerializerMixin:
     """
     Adds `get_t(obj, field)` — returns the correct language value based on

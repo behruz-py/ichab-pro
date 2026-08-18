@@ -45,6 +45,13 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
         leaderPosition: div.leader_position ?? "",
         contactPhone: div.contact_phone ?? "",
         contactEmail: div.contact_email ?? "",
+        stats: div.stats ?? [],
+        capabilities: div.capabilities ?? [],
+        equipment: (div.equipment ?? []).map((e) => ({ ...e, image: e.image ? mediaUrl(e.image) : null })),
+        gallery: (div.gallery ?? []).map((g) => ({ ...g, image: mediaUrl(g.image) })),
+        standards: div.standards ?? [],
+        teamMembers: (div.team_members ?? []).map((m) => ({ ...m, photo: m.photo ? mediaUrl(m.photo) : null })),
+        relatedProjects: div.related_projects ?? [],
       }}
       locale={locale}
       backLabel={t("title")}

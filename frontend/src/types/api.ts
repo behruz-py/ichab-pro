@@ -9,6 +9,52 @@ export interface PaginatedResponse<T> {
 
 // ─── Division ─────────────────────────────────────────────────────────────────
 
+export interface DivisionStat {
+  id: number;
+  icon: string;
+  value: number;
+  suffix: string;
+  label: string;
+  order: number;
+}
+
+export interface DivisionCapability {
+  id: number;
+  icon: string;
+  title: string;
+  order: number;
+}
+
+export interface DivisionEquipment {
+  id: number;
+  icon: string;
+  image: string | null;
+  name: string;
+  model_name: string;
+  order: number;
+}
+
+export interface DivisionGalleryImage {
+  id: number;
+  image: string;
+  caption: string;
+  order: number;
+}
+
+export interface DivisionStandard {
+  id: number;
+  name: string;
+  order: number;
+}
+
+export interface DivisionTeamMember {
+  id: number;
+  photo: string | null;
+  name: string;
+  position: string;
+  order: number;
+}
+
 export interface Division {
   id: number;
   slug: string;
@@ -21,6 +67,14 @@ export interface Division {
   leader_position?: string;
   contact_phone: string;
   contact_email: string;
+  // Present only on the detail (retrieve) response — undefined on list rows.
+  stats?: DivisionStat[];
+  capabilities?: DivisionCapability[];
+  equipment?: DivisionEquipment[];
+  gallery?: DivisionGalleryImage[];
+  standards?: DivisionStandard[];
+  team_members?: DivisionTeamMember[];
+  related_projects?: Project[];
   order: number;
   is_active: boolean;
   created_at?: string;

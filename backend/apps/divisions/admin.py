@@ -1,6 +1,57 @@
 from django.contrib import admin
-from unfold.admin import ModelAdmin
-from .models import Division
+from unfold.admin import ModelAdmin, TabularInline
+from .models import (
+    Division, DivisionStat, DivisionCapability, DivisionEquipment,
+    DivisionImage, DivisionStandard, DivisionTeamMember,
+)
+
+
+class DivisionStatInline(TabularInline):
+    model = DivisionStat
+    extra = 1
+    fields = ("icon", "value", "suffix", "label_uz", "label_ru", "label_en", "order")
+    verbose_name = "Ko'rsatkich"
+    verbose_name_plural = "① Statistika (masalan: '15+ yillik tajriba')"
+
+
+class DivisionCapabilityInline(TabularInline):
+    model = DivisionCapability
+    extra = 1
+    fields = ("icon", "title_uz", "title_ru", "title_en", "order")
+    verbose_name = "Imkoniyat"
+    verbose_name_plural = "② Imkoniyatlar va xizmatlar"
+
+
+class DivisionEquipmentInline(TabularInline):
+    model = DivisionEquipment
+    extra = 1
+    fields = ("icon", "image", "name_uz", "name_ru", "name_en", "model_name", "order")
+    verbose_name = "Jihoz"
+    verbose_name_plural = "③ Jihozlar (rasm ixtiyoriy — bo'lmasa ikonka ko'rsatiladi)"
+
+
+class DivisionImageInline(TabularInline):
+    model = DivisionImage
+    extra = 1
+    fields = ("image", "caption_uz", "caption_ru", "caption_en", "order")
+    verbose_name = "Rasm"
+    verbose_name_plural = "④ Galereya"
+
+
+class DivisionStandardInline(TabularInline):
+    model = DivisionStandard
+    extra = 1
+    fields = ("name", "order")
+    verbose_name = "Standart"
+    verbose_name_plural = "⑤ Standartlar va sertifikatlar"
+
+
+class DivisionTeamMemberInline(TabularInline):
+    model = DivisionTeamMember
+    extra = 1
+    fields = ("photo", "name_uz", "name_ru", "name_en", "position_uz", "position_ru", "position_en", "order")
+    verbose_name = "A'zo"
+    verbose_name_plural = "⑥ Jamoa (rahbardan tashqari qo'shimcha a'zolar)"
 
 
 @admin.register(Division)
@@ -10,6 +61,10 @@ class DivisionAdmin(ModelAdmin):
     list_filter = ("is_active",)
     search_fields = ("name_uz", "name_ru", "name_en")
     prepopulated_fields = {"slug": ("name_uz",)}
+    inlines = [
+        DivisionStatInline, DivisionCapabilityInline, DivisionEquipmentInline,
+        DivisionImageInline, DivisionStandardInline, DivisionTeamMemberInline,
+    ]
     fieldsets = (
         ("Slug", {"fields": ("slug",)}),
         ("Nomi (UZ | RU | EN)", {"fields": ("name_uz", "name_ru", "name_en")}),

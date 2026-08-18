@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse
-from apps.divisions.models import Division
+from apps.divisions.models import Division, DivisionStat, DivisionCapability
 
 
 @pytest.mark.django_db
@@ -30,9 +30,24 @@ class TestDivisionAPI:
 
     def test_detail_public(self, api_client):
         div = self._create()
-        res = api_client.get(f"/api/v1/divisions/{div.pk}/")
+        res = api_client.get(f"/api/v1/divisions/{div.slug}/")
         assert res.status_code == 200
         assert res.data["slug"] == div.slug
+        # Nested lab-content lists are always present, even when empty.
+        assert res.data["stats"] == []
+        assert res.data["capabilities"] == []
+        assert res.data["related_projects"] == []
+
+    def test_detail_includes_nested_lab_content(self, api_client):
+        div = self._create()
+        DivisionStat.objects.create(division=div, value=15, suffix="+", label_uz="Yillik tajriba", order=1)
+        DivisionCapability.objects.create(division=div, title_uz="PLC dasturlash", order=1)
+        res = api_client.get(f"/api/v1/divisions/{div.slug}/")
+        assert res.status_code == 200
+        assert len(res.data["stats"]) == 1
+        assert res.data["stats"][0]["value"] == 15
+        assert res.data["stats"][0]["label"] == "Yillik tajriba"
+        assert res.data["capabilities"][0]["title"] == "PLC dasturlash"
 
     def test_inactive_hidden_from_public(self, api_client):
         Division.objects.create(name_uz="Nofaol", is_active=False, order=2)

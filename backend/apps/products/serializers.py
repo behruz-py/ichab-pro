@@ -1,20 +1,9 @@
 from rest_framework import serializers
 from core.serializers import (
     TranslatedSerializerMixin, ImageFieldAbsoluteURL, FileFieldAbsoluteURL,
-    SUPPORTED_LANGS,
+    translate_plain,
 )
 from .models import ProductCategory, Product, ProductImage, ProductSpecification
-
-
-def translate_plain(obj, field: str, lang: str) -> str:
-    """Translate a label_xx field on a plain (non-TranslatedModel) model,
-    with uz → ru → en fallback chain."""
-    lang = lang if lang in SUPPORTED_LANGS else "uz"
-    for l in (lang, "uz", "ru", "en"):
-        value = getattr(obj, f"{field}_{l}", None)
-        if value:
-            return value
-    return ""
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
