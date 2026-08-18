@@ -4,8 +4,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { ArrowLeft, ArrowRight, Phone, Mail, Award, CheckCircle2, User, Cog } from "lucide-react";
+import { ArrowLeft, ArrowRight, Phone, Mail, Award, CheckCircle2, User, Cog, Expand } from "lucide-react";
 import { DynamicIcon, resolveIcon } from "@/components/ui/DynamicIcon";
+import { TiltCard } from "@/components/ui/TiltCard";
+import { CursorSpotlight } from "@/components/ui/CursorSpotlight";
+import { ProgressRing } from "@/components/ui/ProgressRing";
+import { SectionPathLine } from "@/components/ui/SectionPathLine";
+import { Lightbox, type LightboxItem } from "@/components/ui/Lightbox";
 import { mediaUrl, formatDate } from "@/lib/utils";
 import type {
   DivisionStat, DivisionCapability, DivisionEquipment,
@@ -86,10 +91,14 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 
 function StatCard({ s, rgb, inView, i }: { s: DivisionStat; rgb: string; inView: boolean; i: number }) {
   const v = useCountUp(s.value, inView);
+  const ringProgress = Math.min(0.95, 0.55 + i * 0.08);
   return (
     <motion.div initial={{ opacity: 0, y: 18 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.1 + i * 0.09 }}
       className="glass-card rounded-2xl p-4 sm:p-5" style={{ border: `1px solid rgba(${rgb},0.25)`, boxShadow: `var(--card-shadow), 0 0 24px rgba(${rgb},0.10)` }}>
-      <DynamicIcon name={s.icon} size={20} className="inline-block" />
+      <div className="relative w-8 h-8">
+        <ProgressRing progress={ringProgress} active={inView} size={32} strokeWidth={2} rgb={rgb} />
+        <DynamicIcon name={s.icon} size={16} className="absolute inset-0 m-auto" />
+      </div>
       <div className="font-display font-extrabold tabular-nums mt-2 leading-none" style={{ fontSize: "clamp(22px,2.6vw,32px)", color: "var(--content)" }}>{v}{s.suffix}</div>
     </motion.div>
   );
@@ -116,6 +125,19 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
   const [active, setActive] = useState("overview");
   const statsRef = useRef<HTMLDivElement>(null);
   const statsInView = useInView(statsRef, { once: true, margin: "-40px" });
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const [equipmentLightboxIndex, setEquipmentLightboxIndex] = useState<number | null>(null);
+  const [galleryLightboxIndex, setGalleryLightboxIndex] = useState<number | null>(null);
+
+  const equipmentLightboxItems: LightboxItem[] = useMemo(
+    () => lab.equipment.filter((e) => e.image).map((e) => ({ src: e.image as string, title: e.name, subtitle: e.model_name })),
+    [lab.equipment]
+  );
+  const galleryLightboxItems: LightboxItem[] = useMemo(
+    () => lab.gallery.map((g) => ({ src: g.image, subtitle: g.caption })),
+    [lab.gallery]
+  );
 
   useEffect(() => {
     const obs = new IntersectionObserver((entries) => {
@@ -127,8 +149,10 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
 
   return (
     <div className="lab-page relative">
+      <CursorSpotlight />
+
       {/* ── Cinematic hero ── */}
-      <div className="relative" style={{ height: "clamp(340px, 48vh, 540px)" }}>
+      <div className="relative overflow-hidden" style={{ height: "clamp(340px, 48vh, 540px)" }}>
         {lab.coverImage ? (
           <Image src={lab.coverImage} alt={lab.name} fill className="object-cover" priority />
         ) : (
@@ -142,6 +166,7 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
             ].join(", "),
           }} />
         )}
+        <div className="hero-scan-line" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(4,12,26,0.30) 0%, rgba(4,12,26,0.55) 50%, rgba(4,12,26,0.96) 100%)" }} />
 
         <div className="absolute top-0 inset-x-0 px-4 sm:px-6 lg:px-8 pt-6 max-w-7xl mx-auto">
@@ -182,7 +207,8 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+      <div ref={contentRef} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+        <SectionPathLine containerRef={contentRef} />
 
         {/* Stats */}
         {lab.stats.length > 0 && (
@@ -242,12 +268,16 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                 const rgb = rgbAt(i);
                 return (
                   <Reveal key={c.id} delay={i * 0.05}>
-                    <div className="group glass-card rounded-2xl p-5 h-full transition-all duration-300 hover:-translate-y-1" style={{ border: `1px solid rgba(${rgb},0.2)`, boxShadow: "var(--card-shadow)" }}>
+                    <TiltCard
+                      className="group glass-card rounded-2xl p-5 h-full relative overflow-hidden"
+                      style={{ border: `1px solid rgba(${rgb},0.2)`, boxShadow: "var(--card-shadow)" }}
+                      intensity={6}
+                    >
                       <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4 transition-transform duration-300 group-hover:scale-110" style={{ background: `rgba(${rgb},0.14)`, border: `1px solid rgba(${rgb},0.3)` }}>
                         {(() => { const Icon = resolveIcon(c.icon) ?? Cog; return <Icon size={24} style={{ color: `rgb(${rgb})` }} />; })()}
                       </span>
                       <p className="font-medium text-content leading-snug" style={{ fontSize: "15px" }}>{c.title}</p>
-                    </div>
+                    </TiltCard>
                   </Reveal>
                 );
               })}
@@ -262,10 +292,20 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {lab.equipment.map((e, i) => {
                 const rgb = rgbAt(i);
+                const lightboxIndex = e.image ? equipmentLightboxItems.findIndex((it) => it.src === e.image) : -1;
+                const clickable = lightboxIndex >= 0;
                 return (
                   <Reveal key={e.id} delay={i * 0.05}>
-                    <div className="group glass-card rounded-2xl overflow-hidden h-full transition-all duration-300 hover:-translate-y-1" style={{ border: `1px solid rgba(${rgb},0.2)`, boxShadow: "var(--card-shadow)" }}>
-                      <div className="relative flex items-center justify-center" style={{ aspectRatio: "16/10", background: `linear-gradient(135deg, rgba(${rgb},0.16), rgba(${rgb},0.04))` }}>
+                    <TiltCard
+                      className="group glass-card rounded-2xl overflow-hidden h-full relative"
+                      style={{ border: `1px solid rgba(${rgb},0.2)`, boxShadow: "var(--card-shadow)" }}
+                      intensity={6}
+                    >
+                      <div
+                        className={`relative flex items-center justify-center ${clickable ? "cursor-zoom-in" : ""}`}
+                        style={{ aspectRatio: "16/10", background: `linear-gradient(135deg, rgba(${rgb},0.16), rgba(${rgb},0.04))` }}
+                        onClick={() => clickable && setEquipmentLightboxIndex(lightboxIndex)}
+                      >
                         {e.image ? (
                           <Image src={e.image} alt={e.name} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
                         ) : (() => {
@@ -275,9 +315,14 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                         {e.model_name && (
                           <span className="absolute top-3 left-3 text-[10px] font-mono font-bold px-2 py-1 rounded-md" style={{ background: "rgba(255,255,255,0.9)", color: `rgb(${rgb})` }}>{e.model_name}</span>
                         )}
+                        {clickable && (
+                          <span className="absolute top-3 right-3 w-8 h-8 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "rgba(4,12,26,0.55)", backdropFilter: "blur(4px)" }}>
+                            <Expand size={14} className="text-white" />
+                          </span>
+                        )}
                       </div>
                       <div className="p-4"><p className="font-semibold text-content text-sm">{e.name}</p></div>
-                    </div>
+                    </TiltCard>
                   </Reveal>
                 );
               })}
@@ -292,8 +337,15 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {lab.gallery.map((g, i) => (
                 <Reveal key={g.id} delay={i * 0.04}>
-                  <div className={`relative rounded-2xl overflow-hidden ${i === 0 ? "col-span-2 row-span-2" : ""}`} style={{ aspectRatio: i === 0 ? "16/10" : "1", border: `1px solid rgba(${rgbAt(i)},0.2)` }}>
-                    <Image src={g.image} alt={g.caption || lab.name} fill className="object-cover" sizes={i === 0 ? "50vw" : "25vw"} />
+                  <div
+                    className={`group relative rounded-2xl overflow-hidden cursor-zoom-in ${i === 0 ? "col-span-2 row-span-2" : ""}`}
+                    style={{ aspectRatio: i === 0 ? "16/10" : "1", border: `1px solid rgba(${rgbAt(i)},0.2)` }}
+                    onClick={() => setGalleryLightboxIndex(i)}
+                  >
+                    <Image src={g.image} alt={g.caption || lab.name} fill className="object-cover ken-burns-img" sizes={i === 0 ? "50vw" : "25vw"} />
+                    <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/25 transition-colors duration-300">
+                      <Expand size={22} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </span>
                   </div>
                 </Reveal>
               ))}
@@ -357,21 +409,37 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {lab.leaderName && (
                 <Reveal>
-                  <div className="glass-card rounded-2xl p-5 flex items-center gap-4" style={{ border: "1px solid rgba(var(--accent-rgb),0.25)", boxShadow: "var(--card-shadow)" }}>
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-xl font-bold flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(var(--accent-2-rgb),0.35), rgba(var(--accent-rgb),0.2))", border: "1px solid rgba(var(--accent-rgb),0.35)", color: "var(--accent)" }}>{lab.leaderName.charAt(0).toUpperCase()}</div>
-                    <div><p className="font-semibold text-content">{lab.leaderName}</p><p className="text-xs mt-0.5" style={{ color: "var(--accent)" }}>{lab.leaderPosition || tr(T.leader, locale)}</p></div>
+                  <div className="flip-card h-44">
+                    <div className="flip-card-inner">
+                      <div className="flip-face glass-card rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2" style={{ border: "1px solid rgba(var(--accent-rgb),0.25)", boxShadow: "var(--card-shadow)" }}>
+                        <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-xl font-bold flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(var(--accent-2-rgb),0.35), rgba(var(--accent-rgb),0.2))", border: "1px solid rgba(var(--accent-rgb),0.35)", color: "var(--accent)" }}>{lab.leaderName.charAt(0).toUpperCase()}</div>
+                        <p className="font-semibold text-content">{lab.leaderName}</p>
+                      </div>
+                      <div className="flip-face flip-face-back rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2" style={{ background: "var(--warm-btn)", boxShadow: "var(--card-shadow)" }}>
+                        <Award size={26} className="text-white/90" />
+                        <p className="text-white font-semibold text-sm">{lab.leaderPosition || tr(T.leader, locale)}</p>
+                      </div>
+                    </div>
                   </div>
                 </Reveal>
               )}
               {lab.teamMembers.map((m, i) => (
                 <Reveal key={m.id} delay={(i + 1) * 0.06}>
-                  <div className="glass-card rounded-2xl p-5 flex items-center gap-4" style={{ boxShadow: "var(--card-shadow)" }}>
-                    {m.photo ? (
-                      <div className="relative w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0"><Image src={m.photo} alt={m.name || m.position} fill className="object-cover" /></div>
-                    ) : (
-                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(var(--accent-rgb),0.12)", border: "1px solid rgba(var(--accent-rgb),0.2)" }}><User size={24} style={{ color: "var(--accent)" }} /></div>
-                    )}
-                    <div><p className="font-semibold" style={{ color: "var(--content-secondary)" }}>{m.name || "—"}</p><p className="text-xs mt-0.5" style={{ color: "var(--content-muted)" }}>{m.position}</p></div>
+                  <div className="flip-card h-44">
+                    <div className="flip-card-inner">
+                      <div className="flip-face glass-card rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2" style={{ boxShadow: "var(--card-shadow)" }}>
+                        {m.photo ? (
+                          <div className="relative w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0"><Image src={m.photo} alt={m.name || m.position} fill className="object-cover" /></div>
+                        ) : (
+                          <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(var(--accent-rgb),0.12)", border: "1px solid rgba(var(--accent-rgb),0.2)" }}><User size={24} style={{ color: "var(--accent)" }} /></div>
+                        )}
+                        <p className="font-semibold" style={{ color: "var(--content-secondary)" }}>{m.name || "—"}</p>
+                      </div>
+                      <div className="flip-face flip-face-back rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2" style={{ background: `rgba(${rgbAt(i)},0.16)`, border: `1px solid rgba(${rgbAt(i)},0.35)`, boxShadow: "var(--card-shadow)" }}>
+                        <User size={26} style={{ color: `rgb(${rgbAt(i)})` }} />
+                        <p className="text-sm font-semibold" style={{ color: `rgb(${rgbAt(i)})` }}>{m.position}</p>
+                      </div>
+                    </div>
                   </div>
                 </Reveal>
               ))}
@@ -400,6 +468,19 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
           </Reveal>
         </section>
       </div>
+
+      <Lightbox
+        items={equipmentLightboxItems}
+        index={equipmentLightboxIndex}
+        onClose={() => setEquipmentLightboxIndex(null)}
+        onNavigate={setEquipmentLightboxIndex}
+      />
+      <Lightbox
+        items={galleryLightboxItems}
+        index={galleryLightboxIndex}
+        onClose={() => setGalleryLightboxIndex(null)}
+        onNavigate={setGalleryLightboxIndex}
+      />
     </div>
   );
 }

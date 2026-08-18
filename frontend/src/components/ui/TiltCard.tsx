@@ -6,10 +6,11 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 interface Props {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   intensity?: number;
 }
 
-export function TiltCard({ children, className, intensity = 8 }: Props) {
+export function TiltCard({ children, className, style, intensity = 8 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
   const x = useMotionValue(0);
@@ -42,7 +43,7 @@ export function TiltCard({ children, className, intensity = 8 }: Props) {
       ref={ref}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      style={{ ...style, rotateX, rotateY, transformStyle: "preserve-3d" }}
       className={className}
     >
       {/* Glare overlay */}
