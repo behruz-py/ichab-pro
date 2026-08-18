@@ -373,12 +373,15 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                     style={{ border: `1px solid rgba(${rgbAt(i)},0.2)` }}
                     onClick={() => setGalleryLightboxIndex(i)}
                   >
+                    {/* Blurred fill so the tile is never empty-letterboxed... */}
+                    <Image src={g.image} alt="" aria-hidden fill sizes="1px" className="object-cover scale-125 blur-2xl opacity-40" />
+                    {/* ...while the real photo is never cropped. */}
                     <Image
                       src={g.image}
                       alt={g.caption || lab.name}
                       fill
                       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                      className="object-cover ken-burns-img"
+                      className="object-contain ken-burns-img"
                     />
                     <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/25 transition-colors duration-300">
                       <Expand size={22} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
