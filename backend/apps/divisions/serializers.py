@@ -118,6 +118,7 @@ class DivisionDetailSerializer(TranslatedSerializerMixin, serializers.ModelSeria
     full_description = serializers.SerializerMethodField()
     leader_name = serializers.SerializerMethodField()
     leader_position = serializers.SerializerMethodField()
+    leader_photo = ImageFieldAbsoluteURL(read_only=True)
     logo = ImageFieldAbsoluteURL(read_only=True)
     cover_image = ImageFieldAbsoluteURL(read_only=True)
     stats = DivisionStatSerializer(many=True, read_only=True)
@@ -133,7 +134,7 @@ class DivisionDetailSerializer(TranslatedSerializerMixin, serializers.ModelSeria
         fields = (
             "id", "slug", "name", "short_description", "full_description",
             "logo", "cover_image",
-            "leader_name", "leader_position",
+            "leader_name", "leader_position", "leader_photo",
             "contact_phone", "contact_email",
             "stats", "capabilities", "equipment", "gallery", "standards",
             "team_members", "related_projects",

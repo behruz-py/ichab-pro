@@ -43,6 +43,7 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
         logo: div.logo ? mediaUrl(div.logo) : null,
         leaderName: div.leader_name ?? "",
         leaderPosition: div.leader_position ?? "",
+        leaderPhoto: div.leader_photo ? mediaUrl(div.leader_photo) : null,
         contactPhone: div.contact_phone ?? "",
         contactEmail: div.contact_email ?? "",
         stats: div.stats ?? [],

@@ -65,6 +65,7 @@ export interface Division {
   cover_image: string | null;
   leader_name?: string;
   leader_position?: string;
+  leader_photo?: string | null;
   contact_phone: string;
   contact_email: string;
   // Present only on the detail (retrieve) response — undefined on list rows.

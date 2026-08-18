@@ -29,6 +29,8 @@ class Division(TranslatedModel, OrderedModel, ActiveModel):
     leader_position_ru = models.CharField(max_length=200, blank=True)
     leader_position_en = models.CharField(max_length=200, blank=True)
 
+    leader_photo = models.ImageField("Rahbar surati", upload_to="divisions/leaders/", blank=True, null=True)
+
     contact_phone = models.CharField(max_length=30, blank=True)
     contact_email = models.EmailField(blank=True)
 

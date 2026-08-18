@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { ArrowLeft, ArrowRight, Phone, Mail, Award, CheckCircle2, User, Cog, Expand } from "lucide-react";
+import { ArrowLeft, ArrowRight, Phone, Mail, Award, CheckCircle2, User, Cog, Expand, Quote, ChevronDown } from "lucide-react";
 import { DynamicIcon, resolveIcon } from "@/components/ui/DynamicIcon";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { CursorSpotlight } from "@/components/ui/CursorSpotlight";
@@ -27,6 +27,7 @@ export interface LabData {
   logo: string | null;
   leaderName: string;
   leaderPosition: string;
+  leaderPhoto: string | null;
   contactPhone: string;
   contactEmail: string;
   stats: DivisionStat[];
@@ -60,6 +61,8 @@ const T = {
   leader:       { uz: "Laboratoriya rahbari", ru: "Руководитель лаборатории", en: "Laboratory head" },
   cta:          { uz: "Xizmat so'rash", ru: "Запросить услугу", en: "Request a service" },
   ctaText:      { uz: "Loyihangiz uchun ushbu laboratoriya xizmatlaridan foydalanmoqchimisiz?", ru: "Хотите воспользоваться услугами этой лаборатории?", en: "Want to use this laboratory's services?" },
+  readMore:     { uz: "Batafsil o'qish", ru: "Читать полностью", en: "Read more" },
+  readLess:     { uz: "Yig'ish", ru: "Свернуть", en: "Show less" },
 } satisfies Record<string, Loc>;
 const tr = (o: Loc, l: string) => o[l] ?? o.uz;
 
@@ -129,6 +132,8 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
 
   const [equipmentLightboxIndex, setEquipmentLightboxIndex] = useState<number | null>(null);
   const [galleryLightboxIndex, setGalleryLightboxIndex] = useState<number | null>(null);
+  const [descExpanded, setDescExpanded] = useState(false);
+  const isLongDescription = lab.fullDescription.length > 220;
 
   const equipmentLightboxItems: LightboxItem[] = useMemo(
     () => lab.equipment.filter((e) => e.image).map((e) => ({ src: e.image as string, title: e.name, subtitle: e.model_name })),
@@ -226,28 +231,45 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
         <section id="overview" className="scroll-mt-32">
           <Reveal>
             <div className="grid lg:grid-cols-[1fr_320px] gap-8 items-start">
-              <div>
-                <div className="glass-card rounded-2xl p-6 mb-6" style={{ borderLeft: "3px solid rgba(var(--accent-rgb),0.6)", boxShadow: "var(--card-shadow)" }}>
-                  <p className="leading-relaxed" style={{ color: "var(--content-secondary)", fontSize: "17px" }}>{lab.shortDescription}</p>
-                </div>
+              <div className="glass-card rounded-2xl p-6 sm:p-8 relative overflow-hidden" style={{ boxShadow: "var(--card-shadow)" }}>
+                <Quote size={72} className="absolute -top-3 -left-1 pointer-events-none" style={{ color: "var(--accent)", opacity: 0.08 }} strokeWidth={1.5} />
+                <p className="relative font-display font-semibold leading-snug" style={{ fontSize: "clamp(18px,2.1vw,22px)", color: "var(--content)" }}>
+                  {lab.shortDescription}
+                </p>
                 {lab.fullDescription && (
-                  <div className="glass-card rounded-2xl p-6" style={{ boxShadow: "var(--card-shadow)" }}>
-                    <p className="text-sm leading-[1.85] whitespace-pre-line" style={{ color: "var(--content-secondary)" }}>{lab.fullDescription}</p>
+                  <div className="relative mt-6 pt-6" style={{ borderTop: "1px solid var(--glass-border)" }}>
+                    <div className={`desc-collapse ${descExpanded || !isLongDescription ? "expanded" : ""}`}>
+                      <div>
+                        <p className="text-sm leading-[1.85] whitespace-pre-line" style={{ color: "var(--content-secondary)" }}>{lab.fullDescription}</p>
+                      </div>
+                    </div>
+                    {isLongDescription && (
+                      <button
+                        onClick={() => setDescExpanded((v) => !v)}
+                        className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold transition-colors hover:opacity-80"
+                        style={{ color: "var(--accent)" }}
+                      >
+                        {descExpanded ? tr(T.readLess, locale) : tr(T.readMore, locale)}
+                        <ChevronDown size={16} className="transition-transform duration-300" style={{ transform: descExpanded ? "rotate(180deg)" : "none" }} />
+                      </button>
+                    )}
                   </div>
                 )}
               </div>
               {/* Leader + contact sidebar */}
               <div className="space-y-4">
                 {lab.leaderName && (
-                  <div className="glass-card rounded-2xl p-5" style={{ boxShadow: "var(--card-shadow)" }}>
+                  <div className="glass-card rounded-2xl p-5 text-center" style={{ boxShadow: "var(--card-shadow)" }}>
                     <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-4" style={{ color: "var(--accent)" }}>{tr(T.leader, locale)}</p>
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-lg font-bold flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(var(--accent-2-rgb),0.35), rgba(var(--accent-rgb),0.2))", border: "1px solid rgba(var(--accent-rgb),0.35)", color: "var(--accent)" }}>{lab.leaderName.charAt(0).toUpperCase()}</div>
-                      <div>
-                        <p className="font-semibold" style={{ color: "var(--content)" }}>{lab.leaderName}</p>
-                        {lab.leaderPosition && <p className="text-xs mt-0.5" style={{ color: "var(--content-muted)" }}>{lab.leaderPosition}</p>}
+                    {lab.leaderPhoto ? (
+                      <div className="relative w-20 h-20 rounded-2xl overflow-hidden mx-auto mb-3" style={{ border: "1px solid rgba(var(--accent-rgb),0.35)" }}>
+                        <Image src={lab.leaderPhoto} alt={lab.leaderName} fill className="object-cover" />
                       </div>
-                    </div>
+                    ) : (
+                      <div className="w-20 h-20 rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-3" style={{ background: "linear-gradient(135deg, rgba(var(--accent-2-rgb),0.35), rgba(var(--accent-rgb),0.2))", border: "1px solid rgba(var(--accent-rgb),0.35)", color: "var(--accent)" }}>{lab.leaderName.charAt(0).toUpperCase()}</div>
+                    )}
+                    <p className="font-semibold" style={{ color: "var(--content)" }}>{lab.leaderName}</p>
+                    {lab.leaderPosition && <p className="text-xs mt-0.5" style={{ color: "var(--content-muted)" }}>{lab.leaderPosition}</p>}
                   </div>
                 )}
                 <Link href={`/${locale}/contact`} className="flex items-center justify-center gap-2 w-full py-3.5 px-5 rounded-2xl font-semibold text-sm text-white transition-all duration-200 hover:-translate-y-0.5"
@@ -334,15 +356,22 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
         {hasGallery && (
           <section id="gallery" className="scroll-mt-32">
             <Reveal><SectionTitle>{tr(T.gallery, locale)}</SectionTitle></Reveal>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="masonry-gallery columns-2 sm:columns-3 lg:columns-4">
               {lab.gallery.map((g, i) => (
                 <Reveal key={g.id} delay={i * 0.04}>
                   <div
-                    className={`group relative rounded-2xl overflow-hidden cursor-zoom-in ${i === 0 ? "col-span-2 row-span-2" : ""}`}
-                    style={{ aspectRatio: i === 0 ? "16/10" : "1", border: `1px solid rgba(${rgbAt(i)},0.2)` }}
+                    className="group relative rounded-2xl overflow-hidden cursor-zoom-in"
+                    style={{ border: `1px solid rgba(${rgbAt(i)},0.2)` }}
                     onClick={() => setGalleryLightboxIndex(i)}
                   >
-                    <Image src={g.image} alt={g.caption || lab.name} fill className="object-cover ken-burns-img" sizes={i === 0 ? "50vw" : "25vw"} />
+                    <Image
+                      src={g.image}
+                      alt={g.caption || lab.name}
+                      width={600}
+                      height={450}
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                      className="block w-full h-auto ken-burns-img"
+                    />
                     <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/25 transition-colors duration-300">
                       <Expand size={22} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </span>
@@ -409,15 +438,21 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {lab.leaderName && (
                 <Reveal>
-                  <div className="flip-card h-44">
+                  <div className="flip-card h-56">
                     <div className="flip-card-inner">
-                      <div className="flip-face glass-card rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2" style={{ border: "1px solid rgba(var(--accent-rgb),0.25)", boxShadow: "var(--card-shadow)" }}>
-                        <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-xl font-bold flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(var(--accent-2-rgb),0.35), rgba(var(--accent-rgb),0.2))", border: "1px solid rgba(var(--accent-rgb),0.35)", color: "var(--accent)" }}>{lab.leaderName.charAt(0).toUpperCase()}</div>
+                      <div className="flip-face glass-card rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-3" style={{ border: "1px solid rgba(var(--accent-rgb),0.25)", boxShadow: "var(--card-shadow)" }}>
+                        {lab.leaderPhoto ? (
+                          <div className="relative w-24 h-24 rounded-full overflow-hidden flex-shrink-0" style={{ border: "2px solid rgba(var(--accent-rgb),0.4)" }}>
+                            <Image src={lab.leaderPhoto} alt={lab.leaderName} fill className="object-cover" />
+                          </div>
+                        ) : (
+                          <div className="w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(var(--accent-2-rgb),0.35), rgba(var(--accent-rgb),0.2))", border: "2px solid rgba(var(--accent-rgb),0.4)", color: "var(--accent)" }}>{lab.leaderName.charAt(0).toUpperCase()}</div>
+                        )}
                         <p className="font-semibold text-content">{lab.leaderName}</p>
                       </div>
                       <div className="flip-face flip-face-back rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2" style={{ background: "var(--warm-btn)", boxShadow: "var(--card-shadow)" }}>
-                        <Award size={26} className="text-white/90" />
-                        <p className="text-white font-semibold text-sm">{lab.leaderPosition || tr(T.leader, locale)}</p>
+                        <Award size={30} className="text-white/90" />
+                        <p className="text-white font-semibold">{lab.leaderPosition || tr(T.leader, locale)}</p>
                       </div>
                     </div>
                   </div>
@@ -425,19 +460,21 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
               )}
               {lab.teamMembers.map((m, i) => (
                 <Reveal key={m.id} delay={(i + 1) * 0.06}>
-                  <div className="flip-card h-44">
+                  <div className="flip-card h-56">
                     <div className="flip-card-inner">
-                      <div className="flip-face glass-card rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2" style={{ boxShadow: "var(--card-shadow)" }}>
+                      <div className="flip-face glass-card rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-3" style={{ boxShadow: "var(--card-shadow)" }}>
                         {m.photo ? (
-                          <div className="relative w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0"><Image src={m.photo} alt={m.name || m.position} fill className="object-cover" /></div>
+                          <div className="relative w-24 h-24 rounded-full overflow-hidden flex-shrink-0" style={{ border: "2px solid rgba(var(--accent-rgb),0.25)" }}>
+                            <Image src={m.photo} alt={m.name || m.position} fill className="object-cover" />
+                          </div>
                         ) : (
-                          <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(var(--accent-rgb),0.12)", border: "1px solid rgba(var(--accent-rgb),0.2)" }}><User size={24} style={{ color: "var(--accent)" }} /></div>
+                          <div className="w-24 h-24 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "rgba(var(--accent-rgb),0.12)", border: "2px solid rgba(var(--accent-rgb),0.2)" }}><User size={32} style={{ color: "var(--accent)" }} /></div>
                         )}
                         <p className="font-semibold" style={{ color: "var(--content-secondary)" }}>{m.name || "—"}</p>
                       </div>
                       <div className="flip-face flip-face-back rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2" style={{ background: `rgba(${rgbAt(i)},0.16)`, border: `1px solid rgba(${rgbAt(i)},0.35)`, boxShadow: "var(--card-shadow)" }}>
-                        <User size={26} style={{ color: `rgb(${rgbAt(i)})` }} />
-                        <p className="text-sm font-semibold" style={{ color: `rgb(${rgbAt(i)})` }}>{m.position}</p>
+                        <User size={30} style={{ color: `rgb(${rgbAt(i)})` }} />
+                        <p className="font-semibold" style={{ color: `rgb(${rgbAt(i)})` }}>{m.position}</p>
                       </div>
                     </div>
                   </div>
