@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { ArrowLeft, ArrowRight, Phone, Mail, Award, CheckCircle2, User, Cog, Expand, Quote, ChevronDown } from "lucide-react";
-import { DynamicIcon, resolveIcon } from "@/components/ui/DynamicIcon";
+import { resolveIcon } from "@/components/ui/DynamicIcon";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { CursorSpotlight } from "@/components/ui/CursorSpotlight";
 import { ProgressRing } from "@/components/ui/ProgressRing";
@@ -66,6 +66,15 @@ const T = {
 } satisfies Record<string, Loc>;
 const tr = (o: Loc, l: string) => o[l] ?? o.uz;
 
+// Lets keyboard users (Tab + Enter/Space) activate a div acting as a button —
+// the click-to-enlarge tiles below aren't real <button>s (they contain an
+// <Image>), so this is needed for them to be keyboard-operable.
+function onEnterOrSpace(handler: () => void) {
+  return (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handler(); }
+  };
+}
+
 function useCountUp(target: number, run: boolean, dur = 1500) {
   const [v, setV] = useState(0);
   const started = useRef(false);
@@ -100,12 +109,13 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 function StatCard({ s, rgb, inView, i }: { s: DivisionStat; rgb: string; inView: boolean; i: number }) {
   const v = useCountUp(s.value, inView);
   const ringProgress = Math.min(0.95, 0.55 + i * 0.08);
+  const Icon = resolveIcon(s.icon) ?? Cog;
   return (
     <motion.div initial={{ opacity: 0, y: 18 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.1 + i * 0.09 }}
       className="glass-card rounded-2xl p-4 flex items-center gap-3.5" style={{ border: `1px solid rgba(${rgb},0.25)`, boxShadow: `var(--card-shadow), 0 0 24px rgba(${rgb},0.10)` }}>
       <div className="relative w-11 h-11 flex-shrink-0">
         <ProgressRing progress={ringProgress} active={inView} size={44} strokeWidth={2.5} rgb={rgb} />
-        <DynamicIcon name={s.icon} size={18} className="absolute inset-0 m-auto" />
+        <Icon size={18} className="absolute inset-0 m-auto" style={{ color: `rgb(${rgb})` }} />
       </div>
       <div className="min-w-0">
         <div className="font-display font-extrabold tabular-nums leading-none" style={{ fontSize: "clamp(20px,2.4vw,26px)", color: "var(--content)" }}>{v}{s.suffix}</div>
@@ -143,9 +153,10 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
   const [descExpanded, setDescExpanded] = useState(false);
   const isLongDescription = lab.fullDescription.length > 220;
 
+  const equipmentWithImage = useMemo(() => lab.equipment.filter((e) => e.image), [lab.equipment]);
   const equipmentLightboxItems: LightboxItem[] = useMemo(
-    () => lab.equipment.filter((e) => e.image).map((e) => ({ src: e.image as string, title: e.name, subtitle: e.model_name })),
-    [lab.equipment]
+    () => equipmentWithImage.map((e) => ({ src: e.image as string, title: e.name, subtitle: e.model_name })),
+    [equipmentWithImage]
   );
   const galleryLightboxItems: LightboxItem[] = useMemo(
     () => lab.gallery.map((g) => ({ src: g.image, subtitle: g.caption })),
@@ -243,11 +254,17 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                 </p>
                 {lab.fullDescription && (
                   <div className="relative mt-6 pt-6" style={{ borderTop: "1px solid var(--glass-border)" }}>
-                    <div className={`desc-collapse ${descExpanded || !isLongDescription ? "expanded" : ""}`}>
-                      <div>
-                        <p className="text-sm leading-[1.85] whitespace-pre-line" style={{ color: "var(--content-secondary)" }}>{lab.fullDescription}</p>
-                      </div>
-                    </div>
+                    <p
+                      className="text-sm leading-[1.85] whitespace-pre-line"
+                      style={{
+                        color: "var(--content-secondary)",
+                        ...(isLongDescription && !descExpanded
+                          ? { display: "-webkit-box", WebkitBoxOrient: "vertical" as const, WebkitLineClamp: 4, overflow: "hidden" }
+                          : {}),
+                      }}
+                    >
+                      {lab.fullDescription}
+                    </p>
                     {isLongDescription && (
                       <button
                         onClick={() => setDescExpanded((v) => !v)}
@@ -320,7 +337,7 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {lab.equipment.map((e, i) => {
                 const rgb = rgbAt(i);
-                const lightboxIndex = e.image ? equipmentLightboxItems.findIndex((it) => it.src === e.image) : -1;
+                const lightboxIndex = equipmentWithImage.indexOf(e);
                 const clickable = lightboxIndex >= 0;
                 return (
                   <Reveal key={e.id} delay={i * 0.05}>
@@ -333,6 +350,10 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                         className={`relative flex items-center justify-center ${clickable ? "cursor-zoom-in" : ""}`}
                         style={{ aspectRatio: "16/10", background: `linear-gradient(135deg, rgba(${rgb},0.16), rgba(${rgb},0.04))` }}
                         onClick={() => clickable && setEquipmentLightboxIndex(lightboxIndex)}
+                        role={clickable ? "button" : undefined}
+                        tabIndex={clickable ? 0 : undefined}
+                        aria-label={clickable ? e.name : undefined}
+                        onKeyDown={clickable ? onEnterOrSpace(() => setEquipmentLightboxIndex(lightboxIndex)) : undefined}
                       >
                         {e.image ? (
                           <Image src={e.image} alt={e.name} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
@@ -372,6 +393,10 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                     className="group relative w-full h-full rounded-2xl overflow-hidden cursor-zoom-in"
                     style={{ border: `1px solid rgba(${rgbAt(i)},0.2)` }}
                     onClick={() => setGalleryLightboxIndex(i)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={g.caption || lab.name}
+                    onKeyDown={onEnterOrSpace(() => setGalleryLightboxIndex(i))}
                   >
                     {/* Blurred fill so the tile is never empty-letterboxed... */}
                     <Image src={g.image} alt="" aria-hidden fill sizes="1px" className="object-cover scale-125 blur-2xl opacity-40" />

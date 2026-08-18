@@ -675,18 +675,3 @@ html { scroll-behavior: smooth; }
 }
 .group:hover .ken-burns-img { animation-play-state: running; }
 @media (prefers-reduced-motion: reduce) { .ken-burns-img { animation: none; } }
-
-/* Collapsible "read more" text block — animates height via the grid-rows trick
- * so we don't need to know the content's height ahead of time. */
-.desc-collapse {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.desc-collapse.expanded { grid-template-rows: 1fr; }
-.desc-collapse > div { overflow: hidden; }
-.desc-collapse:not(.expanded) {
-  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-}
-@media (prefers-reduced-motion: reduce) { .desc-collapse { transition: none; } }
