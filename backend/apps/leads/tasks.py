@@ -30,6 +30,31 @@ def notify_new_lead(lead_pk: int) -> None:
     )
 
     _send_telegram(message)
+    _send_email(lead)
+
+
+def _send_email(lead) -> None:
+    to = getattr(settings, "LEAD_NOTIFY_EMAIL_TO", "")
+    if not to:
+        return
+    try:
+        from django.core.mail import send_mail
+        send_mail(
+            subject=f"Yangi murojaat: {lead.name}",
+            message=(
+                f"Ism: {lead.name}\n"
+                f"Kompaniya: {lead.company or '-'}\n"
+                f"Telefon: {lead.phone or '-'}\n"
+                f"Email: {lead.email or '-'}\n"
+                f"Xabar: {lead.message or '-'}\n"
+                f"Sahifa: {lead.source_page or '-'}"
+            ),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[to],
+            fail_silently=True,
+        )
+    except Exception:
+        pass
 
 
 def _send_telegram(text: str) -> None:

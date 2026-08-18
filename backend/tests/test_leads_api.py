@@ -1,4 +1,6 @@
 import pytest
+from django.core.cache import cache
+from rest_framework.throttling import SimpleRateThrottle
 from apps.leads.models import Lead
 
 
@@ -49,3 +51,20 @@ class TestLeadAPI:
         assert res.status_code == 200
         lead.refresh_from_db()
         assert lead.status == Lead.Status.DONE
+
+    def test_lead_create_is_throttled_after_limit(self, api_client, monkeypatch):
+        """Anti-spam guard: once the 'lead' scope rate is hit, further posts get 429."""
+        monkeypatch.setattr(SimpleRateThrottle, "THROTTLE_RATES", {"lead": "2/hour"})
+        cache.clear()
+        payload = {
+            "name": "Spam Bot",
+            "phone": "+998900000000",
+            "message": "hi",
+            "source_page": "/contact",
+        }
+        first = api_client.post("/api/v1/leads/", payload, format="json")
+        second = api_client.post("/api/v1/leads/", payload, format="json")
+        third = api_client.post("/api/v1/leads/", payload, format="json")
+        assert first.status_code == 201
+        assert second.status_code == 201
+        assert third.status_code == 429

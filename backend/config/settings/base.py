@@ -175,6 +175,13 @@ CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS", default="http://localhost:3000"
 ).split(",")
 CORS_ALLOW_CREDENTIALS = True
+# Also allow Vercel preview deployments (random *.vercel.app subdomains) so a
+# preview build of the frontend can submit the contact form without a CORS
+# error. Low risk: the only browser-submitted write this unlocks is the public
+# lead endpoint, which is AllowAny and header-based (no cookies to leak).
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
+]
 
 # ─── Email ─────────────────────────────────────────────────────────────────────
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -188,6 +195,10 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="no-reply@ichab.uz")
 # ─── Telegram ──────────────────────────────────────────────────────────────────
 TELEGRAM_BOT_TOKEN = config("TELEGRAM_BOT_TOKEN", default="")
 TELEGRAM_CHAT_ID = config("TELEGRAM_CHAT_ID", default="")
+
+# ─── Lead notifications ────────────────────────────────────────────────────────
+# Optional: if set, new leads are also emailed here (in addition to Telegram).
+LEAD_NOTIFY_EMAIL_TO = config("LEAD_NOTIFY_EMAIL_TO", default="")
 
 # ─── Celery ────────────────────────────────────────────────────────────────────
 CELERY_BROKER_URL = config("REDIS_URL", default="redis://localhost:6379/0")

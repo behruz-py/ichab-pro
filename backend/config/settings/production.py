@@ -1,6 +1,12 @@
 from .base import *  # noqa
+from django.core.exceptions import ImproperlyConfigured
 
 DEBUG = False
+
+if SECRET_KEY == "unsafe-default-key":  # noqa — SECRET_KEY comes from base via *
+    raise ImproperlyConfigured(
+        "DJANGO_SECRET_KEY environment variable must be set in production."
+    )
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True

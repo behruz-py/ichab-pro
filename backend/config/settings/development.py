@@ -6,4 +6,9 @@ REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] += [  # noqa
     "rest_framework.renderers.BrowsableAPIRenderer",
 ]
 
-INSTALLED_APPS += ["django_extensions"]  # noqa — optional dev tool
+# django_extensions ixtiyoriy — mavjud bo'lsa qo'shiladi
+try:
+    import django_extensions  # noqa
+    INSTALLED_APPS += ["django_extensions"]  # noqa
+except ImportError:
+    pass
