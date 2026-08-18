@@ -80,13 +80,18 @@ function useCountUp(target: number, run: boolean, dur = 1500) {
   return v;
 }
 
-function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+function Reveal({ children, delay = 0, className }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
-    <motion.div initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-70px" }} transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}>
+    <motion.div className={className} initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-70px" }} transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}>
       {children}
     </motion.div>
   );
 }
+
+// Repeating bento pattern for the gallery — cycles regardless of item count,
+// so a fixed-row-height grid never leaves gaps the way a columns-masonry does.
+const BENTO_PATTERN = ["col-span-2 row-span-2", "col-span-1 row-span-1", "col-span-1 row-span-1", "col-span-1 row-span-2", "col-span-1 row-span-1", "col-span-2 row-span-1"];
+const bentoSpan = (i: number) => BENTO_PATTERN[i % BENTO_PATTERN.length];
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="font-display font-bold text-content mb-6" style={{ fontSize: "clamp(22px,2.8vw,34px)" }}>{children}</h2>;
@@ -357,21 +362,23 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
         {hasGallery && (
           <section id="gallery" className="scroll-mt-32">
             <Reveal><SectionTitle>{tr(T.gallery, locale)}</SectionTitle></Reveal>
-            <div className="masonry-gallery columns-2 sm:columns-3 lg:columns-4">
+            <div
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"
+              style={{ gridAutoFlow: "dense", gridAutoRows: "clamp(90px, 12vw, 150px)" }}
+            >
               {lab.gallery.map((g, i) => (
-                <Reveal key={g.id} delay={i * 0.04}>
+                <Reveal key={g.id} delay={i * 0.04} className={bentoSpan(i)}>
                   <div
-                    className="group relative rounded-2xl overflow-hidden cursor-zoom-in"
+                    className="group relative w-full h-full rounded-2xl overflow-hidden cursor-zoom-in"
                     style={{ border: `1px solid rgba(${rgbAt(i)},0.2)` }}
                     onClick={() => setGalleryLightboxIndex(i)}
                   >
                     <Image
                       src={g.image}
                       alt={g.caption || lab.name}
-                      width={600}
-                      height={450}
+                      fill
                       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                      className="block w-full h-auto ken-burns-img"
+                      className="object-cover ken-burns-img"
                     />
                     <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/25 transition-colors duration-300">
                       <Expand size={22} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
