@@ -374,13 +374,16 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
         {hasEquipment && (
           <section id="equipment" className="scroll-mt-32">
             <Reveal><SectionTitle>{tr(T.equipmentTitle, locale)}</SectionTitle></Reveal>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {/* flex + justify-center (not a strict grid) so an incomplete last
+                row — e.g. 5 items over 4 columns — centers itself instead of
+                leaving a lopsided gap on one side. */}
+            <div className="flex flex-wrap justify-center gap-3">
               {lab.equipment.map((e, i) => {
                 const rgb = rgbAt(i);
                 const lightboxIndex = equipmentWithImage.indexOf(e);
                 const clickable = lightboxIndex >= 0;
                 return (
-                  <Reveal key={e.id} delay={i * 0.04}>
+                  <Reveal key={e.id} delay={i * 0.04} className="w-[calc(50%-0.375rem)] sm:w-[calc(33.333%-0.5rem)] lg:w-[calc(25%-0.5625rem)]">
                     <TiltCard
                       className="group glass-card rounded-2xl overflow-hidden h-full relative"
                       style={{ border: `1px solid rgba(${rgb},0.2)`, boxShadow: "var(--card-shadow)" }}
