@@ -99,7 +99,10 @@ function Reveal({ children, delay = 0, className }: { children: React.ReactNode;
 
 // Repeating bento pattern for the gallery — cycles regardless of item count,
 // so a fixed-row-height grid never leaves gaps the way a columns-masonry does.
-const BENTO_PATTERN = ["col-span-2 row-span-2", "col-span-1 row-span-1", "col-span-1 row-span-1", "col-span-1 row-span-2", "col-span-1 row-span-1", "col-span-2 row-span-1"];
+// Deliberately avoids tall/narrow cells: real gallery content (equipment
+// photos, UI screenshots) is landscape, and a portrait cell forces either an
+// ugly crop or — with object-contain — a big empty gap.
+const BENTO_PATTERN = ["col-span-2 row-span-2", "col-span-1 row-span-1", "col-span-1 row-span-1", "col-span-2 row-span-1", "col-span-1 row-span-1", "col-span-1 row-span-1"];
 const bentoSpan = (i: number) => BENTO_PATTERN[i % BENTO_PATTERN.length];
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
@@ -131,13 +134,13 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
   const hasGallery = lab.gallery.length > 0;
   const hasProjects = lab.relatedProjects.length > 0;
   const hasStandards = lab.standards.length > 0;
-  const hasTeam = Boolean(lab.leaderName) || lab.teamMembers.length > 0;
+  const hasTeam = lab.teamMembers.length > 0;
 
   const nav = useMemo(() => [
     { id: "overview", label: T.overview, show: true },
     { id: "capabilities", label: T.capabilities, show: hasCapabilities },
-    { id: "equipment", label: T.equipment, show: hasEquipment },
     { id: "gallery", label: T.gallery, show: hasGallery },
+    { id: "equipment", label: T.equipment, show: hasEquipment },
     { id: "projects", label: T.projects, show: hasProjects },
     { id: "team", label: T.team, show: hasTeam },
     { id: "contact", label: T.contact, show: true },
@@ -330,55 +333,6 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
           </section>
         )}
 
-        {/* Equipment */}
-        {hasEquipment && (
-          <section id="equipment" className="scroll-mt-32">
-            <Reveal><SectionTitle>{tr(T.equipmentTitle, locale)}</SectionTitle></Reveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {lab.equipment.map((e, i) => {
-                const rgb = rgbAt(i);
-                const lightboxIndex = equipmentWithImage.indexOf(e);
-                const clickable = lightboxIndex >= 0;
-                return (
-                  <Reveal key={e.id} delay={i * 0.05}>
-                    <TiltCard
-                      className="group glass-card rounded-2xl overflow-hidden h-full relative"
-                      style={{ border: `1px solid rgba(${rgb},0.2)`, boxShadow: "var(--card-shadow)" }}
-                      intensity={6}
-                    >
-                      <div
-                        className={`relative flex items-center justify-center ${clickable ? "cursor-zoom-in" : ""}`}
-                        style={{ aspectRatio: "16/10", background: `linear-gradient(135deg, rgba(${rgb},0.16), rgba(${rgb},0.04))` }}
-                        onClick={() => clickable && setEquipmentLightboxIndex(lightboxIndex)}
-                        role={clickable ? "button" : undefined}
-                        tabIndex={clickable ? 0 : undefined}
-                        aria-label={clickable ? e.name : undefined}
-                        onKeyDown={clickable ? onEnterOrSpace(() => setEquipmentLightboxIndex(lightboxIndex)) : undefined}
-                      >
-                        {e.image ? (
-                          <Image src={e.image} alt={e.name} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
-                        ) : (() => {
-                          const Icon = resolveIcon(e.icon) ?? Cog;
-                          return <Icon size={54} strokeWidth={1.3} style={{ color: `rgb(${rgb})` }} className="transition-transform duration-500 group-hover:scale-110" />;
-                        })()}
-                        {e.model_name && (
-                          <span className="absolute top-3 left-3 text-[10px] font-mono font-bold px-2 py-1 rounded-md" style={{ background: "rgba(255,255,255,0.9)", color: `rgb(${rgb})` }}>{e.model_name}</span>
-                        )}
-                        {clickable && (
-                          <span className="absolute top-3 right-3 w-8 h-8 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "rgba(4,12,26,0.55)", backdropFilter: "blur(4px)" }}>
-                            <Expand size={14} className="text-white" />
-                          </span>
-                        )}
-                      </div>
-                      <div className="p-4"><p className="font-semibold text-content text-sm">{e.name}</p></div>
-                    </TiltCard>
-                  </Reveal>
-                );
-              })}
-            </div>
-          </section>
-        )}
-
         {/* Gallery */}
         {hasGallery && (
           <section id="gallery" className="scroll-mt-32">
@@ -398,15 +352,12 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                     aria-label={g.caption || lab.name}
                     onKeyDown={onEnterOrSpace(() => setGalleryLightboxIndex(i))}
                   >
-                    {/* Blurred fill so the tile is never empty-letterboxed... */}
-                    <Image src={g.image} alt="" aria-hidden fill sizes="1px" className="object-cover scale-125 blur-2xl opacity-40" />
-                    {/* ...while the real photo is never cropped. */}
                     <Image
                       src={g.image}
                       alt={g.caption || lab.name}
                       fill
                       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                      className="object-contain ken-burns-img"
+                      className="object-cover ken-burns-img"
                     />
                     <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/25 transition-colors duration-300">
                       <Expand size={22} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -414,6 +365,56 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                   </div>
                 </Reveal>
               ))}
+            </div>
+          </section>
+        )}
+
+        {/* Equipment — compact horizontal cards (thumbnail + name/model), not
+            full-width photo tiles, so the section stays scannable. */}
+        {hasEquipment && (
+          <section id="equipment" className="scroll-mt-32">
+            <Reveal><SectionTitle>{tr(T.equipmentTitle, locale)}</SectionTitle></Reveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {lab.equipment.map((e, i) => {
+                const rgb = rgbAt(i);
+                const lightboxIndex = equipmentWithImage.indexOf(e);
+                const clickable = lightboxIndex >= 0;
+                return (
+                  <Reveal key={e.id} delay={i * 0.04}>
+                    <TiltCard
+                      className="group glass-card rounded-2xl p-3 h-full relative flex items-center gap-3"
+                      style={{ border: `1px solid rgba(${rgb},0.2)`, boxShadow: "var(--card-shadow)" }}
+                      intensity={5}
+                    >
+                      <div
+                        className={`relative w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0 ${clickable ? "cursor-zoom-in" : ""}`}
+                        style={{ background: `linear-gradient(135deg, rgba(${rgb},0.16), rgba(${rgb},0.04))` }}
+                        onClick={() => clickable && setEquipmentLightboxIndex(lightboxIndex)}
+                        role={clickable ? "button" : undefined}
+                        tabIndex={clickable ? 0 : undefined}
+                        aria-label={clickable ? e.name : undefined}
+                        onKeyDown={clickable ? onEnterOrSpace(() => setEquipmentLightboxIndex(lightboxIndex)) : undefined}
+                      >
+                        {e.image ? (
+                          <Image src={e.image} alt={e.name} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                        ) : (() => {
+                          const Icon = resolveIcon(e.icon) ?? Cog;
+                          return <Icon size={26} strokeWidth={1.5} style={{ color: `rgb(${rgb})` }} />;
+                        })()}
+                        {clickable && (
+                          <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "rgba(4,12,26,0.45)" }}>
+                            <Expand size={14} className="text-white" />
+                          </span>
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-semibold text-content text-sm truncate">{e.name}</p>
+                        {e.model_name && <p className="text-xs font-mono truncate mt-0.5" style={{ color: `rgb(${rgb})` }}>{e.model_name}</p>}
+                      </div>
+                    </TiltCard>
+                  </Reveal>
+                );
+              })}
             </div>
           </section>
         )}
@@ -471,41 +472,22 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
         {hasTeam && (
           <section id="team" className="scroll-mt-32">
             <Reveal><SectionTitle>{tr(T.teamTitle, locale)}</SectionTitle></Reveal>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {lab.leaderName && (
-                <Reveal>
-                  <TiltCard
-                    className="glass-card rounded-2xl p-5 flex flex-col items-center text-center gap-2"
-                    style={{ border: "1px solid rgba(var(--accent-rgb),0.25)", boxShadow: "var(--card-shadow)" }}
-                    intensity={5}
-                  >
-                    {lab.leaderPhoto ? (
-                      <div className="relative w-20 h-20 rounded-full overflow-hidden flex-shrink-0" style={{ border: "2px solid rgba(var(--accent-rgb),0.4)" }}>
-                        <Image src={lab.leaderPhoto} alt={lab.leaderName} fill className="object-cover" />
-                      </div>
-                    ) : (
-                      <div className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(var(--accent-2-rgb),0.35), rgba(var(--accent-rgb),0.2))", border: "2px solid rgba(var(--accent-rgb),0.4)", color: "var(--accent)" }}>{lab.leaderName.charAt(0).toUpperCase()}</div>
-                    )}
-                    <p className="font-semibold text-content">{lab.leaderName}</p>
-                    <p className="text-xs font-medium" style={{ color: "var(--accent)" }}>{lab.leaderPosition || tr(T.leader, locale)}</p>
-                  </TiltCard>
-                </Reveal>
-              )}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {lab.teamMembers.map((m, i) => (
-                <Reveal key={m.id} delay={(i + 1) * 0.06}>
+                <Reveal key={m.id} delay={i * 0.05}>
                   <TiltCard
-                    className="glass-card rounded-2xl p-5 flex flex-col items-center text-center gap-2"
+                    className="glass-card rounded-2xl p-4 flex flex-col items-center text-center gap-1.5"
                     style={{ border: `1px solid rgba(${rgbAt(i)},0.2)`, boxShadow: "var(--card-shadow)" }}
                     intensity={5}
                   >
                     {m.photo ? (
-                      <div className="relative w-20 h-20 rounded-full overflow-hidden flex-shrink-0" style={{ border: `2px solid rgba(${rgbAt(i)},0.35)` }}>
+                      <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0" style={{ border: `2px solid rgba(${rgbAt(i)},0.35)` }}>
                         <Image src={m.photo} alt={m.name || m.position} fill className="object-cover" />
                       </div>
                     ) : (
-                      <div className="w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: `rgba(${rgbAt(i)},0.14)`, border: `2px solid rgba(${rgbAt(i)},0.3)` }}><User size={28} style={{ color: `rgb(${rgbAt(i)})` }} /></div>
+                      <div className="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: `rgba(${rgbAt(i)},0.14)`, border: `2px solid rgba(${rgbAt(i)},0.3)` }}><User size={22} style={{ color: `rgb(${rgbAt(i)})` }} /></div>
                     )}
-                    <p className="font-semibold" style={{ color: "var(--content-secondary)" }}>{m.name || "—"}</p>
+                    <p className="font-semibold text-sm" style={{ color: "var(--content-secondary)" }}>{m.name || "—"}</p>
                     <p className="text-xs font-medium" style={{ color: `rgb(${rgbAt(i)})` }}>{m.position}</p>
                   </TiltCard>
                 </Reveal>
