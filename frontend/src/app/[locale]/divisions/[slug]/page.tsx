@@ -47,7 +47,7 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
         contactPhone: div.contact_phone ?? "",
         contactEmail: div.contact_email ?? "",
         stats: div.stats ?? [],
-        capabilities: div.capabilities ?? [],
+        services: (div.services ?? []).map((s) => ({ ...s, cover_image: s.cover_image ? mediaUrl(s.cover_image) : null })),
         equipment: (div.equipment ?? []).map((e) => ({ ...e, image: e.image ? mediaUrl(e.image) : null })),
         gallery: (div.gallery ?? []).map((g) => ({ ...g, image: mediaUrl(g.image) })),
         standards: div.standards ?? [],

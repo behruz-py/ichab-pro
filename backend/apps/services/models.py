@@ -28,6 +28,13 @@ class Service(TranslatedModel, OrderedModel, ActiveModel):
     icon = models.CharField(max_length=100, blank=True, help_text="Icon class or SVG name")
     cover_image = models.ImageField(upload_to="services/covers/", blank=True, null=True)
 
+    highlights_uz = models.TextField(
+        "Nega muhim (uz)", blank=True,
+        help_text="Har qatorga bitta band. Masalan: Nosozlikni oldindan aniqlaydi",
+    )
+    highlights_ru = models.TextField("Nega muhim (ru)", blank=True, help_text="Har qatorga bitta band.")
+    highlights_en = models.TextField("Nega muhim (en)", blank=True, help_text="Har qatorga bitta band.")
+
     price_from = models.DecimalField(
         max_digits=12, decimal_places=2, null=True, blank=True,
         help_text="Minimum narx (ixtiyoriy)"

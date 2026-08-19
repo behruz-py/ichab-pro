@@ -1,11 +1,7 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
-import { mediaUrl } from "@/lib/utils";
 import { ServiceGroups } from "@/components/sections/ServiceGroups";
 
 type Props = { params: { locale: string } };
@@ -33,53 +29,7 @@ export default async function ServicesPage({ params: { locale } }: Props) {
         <p className="text-content-secondary text-lg max-w-2xl mx-auto">{t("subtitle")}</p>
       </div>
 
-      {/* ── Grouped service catalogue ── */}
-      <ServiceGroups locale={locale} />
-
-      {/* ── Additional (admin-managed) services, if any ── */}
-      {services.length > 0 && (
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-12">
-        {services.map((svc) => (
-          <Link
-            key={svc.id}
-            href={`/${locale}/services/${svc.slug}`}
-            className="group glass-card rounded-2xl border border-border-subtle overflow-hidden hover:border-accent/40 transition-all duration-300 hover:shadow-glow flex flex-col"
-          >
-            {svc.cover_image ? (
-              <div className="relative h-44 overflow-hidden">
-                <Image
-                  src={mediaUrl(svc.cover_image)}
-                  alt={svc.name}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-            ) : (
-              <div className="h-20 flex items-end px-6 pt-6">
-                {svc.icon && <span className="text-4xl">{svc.icon}</span>}
-              </div>
-            )}
-            <div className="p-6 flex-1 flex flex-col">
-              {!svc.cover_image && !svc.icon && null}
-              <h2 className="font-display font-semibold text-content text-lg mb-2 group-hover:text-accent transition-colors">
-                {svc.name}
-              </h2>
-              <p className="text-content-secondary text-sm leading-relaxed line-clamp-3 flex-1">
-                {svc.short_description}
-              </p>
-              {svc.price_from && (
-                <p className="text-accent text-sm font-medium mt-3">{svc.price_from}</p>
-              )}
-              <span className="inline-flex items-center gap-1 mt-4 text-accent text-xs font-medium">
-                {t("learn_more")}
-                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </span>
-            </div>
-          </Link>
-        ))}
-      </div>
-      )}
+      <ServiceGroups services={services} locale={locale} />
     </div>
   );
 }

@@ -18,13 +18,6 @@ export interface DivisionStat {
   order: number;
 }
 
-export interface DivisionCapability {
-  id: number;
-  icon: string;
-  title: string;
-  order: number;
-}
-
 export interface DivisionEquipment {
   id: number;
   icon: string;
@@ -70,7 +63,7 @@ export interface Division {
   contact_email: string;
   // Present only on the detail (retrieve) response — undefined on list rows.
   stats?: DivisionStat[];
-  capabilities?: DivisionCapability[];
+  services?: Service[];
   equipment?: DivisionEquipment[];
   gallery?: DivisionGalleryImage[];
   standards?: DivisionStandard[];
@@ -157,6 +150,7 @@ export interface Service {
   name: string;
   short_description: string;
   description?: string;
+  highlights?: string[];
   icon: string;
   cover_image: string | null;
   images?: ServiceImage[];

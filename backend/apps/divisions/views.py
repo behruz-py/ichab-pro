@@ -19,7 +19,7 @@ class DivisionViewSet(PublicReadAdminWriteMixin, viewsets.ModelViewSet):
             qs = qs.filter(is_active=True)
         if self.action == "retrieve":
             qs = qs.prefetch_related(
-                "stats", "capabilities", "equipment", "gallery", "standards",
+                "stats", "services", "equipment", "gallery", "standards",
                 "team_members", "projects", "projects__images",
             )
         return qs

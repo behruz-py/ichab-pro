@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { ArrowLeft, ArrowRight, Phone, Mail, Award, CheckCircle2, User, Cog, Expand, Quote, ChevronDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, Phone, Mail, Award, CheckCircle2, Check, User, Cog, Expand, Quote, ChevronDown } from "lucide-react";
 import { resolveIcon } from "@/components/ui/DynamicIcon";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { CursorSpotlight } from "@/components/ui/CursorSpotlight";
@@ -13,7 +13,7 @@ import { SectionPathLine } from "@/components/ui/SectionPathLine";
 import { Lightbox, type LightboxItem } from "@/components/ui/Lightbox";
 import { mediaUrl, formatDate } from "@/lib/utils";
 import type {
-  DivisionStat, DivisionCapability, DivisionEquipment,
+  DivisionStat, Service, DivisionEquipment,
   DivisionGalleryImage, DivisionStandard, DivisionTeamMember, Project,
 } from "@/types/api";
 
@@ -31,7 +31,7 @@ export interface LabData {
   contactPhone: string;
   contactEmail: string;
   stats: DivisionStat[];
-  capabilities: DivisionCapability[];
+  services: Service[];
   equipment: DivisionEquipment[];
   gallery: DivisionGalleryImage[];
   standards: DivisionStandard[];
@@ -46,14 +46,14 @@ const rgbAt = (i: number) => PALETTE[i % PALETTE.length];
 
 const T = {
   overview:     { uz: "Umumiy", ru: "Обзор", en: "Overview" },
-  capabilities: { uz: "Imkoniyatlar", ru: "Возможности", en: "Capabilities" },
+  services:     { uz: "Xizmatlar", ru: "Услуги", en: "Services" },
   equipment:    { uz: "Jihozlar", ru: "Оборудование", en: "Equipment" },
   gallery:      { uz: "Galereya", ru: "Галерея", en: "Gallery" },
   projects:     { uz: "Loyihalar", ru: "Проекты", en: "Projects" },
   standards:    { uz: "Standartlar", ru: "Стандарты", en: "Standards" },
   team:         { uz: "Jamoa", ru: "Команда", en: "Team" },
   contact:      { uz: "Aloqa", ru: "Контакты", en: "Contacts" },
-  capabilitiesTitle: { uz: "Imkoniyatlar va xizmatlar", ru: "Возможности и услуги", en: "Capabilities & services" },
+  servicesTitle: { uz: "Xizmatlarimiz", ru: "Наши услуги", en: "Our services" },
   equipmentTitle:    { uz: "Asosiy jihozlar", ru: "Ключевое оборудование", en: "Key equipment" },
   projectsTitle:     { uz: "Bog'liq loyihalar", ru: "Связанные проекты", en: "Related projects" },
   standardsTitle:    { uz: "Standartlar va akkreditatsiya", ru: "Стандарты и аккредитация", en: "Standards & accreditation" },
@@ -129,7 +129,7 @@ function StatCard({ s, rgb, inView, i }: { s: DivisionStat; rgb: string; inView:
 }
 
 export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: string; backLabel: string }) {
-  const hasCapabilities = lab.capabilities.length > 0;
+  const hasServices = lab.services.length > 0;
   const hasEquipment = lab.equipment.length > 0;
   const hasGallery = lab.gallery.length > 0;
   const hasProjects = lab.relatedProjects.length > 0;
@@ -138,13 +138,13 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
 
   const nav = useMemo(() => [
     { id: "overview", label: T.overview, show: true },
-    { id: "capabilities", label: T.capabilities, show: hasCapabilities },
+    { id: "services", label: T.services, show: hasServices },
     { id: "gallery", label: T.gallery, show: hasGallery },
     { id: "equipment", label: T.equipment, show: hasEquipment },
     { id: "projects", label: T.projects, show: hasProjects },
     { id: "team", label: T.team, show: hasTeam },
     { id: "contact", label: T.contact, show: true },
-  ].filter((n) => n.show), [hasCapabilities, hasEquipment, hasGallery, hasProjects, hasTeam]);
+  ].filter((n) => n.show), [hasServices, hasEquipment, hasGallery, hasProjects, hasTeam]);
 
   const [active, setActive] = useState("overview");
   const statsRef = useRef<HTMLDivElement>(null);
@@ -306,25 +306,43 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
           </Reveal>
         </section>
 
-        {/* Capabilities */}
-        {hasCapabilities && (
-          <section id="capabilities" className="scroll-mt-32">
-            <Reveal><SectionTitle>{tr(T.capabilitiesTitle, locale)}</SectionTitle></Reveal>
+        {/* Services — icon + name, then a checklist of "why it matters" points
+            (Service.highlights). No category grouping/count badge: each card
+            already belongs to this one division, so that layer is redundant. */}
+        {hasServices && (
+          <section id="services" className="scroll-mt-32">
+            <Reveal><SectionTitle>{tr(T.servicesTitle, locale)}</SectionTitle></Reveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {lab.capabilities.map((c, i) => {
+              {lab.services.map((s, i) => {
                 const rgb = rgbAt(i);
+                const Icon = resolveIcon(s.icon) ?? Cog;
                 return (
-                  <Reveal key={c.id} delay={i * 0.05}>
+                  <Reveal key={s.id} delay={i * 0.05}>
                     <TiltCard
-                      className="group glass-card rounded-2xl p-4 h-full relative overflow-hidden flex items-center gap-4"
+                      className="glass-card rounded-2xl p-5 h-full relative overflow-hidden"
                       style={{ border: `1px solid rgba(${rgb},0.2)`, boxShadow: "var(--card-shadow)" }}
-                      intensity={6}
+                      intensity={5}
                     >
-                      <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl flex-shrink-0 transition-transform duration-300 group-hover:scale-110" style={{ background: `rgba(${rgb},0.14)`, border: `1px solid rgba(${rgb},0.3)` }}>
-                        {(() => { const Icon = resolveIcon(c.icon) ?? Cog; return <Icon size={22} style={{ color: `rgb(${rgb})` }} />; })()}
-                      </span>
-                      <p className="font-medium text-content leading-snug flex-1" style={{ fontSize: "15px" }}>{c.title}</p>
-                      <ArrowRight size={16} className="flex-shrink-0 opacity-0 -translate-x-2 group-hover:opacity-70 group-hover:translate-x-0 transition-all duration-300" style={{ color: `rgb(${rgb})` }} />
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl flex-shrink-0" style={{ background: `rgba(${rgb},0.14)`, border: `1px solid rgba(${rgb},0.3)` }}>
+                          <Icon size={20} style={{ color: `rgb(${rgb})` }} />
+                        </span>
+                        <p className="font-semibold text-content leading-snug" style={{ fontSize: "15px" }}>{s.name}</p>
+                      </div>
+                      {s.highlights && s.highlights.length > 0 ? (
+                        <ul className="space-y-2.5">
+                          {s.highlights.map((h, j) => (
+                            <li key={j} className="flex items-start gap-2.5">
+                              <span className="flex items-center justify-center rounded-md flex-shrink-0 mt-0.5" style={{ width: 18, height: 18, background: `rgba(${rgb},0.15)` }}>
+                                <Check size={11} style={{ color: `rgb(${rgb})` }} strokeWidth={3} />
+                              </span>
+                              <span className="text-xs leading-relaxed" style={{ color: "var(--content-secondary)" }}>{h}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : s.short_description ? (
+                        <p className="text-xs leading-relaxed" style={{ color: "var(--content-secondary)" }}>{s.short_description}</p>
+                      ) : null}
                     </TiltCard>
                   </Reveal>
                 );

@@ -49,10 +49,11 @@ class Division(TranslatedModel, OrderedModel, ActiveModel):
 
 
 # ─── Per-division laboratory content (universal — same fields, any division) ──
-# These let the admin build a full "laboratory" detail page (stats, capabilities,
-# equipment, gallery, standards, team) for ANY division without touching code.
-# Related/completed work is intentionally NOT duplicated here — it reuses the
-# existing apps.projects.Project model (already has a `division` FK + images).
+# These let the admin build a full "laboratory" detail page (stats, equipment,
+# gallery, standards, team) for ANY division without touching code.
+# "What we do" and "related work" are intentionally NOT duplicated here — they
+# reuse apps.services.Service and apps.projects.Project (both already have a
+# `division` FK; Service also carries per-item "why it matters" highlights).
 
 class DivisionStat(models.Model):
     """A single animated-counter stat shown near the top of the lab page."""
@@ -75,24 +76,6 @@ class DivisionStat(models.Model):
 
     def __str__(self):
         return f"{self.division} — {self.label_uz}"
-
-
-class DivisionCapability(models.Model):
-    """One "what we do" capability/service card."""
-    division = models.ForeignKey(Division, on_delete=models.CASCADE, related_name="capabilities")
-    icon = models.CharField("Ikonka", max_length=50, blank=True, help_text="Lucide ikonka nomi")
-    title_uz = models.CharField("Nomi (uz)", max_length=250)
-    title_ru = models.CharField("Nomi (ru)", max_length=250, blank=True)
-    title_en = models.CharField("Nomi (en)", max_length=250, blank=True)
-    order = models.PositiveIntegerField("Tartib", default=0)
-
-    class Meta:
-        verbose_name = "Imkoniyat / xizmat"
-        verbose_name_plural = "Imkoniyatlar va xizmatlar"
-        ordering = ["order"]
-
-    def __str__(self):
-        return self.title_uz
 
 
 class DivisionEquipment(models.Model):
