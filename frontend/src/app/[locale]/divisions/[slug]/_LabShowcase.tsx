@@ -374,7 +374,7 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
         {hasEquipment && (
           <section id="equipment" className="scroll-mt-32">
             <Reveal><SectionTitle>{tr(T.equipmentTitle, locale)}</SectionTitle></Reveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {lab.equipment.map((e, i) => {
                 const rgb = rgbAt(i);
                 const lightboxIndex = equipmentWithImage.indexOf(e);
@@ -382,13 +382,13 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                 return (
                   <Reveal key={e.id} delay={i * 0.04}>
                     <TiltCard
-                      className="group glass-card rounded-2xl p-3 h-full relative flex items-center gap-3"
+                      className="group glass-card rounded-2xl overflow-hidden h-full relative"
                       style={{ border: `1px solid rgba(${rgb},0.2)`, boxShadow: "var(--card-shadow)" }}
                       intensity={5}
                     >
                       <div
-                        className={`relative w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0 ${clickable ? "cursor-zoom-in" : ""}`}
-                        style={{ background: `linear-gradient(135deg, rgba(${rgb},0.16), rgba(${rgb},0.04))` }}
+                        className={`relative flex items-center justify-center ${clickable ? "cursor-zoom-in" : ""}`}
+                        style={{ height: "clamp(80px, 11vw, 110px)", background: `linear-gradient(135deg, rgba(${rgb},0.16), rgba(${rgb},0.04))` }}
                         onClick={() => clickable && setEquipmentLightboxIndex(lightboxIndex)}
                         role={clickable ? "button" : undefined}
                         tabIndex={clickable ? 0 : undefined}
@@ -399,17 +399,17 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                           <Image src={e.image} alt={e.name} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
                         ) : (() => {
                           const Icon = resolveIcon(e.icon) ?? Cog;
-                          return <Icon size={26} strokeWidth={1.5} style={{ color: `rgb(${rgb})` }} />;
+                          return <Icon size={34} strokeWidth={1.3} style={{ color: `rgb(${rgb})` }} className="transition-transform duration-500 group-hover:scale-110" />;
                         })()}
                         {clickable && (
                           <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "rgba(4,12,26,0.45)" }}>
-                            <Expand size={14} className="text-white" />
+                            <Expand size={16} className="text-white" />
                           </span>
                         )}
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="font-semibold text-content text-sm truncate">{e.name}</p>
-                        {e.model_name && <p className="text-xs font-mono truncate mt-0.5" style={{ color: `rgb(${rgb})` }}>{e.model_name}</p>}
+                      <div className="p-2.5">
+                        <p className="font-semibold text-content text-xs truncate">{e.name}</p>
+                        {e.model_name && <p className="text-[11px] font-mono truncate mt-0.5" style={{ color: `rgb(${rgb})` }}>{e.model_name}</p>}
                       </div>
                     </TiltCard>
                   </Reveal>
