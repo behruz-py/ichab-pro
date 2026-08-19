@@ -391,7 +391,7 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                     >
                       <div
                         className={`relative flex items-center justify-center ${clickable ? "cursor-zoom-in" : ""}`}
-                        style={{ height: "clamp(80px, 11vw, 110px)", background: `linear-gradient(135deg, rgba(${rgb},0.16), rgba(${rgb},0.04))` }}
+                        style={{ aspectRatio: "4/3", background: `linear-gradient(135deg, rgba(${rgb},0.16), rgba(${rgb},0.04))` }}
                         onClick={() => clickable && setEquipmentLightboxIndex(lightboxIndex)}
                         role={clickable ? "button" : undefined}
                         tabIndex={clickable ? 0 : undefined}
@@ -399,7 +399,11 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                         onKeyDown={clickable ? onEnterOrSpace(() => setEquipmentLightboxIndex(lightboxIndex)) : undefined}
                       >
                         {e.image ? (
-                          <Image src={e.image} alt={e.name} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                          <>
+                            {/* Blurred fill behind so a photo that doesn't match the 4:3 cell never leaves a bare gap */}
+                            <Image src={e.image} alt="" aria-hidden fill sizes="1px" className="object-cover scale-125 blur-xl opacity-30" />
+                            <Image src={e.image} alt={e.name} fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw" className="object-contain p-2 transition-transform duration-500 group-hover:scale-110" />
+                          </>
                         ) : (() => {
                           const Icon = resolveIcon(e.icon) ?? Cog;
                           return <Icon size={34} strokeWidth={1.3} style={{ color: `rgb(${rgb})` }} className="transition-transform duration-500 group-hover:scale-110" />;
