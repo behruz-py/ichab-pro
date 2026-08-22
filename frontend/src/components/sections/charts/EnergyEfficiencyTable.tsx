@@ -20,13 +20,13 @@ const C_2026: Loc = { uz: "2026-yil (mln so'm)", ru: "2026 год (млн сум
 const C_PCT: Loc = { uz: "2026 / 2025 (%)", ru: "2026 / 2025 (%)", en: "2026 / 2025 (%)" };
 const C_TOTAL: Loc = { uz: "Jami", ru: "Итого", en: "Total" };
 
-interface Row { n?: string; name: string; v2025: string; v2026: string; pct?: string; total?: boolean }
+interface Row { n?: string; name: Loc; v2025: string; v2026: string; pct?: string; total?: boolean }
 
 const ROWS: Row[] = [
-  { name: C_TOTAL.uz, v2025: "5 693,9", v2026: "7 800,2", pct: "136 %", total: true },
-  { n: "1", name: "Elektr energiyasi iste'molini qisqartirish", v2025: "12,8", v2026: "16,3", pct: "127,3 %" },
-  { n: "2", name: "Xomashyo, materiallar va butlovchi qismlarni xarid qilish jarayonlarini optimallashtirish", v2025: "4 807,4", v2026: "811,4" },
-  { n: "3", name: "Ishlab chiqarishdagi bilvosita xarajatlarni kamaytirish bo'yicha chora-tadbirlar", v2025: "873,7", v2026: "6 988,8" },
+  { name: C_TOTAL, v2025: "5 693,9", v2026: "7 800,2", pct: "136 %", total: true },
+  { n: "1", name: { uz: "Elektr energiyasi iste'molini qisqartirish", ru: "Сокращение потребления электроэнергии", en: "Reducing electricity consumption" }, v2025: "12,8", v2026: "16,3", pct: "127,3 %" },
+  { n: "2", name: { uz: "Xomashyo, materiallar va butlovchi qismlarni xarid qilish jarayonlarini optimallashtirish", ru: "Оптимизация процессов закупки сырья, материалов и комплектующих", en: "Optimizing procurement of raw materials, supplies and components" }, v2025: "4 807,4", v2026: "811,4" },
+  { n: "3", name: { uz: "Ishlab chiqarishdagi bilvosita xarajatlarni kamaytirish bo'yicha chora-tadbirlar", ru: "Меры по снижению косвенных производственных расходов", en: "Measures to reduce indirect production costs" }, v2025: "873,7", v2026: "6 988,8" },
 ];
 
 export function EnergyEfficiencyTable({ locale }: { locale: string }) {
@@ -68,7 +68,7 @@ export function EnergyEfficiencyTable({ locale }: { locale: string }) {
                     {r.n ?? "—"}
                   </td>
                   <td className="px-4 py-3.5 align-middle leading-snug" style={{ fontSize: 13.5, fontWeight: r.total ? 700 : 500, color: "var(--content)", borderBottom: "1px solid var(--border-subtle)", borderRight: "1px solid var(--border-subtle)" }}>
-                    {r.total ? t(C_TOTAL, locale) : r.name}
+                    {t(r.name, locale)}
                   </td>
                   <td className="px-4 py-3.5 text-right align-middle tabular-nums" style={{ fontSize: 13.5, fontWeight: r.total ? 700 : 500, color: "var(--content)", borderBottom: "1px solid var(--border-subtle)", borderRight: "1px solid var(--border-subtle)" }}>
                     {r.v2025}

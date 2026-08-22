@@ -13,6 +13,7 @@ const HEADING: Loc = {
 };
 const LEG_DONA: Loc = { uz: "Mahsulot turlari, dona", ru: "Виды продукции, шт.", en: "Product types, units" };
 const LEG_VOL: Loc = { uz: "Ishlab chiqarish hajmi, mln so'm", ru: "Объём производства, млн сум", en: "Production volume, mln UZS" };
+const FORECAST: Loc = { uz: "reja", ru: "прогноз", en: "forecast" };
 
 const NOTE1: Loc = {
   uz: "2020 yilgacha o'zlashtirilgan mahsulotlarning asosiy ulushi oddiy turdagi mahsulotlardan iborat edi. Ammo 2022 yilga kelib, ishlab chiqarish jarayonlari modernizatsiya qilingandan so'ng yuqori kuchlanishli mahsulotlar hamda o'lchov vositalari va asboblarini ishlab chiqarish o'zlashtirildi.",
@@ -128,7 +129,7 @@ export function LocalizationGrowthChart({ locale }: { locale: string }) {
                       </div>
                       <div className="mt-2.5 text-center">
                         <span className="font-semibold" style={{ fontSize: 12.5, color: "var(--content-secondary)" }}>{d.year}</span>
-                        {d.forecast && <span className="block text-[9px] font-bold uppercase tracking-wide mt-0.5" style={{ color: "rgb(52,211,153)" }}>reja</span>}
+                        {d.forecast && <span className="block text-[9px] font-bold uppercase tracking-wide mt-0.5" style={{ color: "rgb(52,211,153)" }}>{t(FORECAST, locale)}</span>}
                       </div>
                     </div>
                   ))}

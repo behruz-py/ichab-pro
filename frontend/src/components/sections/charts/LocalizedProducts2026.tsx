@@ -23,27 +23,36 @@ const L_VOL: Loc = { uz: "Mahsulot hajmi", ru: "Объём продукции", 
 const UNIT: Loc = { uz: "mln so'm", ru: "млн сум", en: "mln UZS" };
 const PCS: Loc = { uz: "dona", ru: "шт.", en: "pcs" };
 
-interface P { uz: string; ru: string; count: string; value: string }
+interface P { uz: string; ru: string; en: string; count: string; value: string }
 const PRODUCTS: P[] = [
-  { uz: "Shaxta reversiv puskateli (ПРР)", ru: "Пускатель рудничный реверсивный", count: "10", value: "278.0" },
-  { uz: "Shaxta noreversiv puskateli (ПРН)", ru: "Пускатель рудничный нереверсивный", count: "10", value: "192.0" },
-  { uz: "Yumshoq ishga tushirish puskateli (ПРМ)", ru: "Пускатель рудничный мягкий пуск", count: "6", value: "158.0" },
-  { uz: "Qo'lda boshqariladigan puskatel (ПРШ)", ru: "Пускатель рудничный с ручным управлением", count: "6", value: "168.0" },
-  { uz: "Shovqin darajasi o'lchagichi (ШУМ-4)", ru: "Измеритель уровня шума", count: "16", value: "75.0" },
-  { uz: "OSM transformatori", ru: "Трансформатор ОСМ", count: "70", value: "80.0" },
-  { uz: "Dvigatelni himoyalash boshqaruv shkafi", ru: "Шкаф управления защиты двигателя", count: "45", value: "580.0" },
-  { uz: "DIN-reyka", ru: "Дин-рейка", count: "2 777", value: "55.0" },
-  { uz: "Quyosh geliokollektori", ru: "Солнечный гелиоколлектор", count: "90", value: "700.0" },
-  { uz: "Tiristorli boshqaruv shkafi (ВТЕ)", ru: "Шкаф тиристорного управления", count: "18", value: "2 000.0" },
-  { uz: "Kabel uchlari", ru: "Кабельные наконечники", count: "43 000", value: "500.0" },
-  { uz: "ТРЕ 200/460 quvvat bloki", ru: "ТПЕ 200/460 силовой блок", count: "8", value: "730.0" },
-  { uz: "Shaxta yoritish moslamasi (АОШ)", ru: "Шахтный осветительный прибор", count: "6", value: "220.0" },
-  { uz: "Avtomatlashtirish shkafi", ru: "Шкаф автоматизации", count: "4", value: "330.0" },
-  { uz: "Masofadan boshqarish pulti (PDU)", ru: "Пульт дистанционного управления ПДУ", count: "2", value: "65.0" },
-  { uz: "Reaktiv quvvatni kompensatsiya qurilmasi", ru: "Устройство компенсации реактивной мощности", count: "1", value: "40.0" },
-  { uz: "Kuch shkafi (ШС)", ru: "Шкаф силовой", count: "2", value: "180.0" },
-  { uz: "Titratuvchi boshqarish shkafi", ru: "Шкаф управления вибропитателем", count: "10", value: "240.2" },
+  { uz: "Shaxta reversiv puskateli (ПРР)", ru: "Пускатель рудничный реверсивный", en: "Mine reversible starter (ПРР)", count: "10", value: "278.0" },
+  { uz: "Shaxta noreversiv puskateli (ПРН)", ru: "Пускатель рудничный нереверсивный", en: "Mine non-reversible starter (ПРН)", count: "10", value: "192.0" },
+  { uz: "Yumshoq ishga tushirish puskateli (ПРМ)", ru: "Пускатель рудничный мягкий пуск", en: "Mine soft-start starter (ПРМ)", count: "6", value: "158.0" },
+  { uz: "Qo'lda boshqariladigan puskatel (ПРШ)", ru: "Пускатель рудничный с ручным управлением", en: "Mine manually-operated starter (ПРШ)", count: "6", value: "168.0" },
+  { uz: "Shovqin darajasi o'lchagichi (ШУМ-4)", ru: "Измеритель уровня шума", en: "Noise level meter (ШУМ-4)", count: "16", value: "75.0" },
+  { uz: "OSM transformatori", ru: "Трансформатор ОСМ", en: "OSM transformer", count: "70", value: "80.0" },
+  { uz: "Dvigatelni himoyalash boshqaruv shkafi", ru: "Шкаф управления защиты двигателя", en: "Motor protection control cabinet", count: "45", value: "580.0" },
+  { uz: "DIN-reyka", ru: "Дин-рейка", en: "DIN rail", count: "2 777", value: "55.0" },
+  { uz: "Quyosh geliokollektori", ru: "Солнечный гелиоколлектор", en: "Solar heat collector", count: "90", value: "700.0" },
+  { uz: "Tiristorli boshqaruv shkafi (ВТЕ)", ru: "Шкаф тиристорного управления", en: "Thyristor control cabinet (ВТЕ)", count: "18", value: "2 000.0" },
+  { uz: "Kabel uchlari", ru: "Кабельные наконечники", en: "Cable lugs", count: "43 000", value: "500.0" },
+  { uz: "ТРЕ 200/460 quvvat bloki", ru: "ТПЕ 200/460 силовой блок", en: "ТРЕ 200/460 power unit", count: "8", value: "730.0" },
+  { uz: "Shaxta yoritish moslamasi (АОШ)", ru: "Шахтный осветительный прибор", en: "Mine lighting fixture (АОШ)", count: "6", value: "220.0" },
+  { uz: "Avtomatlashtirish shkafi", ru: "Шкаф автоматизации", en: "Automation cabinet", count: "4", value: "330.0" },
+  { uz: "Masofadan boshqarish pulti (PDU)", ru: "Пульт дистанционного управления ПДУ", en: "Remote control unit (PDU)", count: "2", value: "65.0" },
+  { uz: "Reaktiv quvvatni kompensatsiya qurilmasi", ru: "Устройство компенсации реактивной мощности", en: "Reactive power compensation device", count: "1", value: "40.0" },
+  { uz: "Kuch shkafi (ШС)", ru: "Шкаф силовой", en: "Power cabinet (ШС)", count: "2", value: "180.0" },
+  { uz: "Titratuvchi boshqarish shkafi", ru: "Шкаф управления вибропитателем", en: "Vibro-feeder control cabinet", count: "10", value: "240.2" },
 ];
+
+/** Primary (locale-appropriate) name + a secondary reference name — Russian
+ * technical designations double as de-facto industry model codes, so we keep
+ * one visible as a subtitle unless it would just repeat the primary line. */
+function productNames(p: P, locale: string): { primary: string; secondary: string } {
+  const primary = locale === "ru" ? p.ru : locale === "en" ? p.en : p.uz;
+  const secondary = locale === "ru" ? p.uz : p.ru;
+  return { primary, secondary };
+}
 
 const PALETTE = ["56,189,248", "139,92,246", "245,158,11", "16,185,129", "236,72,153", "59,130,246"];
 
@@ -103,6 +112,7 @@ export function LocalizedProducts2026({ locale }: { locale: string }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {PRODUCTS.map((p, i) => {
           const c = PALETTE[i % PALETTE.length];
+          const { primary, secondary } = productNames(p, locale);
           return (
             <motion.div key={i}
               initial={{ opacity: 0, y: 14 }} animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -112,8 +122,8 @@ export function LocalizedProducts2026({ locale }: { locale: string }) {
               style={{ border: `1px solid rgba(${c},0.22)`, boxShadow: "var(--card-shadow)" }}>
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                 style={{ boxShadow: `inset 0 0 0 1.5px rgba(${c},0.5), 0 16px 34px rgba(${c},0.2)` }} />
-              <h4 className="font-display font-bold text-content leading-snug" style={{ fontSize: 14 }}>{p.uz}</h4>
-              <p className="mt-0.5 leading-snug" style={{ fontSize: 11.5, color: "var(--content-muted)" }}>{p.ru}</p>
+              <h4 className="font-display font-bold text-content leading-snug" style={{ fontSize: 14 }}>{primary}</h4>
+              <p className="mt-0.5 leading-snug" style={{ fontSize: 11.5, color: "var(--content-muted)" }}>{secondary}</p>
               <div className="mt-auto flex items-center justify-between pt-3.5">
                 <span className="inline-flex items-center px-2.5 py-1 rounded-lg font-bold tabular-nums" style={{ fontSize: 12, background: `rgba(${c},0.14)`, color: `rgb(${c})` }}>
                   {p.count} {t(PCS, locale)}
