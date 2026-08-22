@@ -14,7 +14,10 @@ const fmt = (n: number) => n.toLocaleString("ru-RU");
 const W = 250, H = 224, CX = 125, CY = 98;
 const RX = 82, RY = 63, IRX = 49, IRY = 37, DEPTH = 16, LAYERS = 18;
 
-const ept = (cx: number, cy: number, ex: number, ey: number, a: number): [number, number] => [cx + ex * Math.cos(a), cy + ey * Math.sin(a)];
+// Rounded so SSR and hydration always serialize the exact same path string —
+// Math.sin/cos can differ in the last bit between Node's V8 and the browser's.
+const round = (n: number) => Math.round(n * 1000) / 1000;
+const ept = (cx: number, cy: number, ex: number, ey: number, a: number): [number, number] => [round(cx + ex * Math.cos(a)), round(cy + ey * Math.sin(a))];
 function sector(cy: number, a0: number, a1: number) {
   const large = a1 - a0 > Math.PI ? 1 : 0;
   const [x0, y0] = ept(CX, cy, RX, RY, a0), [x1, y1] = ept(CX, cy, RX, RY, a1);

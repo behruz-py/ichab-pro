@@ -48,12 +48,17 @@ function cardRect(i: number) {
   return { x, y: yc - CH / 2, yc, side };
 }
 // connector: from hub edge to the card edge that faces the hub
+// Rounded so the SSR-computed and hydration-computed trig results always
+// serialize to the exact same string — Math.sin/cos can differ in the last
+// bit between Node's V8 and the browser's, which React treats as a mismatch.
+const round = (n: number) => Math.round(n * 1000) / 1000;
+
 function connector(i: number) {
   const { x, yc, side } = cardRect(i);
   const tx = side === "left" ? x + CW : x;       // inner edge of card
   const ty = yc;
   const a = Math.atan2(ty - HUBY, tx - HUBX);
-  return { sx: HUBX + HUB_R * Math.cos(a), sy: HUBY + HUB_R * Math.sin(a), tx, ty };
+  return { sx: round(HUBX + HUB_R * Math.cos(a)), sy: round(HUBY + HUB_R * Math.sin(a)), tx, ty };
 }
 
 /** Circular avatar: cover image with an onError fallback to a neon color + icon. */
