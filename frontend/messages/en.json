@@ -3,7 +3,7 @@
     "home": "Home",
     "company": "Company",
     "about": "About the company",
-    "divisions": "Divisions",
+    "divisions": "Laboratories",
     "services": "Services",
     "products": "Products",
     "projects": "Projects",
@@ -25,16 +25,17 @@
     "title": "ICHAB in numbers"
   },
   "divisions": {
-    "title": "Divisions",
-    "subtitle": "Specialized teams across all areas of industrial automation.",
-    "view_all": "All Divisions",
+    "title": "Our Laboratories",
+    "subtitle": "Specialized laboratories across all areas of industrial automation.",
+    "view_all": "All Laboratories",
     "view_detail": "Details"
   },
   "services": {
     "title": "Our Services",
     "subtitle": "Full cycle — from design to ongoing maintenance.",
     "filter_all": "All",
-    "learn_more": "Learn More"
+    "learn_more": "Learn More",
+    "view_all": "All Services"
   },
   "products": {
     "title": "Product Catalog",

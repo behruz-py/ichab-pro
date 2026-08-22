@@ -5,3 +5,18 @@ export const SITE_URL = (
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "ICHAB";
+
+/** Short brand mark — differs per locale (matches the abbreviation actually
+ * used in that language, not a literal translation of "ICHAB"). */
+export const BRAND_NAME: Record<string, string> = {
+  uz: "ICHAB",
+  ru: "УАП",
+  en: "MAD",
+};
+
+/** Full spelled-out name, per locale. */
+export const BRAND_FULL_NAME: Record<string, string> = {
+  uz: "ISHLAB CHIQARISHNI AVTOMATLASHTIRISH BOSHQARMASI",
+  ru: "УПРАВЛЕНИЕ АВТОМАТИЗАЦИИ ПРОИЗВОДСТВА",
+  en: "MANUFACTURING AUTOMATION DEPARTMENT",
+};

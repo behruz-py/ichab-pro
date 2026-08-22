@@ -4,6 +4,13 @@ import { Star } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { PartnerGrid } from "@/components/sections/PartnerGrid";
+import { BRAND_NAME } from "@/lib/site";
+
+const TRUSTED_PARTNERS: Record<string, string> = {
+  uz: "ta ishonchli hamkor",
+  ru: "надёжных партнёров",
+  en: "trusted partners",
+};
 
 // Refresh every 60s — ensures admin changes appear quickly on the next request
 export const revalidate = 60;
@@ -128,7 +135,7 @@ export default async function PartnersPage({ params: { locale } }: Props) {
                 fontWeight: 600,
               }}
             >
-              {partners.length} ta ishonchli hamkor · ICHAB Pro
+              {partners.length} {TRUSTED_PARTNERS[locale] ?? TRUSTED_PARTNERS.uz} · {BRAND_NAME[locale] ?? BRAND_NAME.uz}
             </p>
           </div>
         </div>

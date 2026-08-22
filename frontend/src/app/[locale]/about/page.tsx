@@ -4,8 +4,15 @@ import Image from "next/image";
 import { Factory } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
+import { BRAND_NAME } from "@/lib/site";
 
 type Props = { params: { locale: string } };
+
+const FULL_NAME_SENTENCE_CASE: Record<string, string> = {
+  uz: "Ishlab chiqarishni avtomatlashtirish boshqarmasi",
+  ru: "Управление автоматизации производства",
+  en: "Manufacturing Automation Department",
+};
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -61,7 +68,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
         {pages.length === 0 && (
           <div className="glass-card rounded-2xl border border-border-subtle p-12 text-center text-content-muted">
             <Factory size={40} strokeWidth={1.5} className="mx-auto mb-4" />
-            <p>ICHAB — Ishlab chiqarishni avtomatlashtirish boshqarmasi</p>
+            <p>{BRAND_NAME[locale] ?? BRAND_NAME.uz} — {FULL_NAME_SENTENCE_CASE[locale] ?? FULL_NAME_SENTENCE_CASE.uz}</p>
           </div>
         )}
       </div>

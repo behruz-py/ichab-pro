@@ -11,18 +11,7 @@ import { ThemeSwitcher } from "@/components/shared/ThemeSwitcher";
 import { useUIStore } from "@/store/ui.store";
 import { cn } from "@/lib/utils";
 import { LogoBadge } from "@/components/shared/LogoBadge";
-
-const BRAND_NAME: Record<string, string> = {
-  uz: "ICHAB",
-  ru: "УАП",
-  en: "MAD",
-};
-
-const FULL_NAME: Record<string, string> = {
-  uz: "ISHLAB CHIQARISHNI AVTOMATLASHTIRISH BOSHQARMASI",
-  ru: "УПРАВЛЕНИЕ АВТОМАТИЗАЦИИ ПРОИЗВОДСТВА",
-  en: "MANUFACTURING AUTOMATION DEPARTMENT",
-};
+import { BRAND_NAME, BRAND_FULL_NAME as FULL_NAME } from "@/lib/site";
 
 const CTA_LABEL: Record<string, string> = {
   uz: "Bog'lanish",

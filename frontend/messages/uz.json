@@ -1,9 +1,9 @@
 {
   "nav": {
     "home": "Bosh sahifa",
-    "company": "Kompaniya",
+    "company": "Korxona",
     "about": "Korxona haqida",
-    "divisions": "Bo'linmalar",
+    "divisions": "Laboratoriyalar",
     "services": "Xizmatlar",
     "products": "Mahsulotlar",
     "projects": "Loyihalar",
@@ -25,16 +25,17 @@
     "title": "Raqamlarda ICHAB"
   },
   "divisions": {
-    "title": "Tarkibiy bo'linmalar",
-    "subtitle": "Sanoat avtomatizatsiyasining barcha sohalarida mutaxassis bo'linmalarimiz.",
-    "view_all": "Barcha bo'linmalar",
+    "title": "Laboratoriyalarimiz",
+    "subtitle": "Sanoat avtomatizatsiyasining barcha sohalarida mutaxassis laboratoriyalarimiz.",
+    "view_all": "Barcha laboratoriyalar",
     "view_detail": "Batafsil"
   },
   "services": {
     "title": "Xizmatlarimiz",
     "subtitle": "Loyihalashdan tortib texnik xizmat ko'rsatishgacha to'liq tsikl.",
     "filter_all": "Barchasi",
-    "learn_more": "Batafsil"
+    "learn_more": "Batafsil",
+    "view_all": "Barcha xizmatlar"
   },
   "products": {
     "title": "Mahsulotlar katalogi",

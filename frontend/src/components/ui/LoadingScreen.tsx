@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { useLocale } from "next-intl";
+import { BRAND_NAME } from "@/lib/site";
 
 interface Props {
   onComplete?: () => void;
@@ -11,7 +13,14 @@ interface Props {
 const R = 140;                       // ring radius
 const CIRC = 2 * Math.PI * R;        // circumference
 
+const SUBTITLE: Record<string, string> = {
+  uz: "Ishlab chiqarishni avtomatlashtirish",
+  ru: "Автоматизация производства",
+  en: "Manufacturing Automation",
+};
+
 export function LoadingScreen({ onComplete }: Props) {
+  const locale = useLocale();
   const [progress, setProgress] = useState(0);
   const [visible, setVisible] = useState(true);
   const [logoError, setLogoError] = useState(false);
@@ -131,10 +140,10 @@ export function LoadingScreen({ onComplete }: Props) {
               className="text-center"
             >
               <h1 className="font-display font-bold text-4xl text-content tracking-[0.22em] uppercase">
-                ICHAB
+                {BRAND_NAME[locale] ?? BRAND_NAME.uz}
               </h1>
               <p className="text-content-muted text-xs tracking-[0.15em] uppercase mt-1.5">
-                Ishlab chiqarishni avtomatlashtirish
+                {SUBTITLE[locale] ?? SUBTITLE.uz}
               </p>
             </motion.div>
 

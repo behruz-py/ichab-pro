@@ -21,7 +21,7 @@ interface Props {
   viewDetail: string;
 }
 
-const EYEBROW: Record<string, string> = { uz: "Bo'linmalar", ru: "Подразделения", en: "Divisions" };
+const EYEBROW: Record<string, string> = { uz: "Laboratoriyalar", ru: "Лаборатории", en: "Laboratories" };
 const LAB: Record<string, string> = { uz: "Laboratoriya", ru: "Лаборатория", en: "Laboratory" };
 const ICONS: LucideIcon[] = [FlaskConical, Cpu, Gauge, Activity, Cog, Zap];
 

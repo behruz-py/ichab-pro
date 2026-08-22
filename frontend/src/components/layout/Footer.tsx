@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { MapPin, Phone, Mail, Clock, ArrowRight, Printer, Globe } from "lucide-react";
 import { LogoBadge } from "@/components/shared/LogoBadge";
+import { BRAND_NAME } from "@/lib/site";
 
 const COMPANY = [
   { key: "about",        path: "/about" },
@@ -72,7 +73,7 @@ export async function Footer() {
             <Link href={`/${locale}`} className="flex items-center gap-3 mb-5 group w-fit">
               <LogoBadge size={40} />
               <div className="flex flex-col leading-none gap-1">
-                <span className="font-display font-bold text-lg text-content group-hover:text-[var(--accent-secondary)] transition-colors">ICHAB Pro</span>
+                <span className="font-display font-bold text-lg text-content group-hover:text-[var(--accent-secondary)] transition-colors">{BRAND_NAME[locale] ?? BRAND_NAME.uz}</span>
                 <span className="text-[9px] text-content-muted font-medium uppercase tracking-[0.12em]">Sanoat avtomatizatsiyasi</span>
               </div>
             </Link>

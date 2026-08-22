@@ -7,9 +7,10 @@ interface Props {
   size?: number;
   className?: string;
   strokeWidth?: number;
+  style?: React.CSSProperties;
 }
 
-type IconComponent = React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
+type IconComponent = React.ComponentType<{ size?: number; className?: string; strokeWidth?: number; style?: React.CSSProperties }>;
 
 // Built once: a case/format-insensitive lookup so admin-entered icon names like
 // "shield-check", "ShieldCheck" or "Shield Check" all resolve to the same icon.
@@ -26,8 +27,8 @@ export function resolveIcon(name?: string | null): IconComponent | null {
   return ICON_MAP[name.replace(/[\s_-]/g, "").toLowerCase()] ?? null;
 }
 
-export function DynamicIcon({ name, size = 22, className = "", strokeWidth }: Props) {
+export function DynamicIcon({ name, size = 22, className = "", strokeWidth, style }: Props) {
   const Icon = resolveIcon(name);
   if (!Icon) return null;
-  return <Icon size={size} className={className} strokeWidth={strokeWidth} />;
+  return <Icon size={size} className={className} strokeWidth={strokeWidth} style={style} />;
 }
