@@ -675,3 +675,15 @@ html { scroll-behavior: smooth; }
 }
 .group:hover .ken-burns-img { animation-play-state: running; }
 @media (prefers-reduced-motion: reduce) { .ken-burns-img { animation: none; } }
+
+/* Homepage service cards — highlights checklist unfolds in on hover instead
+ * of linking out to a per-service page. */
+.service-highlights {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, margin-top 0.35s ease;
+}
+.service-highlights > ul { overflow: hidden; }
+.group:hover .service-highlights { grid-template-rows: 1fr; opacity: 1; margin-top: 14px; }
+@media (prefers-reduced-motion: reduce) { .service-highlights { transition: none; } }

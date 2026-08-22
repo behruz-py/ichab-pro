@@ -88,7 +88,7 @@ export default async function HomePage({ params: { locale } }: Props) {
           locale={locale}
           title={tServices("title")}
           subtitle={tServices("subtitle")}
-          learnMore={tServices("learn_more")}
+          viewAll={tServices("view_all")}
         />
       )}
 
