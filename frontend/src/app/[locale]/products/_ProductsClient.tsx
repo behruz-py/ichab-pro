@@ -51,9 +51,9 @@ export function ProductsClient({ products, categories }: Props) {
     return list;
   }, [products, selectedCategory, search, sort]);
 
-  const chip = (active: boolean, c = "var(--accent-rgb)") =>
+  const chip = (active: boolean) =>
     active
-      ? { background: `rgb(${c === "var(--accent-rgb)" ? "56,189,248" : c})`, color: "#0b1b33", boxShadow: `0 0 16px rgba(56,189,248,0.4)` }
+      ? { background: "var(--warm-btn)", color: "#fff", boxShadow: "0 0 16px rgba(var(--warm-glow),0.4)" }
       : { background: "var(--glass)", border: "1px solid var(--glass-border)", color: "var(--content-secondary)" };
 
   return (
@@ -113,19 +113,19 @@ export function ProductsClient({ products, categories }: Props) {
               <motion.div key={product.id} variants={fadeUp} whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 300, damping: 24 }}>
                 <Link href={`/${locale}/products/${product.slug}`}
                   className="group relative flex flex-col h-full rounded-2xl overflow-hidden glass-card transition-colors"
-                  style={{ border: "1px solid rgba(56,189,248,0.16)", boxShadow: "var(--card-shadow)" }}>
+                  style={{ border: "1px solid rgba(var(--accent-rgb),0.16)", boxShadow: "var(--card-shadow)" }}>
                   {/* Image */}
                   <div className="relative overflow-hidden" style={{ aspectRatio: "4/3", background: "var(--card-solid)" }}>
                     {product.main_image ? (
                       <Image src={product.main_image} alt={product.name} fill className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,25vw" />
                     ) : (
-                      <div className="absolute inset-0 flex items-center justify-center" style={{ color: "rgba(56,189,248,0.4)" }}>
+                      <div className="absolute inset-0 flex items-center justify-center" style={{ color: "rgba(var(--accent-rgb),0.4)" }}>
                         <Package size={42} strokeWidth={1.3} />
                       </div>
                     )}
                     {product.category_name && (
-                      <span className="absolute top-2.5 left-2.5 text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-md" style={{ background: "rgba(11,27,51,0.82)", color: "#7dd3fc" }}>
+                      <span className="absolute top-2.5 left-2.5 text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-md" style={{ background: "rgba(11,27,51,0.82)", color: "#FCD34D" }}>
                         {product.category_name}
                       </span>
                     )}
@@ -152,7 +152,7 @@ export function ProductsClient({ products, categories }: Props) {
                   </div>
                   {/* hover ring */}
                   <span className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                    style={{ boxShadow: "inset 0 0 0 1.5px rgba(56,189,248,0.5), 0 18px 40px rgba(56,189,248,0.18)" }} />
+                    style={{ boxShadow: "inset 0 0 0 1.5px rgba(var(--accent-rgb),0.5), 0 18px 40px rgba(var(--accent-rgb),0.18)" }} />
                 </Link>
               </motion.div>
             );

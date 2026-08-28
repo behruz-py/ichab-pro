@@ -4,66 +4,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── THEME: Soft Slate (light) ───────────────────────────────────────────── */
+/* ─── THEME: Warm Gold (light) ────────────────────────────────────────────────
+   Gold → amber → deep-orange, lifted straight from the inner gear of the
+   ICHAB mark, replacing the previous sky-blue "Soft Slate" identity. Dark
+   (aurora) theme is untouched — this palette is light-mode only.          */
 :root {
-  --surface:            #EEF4FA;
-  --surface-secondary:  #F4F8FC;
+  --surface:            #FAF6EE;
+  --surface-secondary:  #F8F4EA;
   --surface-card:       #FFFFFF;
   --surface-elevated:   #FFFFFF;
 
-  --content:            #0F2438;
-  --content-secondary:  #47596D;
-  --content-muted:      #8195A9;
+  --content:            #241C0F;
+  --content-secondary:  #6B5D45;
+  --content-muted:      #A5977E;
 
-  --accent:             #0EA5E9;
-  --accent-secondary:   #0284C7;
-  --accent-glow:        rgba(14, 165, 233, 0.30);
-  --accent-glow-far:    rgba(14, 165, 233, 0.10);
-  --accent-gradient:    linear-gradient(135deg, #2563EB 0%, #0EA5E9 50%, #10B981 100%);
+  --accent:             #D97706;
+  --accent-secondary:   #B45309;
+  --accent-glow:        rgba(217, 119, 6, 0.30);
+  --accent-glow-far:    rgba(217, 119, 6, 0.10);
+  --accent-gradient:    linear-gradient(135deg, #FBBF24 0%, #F59E0B 50%, #EA580C 100%);
 
   /* Warm complementary accent — the "action" signal: CTAs, featured, highlights */
-  --warm:               linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%);
-  --warm-btn:           linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%);
-  --warm-solid:         #0EA5E9;
-  --warm-tint:          rgba(14, 165, 233, 0.12);
+  --warm:               linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+  --warm-btn:           linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+  --warm-solid:         #F59E0B;
+  --warm-tint:          rgba(217, 119, 6, 0.12);
 
-  --border:             rgba(8, 47, 73, 0.11);
-  --border-subtle:      rgba(8, 47, 73, 0.07);
+  --border:             rgba(36, 28, 15, 0.11);
+  --border-subtle:      rgba(36, 28, 15, 0.07);
 
   --gradient:
-    radial-gradient(ellipse 80% 60% at 80% -8%, rgba(14, 165, 233, 0.10) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 50% at 10% 108%, rgba(16, 185, 129, 0.07) 0%, transparent 45%),
-    linear-gradient(180deg, #EEF4FA 0%, #F2F7FC 60%, #E5EEF7 100%);
+    radial-gradient(ellipse 80% 60% at 80% -8%, rgba(217, 119, 6, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 10% 108%, rgba(245, 158, 11, 0.06) 0%, transparent 45%),
+    linear-gradient(180deg, #FAF6EE 0%, #FBF7EF 60%, #F5EDDC 100%);
 
   --glass:              rgba(255, 255, 255, 0.72);
-  --glass-border:       rgba(8, 47, 73, 0.08);
+  --glass-border:       rgba(120, 90, 30, 0.10);
 
   /* Premium card surface (subtle sheen) + floating shadow */
-  --card-bg:            linear-gradient(165deg, #FFFFFF 0%, #F3F8FC 100%);
-  --card-shadow:        0 1px 2px rgba(8, 47, 73, 0.05), 0 12px 30px rgba(2, 132, 199, 0.10);
+  --card-bg:            linear-gradient(165deg, #FFFFFF 0%, #FDF8EF 100%);
+  --card-shadow:        0 1px 2px rgba(36, 28, 15, 0.05), 0 12px 30px rgba(217, 119, 6, 0.12);
 
   /* Tokenized accents so the alternate theme can re-skin shared utilities */
-  --surface-rgb:        238, 244, 250;
-  --warm-btn-hover:     linear-gradient(135deg, #0B96D6 0%, #0596B0 100%);
-  --warm-glow:          14, 165, 233;         /* rgb triple for glow shadows (sky) */
+  --surface-rgb:        250, 246, 238;
+  --warm-btn-hover:     linear-gradient(135deg, #FBBF24 0%, #F97316 100%);
+  --warm-glow:          217, 119, 6;         /* rgb triple for glow shadows (gold) */
   --header-bg:          rgba(255, 255, 255, 0.70);
-  --header-bg-scrolled: rgba(255, 255, 255, 0.90);
-  --header-border:      rgba(2, 132, 199, 0.10);
+  --header-bg-scrolled: rgba(255, 255, 255, 0.92);
+  --header-border:      rgba(217, 119, 6, 0.14);
   --panel-bg:           rgba(255, 255, 255, 0.97);
-  --panel-border:       rgba(2, 132, 199, 0.16);
-  --brand-gradient:     linear-gradient(120deg, #0F2438 0%, #0EA5E9 70%, #06B6D4 130%);
-  --hero-accent-gradient: linear-gradient(135deg, #0EA5E9 0%, #06B6D4 50%, #10B981 100%);
-  --accent-rgb:         14, 165, 233;    /* sky */
-  --accent-2-rgb:       2, 132, 199;     /* deep sky (shadows) */
-  --surface-2-rgb:      234, 242, 250;   /* section tint */
-  --panel-rgb:          248, 251, 254;   /* raised panel */
-  --footer-bg:          linear-gradient(180deg, #EDF3F9 0%, #E3ECF4 100%);
-  --footer-border:      rgba(8, 47, 73, 0.08);
-  --grad-warm-a:        #06B6D4;         /* decorative AI-border → cyan/mint */
-  --grad-warm-b:        #10B981;
+  --panel-border:       rgba(217, 119, 6, 0.18);
+  --brand-gradient:     linear-gradient(120deg, #241C0F 0%, #F59E0B 70%, #EA580C 130%);
+  --hero-accent-gradient: linear-gradient(135deg, #FBBF24 0%, #F59E0B 50%, #EA580C 100%);
+  --accent-rgb:         217, 119, 6;     /* gold */
+  --accent-2-rgb:       180, 83, 9;      /* deep amber (shadows) */
+  --surface-2-rgb:      248, 241, 224;   /* section tint */
+  --panel-rgb:          253, 250, 243;   /* raised panel */
+  --footer-bg:          linear-gradient(180deg, #FBF3E4 0%, #F5E9D3 100%);
+  --footer-border:      rgba(120, 90, 30, 0.10);
+  --grad-warm-a:        #F59E0B;         /* decorative AI-border → gold/orange */
+  --grad-warm-b:        #EA580C;
   /* near-opaque card surface — for cards that sit ON a decorative gradient
      border (CTA banner), so the border stays an edge, not a fill */
-  --card-solid:         linear-gradient(165deg, #FFFFFF 0%, #F3F8FC 100%);
+  --card-solid:         linear-gradient(165deg, #FFFFFF 0%, #FDF8EF 100%);
 }
 
 /* ─── THEME: Aurora Glass (dark cinematic + frosted accents) ─────────────────
@@ -236,7 +239,7 @@
   /* Animated gradient heading with a soft light sheen sweeping through */
   .title-sheen {
     background: linear-gradient(100deg,
-      #0EA5E9 0%, #0EA5E9 26%, #7DD3FC 44%, #E0F7FF 50%, #7DD3FC 56%, #06B6D4 72%, #10B981 100%);
+      #F59E0B 0%, #F59E0B 26%, #FCD34D 44%, #FEF3C7 50%, #FCD34D 56%, #EA580C 72%, #F59E0B 100%);
     background-size: 220% auto;
     -webkit-background-clip: text;
     background-clip: text;
@@ -550,7 +553,8 @@ select.form-input option {
 
 /* ─── AURORA GLASS THEME — extras ─────────────────────────────────────────── */
 
-/* Recolor the animated heading sheen to the cyan→mint family (no orange) */
+/* Aurora (dark) keeps its own cool cyan→mint sheen — the light theme's
+   version above is gold/amber now, so this override stays necessary. */
 [data-theme="aurora"] .title-sheen {
   background: linear-gradient(100deg,
     #38BDF8 0%, #38BDF8 26%, #7DD3FC 44%, #E0F2FE 50%, #7DD3FC 56%, #22D3EE 72%, #34D399 100%);
