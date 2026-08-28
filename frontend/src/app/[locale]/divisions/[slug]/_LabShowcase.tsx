@@ -221,7 +221,7 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
       </div>
 
       {/* ── Sticky sub-nav ── */}
-      <div className="sticky top-[76px] z-30 -mt-px">
+      <div className="sticky top-[65px] z-30 -mt-px">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="glass-card rounded-2xl px-2 py-1.5 overflow-x-auto flex gap-1" style={{ boxShadow: "var(--card-shadow)" }}>
             {nav.map((n) => (

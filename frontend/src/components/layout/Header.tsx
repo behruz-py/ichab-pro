@@ -67,30 +67,29 @@ export function Header() {
 
   return (
     <>
-      <header className="fixed top-0 inset-x-0 z-50 px-3 sm:px-5 pt-3 sm:pt-4 pointer-events-none">
+      <header className="fixed top-0 inset-x-0 z-50 pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
-            "max-w-[1340px] mx-auto rounded-2xl pointer-events-auto transition-all duration-400 relative",
-            scrolled
-              ? "shadow-[0_8px_40px_rgba(var(--accent-2-rgb),0.16),0_0_0_1px_rgba(var(--accent-rgb),0.18)]"
-              : "shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.10)]"
+            "w-full pointer-events-auto transition-all duration-400 relative",
+            scrolled ? "shadow-[0_8px_32px_rgba(var(--accent-2-rgb),0.14)]" : ""
           )}
           style={{
             background:           scrolled ? "var(--header-bg-scrolled)" : "var(--header-bg)",
             backdropFilter:       "blur(24px)",
             WebkitBackdropFilter: "blur(24px)",
+            borderBottom:         `1px solid rgba(var(--accent-rgb),${scrolled ? 0.16 : 0.08})`,
           }}
         >
-          {/* Blue top accent line */}
+          {/* Accent glow line along the bottom edge — separates the bar from page content now that it sits flush against the viewport */}
           <div
-            className={cn("absolute top-0 left-6 right-6 h-px transition-opacity duration-400", scrolled ? "opacity-70" : "opacity-30")}
+            className={cn("absolute bottom-0 inset-x-0 h-px transition-opacity duration-400", scrolled ? "opacity-100" : "opacity-50")}
             style={{ background: "linear-gradient(90deg, transparent 0%, rgba(var(--accent-rgb),0.7) 40%, rgba(var(--accent-rgb),0.9) 50%, rgba(var(--accent-rgb),0.7) 60%, transparent 100%)" }}
           />
 
-          <div className="px-4 sm:px-5 h-[58px] flex items-center justify-between gap-3">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[64px] flex items-center justify-between gap-3">
 
             {/* ── Logo ──────────────────────────────────────────────────── */}
             <Link
@@ -458,7 +457,7 @@ export function Header() {
         )}
       </AnimatePresence>
 
-      <div className="h-[73px]" aria-hidden="true" />
+      <div className="h-[65px]" aria-hidden="true" />
     </>
   );
 }
