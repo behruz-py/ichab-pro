@@ -109,7 +109,7 @@ export function HeroShareDonut({ heading, total, unit, segments }: { heading: st
             <div className="absolute flex flex-col items-center justify-center text-center pointer-events-none"
               style={{ left: `${(CX / W) * 100}%`, top: `${(CY / H) * 100}%`, transform: "translate(-50%,-50%)" }}>
               <span className="font-display font-extrabold tabular-nums leading-none" style={{ fontSize: 32, color: "var(--content)", textShadow: "0 0 18px rgba(56,189,248,0.5)" }}>{fmt(totalV)}</span>
-              <span className="mt-1 font-semibold" style={{ fontSize: 12.5, color: "var(--content-muted)" }}>{unit}</span>
+              <span className="mt-1 font-semibold" style={{ fontSize: 14, color: "var(--content-muted)" }}>{unit}</span>
             </div>
           </div>
 

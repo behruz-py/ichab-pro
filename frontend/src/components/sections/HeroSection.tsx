@@ -170,7 +170,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
         >
           <div className="w-1 h-2.5 rounded-full" style={{ background: "var(--accent)" }} />
         </motion.div>
-        <span className="text-[10px] font-medium tracking-wider uppercase" style={{ color: "var(--content-muted)" }}>
+        <span className="text-[12px] font-medium tracking-wider uppercase" style={{ color: "var(--content-muted)" }}>
           {scrollHint}
         </span>
       </motion.div>

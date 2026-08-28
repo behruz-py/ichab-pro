@@ -70,7 +70,7 @@ function Bar({ h, grad, glow, label, delay, inView }: { h: number; grad: string;
     <div className="relative" style={{ width: BAR_W, height: CHART_H }}>
       <div className="absolute bottom-0 inset-x-0 rounded-t" style={{ height: PLOT_H, background: "rgba(var(--accent-rgb),0.05)" }} />
       <div className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-center pointer-events-none" style={{ bottom: h + 8 }}>
-        <span className="font-display font-bold tabular-nums" style={{ fontSize: 12, color: "var(--content)" }}>{label}</span>
+        <span className="font-display font-bold tabular-nums" style={{ fontSize: 13.5, color: "var(--content)" }}>{label}</span>
       </div>
       <motion.div className="absolute bottom-0 inset-x-0 rounded-t-md" style={{
         height: h, background: grad, transformOrigin: "bottom",
@@ -110,7 +110,7 @@ export function LocalizationGrowthChart({ locale }: { locale: string }) {
             <div className="flex" style={{ minWidth: 560 }}>
               <div className="relative flex-shrink-0" style={{ width: 50, height: CHART_H }}>
                 {steps.map((v) => (
-                  <span key={v} className="absolute right-2 -translate-y-1/2 tabular-nums" style={{ bottom: (v / AXIS_MAX) * PLOT_H, fontSize: 10.5, color: "var(--content-muted)" }}>
+                  <span key={v} className="absolute right-2 -translate-y-1/2 tabular-nums" style={{ bottom: (v / AXIS_MAX) * PLOT_H, fontSize: 12.5, color: "var(--content-muted)" }}>
                     {v === 0 ? "0" : `${v / 1000}k`}
                   </span>
                 ))}
@@ -128,8 +128,8 @@ export function LocalizationGrowthChart({ locale }: { locale: string }) {
                         <Bar h={(d.volNum / AXIS_MAX) * PLOT_H} grad={VOL_GRAD} glow={VOL_GLOW} delay={0.25 + i * 0.08} inView={inView} label={d.vol} />
                       </div>
                       <div className="mt-2.5 text-center">
-                        <span className="font-semibold" style={{ fontSize: 12.5, color: "var(--content-secondary)" }}>{d.year}</span>
-                        {d.forecast && <span className="block text-[9px] font-bold uppercase tracking-wide mt-0.5" style={{ color: "rgb(52,211,153)" }}>{t(FORECAST, locale)}</span>}
+                        <span className="font-semibold" style={{ fontSize: 14, color: "var(--content-secondary)" }}>{d.year}</span>
+                        {d.forecast && <span className="block text-[11px] font-bold uppercase tracking-wide mt-0.5" style={{ color: "rgb(52,211,153)" }}>{t(FORECAST, locale)}</span>}
                       </div>
                     </div>
                   ))}

@@ -123,13 +123,13 @@ export function LocalizedProducts2026({ locale }: { locale: string }) {
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                 style={{ boxShadow: `inset 0 0 0 1.5px rgba(${c},0.5), 0 16px 34px rgba(${c},0.2)` }} />
               <h4 className="font-display font-bold text-content leading-snug" style={{ fontSize: 14 }}>{primary}</h4>
-              <p className="mt-0.5 leading-snug" style={{ fontSize: 11.5, color: "var(--content-muted)" }}>{secondary}</p>
+              <p className="mt-0.5 leading-snug" style={{ fontSize: 13.5, color: "var(--content-muted)" }}>{secondary}</p>
               <div className="mt-auto flex items-center justify-between pt-3.5">
-                <span className="inline-flex items-center px-2.5 py-1 rounded-lg font-bold tabular-nums" style={{ fontSize: 12, background: `rgba(${c},0.14)`, color: `rgb(${c})` }}>
+                <span className="inline-flex items-center px-2.5 py-1 rounded-lg font-bold tabular-nums" style={{ fontSize: 13.5, background: `rgba(${c},0.14)`, color: `rgb(${c})` }}>
                   {p.count} {t(PCS, locale)}
                 </span>
-                <span className="font-display font-bold tabular-nums" style={{ fontSize: 13.5, color: "var(--content)" }}>
-                  {p.value} <span style={{ fontSize: 10, color: "var(--content-muted)" }}>{t(UNIT, locale)}</span>
+                <span className="font-display font-bold tabular-nums" style={{ fontSize: 15, color: "var(--content)" }}>
+                  {p.value} <span style={{ fontSize: 12, color: "var(--content-muted)" }}>{t(UNIT, locale)}</span>
                 </span>
               </div>
             </motion.div>

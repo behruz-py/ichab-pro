@@ -123,7 +123,7 @@ export function StatsSection({ stats, title }: Props) {
                 </div>
 
                 {/* Label */}
-                <div className="text-[13px] font-medium leading-snug" style={{ color: "var(--content-secondary)" }}>
+                <div className="text-[14.5px] font-medium leading-snug" style={{ color: "var(--content-secondary)" }}>
                   {stat.label}
                 </div>
 

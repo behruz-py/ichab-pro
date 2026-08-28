@@ -58,7 +58,7 @@ export function MainIndicatorsTable({ locale }: { locale: string }) {
               <tr>
                 {[C_NAME, C_UNIT, C_2024, C_2025, C_DIFF, C_PCT].map((c, i) => (
                   <th key={i}
-                    className={`px-3.5 py-3 text-[11px] font-bold uppercase tracking-wide align-middle ${i === 0 ? "text-left" : "text-center"}`}
+                    className={`px-3.5 py-3 text-[13px] font-bold uppercase tracking-wide align-middle ${i === 0 ? "text-left" : "text-center"}`}
                     style={{ color: "var(--accent)", background: "rgba(var(--accent-rgb),0.07)", borderBottom: "1px solid var(--border)", borderRight: i < 5 ? cellBorder : "none", minWidth: i === 0 ? 240 : i === 4 || i === 5 ? 120 : 90 }}>
                     {t(c, locale)}
                   </th>
@@ -76,17 +76,17 @@ export function MainIndicatorsTable({ locale }: { locale: string }) {
                     className="transition-colors duration-200 hover:bg-[rgba(56,189,248,0.09)]"
                     style={i === 0 ? { background: "rgba(var(--accent-rgb),0.10)" } : undefined}
                   >
-                    <td className="py-3 align-middle leading-snug" style={{ paddingLeft: 14 + r.level * 22, paddingRight: 14, fontSize: 13, fontWeight: r.level === 0 ? 700 : 500, color: "var(--content)", borderBottom: cellBorder, borderRight: cellBorder }}>
+                    <td className="py-3 align-middle leading-snug" style={{ paddingLeft: 14 + r.level * 22, paddingRight: 14, fontSize: 14.5, fontWeight: r.level === 0 ? 700 : 500, color: "var(--content)", borderBottom: cellBorder, borderRight: cellBorder }}>
                       {t(r.name, locale)}
                     </td>
-                    <td className="px-3 py-3 text-center align-middle whitespace-nowrap" style={{ fontSize: 11, color: "var(--content-muted)", borderBottom: cellBorder, borderRight: cellBorder }}>{t(r.unit, locale)}</td>
-                    <td className="px-3.5 py-3 text-right align-middle tabular-nums" style={{ fontSize: 13, fontWeight: r.level === 0 ? 700 : 500, color: "var(--content)", borderBottom: cellBorder, borderRight: cellBorder }}>{r.v2024}</td>
-                    <td className="px-3.5 py-3 text-right align-middle tabular-nums" style={{ fontSize: 13, fontWeight: r.level === 0 ? 700 : 500, color: "var(--content)", borderBottom: cellBorder, borderRight: cellBorder }}>{r.v2025}</td>
-                    <td className="px-3.5 py-3 text-right align-middle tabular-nums font-bold" style={{ fontSize: 13, color: changeColor(r.change), borderBottom: cellBorder, borderRight: cellBorder }}>{r.change}</td>
+                    <td className="px-3 py-3 text-center align-middle whitespace-nowrap" style={{ fontSize: 13, color: "var(--content-muted)", borderBottom: cellBorder, borderRight: cellBorder }}>{t(r.unit, locale)}</td>
+                    <td className="px-3.5 py-3 text-right align-middle tabular-nums" style={{ fontSize: 14.5, fontWeight: r.level === 0 ? 700 : 500, color: "var(--content)", borderBottom: cellBorder, borderRight: cellBorder }}>{r.v2024}</td>
+                    <td className="px-3.5 py-3 text-right align-middle tabular-nums" style={{ fontSize: 14.5, fontWeight: r.level === 0 ? 700 : 500, color: "var(--content)", borderBottom: cellBorder, borderRight: cellBorder }}>{r.v2025}</td>
+                    <td className="px-3.5 py-3 text-right align-middle tabular-nums font-bold" style={{ fontSize: 14.5, color: changeColor(r.change), borderBottom: cellBorder, borderRight: cellBorder }}>{r.change}</td>
                     <td className="px-3 py-3 text-center align-middle" style={{ borderBottom: cellBorder }}>
                       {r.pct ? (
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full font-bold tabular-nums" style={{
-                          fontSize: 12,
+                          fontSize: 13.5,
                           background: up ? "rgba(16,185,129,0.15)" : "rgba(248,113,113,0.15)",
                           color: up ? "rgb(52,211,153)" : "rgb(248,113,113)",
                           border: `1px solid ${up ? "rgba(16,185,129,0.4)" : "rgba(248,113,113,0.4)"}`,

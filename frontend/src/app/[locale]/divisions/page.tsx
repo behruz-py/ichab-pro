@@ -57,7 +57,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                 </span>
                 {/* Pulsing green dot */}
                 <span
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold font-mono"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-bold font-mono"
                   style={{
                     background: "rgba(34,197,94,0.08)",
                     border: "1px solid rgba(34,197,94,0.25)",
@@ -91,12 +91,12 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
             >
               <div className="text-center">
                 <p className="font-mono font-bold text-2xl" style={{ color: "var(--accent)" }}>{divisions.length}</p>
-                <p className="text-[11px] uppercase tracking-wider" style={{ color: "#64748B" }}>Laboratoriya</p>
+                <p className="text-[13px] uppercase tracking-wider" style={{ color: "#64748B" }}>Laboratoriya</p>
               </div>
               <div className="w-px h-10 self-center" style={{ background: "rgba(var(--accent-rgb),0.18)" }} />
               <div className="text-center">
                 <p className="font-mono font-bold text-2xl" style={{ color: "#22C55E" }}>AKTIV</p>
-                <p className="text-[11px] uppercase tracking-wider" style={{ color: "#64748B" }}>Status</p>
+                <p className="text-[13px] uppercase tracking-wider" style={{ color: "#64748B" }}>Status</p>
               </div>
             </div>
           </div>
@@ -152,7 +152,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
                         WebkitBackdropFilter: "blur(6px)",
                       }}>
                       <span className="w-1.5 h-1.5 rounded-full lab-active-dot" style={{ background: "#22C55E" }} />
-                      <span className="font-mono text-[11px] font-bold tracking-widest" style={{ color: "var(--accent)" }}>
+                      <span className="font-mono text-[13px] font-bold tracking-widest" style={{ color: "var(--accent)" }}>
                         Laboratoriya · {String(i + 1).padStart(2, "0")}
                       </span>
                     </div>

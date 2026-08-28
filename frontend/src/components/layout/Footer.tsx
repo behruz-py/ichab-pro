@@ -74,7 +74,7 @@ export async function Footer() {
               <LogoBadge size={40} />
               <div className="flex flex-col leading-none gap-1">
                 <span className="font-display font-bold text-lg text-content group-hover:text-[var(--accent-secondary)] transition-colors">{BRAND_NAME[locale] ?? BRAND_NAME.uz}</span>
-                <span className="text-[9px] text-content-muted font-medium uppercase tracking-[0.12em]">Sanoat avtomatizatsiyasi</span>
+                <span className="text-[11px] text-content-muted font-medium uppercase tracking-[0.12em]">Sanoat avtomatizatsiyasi</span>
               </div>
             </Link>
             <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--content-secondary)" }}>{tFooter("description")}</p>

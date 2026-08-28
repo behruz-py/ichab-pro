@@ -64,7 +64,7 @@ export function DonutChart({ title, total, unit, segments, showPct = false }: { 
 
   return (
     <div ref={ref} className="glass-card rounded-2xl p-5 flex flex-col h-full" style={{ boxShadow: "var(--card-shadow)" }}>
-      {title && <h4 className="font-display font-bold text-content leading-snug mb-3" style={{ fontSize: 13.5, minHeight: 58 }}>{title}</h4>}
+      {title && <h4 className="font-display font-bold text-content leading-snug mb-3" style={{ fontSize: 15, minHeight: 58 }}>{title}</h4>}
 
       <div className="relative mx-auto" style={{ width: W, height: H }}>
         <motion.div initial={{ opacity: 0, scale: 0.82, rotate: -12 }} animate={inView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
@@ -127,7 +127,7 @@ export function DonutChart({ title, total, unit, segments, showPct = false }: { 
         <div className="absolute flex flex-col items-center justify-center text-center pointer-events-none"
           style={{ left: CX, top: CY, transform: "translate(-50%,-50%)", width: IRX * 1.8 }}>
           <span className="font-display font-extrabold tabular-nums leading-none" style={{ fontSize: 18, color: "var(--content)" }}>{fmt(totalV)}</span>
-          <span className="mt-0.5 font-semibold" style={{ fontSize: 9.5, color: "var(--content-muted)" }}>{unit}</span>
+          <span className="mt-0.5 font-semibold" style={{ fontSize: 11.5, color: "var(--content-muted)" }}>{unit}</span>
         </div>
       </div>
 
@@ -136,8 +136,8 @@ export function DonutChart({ title, total, unit, segments, showPct = false }: { 
         {segs.map((s, i) => (
           <li key={i} className="flex items-start gap-2.5">
             <span className="mt-1 w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: `rgb(${s.rgb})`, boxShadow: `0 0 8px rgba(${s.rgb},0.6)` }} />
-            <span className="flex-1 leading-snug" style={{ fontSize: 11.5, color: "var(--content-secondary)" }}>{s.label}</span>
-            <span className="font-bold tabular-nums whitespace-nowrap" style={{ fontSize: 11.5, color: `rgb(${lighten(s.rgb, 0.18)})` }}>{fmt(s.value)} {unitLine(s)}</span>
+            <span className="flex-1 leading-snug" style={{ fontSize: 13.5, color: "var(--content-secondary)" }}>{s.label}</span>
+            <span className="font-bold tabular-nums whitespace-nowrap" style={{ fontSize: 13.5, color: `rgb(${lighten(s.rgb, 0.18)})` }}>{fmt(s.value)} {unitLine(s)}</span>
           </li>
         ))}
       </ul>

@@ -9,6 +9,25 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Bumped ~10-15% over Tailwind's stock scale, site-wide — the old
+      // scale (text-sm=14px as the de-facto body size) read cramped next
+      // to reference sites like ngmk.uz, which sets body copy closer to
+      // 17-18px with generous line-height. Every text-* utility already
+      // used across the codebase inherits this automatically; only the
+      // handful of components using arbitrary text-[Npx] values (bypassing
+      // this scale entirely) needed separate, per-file adjustment.
+      fontSize: {
+        xs:   ["13px", { lineHeight: "17px" }],
+        sm:   ["15px", { lineHeight: "22px" }],
+        base: ["17px", { lineHeight: "26px" }],
+        lg:   ["19px", { lineHeight: "30px" }],
+        xl:   ["21px", { lineHeight: "30px" }],
+        "2xl": ["26px", { lineHeight: "34px" }],
+        "3xl": ["32px", { lineHeight: "38px" }],
+        "4xl": ["39px", { lineHeight: "44px" }],
+        "5xl": ["51px", { lineHeight: "1" }],
+        "6xl": ["63px", { lineHeight: "1" }],
+      },
       colors: {
         // Theme-aware semantic tokens — backed by CSS variables
         surface: {

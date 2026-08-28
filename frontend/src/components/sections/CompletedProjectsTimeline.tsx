@@ -115,7 +115,7 @@ export function CompletedProjectsTimeline({ locale }: { locale: string }) {
               className="glass-card rounded-2xl p-4 sm:p-5" style={{ border: `1px solid rgba(${k.rgb},0.25)`, boxShadow: "var(--card-shadow)" }}>
               <k.Icon size={20} style={{ color: `rgb(${k.rgb})` }} />
               <div className="font-display font-extrabold tabular-nums mt-2 leading-none" style={{ fontSize: "clamp(20px,2.4vw,30px)", color: "var(--content)" }}>{k.big}</div>
-              <div className="text-xs sm:text-[13px] mt-1.5 leading-snug" style={{ color: "var(--content-secondary)" }}>{k.label}</div>
+              <div className="text-xs sm:text-[14.5px] mt-1.5 leading-snug" style={{ color: "var(--content-secondary)" }}>{k.label}</div>
             </motion.div>
           ))}
         </div>
@@ -173,10 +173,10 @@ export function CompletedProjectsTimeline({ locale }: { locale: string }) {
                       </span>
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2 mb-2.5">
-                          <span className="font-mono text-[12px] font-bold tracking-wide px-2.5 py-1 rounded-md" style={{ background: `rgba(${m.rgb},0.16)`, color: `rgb(${m.rgb})` }}>
+                          <span className="font-mono text-[13.5px] font-bold tracking-wide px-2.5 py-1 rounded-md" style={{ background: `rgba(${m.rgb},0.16)`, color: `rgb(${m.rgb})` }}>
                             {dateLabel(it.year, it.month, locale)}
                           </span>
-                          <span className="text-[11.5px] font-semibold uppercase tracking-wide" style={{ color: "var(--content-muted)" }}>{tr(m.label, locale)}</span>
+                          <span className="text-[13.5px] font-semibold uppercase tracking-wide" style={{ color: "var(--content-muted)" }}>{tr(m.label, locale)}</span>
                         </div>
                         <p className="text-[15px] sm:text-base leading-relaxed font-medium text-content">{text}</p>
                       </div>

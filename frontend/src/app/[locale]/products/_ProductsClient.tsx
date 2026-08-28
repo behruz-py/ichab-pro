@@ -125,7 +125,7 @@ export function ProductsClient({ products, categories }: Props) {
                       </div>
                     )}
                     {product.category_name && (
-                      <span className="absolute top-2.5 left-2.5 text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-md" style={{ background: "rgba(11,27,51,0.82)", color: "#FCD34D" }}>
+                      <span className="absolute top-2.5 left-2.5 text-[12px] font-bold uppercase tracking-wide px-2 py-1 rounded-md" style={{ background: "rgba(11,27,51,0.82)", color: "#FCD34D" }}>
                         {product.category_name}
                       </span>
                     )}
@@ -142,7 +142,7 @@ export function ProductsClient({ products, categories }: Props) {
                       <p className="text-xs leading-relaxed mb-3 line-clamp-2 flex-1" style={{ color: "var(--content-secondary)" }}>{product.short_description}</p>
                     ) : <div className="flex-1" />}
                     {(product.sku || product.brand) && (
-                      <p className="text-[11px] mb-2.5 truncate" style={{ color: "var(--content-muted)" }}>
+                      <p className="text-[13px] mb-2.5 truncate" style={{ color: "var(--content-muted)" }}>
                         {product.brand}{product.brand && product.sku ? " · " : ""}{product.sku}
                       </p>
                     )}

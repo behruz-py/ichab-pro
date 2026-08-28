@@ -168,10 +168,10 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                 }}>
                 <Avatar div={div} Icon={Icon} c={c} size={62} />
                 <div className="min-w-0 flex-1">
-                  <span className="block font-mono text-[10px] font-bold tracking-widest mb-0.5" style={{ color: `rgb(${c})` }}>
+                  <span className="block font-mono text-[12px] font-bold tracking-widest mb-0.5" style={{ color: `rgb(${c})` }}>
                     {lab} · {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="font-display font-bold text-[13.5px] leading-snug line-clamp-2 first-letter:uppercase text-content">
+                  <h3 className="font-display font-bold text-[15px] leading-snug line-clamp-2 first-letter:uppercase text-content">
                     {div.name}
                   </h3>
                 </div>
@@ -208,7 +208,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                   style={{ background: "var(--card-bg)", border: `1.5px solid rgba(${c},0.55)`, boxShadow: `0 0 14px rgba(${c},0.25)` }}>
                   <Avatar div={div} Icon={Icon} c={c} size={60} />
                   <div className="min-w-0 flex-1">
-                    <span className="font-mono text-[10px] font-bold" style={{ color: `rgb(${c})` }}>
+                    <span className="font-mono text-[12px] font-bold" style={{ color: `rgb(${c})` }}>
                       {lab} · {String(i + 1).padStart(2, "0")}
                     </span>
                     <h3 className="font-display font-bold text-sm leading-snug line-clamp-2 first-letter:uppercase text-content">{div.name}</h3>

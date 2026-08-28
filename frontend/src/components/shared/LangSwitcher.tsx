@@ -45,7 +45,7 @@ export function LangSwitcher({ className }: { className?: string }) {
         aria-expanded={open}
         aria-haspopup="listbox"
         className={cn(
-          "flex items-center gap-1.5 px-3 h-8 rounded-lg text-[12px] font-semibold transition-all duration-200",
+          "flex items-center gap-1.5 px-3 h-8 rounded-lg text-[13.5px] font-semibold transition-all duration-200",
           "border bg-black/[0.03] backdrop-blur-sm",
           open
             ? "border-accent/45 text-accent bg-accent/8"

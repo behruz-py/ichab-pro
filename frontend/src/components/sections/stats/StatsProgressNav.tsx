@@ -29,7 +29,7 @@ export function StatsProgressNav({ sections }: { sections: { id: string; label: 
           const on = active === s.id;
           return (
             <a key={s.id} href={`#${s.id}`} className="group relative flex items-center justify-end gap-2.5" aria-label={s.label}>
-              <span className="pointer-events-none opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-[11px] font-semibold px-2.5 py-1 rounded-lg whitespace-nowrap glass-card"
+              <span className="pointer-events-none opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-[13px] font-semibold px-2.5 py-1 rounded-lg whitespace-nowrap glass-card"
                 style={{ color: "var(--content)" }}>
                 {s.label}
               </span>

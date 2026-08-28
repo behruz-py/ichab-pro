@@ -96,7 +96,7 @@ export function ServiceGroups({ services, locale }: { services: Service[]; local
                 <h3 className="font-display font-bold leading-snug text-content" style={{ fontSize: 16.5 }}>
                   {g.title}
                 </h3>
-                <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-[10.5px] font-bold uppercase tracking-wide"
+                <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-[12.5px] font-bold uppercase tracking-wide"
                   style={{ background: `rgba(${rgb},0.15)`, color: `rgb(${rgb})` }}>
                   {g.items.length} {tr(UNIT, locale)}
                 </span>
@@ -110,7 +110,7 @@ export function ServiceGroups({ services, locale }: { services: Service[]; local
                     style={{ width: 18, height: 18, background: `rgba(${rgb},0.15)` }}>
                     <Check size={12} color={`rgb(${rgb})`} strokeWidth={3} />
                   </span>
-                  <span className="leading-relaxed" style={{ fontSize: 13.5, color: "var(--content-secondary)" }}>
+                  <span className="leading-relaxed" style={{ fontSize: 15, color: "var(--content-secondary)" }}>
                     {svc.name}
                   </span>
                 </li>

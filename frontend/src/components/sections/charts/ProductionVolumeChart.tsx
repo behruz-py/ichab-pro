@@ -89,7 +89,7 @@ function Column({ d, i, inView, locale }: { d: Row; i: number; inView: boolean; 
         {stacked && (
           <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1 whitespace-nowrap pointer-events-none" style={{ bottom: totalH + 8 }}>
             <Sun size={11} style={{ color: "#F5B30B" }} />
-            <span className="font-display font-bold tabular-nums" style={{ fontSize: 12.5, color: "#F5B30B" }}>{fmt(helioV)}</span>
+            <span className="font-display font-bold tabular-nums" style={{ fontSize: 14, color: "#F5B30B" }}>{fmt(helioV)}</span>
           </div>
         )}
 
@@ -97,7 +97,7 @@ function Column({ d, i, inView, locale }: { d: Row; i: number; inView: boolean; 
         <div className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-center pointer-events-none flex items-center gap-1" style={{ bottom: stacked ? prodH - 22 : prodH + 8 }}>
           {d.forecast && <Target size={12} style={{ color: "var(--accent)" }} />}
           <span className="font-display font-bold tabular-nums"
-            style={{ fontSize: 13, color: d.forecast ? "var(--accent)" : stacked ? "#fff" : "var(--content)", textShadow: stacked ? "0 1px 3px rgba(0,0,0,0.45)" : "none" }}>
+            style={{ fontSize: 14.5, color: d.forecast ? "var(--accent)" : stacked ? "#fff" : "var(--content)", textShadow: stacked ? "0 1px 3px rgba(0,0,0,0.45)" : "none" }}>
             {fmt(prodV)}
           </span>
         </div>
@@ -133,8 +133,8 @@ function Column({ d, i, inView, locale }: { d: Row; i: number; inView: boolean; 
 
       {/* year */}
       <div className="mt-2.5 text-center">
-        <span className="font-semibold" style={{ fontSize: 12.5, color: "var(--content-secondary)" }}>{d.year}</span>
-        {d.forecast && <span className="block text-[9px] font-bold uppercase tracking-wide mt-0.5" style={{ color: "var(--accent)" }}>{tr(FORECAST, locale)}</span>}
+        <span className="font-semibold" style={{ fontSize: 14, color: "var(--content-secondary)" }}>{d.year}</span>
+        {d.forecast && <span className="block text-[11px] font-bold uppercase tracking-wide mt-0.5" style={{ color: "var(--accent)" }}>{tr(FORECAST, locale)}</span>}
       </div>
     </div>
   );
@@ -157,7 +157,7 @@ export function ProductionVolumeChart({ locale }: { locale: string }) {
           {/* Y axis */}
           <div className="relative flex-shrink-0" style={{ width: 56, height: CHART_H }}>
             {steps.map((v) => (
-              <span key={v} className="absolute right-2 -translate-y-1/2 tabular-nums" style={{ bottom: (v / AXIS_MAX) * PLOT_H, fontSize: 10.5, color: "var(--content-muted)" }}>
+              <span key={v} className="absolute right-2 -translate-y-1/2 tabular-nums" style={{ bottom: (v / AXIS_MAX) * PLOT_H, fontSize: 12.5, color: "var(--content-muted)" }}>
                 {v === 0 ? "0" : `${v / 1000}k`}
               </span>
             ))}

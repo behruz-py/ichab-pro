@@ -53,13 +53,13 @@ export function HeroVisual() {
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <Activity size={15} style={{ color: "var(--accent)" }} />
-              <span className="text-[11px] font-semibold tracking-wide" style={{ color: "var(--content-secondary)" }}>
+              <span className="text-[13px] font-semibold tracking-wide" style={{ color: "var(--content-secondary)" }}>
                 SCADA · REALTIME
               </span>
             </div>
             <span className="flex items-center gap-1.5">
               <span className="lab-active-dot w-1.5 h-1.5 rounded-full" style={{ background: "#34D399" }} />
-              <span className="text-[10px] font-bold tracking-wider" style={{ color: "var(--accent)" }}>LIVE</span>
+              <span className="text-[12px] font-bold tracking-wider" style={{ color: "var(--accent)" }}>LIVE</span>
             </span>
           </div>
 
@@ -138,7 +138,7 @@ export function HeroVisual() {
             <div className="font-display font-bold text-2xl leading-none" style={{ color: "var(--content)" }}>
               {projects}+
             </div>
-            <div className="text-[10px] font-semibold tracking-wider mt-1" style={{ color: "var(--content-muted)" }}>
+            <div className="text-[12px] font-semibold tracking-wider mt-1" style={{ color: "var(--content-muted)" }}>
               PROJECTS
             </div>
           </div>
@@ -156,7 +156,7 @@ export function HeroVisual() {
           {NODES.map((n, i) => (
             <span key={n} className="flex items-center gap-1.5">
               <span
-                className="text-[11px] font-mono font-semibold px-2 py-1 rounded-md"
+                className="text-[13px] font-mono font-semibold px-2 py-1 rounded-md"
                 style={{ background: "var(--accent-glow-far)", color: "var(--accent)" }}
               >
                 {n}
@@ -183,7 +183,7 @@ export function HeroVisual() {
         >
           <Wifi size={14} style={{ color: "#34D399" }} />
           <span className="font-display font-bold text-sm" style={{ color: "var(--content)" }}>99.9%</span>
-          <span className="text-[10px] font-semibold tracking-wider" style={{ color: "var(--content-muted)" }}>UPTIME</span>
+          <span className="text-[12px] font-semibold tracking-wider" style={{ color: "var(--content-muted)" }}>UPTIME</span>
         </motion.div>
 
         {/* ── ISO badge chip ────────────────────────────────────────────── */}
@@ -195,7 +195,7 @@ export function HeroVisual() {
           style={{ left: 0, top: 372, padding: "10px 14px" }}
         >
           <ShieldCheck size={15} style={{ color: "var(--accent)" }} />
-          <span className="text-[11px] font-bold tracking-wider" style={{ color: "var(--content-secondary)" }}>ISO 9001</span>
+          <span className="text-[13px] font-bold tracking-wider" style={{ color: "var(--content-secondary)" }}>ISO 9001</span>
         </motion.div>
       </div>
     </div>

@@ -83,7 +83,7 @@ function PartnerCard({ partner, visitSite }: { partner: Partner; visitSite: stri
 
         {partner.description && (
           <p
-            className="text-[11px] text-center leading-relaxed mb-3 line-clamp-2"
+            className="text-[13px] text-center leading-relaxed mb-3 line-clamp-2"
             style={{ color: "#64748B" }}
           >
             {partner.description}

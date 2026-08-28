@@ -72,7 +72,7 @@ function TrustNumber({ value, label, rgb, i, inView }: { value: number; label: s
       <div className="font-display font-extrabold tabular-nums leading-none" style={{ fontSize: "clamp(28px,3.6vw,40px)", color: `rgb(${rgb})`, textShadow: `0 0 24px rgba(${rgb},0.35)` }}>
         {v}+
       </div>
-      <p className="text-xs sm:text-[13px] mt-2.5 leading-snug" style={{ color: "var(--content-muted)" }}>{label}</p>
+      <p className="text-xs sm:text-[14.5px] mt-2.5 leading-snug" style={{ color: "var(--content-muted)" }}>{label}</p>
     </motion.div>
   );
 }
@@ -125,7 +125,7 @@ export function AboutShowcase({
         <div className="absolute bottom-0 inset-x-0 px-4 sm:px-6 lg:px-8 pb-10 max-w-7xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl mb-4" style={{ background: "rgba(4,12,26,0.82)", border: "1px solid rgba(56,189,248,0.4)", backdropFilter: "blur(8px)" }}>
             <span className="w-1.5 h-1.5 rounded-full lab-active-dot" style={{ background: "#22C55E" }} />
-            <span className="font-mono text-[11px] font-bold tracking-widest" style={{ color: "#7dd3fc" }}>{tr(T.badge, locale)}</span>
+            <span className="font-mono text-[13px] font-bold tracking-widest" style={{ color: "#7dd3fc" }}>{tr(T.badge, locale)}</span>
           </div>
           <h1 className="font-display font-bold text-white leading-tight max-w-3xl" style={{ fontSize: "clamp(26px, 4vw, 48px)", textShadow: "0 2px 20px rgba(0,0,0,0.6)" }}>
             {mission?.title || "ICHAB"}

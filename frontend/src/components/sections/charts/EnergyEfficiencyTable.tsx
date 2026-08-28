@@ -44,14 +44,14 @@ export function EnergyEfficiencyTable({ locale }: { locale: string }) {
           <table className="w-full border-collapse" style={{ minWidth: 720 }}>
             <thead>
               <tr>
-                <th rowSpan={2} className="px-4 py-3 text-center align-middle text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--accent)", borderBottom: "1px solid var(--border)", borderRight: "1px solid var(--border-subtle)" }}>{t(C_NO, locale)}</th>
-                <th rowSpan={2} className="px-4 py-3 text-left align-middle text-[12px] font-bold uppercase tracking-wide" style={{ color: "var(--accent)", borderBottom: "1px solid var(--border)", borderRight: "1px solid var(--border-subtle)" }}>{t(C_NAME, locale)}</th>
-                <th colSpan={3} className="px-4 py-3 text-center text-[12.5px] font-bold uppercase tracking-wide" style={{ color: "var(--accent)", background: "rgba(var(--accent-rgb),0.08)", borderBottom: "1px solid var(--border-subtle)" }}>{t(GROUP, locale)}</th>
+                <th rowSpan={2} className="px-4 py-3 text-center align-middle text-[13px] font-bold uppercase tracking-wider" style={{ color: "var(--accent)", borderBottom: "1px solid var(--border)", borderRight: "1px solid var(--border-subtle)" }}>{t(C_NO, locale)}</th>
+                <th rowSpan={2} className="px-4 py-3 text-left align-middle text-[13.5px] font-bold uppercase tracking-wide" style={{ color: "var(--accent)", borderBottom: "1px solid var(--border)", borderRight: "1px solid var(--border-subtle)" }}>{t(C_NAME, locale)}</th>
+                <th colSpan={3} className="px-4 py-3 text-center text-[14px] font-bold uppercase tracking-wide" style={{ color: "var(--accent)", background: "rgba(var(--accent-rgb),0.08)", borderBottom: "1px solid var(--border-subtle)" }}>{t(GROUP, locale)}</th>
               </tr>
               <tr>
-                <th className="px-4 py-2.5 text-right text-[11px] font-semibold" style={{ color: "var(--content-secondary)", borderBottom: "1px solid var(--border)", borderRight: "1px solid var(--border-subtle)" }}>{t(C_2025, locale)}</th>
-                <th className="px-4 py-2.5 text-right text-[11px] font-semibold" style={{ color: "var(--content-secondary)", borderBottom: "1px solid var(--border)", borderRight: "1px solid var(--border-subtle)" }}>{t(C_2026, locale)}</th>
-                <th className="px-4 py-2.5 text-center text-[11px] font-semibold" style={{ color: "var(--content-secondary)", borderBottom: "1px solid var(--border)" }}>{t(C_PCT, locale)}</th>
+                <th className="px-4 py-2.5 text-right text-[13px] font-semibold" style={{ color: "var(--content-secondary)", borderBottom: "1px solid var(--border)", borderRight: "1px solid var(--border-subtle)" }}>{t(C_2025, locale)}</th>
+                <th className="px-4 py-2.5 text-right text-[13px] font-semibold" style={{ color: "var(--content-secondary)", borderBottom: "1px solid var(--border)", borderRight: "1px solid var(--border-subtle)" }}>{t(C_2026, locale)}</th>
+                <th className="px-4 py-2.5 text-center text-[13px] font-semibold" style={{ color: "var(--content-secondary)", borderBottom: "1px solid var(--border)" }}>{t(C_PCT, locale)}</th>
               </tr>
             </thead>
             <tbody>
@@ -64,21 +64,21 @@ export function EnergyEfficiencyTable({ locale }: { locale: string }) {
                   className="transition-colors duration-200 hover:bg-[rgba(56,189,248,0.09)]"
                   style={r.total ? { background: "rgba(var(--accent-rgb),0.10)" } : undefined}
                 >
-                  <td className="px-4 py-3.5 text-center align-middle font-mono font-bold" style={{ fontSize: 13, color: r.total ? "var(--accent)" : "var(--content-secondary)", borderBottom: "1px solid var(--border-subtle)", borderRight: "1px solid var(--border-subtle)" }}>
+                  <td className="px-4 py-3.5 text-center align-middle font-mono font-bold" style={{ fontSize: 14.5, color: r.total ? "var(--accent)" : "var(--content-secondary)", borderBottom: "1px solid var(--border-subtle)", borderRight: "1px solid var(--border-subtle)" }}>
                     {r.n ?? "—"}
                   </td>
-                  <td className="px-4 py-3.5 align-middle leading-snug" style={{ fontSize: 13.5, fontWeight: r.total ? 700 : 500, color: "var(--content)", borderBottom: "1px solid var(--border-subtle)", borderRight: "1px solid var(--border-subtle)" }}>
+                  <td className="px-4 py-3.5 align-middle leading-snug" style={{ fontSize: 15, fontWeight: r.total ? 700 : 500, color: "var(--content)", borderBottom: "1px solid var(--border-subtle)", borderRight: "1px solid var(--border-subtle)" }}>
                     {t(r.name, locale)}
                   </td>
-                  <td className="px-4 py-3.5 text-right align-middle tabular-nums" style={{ fontSize: 13.5, fontWeight: r.total ? 700 : 500, color: "var(--content)", borderBottom: "1px solid var(--border-subtle)", borderRight: "1px solid var(--border-subtle)" }}>
+                  <td className="px-4 py-3.5 text-right align-middle tabular-nums" style={{ fontSize: 15, fontWeight: r.total ? 700 : 500, color: "var(--content)", borderBottom: "1px solid var(--border-subtle)", borderRight: "1px solid var(--border-subtle)" }}>
                     {r.v2025}
                   </td>
-                  <td className="px-4 py-3.5 text-right align-middle tabular-nums" style={{ fontSize: 13.5, fontWeight: r.total ? 700 : 500, color: "var(--content)", borderBottom: "1px solid var(--border-subtle)", borderRight: "1px solid var(--border-subtle)" }}>
+                  <td className="px-4 py-3.5 text-right align-middle tabular-nums" style={{ fontSize: 15, fontWeight: r.total ? 700 : 500, color: "var(--content)", borderBottom: "1px solid var(--border-subtle)", borderRight: "1px solid var(--border-subtle)" }}>
                     {r.v2026}
                   </td>
                   <td className="px-4 py-3.5 text-center align-middle" style={{ borderBottom: "1px solid var(--border-subtle)" }}>
                     {r.pct ? (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full font-bold tabular-nums" style={{ fontSize: 12, background: "rgba(16,185,129,0.15)", color: "rgb(52,211,153)", border: "1px solid rgba(16,185,129,0.4)" }}>
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full font-bold tabular-nums" style={{ fontSize: 13.5, background: "rgba(16,185,129,0.15)", color: "rgb(52,211,153)", border: "1px solid rgba(16,185,129,0.4)" }}>
                         <TrendingUp size={12} /> {r.pct}
                       </span>
                     ) : (

@@ -122,7 +122,7 @@ function StatCard({ s, rgb, inView, i }: { s: DivisionStat; rgb: string; inView:
       </div>
       <div className="min-w-0">
         <div className="font-display font-extrabold tabular-nums leading-none" style={{ fontSize: "clamp(20px,2.4vw,26px)", color: "var(--content)" }}>{v}{s.suffix}</div>
-        <p className="text-[11px] mt-1.5 leading-snug truncate" style={{ color: "var(--content-muted)" }}>{s.label}</p>
+        <p className="text-[13px] mt-1.5 leading-snug truncate" style={{ color: "var(--content-muted)" }}>{s.label}</p>
       </div>
     </motion.div>
   );
@@ -212,7 +212,7 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl mb-3" style={{ background: "rgba(4,12,26,0.82)", border: "1px solid rgba(56,189,248,0.4)", backdropFilter: "blur(8px)" }}>
                 <span className="w-1.5 h-1.5 rounded-full lab-active-dot" style={{ background: "#22C55E" }} />
-                <span className="font-mono text-[11px] font-bold tracking-widest" style={{ color: "#7dd3fc" }}>LABORATORIYA · AKTIV</span>
+                <span className="font-mono text-[13px] font-bold tracking-widest" style={{ color: "#7dd3fc" }}>LABORATORIYA · AKTIV</span>
               </div>
               <h1 className="font-display font-bold text-white leading-tight" style={{ fontSize: "clamp(26px, 4vw, 48px)", textShadow: "0 2px 20px rgba(0,0,0,0.6)" }}>{lab.name}</h1>
             </div>
@@ -285,7 +285,7 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
               <div className="space-y-4">
                 {lab.leaderName && (
                   <div className="glass-card rounded-2xl p-5 text-center" style={{ boxShadow: "var(--card-shadow)" }}>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] mb-4" style={{ color: "var(--accent)" }}>{tr(T.leader, locale)}</p>
+                    <p className="text-[12px] font-bold uppercase tracking-[0.18em] mb-4" style={{ color: "var(--accent)" }}>{tr(T.leader, locale)}</p>
                     {lab.leaderPhoto ? (
                       <div className="relative w-20 h-20 rounded-2xl overflow-hidden mx-auto mb-3" style={{ border: "1px solid rgba(var(--accent-rgb),0.35)" }}>
                         <Image src={lab.leaderPhoto} alt={lab.leaderName} fill className="object-cover" />
@@ -434,7 +434,7 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                       </div>
                       <div className="p-2.5">
                         <p className="font-semibold text-content text-xs truncate">{e.name}</p>
-                        {e.model_name && <p className="text-[11px] font-mono truncate mt-0.5" style={{ color: `rgb(${rgb})` }}>{e.model_name}</p>}
+                        {e.model_name && <p className="text-[13px] font-mono truncate mt-0.5" style={{ color: `rgb(${rgb})` }}>{e.model_name}</p>}
                       </div>
                     </TiltCard>
                   </Reveal>
@@ -463,7 +463,7 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                         <div className="flex items-center gap-2 mb-2.5">
                           <CheckCircle2 size={15} style={{ color: `rgb(${rgb})` }} />
                           {p.completed_date && (
-                            <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded-md" style={{ background: `rgba(${rgb},0.15)`, color: `rgb(${rgb})` }}>{formatDate(p.completed_date, locale)}</span>
+                            <span className="font-mono text-[13px] font-bold px-2 py-0.5 rounded-md" style={{ background: `rgba(${rgb},0.15)`, color: `rgb(${rgb})` }}>{formatDate(p.completed_date, locale)}</span>
                           )}
                         </div>
                         <p className="text-sm font-medium leading-relaxed text-content">{p.name}</p>

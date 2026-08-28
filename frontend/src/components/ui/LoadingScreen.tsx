@@ -164,7 +164,7 @@ export function LoadingScreen({ onComplete }: Props) {
               >
                 {progress}%
               </span>
-              <span className="font-mono text-[11px] tracking-[0.2em] uppercase" style={{ color: "var(--content-muted)" }}>
+              <span className="font-mono text-[13px] tracking-[0.2em] uppercase" style={{ color: "var(--content-muted)" }}>
                 Initializing
               </span>
             </motion.div>

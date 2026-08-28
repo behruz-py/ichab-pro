@@ -222,7 +222,7 @@ export function Header() {
                             <Link
                               href={`/${locale}${item.path}`}
                               className={cn(
-                                "flex items-center gap-3 mx-1.5 my-0.5 px-3 py-2.5 rounded-xl text-[13.5px] font-medium transition-all duration-150 group",
+                                "flex items-center gap-3 mx-1.5 my-0.5 px-3 py-2.5 rounded-xl text-[15px] font-medium transition-all duration-150 group",
                                 active
                                   ? "text-[var(--accent)] bg-blue-500/10"
                                   : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
@@ -291,7 +291,7 @@ export function Header() {
               {/* CTA — pulsing glow */}
               <Link
                 href={`/${locale}/contact`}
-                className="hidden lg:inline-flex items-center px-5 py-2 rounded-xl text-[13.5px] font-semibold transition-colors duration-200 ml-1 cta-pulse"
+                className="hidden lg:inline-flex items-center px-5 py-2 rounded-xl text-[15px] font-semibold transition-colors duration-200 ml-1 cta-pulse"
                 style={{
                   background: "var(--warm-btn)",
                   border:     "1px solid rgba(var(--warm-glow),0.45)",
@@ -376,7 +376,7 @@ export function Header() {
 
               <nav className="flex-1 overflow-y-auto px-3 py-4">
                 <div className="mb-3">
-                  <p className="px-4 mb-1.5 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(var(--accent-rgb),0.55)" }}>
+                  <p className="px-4 mb-1.5 text-[12px] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(var(--accent-rgb),0.55)" }}>
                     {t("company")}
                   </p>
                   <div className="space-y-0.5">
@@ -393,7 +393,7 @@ export function Header() {
                           <Link
                             href={`/${locale}${item.path}`}
                             className={cn(
-                              "flex items-center gap-3 px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200",
+                              "flex items-center gap-3 px-4 py-2.5 rounded-xl text-[14.5px] font-medium transition-all duration-200",
                               active ? "text-[var(--accent)]" : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
                             )}
                             style={active ? { background: "rgba(var(--accent-rgb),0.10)", border: "1px solid rgba(var(--accent-rgb),0.20)" } : {}}
@@ -423,7 +423,7 @@ export function Header() {
                         <Link
                           href={`/${locale}${path}`}
                           className={cn(
-                            "flex items-center justify-between px-4 py-3 rounded-xl text-[13.5px] font-medium transition-all duration-200",
+                            "flex items-center justify-between px-4 py-3 rounded-xl text-[15px] font-medium transition-all duration-200",
                             active ? "text-[var(--accent)]" : "text-content-secondary hover:text-content hover:bg-black/[0.03]"
                           )}
                           style={active ? { background: "rgba(var(--accent-rgb),0.10)", border: "1px solid rgba(var(--accent-rgb),0.20)" } : {}}
@@ -439,7 +439,7 @@ export function Header() {
 
               <div className="px-5 py-5 border-t border-black/[0.06] space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] text-content-muted font-semibold uppercase tracking-[0.1em]">Til</span>
+                  <span className="text-[13px] text-content-muted font-semibold uppercase tracking-[0.1em]">Til</span>
                   <div className="flex items-center gap-2">
                     <ThemeSwitcher />
                     <LangSwitcher />
