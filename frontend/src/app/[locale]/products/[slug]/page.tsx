@@ -278,7 +278,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
               <Link key={p.id} href={`/${locale}/products/${p.slug}`}
                 className="group flex flex-col rounded-2xl overflow-hidden glass-card transition-transform duration-300 hover:-translate-y-1"
                 style={{ border: "1px solid rgba(56,189,248,0.16)", boxShadow: "var(--card-shadow)" }}>
-                <div className="relative overflow-hidden" style={{ aspectRatio: "4/3", background: "rgba(255,255,255,0.92)" }}>
+                <div className="relative overflow-hidden" style={{ aspectRatio: "4/3", background: "var(--card-solid)" }}>
                   {p.main_image ? (
                     <Image src={p.main_image} alt={p.name} fill className="object-contain p-3 transition-transform duration-500 group-hover:scale-105" sizes="(max-width:1024px) 50vw, 25vw" />
                   ) : (

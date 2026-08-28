@@ -26,7 +26,7 @@ export function ProductGallery({ images, productName, locale, noImageText }: Pro
     return (
       <div
         className="relative rounded-2xl overflow-hidden flex flex-col items-center justify-center gap-3"
-        style={{ aspectRatio: "4/3", background: "rgba(255,255,255,0.92)", border: "1px solid rgba(var(--accent-rgb),0.14)" }}
+        style={{ aspectRatio: "4/3", background: "var(--card-solid)", border: "1px solid rgba(var(--accent-rgb),0.14)" }}
       >
         <svg width="52" height="52" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" strokeWidth="1" style={{ color: "var(--content-muted)" }}>
@@ -43,7 +43,7 @@ export function ProductGallery({ images, productName, locale, noImageText }: Pro
       {/* Main image */}
       <div
         className="relative rounded-2xl overflow-hidden"
-        style={{ aspectRatio: "4/3", background: "rgba(255,255,255,0.92)", border: "1px solid rgba(var(--accent-rgb),0.14)" }}
+        style={{ aspectRatio: "4/3", background: "var(--card-solid)", border: "1px solid rgba(var(--accent-rgb),0.14)" }}
       >
         <Image
           src={active.image}
