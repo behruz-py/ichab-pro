@@ -45,12 +45,11 @@ class LeadViewSet(
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         lead = serializer.save()
-        # Fire-and-forget notify task (Celery) — graceful fallback if not configured
-        try:
-            from .tasks import notify_new_lead
-            notify_new_lead.delay(lead.pk)
-        except Exception:
-            pass
+        # Synchronous — no Celery/Redis broker to host. Telegram/email sends
+        # are each individually wrapped in try/except (see tasks.py), so a
+        # slow or failed notification can't break the lead submission itself.
+        from .tasks import notify_new_lead
+        notify_new_lead(lead.pk)
         return Response(
             {"detail": "Murojaatingiz qabul qilindi. Tez orada bog'lanamiz!"},
             status=status.HTTP_201_CREATED,

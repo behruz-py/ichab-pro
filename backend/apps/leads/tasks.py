@@ -4,10 +4,7 @@ from django.conf import settings
 
 
 def notify_new_lead(lead_pk: int) -> None:
-    """
-    Send Telegram + email notification for new lead.
-    Called as Celery task when available; also works as plain function.
-    """
+    """Send Telegram + email notification for a new lead. Called synchronously."""
     from .models import Lead
     try:
         lead = Lead.objects.get(pk=lead_pk)
@@ -74,10 +71,3 @@ def _send_telegram(text: str) -> None:
     except Exception:
         pass
 
-
-# Wrap as Celery task only if Celery is available
-try:
-    from celery import shared_task
-    notify_new_lead = shared_task(notify_new_lead)
-except ImportError:
-    pass

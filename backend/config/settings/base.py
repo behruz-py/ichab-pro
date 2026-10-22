@@ -7,13 +7,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = config("DJANGO_SECRET_KEY", default="unsafe-default-key")
 DEBUG = config("DJANGO_DEBUG", default=False, cast=bool)
 ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS", default="localhost,127.0.0.1").split(",")
-# Railway auto-domain
-_railway_host = config("RAILWAY_PUBLIC_DOMAIN", default="")
-if _railway_host:
-    ALLOWED_HOSTS.append(_railway_host)
-    CSRF_TRUSTED_ORIGINS = [f"https://{_railway_host}"]
+# Auto-domain injected by the hosting platform — Railway's and Render's env
+# var names differ, so check both; whichever platform is actually running
+# this sets its own var and leaves the other unset.
+_platform_host = config("RAILWAY_PUBLIC_DOMAIN", default="") or config("RENDER_EXTERNAL_HOSTNAME", default="")
+if _platform_host:
+    ALLOWED_HOSTS.append(_platform_host)
+    CSRF_TRUSTED_ORIGINS = [f"https://{_platform_host}"]
 
-# Railway terminates SSL at the proxy level
+# Both Railway and Render terminate SSL at the proxy level
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
 
@@ -99,12 +101,13 @@ else:
         }
     }
 
-# ─── Cache (Redis) ─────────────────────────────────────────────────────────────
+# ─── Cache ─────────────────────────────────────────────────────────────────────
+# In-process cache — only used for DRF's lead-submission rate limiting (see
+# apps.leads.views), which doesn't need to be shared across processes for a
+# single-instance deployment. No Redis service to host/pay for as a result.
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": config("REDIS_URL", default="redis://localhost:6379/0"),
-        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
     }
 }
 
@@ -127,8 +130,26 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+# Media (uploaded images/files): local disk by default (dev, or any host with
+# a persistent volume). Set the AWS_* vars below to serve media from an
+# S3-compatible bucket instead — e.g. Cloudflare R2 — for hosts with no
+# persistent disk (Render's free tier, Cloud Run, etc). R2's free tier has no
+# egress fees, unlike S3.
+AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME", default="")
+if AWS_STORAGE_BUCKET_NAME:
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID", default="")
+    AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY", default="")
+    AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL", default="")  # e.g. https://<account_id>.r2.cloudflarestorage.com
+    AWS_S3_CUSTOM_DOMAIN = config("AWS_S3_CUSTOM_DOMAIN", default="")  # e.g. a public R2.dev or custom media subdomain, no scheme
+    AWS_DEFAULT_ACL = None  # R2/S3 bucket-level public access policy handles this, not per-object ACLs
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_QUERYSTRING_AUTH = False  # public bucket — plain URLs, no signed-query noise
+    AWS_S3_ADDRESSING_STYLE = "virtual"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/" if AWS_S3_CUSTOM_DOMAIN else "/media/"
+else:
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -199,12 +220,6 @@ TELEGRAM_CHAT_ID = config("TELEGRAM_CHAT_ID", default="")
 # ─── Lead notifications ────────────────────────────────────────────────────────
 # Optional: if set, new leads are also emailed here (in addition to Telegram).
 LEAD_NOTIFY_EMAIL_TO = config("LEAD_NOTIFY_EMAIL_TO", default="")
-
-# ─── Celery ────────────────────────────────────────────────────────────────────
-CELERY_BROKER_URL = config("REDIS_URL", default="redis://localhost:6379/0")
-CELERY_RESULT_BACKEND = config("REDIS_URL", default="redis://localhost:6379/0")
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
 
 # ─── Unfold Admin ───────────────────────────────────────────────────────────────
 UNFOLD = {

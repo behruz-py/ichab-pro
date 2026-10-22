@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
       "Bash(git:*)",
       "Bash(npm:*)",
@@ -43,8 +42,17 @@
       "mcp__claude_ai_Vercel__get_project",
       "mcp__claude_ai_Vercel__get_deployment_build_logs",
       "mcp__claude_ai_Vercel__list_projects",
-      "mcp__claude_ai_Vercel__list_teams"
+      "mcp__claude_ai_Vercel__list_teams",
+      "Bash(ls messages/)",
+      "Bash(node -e \"const m=require\\('./messages/uz.json'\\); console.log\\(JSON.stringify\\(m.contact?.form,null,1\\)\\)\")",
+      "Bash(cat .vercel/project.json)",
+      "Bash(cat frontend/.vercel/project.json)",
+      "mcp__claude_ai_Vercel__deploy_to_vercel",
+      "Bash(python -)",
+      "Bash(git commit -m ' *)",
+      "Bash(node -e \"const m=require\\('./messages/uz.json'\\); console.log\\(JSON.stringify\\(m.products,null,1\\)\\)\")"
     ],
+    "defaultMode": "acceptEdits",
     "additionalDirectories": [
       "d:\\Document\\developing\\Web\\ichab_pro\\frontend\\src\\app\\[locale]\\products"
     ]
