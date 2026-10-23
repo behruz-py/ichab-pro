@@ -84,7 +84,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
 
           <motion.h1
             variants={fadeUp}
-            className="font-display font-bold text-content mb-6 leading-[1.04] tracking-tight"
+            className="font-display font-bold text-content mb-6 leading-[1.04] tracking-tight uppercase"
             style={{ fontSize: "clamp(40px, 5.5vw, 78px)" }}
           >
             {title}
