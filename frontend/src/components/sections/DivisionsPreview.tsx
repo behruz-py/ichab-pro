@@ -28,30 +28,14 @@ const ICONS: LucideIcon[] = [FlaskConical, Cpu, Gauge, Activity, Cog, Zap];
 // Vibrant neon hues (rgb triples) — cyan, purple, green, amber, pink, blue
 const NEON = ["0,229,255", "181,84,255", "0,235,140", "255,170,40", "255,77,141", "56,189,248"];
 
-// Official division names run 50–110 characters long (real org-chart titles),
-// too long to fit in a compact mind-map node at any reasonable card width.
-// Same short labels as the About page's org-structure diagram, keyed by slug
-// — the full name is still shown via the link's title attribute and on the
-// division's own detail page.
-const SHORT_NAME: Record<string, Record<string, string>> = {
-  asutp: { uz: "ASUTP joriy etish", ru: "Внедрение АСУТП", en: "APCS Deployment" },
-  taae:  { uz: "Texnologik avtomatika", ru: "Технологическая автоматика", en: "Technological Automation" },
-  itso:  { uz: "Muhofaza tizimlari", ru: "Системы охраны", en: "Security Systems" },
-  mop:   { uz: "Metrologik ta'minot", ru: "Метрологическое обеспечение", en: "Metrological Support" },
-  rsi:   { uz: "O'lchov vositalari ta'miri", ru: "Ремонт средств измерений", en: "Instrument Repair" },
-  insa:  { uz: "Nostandart ishlab chiqarish", ru: "Нестандартное производство", en: "Non-Standard Production" },
-};
-function shortName(div: Division, locale: string) {
-  const m = SHORT_NAME[div.slug];
-  return (m && (m[locale] ?? m.uz)) || div.name;
-}
-
 // ── Stage geometry (desktop) — 3 cards left, hub center, 3 cards right ───────
-const W = 1000, H = 540;
-const HUBX = 500, HUBY = 270, HUB_R = 78;
-const CW = 340, CH = 100;
-const LEFT_X = 18, RIGHT_X = W - 18 - CW;        // 18 / 642
-const ROWS_Y = [104, 270, 436];                  // top / middle / bottom centers
+// Official division names run 50–110 characters (real org-chart titles), so
+// cards are sized to wrap the longest one onto 3 lines rather than clip it.
+const W = 1292, H = 600;
+const HUBX = 646, HUBY = 300, HUB_R = 78;
+const CW = 480, CH = 130;
+const LEFT_X = 18, RIGHT_X = W - 18 - CW;        // 18 / 794
+const ROWS_Y = [114, 300, 486];                  // top / middle / bottom centers
 // i → which side + row (alternating: L,R,L,R,L,R top→bottom)
 const LAYOUT = [
   { side: "left",  row: 0 }, { side: "right", row: 0 },
@@ -189,8 +173,8 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                   <span className="block font-mono text-[12px] font-bold tracking-widest mb-0.5" style={{ color: `rgb(${c})` }}>
                     {lab} · {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="font-display font-bold text-[15px] leading-snug line-clamp-2 first-letter:uppercase text-content">
-                    {shortName(div, locale)}
+                  <h3 className="font-display font-bold text-[14px] leading-snug line-clamp-3 first-letter:uppercase text-content">
+                    {div.name}
                   </h3>
                 </div>
               </Link>
@@ -229,7 +213,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                     <span className="font-mono text-[12px] font-bold" style={{ color: `rgb(${c})` }}>
                       {lab} · {String(i + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="font-display font-bold text-sm leading-snug line-clamp-2 first-letter:uppercase text-content">{shortName(div, locale)}</h3>
+                    <h3 className="font-display font-bold text-sm leading-snug first-letter:uppercase text-content">{div.name}</h3>
                   </div>
                   <ArrowRight size={16} style={{ color: `rgb(${c})` }} className="flex-shrink-0" />
                 </Link>
