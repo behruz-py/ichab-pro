@@ -92,7 +92,7 @@ export default async function PartnersPage({ params: { locale } }: Props) {
                 color: "var(--accent)",
               }}
             >
-              <span className="font-bold text-white" style={{ fontSize: "20px" }}>{partners.length}</span>
+              <span className="font-bold" style={{ fontSize: "20px", color: "var(--accent)" }}>{partners.length}</span>
               {t("all_count")}
             </div>
 
@@ -106,7 +106,7 @@ export default async function PartnersPage({ params: { locale } }: Props) {
                 }}
               >
                 <Star size={16} fill="var(--warm-solid)" />
-                <span className="font-bold text-white" style={{ fontSize: "20px" }}>{featuredCount}</span>
+                <span className="font-bold" style={{ fontSize: "20px", color: "var(--warm-solid)" }}>{featuredCount}</span>
                 {t("strategic")}
               </div>
             )}
