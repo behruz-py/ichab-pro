@@ -32,7 +32,7 @@ export default async function ProductsPage({ params: { locale } }: Props) {
   const products   = productsRes?.results ?? [];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10">
         <h1 className="font-display font-bold text-content mb-3"
           style={{ fontSize: "clamp(28px, 4vw, 48px)" }}>

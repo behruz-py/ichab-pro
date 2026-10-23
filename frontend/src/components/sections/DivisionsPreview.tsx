@@ -92,7 +92,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
           style={{ background: "radial-gradient(ellipse, rgba(var(--accent-rgb),0.10) 0%, transparent 70%)", filter: "blur(50px)" }} />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-5">

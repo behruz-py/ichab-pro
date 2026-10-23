@@ -140,7 +140,7 @@ export function AboutShowcase({
         <div className="hero-scan-line" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(4,12,26,0.35) 0%, rgba(4,12,26,0.55) 50%, rgba(4,12,26,0.96) 100%)" }} />
 
-        <div className="absolute bottom-0 inset-x-0 px-4 sm:px-6 lg:px-8 pb-10 max-w-7xl mx-auto">
+        <div className="absolute bottom-0 inset-x-0 px-4 sm:px-6 lg:px-8 pb-10 max-w-[1600px] mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl mb-4" style={{ background: "rgba(4,12,26,0.82)", border: "1px solid rgba(56,189,248,0.4)", backdropFilter: "blur(8px)" }}>
             <span className="w-1.5 h-1.5 rounded-full lab-active-dot" style={{ background: "#22C55E" }} />
             <span className="font-mono text-[13px] font-bold tracking-widest" style={{ color: "#7dd3fc" }}>{tr(T.badge, locale)}</span>
@@ -154,7 +154,7 @@ export function AboutShowcase({
         </div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-16">
+      <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-16">
 
         {/* Trust numbers */}
         {trustStats.length > 0 && (

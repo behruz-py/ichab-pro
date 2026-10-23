@@ -34,7 +34,7 @@ export default async function ProjectsPage({ params: { locale } }: Props) {
         <div className="stat-orb" style={{ top: "44%", right: "-6%", background: "radial-gradient(circle, rgba(16,185,129,0.14), transparent 70%)", animationDelay: "-9s" }} />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="mb-12">
           <h1 className="font-display font-bold text-content mb-4 leading-tight" style={{ fontSize: "clamp(32px,4.5vw,56px)" }}>{t("title")}</h1>
           <p className="max-w-2xl" style={{ color: "var(--content-secondary)", fontSize: "clamp(16px,2vw,19px)" }}>{t("subtitle")}</p>

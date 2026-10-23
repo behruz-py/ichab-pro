@@ -65,7 +65,7 @@ export async function Footer() {
         <div className="w-full h-full rounded-full bg-blue-700 blur-[120px] opacity-[0.05]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-12">
 
           {/* Brand + CTA */}

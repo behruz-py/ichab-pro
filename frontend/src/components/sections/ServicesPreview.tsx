@@ -26,7 +26,7 @@ export function ServicesPreview({ services, locale, title, subtitle, viewAll }: 
 
       <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(var(--accent-rgb),0.20) 50%,transparent)" }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <motion.div

@@ -59,7 +59,7 @@ export function HeroSection({ locale, badge, title, titleAccent, subtitle, ctaPr
       {/* ── Main content ── */}
       <motion.div
         style={{ y: contentY }}
-        className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28"
+        className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28"
       >
         <motion.div
           variants={staggerContainer}

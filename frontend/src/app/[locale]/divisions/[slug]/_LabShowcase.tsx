@@ -196,13 +196,13 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
         <div className="hero-scan-line" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(4,12,26,0.30) 0%, rgba(4,12,26,0.55) 50%, rgba(4,12,26,0.96) 100%)" }} />
 
-        <div className="absolute top-0 inset-x-0 px-4 sm:px-6 lg:px-8 pt-6 max-w-7xl mx-auto">
+        <div className="absolute top-0 inset-x-0 px-4 sm:px-6 lg:px-8 pt-6 max-w-[1600px] mx-auto">
           <Link href={`/${locale}/divisions`} className="inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 hover:gap-3" style={{ color: "rgba(125,211,252,0.9)" }}>
             <ArrowLeft size={16} /> {backLabel}
           </Link>
         </div>
 
-        <div className="absolute bottom-0 inset-x-0 px-4 sm:px-6 lg:px-8 pb-9 max-w-7xl mx-auto">
+        <div className="absolute bottom-0 inset-x-0 px-4 sm:px-6 lg:px-8 pb-9 max-w-[1600px] mx-auto">
           <div className="flex items-end gap-5">
             {lab.logo && (
               <div className="w-16 h-16 rounded-2xl items-center justify-center flex-shrink-0 hidden sm:flex" style={{ background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.18)", backdropFilter: "blur(10px)" }}>
@@ -222,7 +222,7 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
 
       {/* ── Sticky sub-nav ── */}
       <div className="sticky top-[65px] z-30 -mt-px">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="glass-card rounded-2xl px-2 py-1.5 overflow-x-auto flex gap-1" style={{ boxShadow: "var(--card-shadow)" }}>
             {nav.map((n) => (
               <a key={n.id} href={`#${n.id}`} className="px-3.5 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-colors"
@@ -234,7 +234,7 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
         </div>
       </div>
 
-      <div ref={contentRef} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+      <div ref={contentRef} className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
         <SectionPathLine containerRef={contentRef} />
 
         {/* Stats */}

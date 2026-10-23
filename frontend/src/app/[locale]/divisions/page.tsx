@@ -48,7 +48,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
           style={{ background: "linear-gradient(90deg,transparent,rgba(var(--accent-rgb),0.28) 50%,transparent)" }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -104,7 +104,7 @@ export default async function DivisionsPage({ params: { locale } }: Props) {
       </div>
 
       {/* ── Lab card grid ── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-14">
         {divisions.length === 0 ? (
           <div className="text-center py-24" style={{ color: "var(--content-muted)" }}>
             <Settings size={48} strokeWidth={1.5} className="mx-auto mb-4 opacity-30" />

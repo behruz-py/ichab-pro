@@ -89,7 +89,7 @@ export function Header() {
             style={{ background: "linear-gradient(90deg, transparent 0%, rgba(var(--accent-rgb),0.7) 40%, rgba(var(--accent-rgb),0.9) 50%, rgba(var(--accent-rgb),0.7) 60%, transparent 100%)" }}
           />
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[64px] flex items-center justify-between gap-3">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-[64px] flex items-center justify-between gap-3">
 
             {/* ── Logo ──────────────────────────────────────────────────── */}
             <Link

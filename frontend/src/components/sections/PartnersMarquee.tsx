@@ -124,7 +124,7 @@ export function PartnersMarquee({ partners, title, subtitle }: Props) {
     <section className="py-16">
 
       {/* ── Header ─────────────────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={VIEWPORT}>
           <span
             className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-3"

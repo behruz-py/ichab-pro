@@ -60,7 +60,7 @@ export default async function PartnersPage({ params: { locale } }: Props) {
           style={{ background: "linear-gradient(90deg,transparent,rgba(var(--accent-rgb),0.28) 50%,transparent)" }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span
             className="inline-block text-xs font-bold uppercase tracking-[0.22em] mb-5"
             style={{ color: "var(--accent)" }}
@@ -115,7 +115,7 @@ export default async function PartnersPage({ params: { locale } }: Props) {
       </div>
 
       {/* ── Partner grid (client component for hover effects) ── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <PartnerGrid partners={partners} visitSite={t("visit_site")} />
       </div>
 
@@ -125,7 +125,7 @@ export default async function PartnersPage({ params: { locale } }: Props) {
           className="py-12"
           style={{ borderTop: "1px solid rgba(var(--accent-rgb),0.10)" }}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p
               style={{
                 color: "var(--content-muted)",
