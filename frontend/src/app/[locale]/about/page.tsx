@@ -22,19 +22,22 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
 export default async function AboutPage({ params: { locale } }: Props) {
   setRequestLocale(locale);
 
-  const [missionR, visionR, historyR, divisionsR, projectsR, partnersR] = await Promise.allSettled([
+  const [missionR, visionR, historyR, divisionsR, projectsR, partnersR, statsR, certificatesR] = await Promise.allSettled([
     api.pages.byKey("about_mission", locale),
     api.pages.byKey("about_vision", locale),
     api.pages.byKey("about_history", locale),
     api.divisions.list(locale),
     api.projects.list(locale),
     api.partners.list(undefined, locale),
+    api.stats.list(locale),
+    api.certificates.list(locale),
   ]);
 
   const mission = missionR.status === "fulfilled" ? missionR.value : null;
   const vision = visionR.status === "fulfilled" ? visionR.value : null;
   const history = historyR.status === "fulfilled" ? historyR.value : null;
   const divisions = divisionsR.status === "fulfilled" ? divisionsR.value.results : [];
+  const certificates = certificatesR.status === "fulfilled" ? certificatesR.value.results : [];
 
   const trustStats: TrustStat[] = [];
   if (divisionsR.status === "fulfilled" && divisionsR.value.count > 0) {
@@ -46,6 +49,13 @@ export default async function AboutPage({ params: { locale } }: Props) {
   if (partnersR.status === "fulfilled" && partnersR.value.count > 0) {
     trustStats.push({ value: partnersR.value.count, label: PARTNERS_LABEL[locale] ?? PARTNERS_LABEL.uz });
   }
+  // Admin-entered verified stats (e.g. "5000+ Mahsulot nomenklaturasi") slot
+  // in alongside the counted ones above — both are real, neither is invented.
+  if (statsR.status === "fulfilled") {
+    for (const s of statsR.value.results) {
+      trustStats.push({ value: s.value, label: s.label, suffix: s.suffix });
+    }
+  }
 
   return (
     <AboutShowcase
@@ -55,6 +65,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
       history={history}
       divisions={divisions}
       trustStats={trustStats}
+      certificates={certificates}
     />
   );
 }
