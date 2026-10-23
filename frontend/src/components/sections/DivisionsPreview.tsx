@@ -28,12 +28,30 @@ const ICONS: LucideIcon[] = [FlaskConical, Cpu, Gauge, Activity, Cog, Zap];
 // Vibrant neon hues (rgb triples) — cyan, purple, green, amber, pink, blue
 const NEON = ["0,229,255", "181,84,255", "0,235,140", "255,170,40", "255,77,141", "56,189,248"];
 
+// Official division names run 50–110 characters long (real org-chart titles),
+// too long to fit in a compact mind-map node at any reasonable card width.
+// Same short labels as the About page's org-structure diagram, keyed by slug
+// — the full name is still shown via the link's title attribute and on the
+// division's own detail page.
+const SHORT_NAME: Record<string, Record<string, string>> = {
+  asutp: { uz: "ASUTP joriy etish", ru: "Внедрение АСУТП", en: "APCS Deployment" },
+  taae:  { uz: "Texnologik avtomatika", ru: "Технологическая автоматика", en: "Technological Automation" },
+  itso:  { uz: "Muhofaza tizimlari", ru: "Системы охраны", en: "Security Systems" },
+  mop:   { uz: "Metrologik ta'minot", ru: "Метрологическое обеспечение", en: "Metrological Support" },
+  rsi:   { uz: "O'lchov vositalari ta'miri", ru: "Ремонт средств измерений", en: "Instrument Repair" },
+  insa:  { uz: "Nostandart ishlab chiqarish", ru: "Нестандартное производство", en: "Non-Standard Production" },
+};
+function shortName(div: Division, locale: string) {
+  const m = SHORT_NAME[div.slug];
+  return (m && (m[locale] ?? m.uz)) || div.name;
+}
+
 // ── Stage geometry (desktop) — 3 cards left, hub center, 3 cards right ───────
-const W = 900, H = 520;
-const HUBX = 450, HUBY = 260, HUB_R = 78;
-const CW = 288, CH = 96;
-const LEFT_X = 18, RIGHT_X = W - 18 - CW;        // 18 / 594
-const ROWS_Y = [94, 260, 426];                   // top / middle / bottom centers
+const W = 1000, H = 540;
+const HUBX = 500, HUBY = 270, HUB_R = 78;
+const CW = 340, CH = 100;
+const LEFT_X = 18, RIGHT_X = W - 18 - CW;        // 18 / 642
+const ROWS_Y = [104, 270, 436];                  // top / middle / bottom centers
 // i → which side + row (alternating: L,R,L,R,L,R top→bottom)
 const LAYOUT = [
   { side: "left",  row: 0 }, { side: "right", row: 0 },
@@ -172,7 +190,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                     {lab} · {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="font-display font-bold text-[15px] leading-snug line-clamp-2 first-letter:uppercase text-content">
-                    {div.name}
+                    {shortName(div, locale)}
                   </h3>
                 </div>
               </Link>
@@ -203,7 +221,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
             const c = NEON[i % NEON.length];
             return (
               <motion.div key={div.id} variants={fadeUp}>
-                <Link href={`/${locale}/divisions/${div.slug}`}
+                <Link href={`/${locale}/divisions/${div.slug}`} title={div.name}
                   className="flex items-center gap-4 p-3 rounded-2xl transition-transform duration-200 active:scale-[0.98]"
                   style={{ background: "var(--card-bg)", border: `1.5px solid rgba(${c},0.55)`, boxShadow: `0 0 14px rgba(${c},0.25)` }}>
                   <Avatar div={div} Icon={Icon} c={c} size={60} />
@@ -211,7 +229,7 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                     <span className="font-mono text-[12px] font-bold" style={{ color: `rgb(${c})` }}>
                       {lab} · {String(i + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="font-display font-bold text-sm leading-snug line-clamp-2 first-letter:uppercase text-content">{div.name}</h3>
+                    <h3 className="font-display font-bold text-sm leading-snug line-clamp-2 first-letter:uppercase text-content">{shortName(div, locale)}</h3>
                   </div>
                   <ArrowRight size={16} style={{ color: `rgb(${c})` }} className="flex-shrink-0" />
                 </Link>
