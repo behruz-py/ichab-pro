@@ -17,6 +17,16 @@ const nextConfig = {
         hostname: "ichab-pro-production-e3e8.up.railway.app",
         pathname: "/media/**",
       },
+      {
+        protocol: "https",
+        hostname: "ichab-pro.onrender.com",
+        pathname: "/media/**",
+      },
+      {
+        // Cloudflare R2 public bucket domain (media storage)
+        protocol: "https",
+        hostname: "pub-2a9e79f8cd1948a0adad7ea2ef7b40c7.r2.dev",
+      },
     ],
   },
   async rewrites() {
