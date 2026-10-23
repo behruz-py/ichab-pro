@@ -5,14 +5,15 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
-import { HeroSection }       from "@/components/sections/HeroSection";
-import { TrustStrip }        from "@/components/sections/TrustStrip";
-import { StatsSection }      from "@/components/sections/StatsSection";
-import { DivisionsPreview }  from "@/components/sections/DivisionsPreview";
-import { ServicesPreview }   from "@/components/sections/ServicesPreview";
-import { ProcessSection }    from "@/components/sections/ProcessSection";
-import { PartnersMarquee }   from "@/components/sections/PartnersMarquee";
-import { Reveal }            from "@/components/ui/Reveal";
+import { HeroSection }            from "@/components/sections/HeroSection";
+import { TrustStrip }             from "@/components/sections/TrustStrip";
+import { StatsSection }           from "@/components/sections/StatsSection";
+import { FeaturedProjectsSlider } from "@/components/sections/FeaturedProjectsSlider";
+import { DivisionsPreview }       from "@/components/sections/DivisionsPreview";
+import { ServicesPreview }        from "@/components/sections/ServicesPreview";
+import { ProcessSection }         from "@/components/sections/ProcessSection";
+import { PartnersMarquee }        from "@/components/sections/PartnersMarquee";
+import { Reveal }                 from "@/components/ui/Reveal";
 
 type Props = { params: { locale: string } };
 
@@ -31,22 +32,25 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
 export default async function HomePage({ params: { locale } }: Props) {
   setRequestLocale(locale);
 
-  const [tHero, tStats, tDivisions, tServices, tPartners] = await Promise.all([
+  const [tHero, tStats, tProjects, tDivisions, tServices, tPartners] = await Promise.all([
     getTranslations({ locale, namespace: "hero" }),
     getTranslations({ locale, namespace: "stats" }),
+    getTranslations({ locale, namespace: "projects" }),
     getTranslations({ locale, namespace: "divisions" }),
     getTranslations({ locale, namespace: "services" }),
     getTranslations({ locale, namespace: "partners" }),
   ]);
 
-  const [statsRes, divisionsRes, servicesRes, partnersRes] = await Promise.allSettled([
+  const [statsRes, projectsRes, divisionsRes, servicesRes, partnersRes] = await Promise.allSettled([
     api.stats.list(locale),
+    api.projects.list(locale),
     api.divisions.list(locale),
     api.services.list(locale),
     api.partners.list(true, locale),
   ]);
 
   const stats     = statsRes.status     === "fulfilled" ? statsRes.value.results     : [];
+  const projects  = projectsRes.status  === "fulfilled" ? projectsRes.value.results  : [];
   const divisions = divisionsRes.status === "fulfilled" ? divisionsRes.value.results : [];
   const services  = servicesRes.status  === "fulfilled" ? servicesRes.value.results  : [];
   const partners  = partnersRes.status  === "fulfilled" ? partnersRes.value.results  : [];
@@ -69,6 +73,16 @@ export default async function HomePage({ params: { locale } }: Props) {
 
       {stats.length > 0 && (
         <StatsSection stats={stats} title={tStats("title")} />
+      )}
+
+      {projects.length > 0 && (
+        <FeaturedProjectsSlider
+          projects={projects}
+          locale={locale}
+          title={tProjects("title")}
+          subtitle={tProjects("subtitle")}
+          viewAll={tProjects("view_all")}
+        />
       )}
 
       {divisions.length > 0 && (
