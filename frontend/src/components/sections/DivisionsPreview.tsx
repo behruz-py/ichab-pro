@@ -168,12 +168,12 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
                   transform: on ? "scale(1.04)" : "scale(1)",
                   transition: "transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s, border-color 0.3s",
                 }}>
-                <Avatar div={div} Icon={Icon} c={c} size={62} />
+                <Avatar div={div} Icon={Icon} c={c} size={68} />
                 <div className="min-w-0 flex-1">
-                  <span className="block font-mono text-[12px] font-bold tracking-widest mb-0.5" style={{ color: `rgb(${c})` }}>
+                  <span className="block font-mono text-[13px] font-bold tracking-widest mb-1.5" style={{ color: `rgb(${c})` }}>
                     {lab} · {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="font-display font-bold text-[14px] leading-snug line-clamp-3 first-letter:uppercase text-content">
+                  <h3 className="font-display font-bold text-[17px] leading-snug line-clamp-3 first-letter:uppercase text-content">
                     {div.name}
                   </h3>
                 </div>
