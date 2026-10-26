@@ -3,6 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { EASE, useCountUp, useVisibleOnce } from "./hooks";
+import { HeroDial } from "./HeroDial";
 
 export interface HeroStat { value: number; label: string; suffix?: string }
 
@@ -28,7 +29,7 @@ const HIGHLIGHT = /avtomat|автомат|automat/i;
 /** Full-viewport dark hero: masked word-by-word headline, mouse-reactive
  * aurora field, and a cardless stats ribbon along the bottom. */
 export function EditorialHero({
-  badge, title, uppercase, subtitle, stats, scrollLabel, actions, tags,
+  badge, title, uppercase, subtitle, stats, scrollLabel, actions, tags, dial,
 }: {
   badge: string;
   title: string;
@@ -38,6 +39,8 @@ export function EditorialHero({
   scrollLabel: string;
   actions?: ReactNode;
   tags?: string[];
+  /** Show the instrument dial on the right (desktop); tags then orbit it. */
+  dial?: boolean;
 }) {
   const ref = useRef<HTMLElement>(null);
   const ready = useVisibleOnce(ref);
@@ -85,7 +88,8 @@ export function EditorialHero({
       </div>
 
       <motion.div style={reduce ? undefined : { y: contentY, opacity: contentOpacity }}
-        className="relative z-10 flex-1 flex flex-col justify-center w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
+        className={`relative z-10 flex-1 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10 ${dial ? "grid lg:grid-cols-12 gap-10 items-center" : "flex flex-col justify-center"}`}>
+       <div className={dial ? "lg:col-span-7 flex flex-col" : "contents"}>
         <motion.div initial={{ opacity: 0, y: 12 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, ease: EASE }}
           className="inline-flex self-start items-center gap-2.5 mb-8 px-3.5 py-1.5 rounded-full"
           style={{ border: "1px solid rgba(255,255,255,0.14)", background: "rgba(255,255,255,0.04)", backdropFilter: "blur(8px)" }}>
@@ -95,7 +99,7 @@ export function EditorialHero({
 
         <h1 aria-label={title}
           className={`font-display font-bold text-white leading-[1.02] tracking-[-0.025em] ${uppercase ? "uppercase" : ""}`}
-          style={{ fontSize: uppercase ? "clamp(30px, 5.6vw, 96px)" : "clamp(38px, 6.4vw, 104px)" }}>
+          style={{ fontSize: dial ? "clamp(30px, 4.3vw, 78px)" : uppercase ? "clamp(30px, 5.6vw, 96px)" : "clamp(38px, 6.4vw, 104px)" }}>
           {words.map((w, i) => (
             <span key={i} aria-hidden className="inline-block overflow-hidden align-bottom pb-[0.1em] mr-[0.24em] last:mr-0">
               <motion.span
@@ -127,11 +131,17 @@ export function EditorialHero({
 
         {tags && tags.length > 0 && (
           <motion.div initial={{ opacity: 0 }} animate={ready ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: afterTitle + 0.35 }}
-            className="mt-10 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs font-semibold tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.45)" }}>
+            className={`mt-10 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs font-semibold tracking-[0.18em] ${dial ? "lg:hidden" : ""}`} style={{ color: "rgba(255,255,255,0.55)" }}>
             {tags.map((t, i) => (
               <span key={t} className="inline-flex items-center gap-5">{t}{i < tags.length - 1 && <span style={{ color: "#F59E0B" }}>/</span>}</span>
             ))}
           </motion.div>
+        )}
+       </div>
+        {dial && (
+          <div className="hidden lg:block lg:col-span-5">
+            <HeroDial tags={tags ?? []} run={ready} />
+          </div>
         )}
       </motion.div>
 

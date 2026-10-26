@@ -26,10 +26,10 @@ function Row({ words, reverse }: { words: string[]; reverse?: boolean }) {
 /** Oversized kinetic type band — outline / gradient words drifting in opposite directions. */
 export function KineticMarquee({ words }: { words: string[] }) {
   return (
-    <section aria-hidden className="relative overflow-hidden py-10 sm:py-14 select-none"
+    <section aria-hidden className="relative overflow-hidden py-6 sm:py-8 select-none"
       style={{ borderTop: "1px solid var(--border-subtle)", borderBottom: "1px solid var(--border-subtle)" }}>
-      <div style={{ fontSize: "clamp(44px, 7.5vw, 120px)" }}><Row words={words} /></div>
-      <div className="mt-3 sm:mt-5 opacity-60" style={{ fontSize: "clamp(28px, 4.2vw, 64px)" }}><Row words={[...words].reverse()} reverse /></div>
+      <div style={{ fontSize: "clamp(30px, 4.2vw, 68px)" }}><Row words={words} /></div>
+      <div className="mt-2 sm:mt-3 opacity-55" style={{ fontSize: "clamp(18px, 2.3vw, 36px)" }}><Row words={[...words].reverse()} reverse /></div>
     </section>
   );
 }

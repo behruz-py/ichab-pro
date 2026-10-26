@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { EASE } from "./hooks";
-import { MagneticLink } from "./MagneticLink";
+import { PillLink } from "./PillLink";
 
 type Loc = Record<string, string>;
 const T: Record<string, Loc> = {
@@ -35,7 +35,7 @@ export function FinaleCta({ locale }: { locale: string }) {
           ))}
         </h2>
         <p className="mt-8 mb-12 max-w-xl mx-auto leading-relaxed" style={{ fontSize: 18, color: "var(--content-secondary)" }}>{t("text")}</p>
-        <MagneticLink href={`/${locale}/contact`}>{t("btn")}</MagneticLink>
+        <PillLink href={`/${locale}/contact`}>{t("btn")}</PillLink>
       </div>
     </section>
   );

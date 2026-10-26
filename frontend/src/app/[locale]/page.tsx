@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { EditorialHero, type HeroStat } from "@/components/editorial/EditorialHero";
-import { MagneticLink } from "@/components/editorial/MagneticLink";
+import { PillLink } from "@/components/editorial/PillLink";
 import { ScrollRevealText } from "@/components/editorial/ScrollRevealText";
 import { KineticMarquee, MARQUEE_WORDS } from "@/components/editorial/KineticMarquee";
 import { FinaleCta } from "@/components/editorial/FinaleCta";
-import { ProjectsHorizontal } from "@/components/home/ProjectsHorizontal";
-import { ServicesEditorial } from "@/components/home/ServicesEditorial";
+import { ProjectsShowcase } from "@/components/home/ProjectsShowcase";
+import { ServicesShowcase } from "@/components/home/ServicesShowcase";
 import { ProcessEditorial } from "@/components/home/ProcessEditorial";
 import { DivisionsPreview } from "@/components/sections/DivisionsPreview";
 import { PartnersMarquee } from "@/components/sections/PartnersMarquee";
@@ -92,10 +92,11 @@ export default async function HomePage({ params: { locale } }: Props) {
         stats={heroStats}
         scrollLabel={tHero("scroll_hint")}
         tags={TECH_TAGS}
+        dial
         actions={
           <>
-            <MagneticLink href={`/${locale}/contact`}>{tHero("cta_primary")}</MagneticLink>
-            <MagneticLink href={`/${locale}/projects`} variant="ghost">{tHero("cta_secondary")}</MagneticLink>
+            <PillLink href={`/${locale}/contact`}>{tHero("cta_primary")}</PillLink>
+            <PillLink href={`/${locale}/projects`} variant="ghost">{tHero("cta_secondary")}</PillLink>
           </>
         }
       />
@@ -104,7 +105,7 @@ export default async function HomePage({ params: { locale } }: Props) {
       <KineticMarquee words={MARQUEE_WORDS[locale] ?? MARQUEE_WORDS.uz} />
 
       {projects.length > 0 && (
-        <ProjectsHorizontal
+        <ProjectsShowcase
           index={next()}
           label={t(L.projects, locale)}
           locale={locale}
@@ -128,7 +129,7 @@ export default async function HomePage({ params: { locale } }: Props) {
       )}
 
       {services.length > 0 && (
-        <ServicesEditorial
+        <ServicesShowcase
           index={next()}
           label={t(L.services, locale)}
           locale={locale}
