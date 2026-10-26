@@ -2,14 +2,14 @@
 
 import type { ReactNode } from "react";
 import type { Certificate, Division, PageContent } from "@/types/api";
+import { EditorialHero } from "@/components/editorial/EditorialHero";
+import { ScrollRevealText } from "@/components/editorial/ScrollRevealText";
+import { KineticMarquee, MARQUEE_WORDS } from "@/components/editorial/KineticMarquee";
+import { FinaleCta } from "@/components/editorial/FinaleCta";
 import { T, tr, type TrustStat } from "./_sections/copy";
-import { Hero } from "./_sections/Hero";
-import { MissionReveal } from "./_sections/MissionReveal";
-import { Marquee } from "./_sections/Marquee";
 import { GoalsSplit } from "./_sections/GoalsSplit";
 import { StructureIndex } from "./_sections/StructureIndex";
 import { Accreditation } from "./_sections/Accreditation";
-import { FinaleCta } from "./_sections/FinaleCta";
 
 export type { TrustStat };
 
@@ -31,8 +31,8 @@ export function AboutShowcase({
 
   const sections: ReactNode[] = [];
   if (mission?.body) {
-    sections.push(<MissionReveal key="mission" index={next()} label={tr(T.mission, locale)} body={mission.body} />);
-    sections.push(<Marquee key="marquee" locale={locale} />);
+    sections.push(<ScrollRevealText key="mission" index={next()} label={tr(T.mission, locale)} text={mission.body} />);
+    sections.push(<KineticMarquee key="marquee" words={MARQUEE_WORDS[locale] ?? MARQUEE_WORDS.uz} />);
   }
   if (vision?.body) {
     sections.push(<GoalsSplit key="vision" index={next()} label={tr(T.goals, locale)} title={vision.title} subtitle={vision.subtitle} body={vision.body} />);
@@ -49,7 +49,8 @@ export function AboutShowcase({
 
   return (
     <div className="relative">
-      <Hero locale={locale} title={mission?.title || "ICHAB"} subtitle={mission?.subtitle} stats={trustStats} />
+      <EditorialHero badge={tr(T.badge, locale)} title={mission?.title || "ICHAB"} subtitle={mission?.subtitle}
+        stats={trustStats} scrollLabel={tr(T.scroll, locale)} />
       {sections}
       <FinaleCta locale={locale} />
     </div>

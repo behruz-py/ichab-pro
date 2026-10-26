@@ -1,40 +1,57 @@
-import { setRequestLocale } from "next-intl/server";
-import { getTranslations } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
-import { HeroSection }            from "@/components/sections/HeroSection";
-import { TrustStrip }             from "@/components/sections/TrustStrip";
-import { StatsSection }           from "@/components/sections/StatsSection";
-import { FeaturedProjectsSlider } from "@/components/sections/FeaturedProjectsSlider";
-import { DivisionsPreview }       from "@/components/sections/DivisionsPreview";
-import { ServicesPreview }        from "@/components/sections/ServicesPreview";
-import { ProcessSection }         from "@/components/sections/ProcessSection";
-import { PartnersMarquee }        from "@/components/sections/PartnersMarquee";
-import { Reveal }                 from "@/components/ui/Reveal";
+import { EditorialHero, type HeroStat } from "@/components/editorial/EditorialHero";
+import { MagneticLink } from "@/components/editorial/MagneticLink";
+import { ScrollRevealText } from "@/components/editorial/ScrollRevealText";
+import { KineticMarquee, MARQUEE_WORDS } from "@/components/editorial/KineticMarquee";
+import { FinaleCta } from "@/components/editorial/FinaleCta";
+import { ProjectsHorizontal } from "@/components/home/ProjectsHorizontal";
+import { ServicesEditorial } from "@/components/home/ServicesEditorial";
+import { ProcessEditorial } from "@/components/home/ProcessEditorial";
+import { DivisionsPreview } from "@/components/sections/DivisionsPreview";
+import { PartnersMarquee } from "@/components/sections/PartnersMarquee";
 
 type Props = { params: { locale: string } };
+type Loc = Record<string, string>;
+const t = (o: Loc, l: string) => o[l] ?? o.uz;
+
+const TECH_TAGS = ["PLC", "SCADA", "HMI", "VFD", "IoT", "DCS"];
+
+const L = {
+  who:      { uz: "Biz kimmiz", ru: "Кто мы", en: "Who we are" },
+  projects: { uz: "Loyihalar", ru: "Проекты", en: "Projects" },
+  services: { uz: "Xizmatlar", ru: "Услуги", en: "Services" },
+  process:  { uz: "Jarayon", ru: "Процесс", en: "Process" },
+  labs:     { uz: "Laboratoriya", ru: "Лаборатория", en: "Laboratory" },
+  done:     { uz: "Amalga oshirilgan loyiha", ru: "Реализованный проект", en: "Completed project" },
+} satisfies Record<string, Loc>;
+
+// Condensed from the department's own description (about_mission).
+const STATEMENT: Loc = {
+  uz: "Biz — «Navoiy kon-metallurgiya kombinati» tarkibidagi bo'linmamiz. Texnologik jarayonlarni avtomatlashtirish, ASUTP va SCADA tizimlarini joriy etish hamda nostandart avtomatlashtirish vositalarini ishlab chiqarish bo'yicha «kalit taslim» yechimlarini taqdim etamiz.",
+  ru: "Мы — подразделение АО «Навоийский горно-металлургический комбинат». Мы предлагаем решения «под ключ» по автоматизации технологических процессов, внедрению систем АСУТП и SCADA и производству нестандартных средств автоматизации.",
+  en: "We are a division of Navoi Mining and Metallurgical Company, delivering turnkey solutions for process automation, APCS and SCADA deployment, and the manufacture of non-standard automation equipment.",
+};
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: "hero" });
+  const tHero = await getTranslations({ locale, namespace: "hero" });
   return {
-    title: `${t("title")} ${t("title_accent")}`,
-    description: t("subtitle"),
+    title: `${tHero("title")} ${tHero("title_accent")}`,
+    description: tHero("subtitle"),
   };
 }
 
 export default async function HomePage({ params: { locale } }: Props) {
   setRequestLocale(locale);
 
-  const [tHero, tStats, tProjects, tDivisions, tServices, tPartners] = await Promise.all([
+  const [tHero, tProjects, tDivisions, tServices, tPartners] = await Promise.all([
     getTranslations({ locale, namespace: "hero" }),
-    getTranslations({ locale, namespace: "stats" }),
     getTranslations({ locale, namespace: "projects" }),
     getTranslations({ locale, namespace: "divisions" }),
     getTranslations({ locale, namespace: "services" }),
@@ -51,34 +68,48 @@ export default async function HomePage({ params: { locale } }: Props) {
 
   const stats     = statsRes.status     === "fulfilled" ? statsRes.value.results     : [];
   const projects  = projectsRes.status  === "fulfilled" ? projectsRes.value.results  : [];
+  const projectCount = projectsRes.status === "fulfilled" ? projectsRes.value.count  : 0;
   const divisions = divisionsRes.status === "fulfilled" ? divisionsRes.value.results : [];
   const services  = servicesRes.status  === "fulfilled" ? servicesRes.value.results  : [];
   const partners  = partnersRes.status  === "fulfilled" ? partnersRes.value.results  : [];
 
+  // Only real, counted figures — no marketing round numbers.
+  const heroStats: HeroStat[] = [];
+  if (divisions.length > 0) heroStats.push({ value: divisions.length, label: t(L.labs, locale) });
+  if (projectCount > 0) heroStats.push({ value: projectCount, label: t(L.done, locale) });
+  for (const s of stats) heroStats.push({ value: s.value, label: s.label, suffix: s.suffix });
+
+  let n = 0;
+  const next = () => ++n;
+
   return (
     <>
-      <HeroSection
-        locale={locale}
+      <EditorialHero
         badge={tHero("badge")}
-        title={tHero("title")}
-        titleAccent={tHero("title_accent")}
+        title={`${tHero("title")} ${tHero("title_accent")}`}
+        uppercase
         subtitle={tHero("subtitle")}
-        ctaPrimary={tHero("cta_primary")}
-        ctaSecondary={tHero("cta_secondary")}
-        scrollHint={tHero("scroll_hint")}
+        stats={heroStats}
+        scrollLabel={tHero("scroll_hint")}
+        tags={TECH_TAGS}
+        actions={
+          <>
+            <MagneticLink href={`/${locale}/contact`}>{tHero("cta_primary")}</MagneticLink>
+            <MagneticLink href={`/${locale}/projects`} variant="ghost">{tHero("cta_secondary")}</MagneticLink>
+          </>
+        }
       />
 
-      {/* Trust strip — thin marquee bar */}
-      <TrustStrip />
-
-      {stats.length > 0 && (
-        <StatsSection stats={stats} title={tStats("title")} />
-      )}
+      <ScrollRevealText index={next()} label={t(L.who, locale)} text={t(STATEMENT, locale)} />
+      <KineticMarquee words={MARQUEE_WORDS[locale] ?? MARQUEE_WORDS.uz} />
 
       {projects.length > 0 && (
-        <FeaturedProjectsSlider
-          projects={projects}
+        <ProjectsHorizontal
+          index={next()}
+          label={t(L.projects, locale)}
           locale={locale}
+          projects={projects}
+          total={projectCount}
           title={tProjects("title")}
           subtitle={tProjects("subtitle")}
           viewAll={tProjects("view_all")}
@@ -87,87 +118,34 @@ export default async function HomePage({ params: { locale } }: Props) {
 
       {divisions.length > 0 && (
         <DivisionsPreview
+          index={next()}
           divisions={divisions}
           locale={locale}
           title={tDivisions("title")}
           subtitle={tDivisions("subtitle")}
           viewAll={tDivisions("view_all")}
-          viewDetail={tDivisions("view_detail")}
         />
       )}
 
       {services.length > 0 && (
-        <ServicesPreview
-          services={services}
+        <ServicesEditorial
+          index={next()}
+          label={t(L.services, locale)}
           locale={locale}
+          services={services}
           title={tServices("title")}
           subtitle={tServices("subtitle")}
           viewAll={tServices("view_all")}
         />
       )}
 
-      {/* How we work */}
-      <ProcessSection locale={locale} />
+      <ProcessEditorial index={next()} label={t(L.process, locale)} locale={locale} />
 
       {partners.length > 0 && (
-        <PartnersMarquee
-          partners={partners}
-          title={tPartners("title")}
-          subtitle={tPartners("subtitle")}
-        />
+        <PartnersMarquee partners={partners} title={tPartners("title")} subtitle={tPartners("subtitle")} />
       )}
 
-      {/* CTA Banner */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Reveal variant="scale">
-            <div className="cta-flow-border">
-              <div
-                className="rounded-3xl p-12 relative overflow-hidden"
-                style={{
-                  background:           "var(--card-solid)",
-                  backdropFilter:       "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
-                }}
-              >
-                {/* Glow top */}
-                <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[400px] h-[200px] rounded-full pointer-events-none"
-                  style={{ background: "radial-gradient(ellipse, rgba(var(--accent-rgb),0.14) 0%, transparent 70%)" }} />
-                {/* Bottom glow */}
-                <div className="absolute -bottom-10 left-1/4 w-[300px] h-[150px] rounded-full pointer-events-none"
-                  style={{ background: "radial-gradient(ellipse, rgba(var(--warm-glow),0.08) 0%, transparent 70%)" }} />
-
-                <div className="relative">
-                  <span className="inline-block text-xs font-bold uppercase tracking-[0.20em] mb-4" style={{ color: "var(--accent)" }}>
-                    Biz bilan bog&apos;laning
-                  </span>
-                  <h2
-                    className="font-display font-bold text-content mb-4"
-                    style={{ fontSize: "clamp(26px, 3.5vw, 42px)" }}
-                  >
-                    {tHero("cta_primary")}?
-                  </h2>
-                  <p className="mb-10 max-w-lg mx-auto" style={{ color: "var(--content-secondary)" }}>
-                    {tHero("subtitle")}
-                  </p>
-                  <Link
-                    href={`/${locale}/contact`}
-                    className="group btn-shine cta-pulse inline-flex items-center gap-2 px-10 py-4 rounded-2xl font-semibold text-base text-white transition-transform duration-200 hover:scale-[1.04] hover:-translate-y-0.5"
-                    style={{
-                      background: "var(--warm-btn)",
-                    }}
-                  >
-                    {tHero("cta_primary")}
-                    <span className="inline-flex transition-transform duration-200 group-hover:translate-x-1">
-                      <ArrowRight size={18} />
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <FinaleCta locale={locale} />
     </>
   );
 }

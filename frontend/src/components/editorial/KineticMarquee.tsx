@@ -1,5 +1,3 @@
-import { MARQUEE } from "./copy";
-
 // Literal class names so Tailwind generates them; `motion-reduce:animate-none`
 // can only override an animation set by a class, not an inline style.
 const FORWARD = "animate-[marquee_48s_linear_infinite]";
@@ -26,8 +24,7 @@ function Row({ words, reverse }: { words: string[]; reverse?: boolean }) {
 }
 
 /** Oversized kinetic type band — outline / gradient words drifting in opposite directions. */
-export function Marquee({ locale }: { locale: string }) {
-  const words = MARQUEE[locale] ?? MARQUEE.uz;
+export function KineticMarquee({ words }: { words: string[] }) {
   return (
     <section aria-hidden className="relative overflow-hidden py-10 sm:py-14 select-none"
       style={{ borderTop: "1px solid var(--border-subtle)", borderBottom: "1px solid var(--border-subtle)" }}>
@@ -36,3 +33,9 @@ export function Marquee({ locale }: { locale: string }) {
     </section>
   );
 }
+
+export const MARQUEE_WORDS: Record<string, string[]> = {
+  uz: ["ASUTP", "SCADA", "ASODU", "Metrologiya", "Avtomatika", "Lokalizatsiya", "Kalit taslim", "Raqamlashtirish"],
+  ru: ["АСУТП", "SCADA", "АСОДУ", "Метрология", "Автоматика", "Локализация", "Под ключ", "Цифровизация"],
+  en: ["APCS", "SCADA", "ASODU", "Metrology", "Automation", "Localization", "Turnkey", "Digitalization"],
+};

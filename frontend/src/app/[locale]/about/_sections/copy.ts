@@ -5,7 +5,7 @@ export interface TrustStat { value: number; label: string; suffix?: string }
 
 export const PALETTE = ["56,189,248", "16,185,129", "139,92,246", "245,158,11", "236,72,153", "6,182,212"];
 
-export const EASE = [0.22, 1, 0.36, 1] as const;
+export { EASE } from "@/components/editorial/hooks";
 
 export const T = {
   badge:        { uz: "Korxona haqida", ru: "О предприятии", en: "About the enterprise" },
@@ -23,11 +23,6 @@ export const T = {
   intl:         { uz: "Xalqaro", ru: "Международный", en: "International" },
   national:     { uz: "Milliy", ru: "Национальный", en: "National" },
   seal:         { uz: "AKKREDITATSIYALANGAN • SERTIFIKATLANGAN • ", ru: "АККРЕДИТОВАНО • СЕРТИФИЦИРОВАНО • ", en: "ACCREDITED • CERTIFIED • STANDARDS COMPLIANT • " },
-  ctaEyebrow:   { uz: "Hamkorlik", ru: "Сотрудничество", en: "Partnership" },
-  ctaLine1:     { uz: "Keling, kelajakni", ru: "Давайте строить", en: "Let's build" },
-  ctaLine2:     { uz: "birga quramiz", ru: "будущее вместе", en: "the future together" },
-  ctaText:      { uz: "Loyihangiz uchun ICHAB mutaxassislari bilan bog'laning.", ru: "Свяжитесь со специалистами ICHAB по вашему проекту.", en: "Get in touch with ICHAB specialists about your project." },
-  ctaBtn:       { uz: "Bog'lanish", ru: "Связаться", en: "Contact us" },
 } satisfies Record<string, Loc>;
 
 export function structureSub(n: number, locale: string) {
@@ -40,10 +35,4 @@ export function structureSub(n: number, locale: string) {
 // kept constant across locales the way "PLC"/"SCADA" would be.
 export const DEPT_CODE: Record<string, string> = {
   asutp: "АСУТП", taae: "ТАиАЭ", itso: "ИТСОиАПС", mop: "МОП", rsi: "РСИ", insa: "ИНСА",
-};
-
-export const MARQUEE: Record<string, string[]> = {
-  uz: ["ASUTP", "SCADA", "ASODU", "Metrologiya", "Avtomatika", "Lokalizatsiya", "Kalit taslim", "Raqamlashtirish"],
-  ru: ["АСУТП", "SCADA", "АСОДУ", "Метрология", "Автоматика", "Локализация", "Под ключ", "Цифровизация"],
-  en: ["APCS", "SCADA", "ASODU", "Metrology", "Automation", "Localization", "Turnkey", "Digitalization"],
 };

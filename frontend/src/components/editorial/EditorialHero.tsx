@@ -1,45 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useRef, type ReactNode } from "react";
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
-import { EASE, T, tr, type TrustStat } from "./copy";
+import { EASE, useCountUp, useVisibleOnce } from "./hooks";
 
-// AppLoader mounts the page with visibility:hidden behind the splash screen;
-// start the entrance only once the hero is actually visible, or it plays unseen.
-function useVisibleOnce(ref: RefObject<HTMLElement>) {
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    let raf = 0;
-    const check = () => {
-      const el = ref.current;
-      if (el && getComputedStyle(el).visibility === "visible") { setReady(true); return; }
-      raf = requestAnimationFrame(check);
-    };
-    check();
-    return () => cancelAnimationFrame(raf);
-  }, [ref]);
-  return ready;
-}
+export interface HeroStat { value: number; label: string; suffix?: string }
 
-function useCountUp(target: number, run: boolean, dur: number) {
-  const [v, setV] = useState(0);
-  useEffect(() => {
-    if (!run) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setV(target); return; }
-    const t0 = performance.now();
-    let raf = 0;
-    const tick = (t: number) => {
-      const p = Math.min((t - t0) / dur, 1);
-      setV(Math.round((1 - Math.pow(1 - p, 3)) * target));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [run, target, dur]);
-  return v;
-}
-
-function Stat({ s, i, run }: { s: TrustStat; i: number; run: boolean }) {
+function Stat({ s, i, run }: { s: HeroStat; i: number; run: boolean }) {
   const v = useCountUp(s.value, run, 1600 + i * 200);
   return (
     <motion.div
@@ -58,7 +25,20 @@ function Stat({ s, i, run }: { s: TrustStat; i: number; run: boolean }) {
 
 const HIGHLIGHT = /avtomat|автомат|automat/i;
 
-export function Hero({ locale, title, subtitle, stats }: { locale: string; title: string; subtitle?: string; stats: TrustStat[] }) {
+/** Full-viewport dark hero: masked word-by-word headline, mouse-reactive
+ * aurora field, and a cardless stats ribbon along the bottom. */
+export function EditorialHero({
+  badge, title, uppercase, subtitle, stats, scrollLabel, actions, tags,
+}: {
+  badge: string;
+  title: string;
+  uppercase?: boolean;
+  subtitle?: string;
+  stats: HeroStat[];
+  scrollLabel: string;
+  actions?: ReactNode;
+  tags?: string[];
+}) {
   const ref = useRef<HTMLElement>(null);
   const ready = useVisibleOnce(ref);
   const reduce = useReducedMotion();
@@ -77,6 +57,7 @@ export function Hero({ locale, title, subtitle, stats }: { locale: string; title
   const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
 
   const words = title.split(/\s+/).filter(Boolean);
+  const afterTitle = 0.6 + words.length * 0.05;
 
   return (
     <section
@@ -90,7 +71,6 @@ export function Hero({ locale, title, subtitle, stats }: { locale: string; title
       className="relative overflow-hidden flex flex-col"
       style={{ minHeight: "calc(100svh - 64px)", background: "#040b19" }}
     >
-      {/* Aurora field */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
         <motion.div className="absolute rounded-full" style={{ x: blobAx, y: blobAy, width: "62vw", height: "62vw", top: "-22vw", right: "-14vw", background: "radial-gradient(circle, rgba(245,158,11,0.32), transparent 62%)", filter: "blur(40px)" }} />
         <motion.div className="absolute rounded-full" style={{ x: blobBx, y: blobBy, width: "56vw", height: "56vw", bottom: "-26vw", left: "-16vw", background: "radial-gradient(circle, rgba(56,189,248,0.26), transparent 62%)", filter: "blur(44px)" }} />
@@ -110,11 +90,12 @@ export function Hero({ locale, title, subtitle, stats }: { locale: string; title
           className="inline-flex self-start items-center gap-2.5 mb-8 px-3.5 py-1.5 rounded-full"
           style={{ border: "1px solid rgba(255,255,255,0.14)", background: "rgba(255,255,255,0.04)", backdropFilter: "blur(8px)" }}>
           <span className="w-1.5 h-1.5 rounded-full lab-active-dot" style={{ background: "#F59E0B" }} />
-          <span className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: "rgba(255,255,255,0.75)" }}>{tr(T.badge, locale)}</span>
+          <span className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: "rgba(255,255,255,0.75)" }}>{badge}</span>
         </motion.div>
 
-        <h1 aria-label={title} className="font-display font-bold text-white leading-[1.02] tracking-[-0.025em] max-w-[15ch] sm:max-w-none"
-          style={{ fontSize: "clamp(38px, 6.4vw, 104px)" }}>
+        <h1 aria-label={title}
+          className={`font-display font-bold text-white leading-[1.02] tracking-[-0.025em] ${uppercase ? "uppercase" : ""}`}
+          style={{ fontSize: uppercase ? "clamp(30px, 5.6vw, 96px)" : "clamp(38px, 6.4vw, 104px)" }}>
           {words.map((w, i) => (
             <span key={i} aria-hidden className="inline-block overflow-hidden align-bottom pb-[0.1em] mr-[0.24em] last:mr-0">
               <motion.span
@@ -131,14 +112,29 @@ export function Hero({ locale, title, subtitle, stats }: { locale: string; title
         </h1>
 
         {subtitle && (
-          <motion.p initial={{ opacity: 0, y: 14 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.6 + words.length * 0.05, ease: EASE }}
-            className="mt-8 max-w-xl leading-relaxed" style={{ fontSize: "clamp(16px,1.35vw,20px)", color: "rgba(255,255,255,0.68)" }}>
+          <motion.p initial={{ opacity: 0, y: 14 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: afterTitle, ease: EASE }}
+            className="mt-8 max-w-2xl leading-relaxed" style={{ fontSize: "clamp(16px,1.35vw,20px)", color: "rgba(255,255,255,0.68)" }}>
             {subtitle}
           </motion.p>
         )}
+
+        {actions && (
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={ready ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: afterTitle + 0.15, ease: EASE }}
+            className="mt-10 flex flex-wrap items-center gap-4">
+            {actions}
+          </motion.div>
+        )}
+
+        {tags && tags.length > 0 && (
+          <motion.div initial={{ opacity: 0 }} animate={ready ? { opacity: 1 } : {}} transition={{ duration: 0.8, delay: afterTitle + 0.35 }}
+            className="mt-10 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs font-semibold tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.45)" }}>
+            {tags.map((t, i) => (
+              <span key={t} className="inline-flex items-center gap-5">{t}{i < tags.length - 1 && <span style={{ color: "#F59E0B" }}>/</span>}</span>
+            ))}
+          </motion.div>
+        )}
       </motion.div>
 
-      {/* Stats ribbon + scroll cue */}
       <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pb-10">
         <div className="h-px w-full mb-8" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04))" }} />
         <div className="flex flex-wrap items-end justify-between gap-8">
@@ -149,7 +145,7 @@ export function Hero({ locale, title, subtitle, stats }: { locale: string; title
           )}
           <motion.div initial={{ opacity: 0 }} animate={ready ? { opacity: 1 } : {}} transition={{ delay: 1.6, duration: 0.8 }}
             className="hidden md:flex items-center gap-3 text-[11px] uppercase tracking-[0.28em]" style={{ color: "rgba(255,255,255,0.5)" }}>
-            {tr(T.scroll, locale)}
+            {scrollLabel}
             <span className="relative block w-px h-12 overflow-hidden" style={{ background: "rgba(255,255,255,0.15)" }}>
               <motion.span className="absolute inset-x-0 top-0 h-1/2" style={{ background: "#F59E0B" }}
                 animate={reduce ? undefined : { y: ["-100%", "200%"] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }} />

@@ -10,11 +10,11 @@ function Word({ word, progress, range }: { word: string; progress: MotionValue<n
 }
 
 /** Long-form statement that lights up word by word as it scrolls through the viewport. */
-export function MissionReveal({ index, label, body }: { index: number; label: string; body: string }) {
+export function ScrollRevealText({ index, label, text }: { index: number; label: string; text: string }) {
   const ref = useRef<HTMLParagraphElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.5"] });
-  const words = body.split(/\s+/).filter(Boolean);
+  const words = text.split(/\s+/).filter(Boolean);
 
   return (
     <section className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
@@ -25,7 +25,7 @@ export function MissionReveal({ index, label, body }: { index: number; label: st
         <p ref={ref} className="lg:col-span-9 font-display font-medium tracking-[-0.01em]"
           style={{ fontSize: "clamp(21px, 2.3vw, 36px)", lineHeight: 1.42, color: "var(--content)" }}>
           {reduce
-            ? body
+            ? text
             : words.map((w, i) => (
                 <Word key={i} word={w} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} />
               ))}

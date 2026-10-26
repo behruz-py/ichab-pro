@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Award, ShieldCheck } from "lucide-react";
 import type { Certificate } from "@/types/api";
 import { EASE, T, tr } from "./copy";
-import { SectionLabel } from "./SectionLabel";
+import { SectionLabel } from "@/components/editorial/SectionLabel";
 
 const R = 84;
 const CIRC = 2 * Math.PI * R;

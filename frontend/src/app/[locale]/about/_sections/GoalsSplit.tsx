@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView, useScroll } from "framer-motion";
 import { EASE, PALETTE } from "./copy";
-import { SectionLabel } from "./SectionLabel";
+import { SectionLabel } from "@/components/editorial/SectionLabel";
 
 interface Block { lead: string; items: string[] }
 

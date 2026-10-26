@@ -6,7 +6,7 @@ import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring } 
 import { ArrowUpRight, Factory, FlaskConical, Cpu, Gauge, Activity, Cog, Zap, type LucideIcon } from "lucide-react";
 import type { Division } from "@/types/api";
 import { DEPT_CODE, EASE, PALETTE, structureSub, T, tr } from "./copy";
-import { SectionLabel } from "./SectionLabel";
+import { SectionLabel } from "@/components/editorial/SectionLabel";
 
 const ICONS: LucideIcon[] = [FlaskConical, Cpu, Gauge, Activity, Cog, Zap];
 

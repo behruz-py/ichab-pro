@@ -11,14 +11,15 @@ import {
 import type { Division } from "@/types/api";
 import { mediaUrl } from "@/lib/utils";
 import { staggerContainer, fadeUp, fadeLeft, VIEWPORT } from "@/lib/motion";
+import { SectionLabel } from "@/components/editorial/SectionLabel";
 
 interface Props {
+  index: number;
   divisions: Division[];
   locale: string;
   title: string;
   subtitle: string;
   viewAll: string;
-  viewDetail: string;
 }
 
 const EYEBROW: Record<string, string> = { uz: "Laboratoriyalar", ru: "Лаборатории", en: "Laboratories" };
@@ -80,15 +81,14 @@ function Avatar({ div, Icon, c, size }: { div: Division; Icon: LucideIcon; c: st
   );
 }
 
-export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, viewDetail }: Props) {
+export function DivisionsPreview({ index, divisions, locale, title, subtitle, viewAll }: Props) {
   const shown = divisions.slice(0, 6);
   const [active, setActive] = useState<number | null>(null);
   if (!shown.length) return null;
   const lab = LAB[locale] ?? LAB.uz;
 
   return (
-    <section className="relative py-20 overflow-hidden">
-      <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(var(--accent-rgb),0.22) 50%,transparent)" }} />
+    <section className="relative py-24 sm:py-32 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[520px] rounded-full"
           style={{ background: "radial-gradient(ellipse, rgba(var(--accent-rgb),0.10) 0%, transparent 70%)", filter: "blur(50px)" }} />
@@ -97,21 +97,17 @@ export function DivisionsPreview({ divisions, locale, title, subtitle, viewAll, 
       <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-5">
-          <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" viewport={VIEWPORT}>
-            <span className="inline-block text-xs font-bold uppercase tracking-[0.22em] mb-3" style={{ color: "var(--accent)" }}>
-              {EYEBROW[locale] ?? EYEBROW.uz}
-            </span>
-            <h2 className="font-display font-bold text-content leading-tight" style={{ fontSize: "clamp(28px,3.5vw,44px)" }}>{title}</h2>
-            <p className="mt-3 max-w-lg" style={{ color: "var(--content-secondary)" }}>{subtitle}</p>
+        <div className="grid lg:grid-cols-12 gap-8 mb-14">
+          <motion.div className="lg:col-span-7" variants={fadeLeft} initial="hidden" whileInView="visible" viewport={VIEWPORT}>
+            <SectionLabel index={index} label={EYEBROW[locale] ?? EYEBROW.uz} />
+            <h2 className="font-display font-bold leading-[1.05] tracking-[-0.02em]" style={{ fontSize: "clamp(34px,4.2vw,64px)", color: "var(--content)" }}>{title}</h2>
           </motion.div>
-          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={VIEWPORT} transition={{ duration: 0.5, delay: 0.2 }}>
-            <Link href={`/${locale}/divisions`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold shrink-0 transition-all duration-200 hover:gap-3"
-              style={{ background: "rgba(var(--accent-rgb),0.10)", border: "1px solid rgba(var(--accent-rgb),0.25)", color: "var(--accent)" }}>
-              {viewAll} <ArrowRight size={16} />
+          <div className="lg:col-span-5 lg:self-end">
+            <p className="leading-relaxed" style={{ fontSize: 17, color: "var(--content-secondary)" }}>{subtitle}</p>
+            <Link href={`/${locale}/divisions`} className="group inline-flex items-center gap-2 mt-5 text-sm font-semibold" style={{ color: "var(--accent)" }}>
+              {viewAll} <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-          </motion.div>
+          </div>
         </div>
 
         {/* ── Desktop: neon mind-map ── */}
