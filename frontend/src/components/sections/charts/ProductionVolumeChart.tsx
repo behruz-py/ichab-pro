@@ -4,24 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Sun, Target } from "lucide-react";
 
-type Loc = Record<string, string>;
+import type { Loc, ProductionRow as Row } from "@/types/internal";
+
 const tr = (o: Loc, l: string) => o[l] ?? o.uz;
-
-interface Row { year: number; prod: number; helio?: number; forecast?: boolean }
-
-const DATA: Row[] = [
-  { year: 2016, prod: 6404 },
-  { year: 2017, prod: 8022 },
-  { year: 2018, prod: 12845 },
-  { year: 2019, prod: 21827 },
-  { year: 2020, prod: 38275 },
-  { year: 2021, prod: 50526 },
-  { year: 2022, prod: 50332 },
-  { year: 2023, prod: 51260, helio: 20800 },
-  { year: 2024, prod: 53300 },
-  { year: 2025, prod: 81000 },
-  { year: 2026, prod: 82000, forecast: true },
-];
 
 const AXIS_MAX = 100000;
 const STEP = 10000;
@@ -140,7 +125,7 @@ function Column({ d, i, inView, locale }: { d: Row; i: number; inView: boolean; 
   );
 }
 
-export function ProductionVolumeChart({ locale }: { locale: string }) {
+export function ProductionVolumeChart({ locale, data }: { locale: string; data: Row[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const steps = Array.from({ length: AXIS_MAX / STEP + 1 }, (_, k) => k * STEP);
@@ -170,7 +155,7 @@ export function ProductionVolumeChart({ locale }: { locale: string }) {
             ))}
             <div className="absolute inset-x-0" style={{ bottom: 0, height: 2, background: "rgba(var(--accent-rgb),0.35)" }} />
             <div className="relative flex items-end justify-around" style={{ height: CHART_H }}>
-              {DATA.map((d, i) => <Column key={d.year} d={d} i={i} inView={inView} locale={locale} />)}
+              {data.map((d, i) => <Column key={d.year} d={d} i={i} inView={inView} locale={locale} />)}
             </div>
           </div>
         </div>

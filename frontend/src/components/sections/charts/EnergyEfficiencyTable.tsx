@@ -3,8 +3,8 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { TrendingUp } from "lucide-react";
+import type { EnergyRow, Loc } from "@/types/internal";
 
-type Loc = Record<string, string>;
 const t = (o: Loc, l: string) => o[l] ?? o.uz;
 
 const HEADING: Loc = {
@@ -18,18 +18,7 @@ const C_NAME: Loc = { uz: "Chora-tadbir nomi", ru: "Наименование м�
 const C_2025: Loc = { uz: "2025-yil (mln so'm)", ru: "2025 год (млн сум)", en: "2025 (mln UZS)" };
 const C_2026: Loc = { uz: "2026-yil (mln so'm)", ru: "2026 год (млн сум)", en: "2026 (mln UZS)" };
 const C_PCT: Loc = { uz: "2026 / 2025 (%)", ru: "2026 / 2025 (%)", en: "2026 / 2025 (%)" };
-const C_TOTAL: Loc = { uz: "Jami", ru: "Итого", en: "Total" };
-
-interface Row { n?: string; name: Loc; v2025: string; v2026: string; pct?: string; total?: boolean }
-
-const ROWS: Row[] = [
-  { name: C_TOTAL, v2025: "5 693,9", v2026: "7 800,2", pct: "136 %", total: true },
-  { n: "1", name: { uz: "Elektr energiyasi iste'molini qisqartirish", ru: "Сокращение потребления электроэнергии", en: "Reducing electricity consumption" }, v2025: "12,8", v2026: "16,3", pct: "127,3 %" },
-  { n: "2", name: { uz: "Xomashyo, materiallar va butlovchi qismlarni xarid qilish jarayonlarini optimallashtirish", ru: "Оптимизация процессов закупки сырья, материалов и комплектующих", en: "Optimizing procurement of raw materials, supplies and components" }, v2025: "4 807,4", v2026: "811,4" },
-  { n: "3", name: { uz: "Ishlab chiqarishdagi bilvosita xarajatlarni kamaytirish bo'yicha chora-tadbirlar", ru: "Меры по снижению косвенных производственных расходов", en: "Measures to reduce indirect production costs" }, v2025: "873,7", v2026: "6 988,8" },
-];
-
-export function EnergyEfficiencyTable({ locale }: { locale: string }) {
+export function EnergyEfficiencyTable({ locale, data }: { locale: string; data: EnergyRow[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
@@ -55,7 +44,7 @@ export function EnergyEfficiencyTable({ locale }: { locale: string }) {
               </tr>
             </thead>
             <tbody>
-              {ROWS.map((r, i) => (
+              {data.map((r, i) => (
                 <motion.tr
                   key={i}
                   initial={{ opacity: 0, x: -12 }}

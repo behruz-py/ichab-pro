@@ -3,8 +3,8 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { TrendingUp, TrendingDown } from "lucide-react";
+import type { CostRow, Loc } from "@/types/internal";
 
-type Loc = Record<string, string>;
 const t = (o: Loc, l: string) => o[l] ?? o.uz;
 
 const HEADING: Loc = { uz: "ICHAB xarajatlar smetasi", ru: "Смета расходов ICHAB", en: "ICHAB cost estimate" };
@@ -17,22 +17,7 @@ const H_SHARE: Loc = { uz: "Ulush, %", ru: "Доля, %", en: "Share, %" };
 const H_2026: Loc = { uz: "2026-yil", ru: "2026 год", en: "2026" };
 const H_PCT: Loc = { uz: "2025-yilga nisbatan %", ru: "к 2025 году %", en: "vs 2025 %" };
 
-interface Row { name: Loc; bSum: string; bShare?: string; kSum: string; kShare?: string; y2026: string; pct?: string; bold?: boolean }
-
-const ROWS: Row[] = [
-  { name: { uz: "Material xarajatlari", ru: "Материальные затраты", en: "Material costs" }, bSum: "50 314", bShare: "55", kSum: "50 314", kShare: "55", y2026: "44 160", pct: "87,8" },
-  { name: { uz: "Mehnatga haq to'lash xarajatlari", ru: "Расходы на оплату труда", en: "Labor costs" }, bSum: "19 949", bShare: "22", kSum: "19 949", kShare: "22", y2026: "20 000", pct: "100,3" },
-  { name: { uz: "Yagona ijtimoiy to'lov", ru: "Единый социальный платёж", en: "Unified social payment" }, bSum: "2 394", bShare: "3", kSum: "2 394", kShare: "3", y2026: "2 400", pct: "100,3" },
-  { name: { uz: "Amortizatsiya ajratmalari", ru: "Амортизационные отчисления", en: "Depreciation charges" }, bSum: "1 566", bShare: "3", kSum: "1 566", kShare: "3", y2026: "1 780", pct: "113,7" },
-  { name: { uz: "Ishlab chiqarish maqsadidagi boshqa xarajatlar", ru: "Прочие производственные расходы", en: "Other production costs" }, bSum: "7 252", bShare: "8", kSum: "7 252", kShare: "8", y2026: "5 601", pct: "77,2" },
-  { name: { uz: "Jami ishlab chiqarish tannarxi", ru: "Итого себестоимость производства", en: "Total production cost" }, bSum: "81 475", bShare: "90", kSum: "81 475", kShare: "90", y2026: "71 941", pct: "88,3", bold: true },
-  { name: { uz: "Ma'muriy xarajatlar", ru: "Административные расходы", en: "Administrative expenses" }, bSum: "6 155", bShare: "7", kSum: "6 155", kShare: "7", y2026: "6 100", pct: "99,1" },
-  { name: { uz: "Boshqa operatsion xarajatlar", ru: "Прочие операционные расходы", en: "Other operating expenses" }, bSum: "2 570", bShare: "3", kSum: "2 570", kShare: "3", y2026: "1 959", pct: "76,2" },
-  { name: { uz: "Jami davr xarajatlari", ru: "Итого расходы периода", en: "Total period expenses" }, bSum: "8 725", bShare: "10", kSum: "8 725", kShare: "10", y2026: "8 059", pct: "92,4", bold: true },
-  { name: { uz: "JAMI", ru: "ИТОГО", en: "TOTAL" }, bSum: "90 200", kSum: "90 200", y2026: "82 000", pct: "90,9", bold: true },
-];
-
-export function CostEstimateTable({ locale }: { locale: string }) {
+export function CostEstimateTable({ locale, data }: { locale: string; data: CostRow[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const cb = "1px solid var(--border-subtle)";
@@ -66,7 +51,7 @@ export function CostEstimateTable({ locale }: { locale: string }) {
               </tr>
             </thead>
             <tbody>
-              {ROWS.map((r, i) => {
+              {data.map((r, i) => {
                 const up = r.pct ? parseFloat(r.pct.replace(",", ".")) >= 100 : true;
                 const fw = r.bold ? 700 : 500;
                 return (

@@ -30,7 +30,6 @@ const MAIN_NAV = [
   { key: "services",   path: "/services"   },
   { key: "products",   path: "/products"   },
   { key: "projects",   path: "/projects"   },
-  { key: "statistics", path: "/statistics" },
   { key: "contact",    path: "/contact"    },
 ] as const;
 

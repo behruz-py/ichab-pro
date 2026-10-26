@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { MapPin, Phone, Mail, Clock, ArrowRight, Printer, Globe } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, ArrowRight, Printer, Globe, Lock } from "lucide-react";
 import { LogoBadge } from "@/components/shared/LogoBadge";
 import { BRAND_NAME } from "@/lib/site";
+
+const STAFF_LOGIN: Record<string, string> = { uz: "Xodimlar uchun", ru: "Для сотрудников", en: "Staff" };
 
 const COMPANY = [
   { key: "about",        path: "/about" },
   { key: "divisions",    path: "/divisions" },
-  { key: "statistics",   path: "/statistics" },
   { key: "certificates", path: "/certificates" },
   { key: "partners",     path: "/partners" },
 ] as const;
@@ -159,7 +160,12 @@ export async function Footer() {
         {/* Bottom bar */}
         <div className="pt-7 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: "1px solid var(--border-subtle)" }}>
           <p className="text-xs" style={{ color: "var(--content-muted)" }}>{tFooter("copyright", { year })}</p>
-          <p className="text-xs" style={{ color: "var(--content-muted)" }}>{tFooter("made_with")}</p>
+          <div className="flex items-center gap-4">
+            <Link href={`/${locale}/login`} className="inline-flex items-center gap-1 text-xs hover:underline" style={{ color: "var(--content-muted)" }}>
+              <Lock size={11} /> {STAFF_LOGIN[locale] ?? STAFF_LOGIN.uz}
+            </Link>
+            <p className="text-xs" style={{ color: "var(--content-muted)" }}>{tFooter("made_with")}</p>
+          </div>
         </div>
       </div>
     </footer>

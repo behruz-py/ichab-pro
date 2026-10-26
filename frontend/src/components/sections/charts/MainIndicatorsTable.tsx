@@ -3,8 +3,8 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { TrendingUp, TrendingDown } from "lucide-react";
+import type { IndicatorRow, Loc } from "@/types/internal";
 
-type Loc = Record<string, string>;
 const t = (o: Loc, l: string) => o[l] ?? o.uz;
 
 const HEADING: Loc = {
@@ -19,27 +19,9 @@ const C_2025: Loc = { uz: "2025-yil", ru: "2025 год", en: "2025" };
 const C_DIFF: Loc = { uz: "2025-yilning 2024-yilga nisbatan (+, -)", ru: "2025 к 2024 (+, -)", en: "2025 vs 2024 (+, -)" };
 const C_PCT: Loc = { uz: "2025-yilning 2024-yilga nisbatan %", ru: "2025 к 2024 %", en: "2025 vs 2024 %" };
 
-interface Row { name: Loc; unit: Loc; v2024: string; v2025: string; change: string; pct?: string; level: number }
-
-const U_SUM: Loc = { uz: "mln so'm", ru: "млн сум", en: "mln UZS" };
-const U_PERSON: Loc = { uz: "odam", ru: "чел.", en: "people" };
-const U_SUM_PERSON: Loc = { uz: "mln so'm/odam", ru: "млн сум/чел.", en: "mln UZS/person" };
-
-const ROWS: Row[] = [
-  { name: { uz: "Yalpi mahsulot hajmi, jami:", ru: "Объём валовой продукции, всего:", en: "Total gross output:" }, unit: U_SUM, v2024: "53 748", v2025: "81 000", change: "27 252", pct: "151", level: 0 },
-  { name: { uz: "shu jumladan: Avtomatlashtirilgan nostandart vositalarni tayyorlash", ru: "в т.ч.: изготовление нестандартных средств автоматизации", en: "incl.: manufacture of non-standard automation equipment" }, unit: U_SUM, v2024: "28 673", v2025: "47 500", change: "18 827", pct: "165.7", level: 1 },
-  { name: { uz: "ICHAB tarkibiy bo'linmalari tomonidan bajariladigan ishlar (xizmatlar) hajmi", ru: "Объём работ (услуг), выполняемых структурными подразделениями ICHAB", en: "Volume of works (services) performed by ICHAB's structural units" }, unit: U_SUM, v2024: "20 144", v2025: "23 629", change: "3 485", pct: "117.3", level: 2 },
-  { name: { uz: "yangi turdagi mahsulotlar va xizmatlarni o'zlashtirish", ru: "освоение новых видов продукции и услуг", en: "development of new types of products and services" }, unit: U_SUM, v2024: "4 931", v2025: "9 871", change: "4 940", pct: "200.2", level: 1 },
-  { name: { uz: "tovar mahsuloti", ru: "товарная продукция", en: "marketable output" }, unit: U_SUM, v2024: "488", v2025: "552", change: "64", pct: "113", level: 0 },
-  { name: { uz: "O'rtacha ro'yxatdagi xodimlar soni, jami", ru: "Среднесписочная численность работников, всего", en: "Average headcount, total" }, unit: U_PERSON, v2024: "153", v2025: "152", change: "-1", pct: "99", level: 0 },
-  { name: { uz: "Boshqaruv xodimlari soni", ru: "Численность управленческого персонала", en: "Management staff headcount" }, unit: U_PERSON, v2024: "22", v2025: "22", change: "0", level: 0 },
-  { name: { uz: "Mehnat unumdorligi", ru: "Производительность труда", en: "Labor productivity" }, unit: U_SUM_PERSON, v2024: "351,3", v2025: "532,9", change: "181,6", pct: "152", level: 0 },
-  { name: { uz: "ICHAB ni saqlash smetasi", ru: "Смета содержания ICHAB", en: "ICHAB maintenance budget" }, unit: U_SUM, v2024: "51 707", v2025: "90 200", change: "27 693", pct: "137", level: 0 },
-];
-
 const changeColor = (c: string) => (c.startsWith("-") ? "rgb(248,113,113)" : c === "0" ? "var(--content-muted)" : "rgb(52,211,153)");
 
-export function MainIndicatorsTable({ locale }: { locale: string }) {
+export function MainIndicatorsTable({ locale, data }: { locale: string; data: IndicatorRow[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
@@ -66,7 +48,7 @@ export function MainIndicatorsTable({ locale }: { locale: string }) {
               </tr>
             </thead>
             <tbody>
-              {ROWS.map((r, i) => {
+              {data.map((r, i) => {
                 const up = r.pct ? parseFloat(r.pct.replace(",", ".")) >= 100 : true;
                 return (
                   <motion.tr key={i}

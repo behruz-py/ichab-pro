@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import type { GrowthRow, Loc } from "@/types/internal";
 
-type Loc = Record<string, string>;
 const t = (o: Loc, l: string) => o[l] ?? o.uz;
 
 const HEADING: Loc = {
@@ -25,15 +25,6 @@ const NOTE2: Loc = {
   ru: "В последние 4 года ведётся работа по освоению экономически эффективной, импортозамещающей высокотехнологичной продукции.",
   en: "Over the past 4 years, work has been under way to master cost-effective, import-substituting high-tech products.",
 };
-
-interface Row { year: number; dona: number; vol: string; volNum: number; forecast?: boolean }
-const DATA: Row[] = [
-  { year: 2022, dona: 18, vol: "3 845.9", volNum: 3845.9 },
-  { year: 2023, dona: 20, vol: "4 486.6", volNum: 4486.6 },
-  { year: 2024, dona: 21, vol: "4 876.4", volNum: 4876.4 },
-  { year: 2025, dona: 24, vol: "9 250.5", volNum: 9250.5 },
-  { year: 2026, dona: 24, vol: "10 545.6", volNum: 10545.6, forecast: true },
-];
 
 const AXIS_MAX = 12000, STEP = 2000, DONA_VIS_MAX = 100;
 const PLOT_H = 340, CHART_H = PLOT_H + 40, BAR_W = 34;
@@ -86,7 +77,7 @@ function DonaCount({ to, inView }: { to: number; inView: boolean }) {
   return <>{useCountUp(to, inView)}</>;
 }
 
-export function LocalizationGrowthChart({ locale }: { locale: string }) {
+export function LocalizationGrowthChart({ locale, data }: { locale: string; data: GrowthRow[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const steps = Array.from({ length: AXIS_MAX / STEP + 1 }, (_, k) => k * STEP);
@@ -121,7 +112,7 @@ export function LocalizationGrowthChart({ locale }: { locale: string }) {
                 ))}
                 <div className="absolute inset-x-0" style={{ bottom: 0, height: 2, background: "rgba(var(--accent-rgb),0.35)" }} />
                 <div className="relative flex items-end justify-around" style={{ height: CHART_H }}>
-                  {DATA.map((d, i) => (
+                  {data.map((d, i) => (
                     <div key={d.year} className="flex flex-col items-center">
                       <div className="flex items-end gap-1.5">
                         <Bar h={(d.dona / DONA_VIS_MAX) * PLOT_H} grad={DONA_GRAD} glow={DONA_GLOW} delay={0.15 + i * 0.08} inView={inView} label={<DonaCount to={d.dona} inView={inView} />} />

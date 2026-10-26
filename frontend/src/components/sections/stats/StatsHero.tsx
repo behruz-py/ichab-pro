@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import type { KpiRow as Kpi, Loc } from "@/types/internal";
 
-type Loc = Record<string, string>;
 const tr = (o: Loc, l: string) => o[l] ?? o.uz;
 const fmt = (n: number) => n.toLocaleString("ru-RU");
 const lighten = (rgb: string, f: number) => rgb.split(",").map((n) => Math.round(+n + (255 - +n) * f)).join(",");
@@ -14,14 +14,6 @@ const SUB: Loc = {
   ru: "Рост, показатели и достигнутые результаты нашего предприятия",
   en: "Our company's growth, indicators and achieved results",
 };
-
-interface Kpi { value: number; suffix: string; rgb: string; label: Loc }
-const KPIS: Kpi[] = [
-  { value: 81000, suffix: "", rgb: "56,189,248", label: { uz: "2025-yil yalpi mahsulot, mln so'm", ru: "Валовая продукция 2025, млн сум", en: "2025 gross output, mln UZS" } },
-  { value: 151, suffix: "%", rgb: "16,185,129", label: { uz: "2024 → 2025 o'sish", ru: "Рост 2024 → 2025", en: "2024 → 2025 growth" } },
-  { value: 18, suffix: "", rgb: "139,92,246", label: { uz: "Lokalizatsiyalangan mahsulot turi", ru: "Видов локализованной продукции", en: "Localized product types" } },
-  { value: 82000, suffix: "", rgb: "245,158,11", label: { uz: "2026 ishlab chiqarish rejasi, mln so'm", ru: "План производства 2026, млн сум", en: "2026 production plan, mln UZS" } },
-];
 
 function useCountUp(target: number, run: boolean, dur = 1700) {
   const [v, setV] = useState(0);
@@ -57,7 +49,7 @@ function KpiCard({ k, i, inView, locale }: { k: Kpi; i: number; inView: boolean;
   );
 }
 
-export function StatsHero({ locale }: { locale: string }) {
+export function StatsHero({ locale, kpis }: { locale: string; kpis: Kpi[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   return (
@@ -67,7 +59,7 @@ export function StatsHero({ locale }: { locale: string }) {
       <motion.p initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.15 }}
         className="text-content-secondary text-lg max-w-2xl mx-auto mt-4">{tr(SUB, locale)}</motion.p>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
-        {KPIS.map((k, i) => <KpiCard key={i} k={k} i={i} inView={inView} locale={locale} />)}
+        {kpis.map((k, i) => <KpiCard key={i} k={k} i={i} inView={inView} locale={locale} />)}
       </div>
     </div>
   );

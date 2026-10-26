@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Boxes, Layers } from "lucide-react";
+import type { Loc, LocalizedProduct, LocalizedProducts } from "@/types/internal";
 
-type Loc = Record<string, string>;
 const t = (o: Loc, l: string) => o[l] ?? o.uz;
 
 const HEADING: Loc = {
@@ -23,32 +23,10 @@ const L_VOL: Loc = { uz: "Mahsulot hajmi", ru: "Объём продукции", 
 const UNIT: Loc = { uz: "mln so'm", ru: "млн сум", en: "mln UZS" };
 const PCS: Loc = { uz: "dona", ru: "шт.", en: "pcs" };
 
-interface P { uz: string; ru: string; en: string; count: string; value: string }
-const PRODUCTS: P[] = [
-  { uz: "Shaxta reversiv puskateli (ПРР)", ru: "Пускатель рудничный реверсивный", en: "Mine reversible starter (ПРР)", count: "10", value: "278.0" },
-  { uz: "Shaxta noreversiv puskateli (ПРН)", ru: "Пускатель рудничный нереверсивный", en: "Mine non-reversible starter (ПРН)", count: "10", value: "192.0" },
-  { uz: "Yumshoq ishga tushirish puskateli (ПРМ)", ru: "Пускатель рудничный мягкий пуск", en: "Mine soft-start starter (ПРМ)", count: "6", value: "158.0" },
-  { uz: "Qo'lda boshqariladigan puskatel (ПРШ)", ru: "Пускатель рудничный с ручным управлением", en: "Mine manually-operated starter (ПРШ)", count: "6", value: "168.0" },
-  { uz: "Shovqin darajasi o'lchagichi (ШУМ-4)", ru: "Измеритель уровня шума", en: "Noise level meter (ШУМ-4)", count: "16", value: "75.0" },
-  { uz: "OSM transformatori", ru: "Трансформатор ОСМ", en: "OSM transformer", count: "70", value: "80.0" },
-  { uz: "Dvigatelni himoyalash boshqaruv shkafi", ru: "Шкаф управления защиты двигателя", en: "Motor protection control cabinet", count: "45", value: "580.0" },
-  { uz: "DIN-reyka", ru: "Дин-рейка", en: "DIN rail", count: "2 777", value: "55.0" },
-  { uz: "Quyosh geliokollektori", ru: "Солнечный гелиоколлектор", en: "Solar heat collector", count: "90", value: "700.0" },
-  { uz: "Tiristorli boshqaruv shkafi (ВТЕ)", ru: "Шкаф тиристорного управления", en: "Thyristor control cabinet (ВТЕ)", count: "18", value: "2 000.0" },
-  { uz: "Kabel uchlari", ru: "Кабельные наконечники", en: "Cable lugs", count: "43 000", value: "500.0" },
-  { uz: "ТРЕ 200/460 quvvat bloki", ru: "ТПЕ 200/460 силовой блок", en: "ТРЕ 200/460 power unit", count: "8", value: "730.0" },
-  { uz: "Shaxta yoritish moslamasi (АОШ)", ru: "Шахтный осветительный прибор", en: "Mine lighting fixture (АОШ)", count: "6", value: "220.0" },
-  { uz: "Avtomatlashtirish shkafi", ru: "Шкаф автоматизации", en: "Automation cabinet", count: "4", value: "330.0" },
-  { uz: "Masofadan boshqarish pulti (PDU)", ru: "Пульт дистанционного управления ПДУ", en: "Remote control unit (PDU)", count: "2", value: "65.0" },
-  { uz: "Reaktiv quvvatni kompensatsiya qurilmasi", ru: "Устройство компенсации реактивной мощности", en: "Reactive power compensation device", count: "1", value: "40.0" },
-  { uz: "Kuch shkafi (ШС)", ru: "Шкаф силовой", en: "Power cabinet (ШС)", count: "2", value: "180.0" },
-  { uz: "Titratuvchi boshqarish shkafi", ru: "Шкаф управления вибропитателем", en: "Vibro-feeder control cabinet", count: "10", value: "240.2" },
-];
-
 /** Primary (locale-appropriate) name + a secondary reference name — Russian
  * technical designations double as de-facto industry model codes, so we keep
  * one visible as a subtitle unless it would just repeat the primary line. */
-function productNames(p: P, locale: string): { primary: string; secondary: string } {
+function productNames(p: LocalizedProduct, locale: string): { primary: string; secondary: string } {
   const primary = locale === "ru" ? p.ru : locale === "en" ? p.en : p.uz;
   const secondary = locale === "ru" ? p.uz : p.ru;
   return { primary, secondary };
@@ -76,10 +54,10 @@ function useCountUp(target: number, run: boolean, dur = 1400) {
   return v;
 }
 
-export function LocalizedProducts2026({ locale }: { locale: string }) {
+export function LocalizedProducts2026({ locale, data }: { locale: string; data: LocalizedProducts }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  const types = useCountUp(18, inView);
+  const types = useCountUp(data.types, inView);
 
   return (
     <section ref={ref}>
@@ -101,7 +79,7 @@ export function LocalizedProducts2026({ locale }: { locale: string }) {
           <div className="flex items-center gap-3">
             <Boxes size={28} style={{ color: "rgb(52,211,153)" }} />
             <div>
-              <div className="font-display font-extrabold tabular-nums leading-none" style={{ fontSize: 34, color: "var(--content)" }}>6 591.3 <span style={{ fontSize: 14, color: "var(--content-secondary)" }}>{t(UNIT, locale)}</span></div>
+              <div className="font-display font-extrabold tabular-nums leading-none" style={{ fontSize: 34, color: "var(--content)" }}>{data.volume} <span style={{ fontSize: 14, color: "var(--content-secondary)" }}>{t(UNIT, locale)}</span></div>
               <div className="text-xs mt-1" style={{ color: "var(--content-muted)" }}>{t(L_VOL, locale)}</div>
             </div>
           </div>
@@ -110,7 +88,7 @@ export function LocalizedProducts2026({ locale }: { locale: string }) {
 
       {/* Product grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {PRODUCTS.map((p, i) => {
+        {data.products.map((p, i) => {
           const c = PALETTE[i % PALETTE.length];
           const { primary, secondary } = productNames(p, locale);
           return (
