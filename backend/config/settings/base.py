@@ -129,7 +129,6 @@ USE_TZ = True
 # ─── Static & Media ────────────────────────────────────────────────────────────
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media (uploaded images/files): local disk by default (dev, or any host with
 # a persistent volume). Set the AWS_* vars below to serve media from an
@@ -137,8 +136,16 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # persistent disk (Render's free tier, Cloud Run, etc). R2's free tier has no
 # egress fees, unlike S3.
 AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME", default="")
+# Django 5.1 removed DEFAULT_FILE_STORAGE / STATICFILES_STORAGE — they are
+# silently ignored, so storage backends must be declared via STORAGES.
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage" if AWS_STORAGE_BUCKET_NAME
+        else "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+}
 if AWS_STORAGE_BUCKET_NAME:
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID", default="")
     AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY", default="")
     AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL", default="")  # e.g. https://<account_id>.r2.cloudflarestorage.com
