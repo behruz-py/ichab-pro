@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Info, LayoutGrid, Award, Users, ChevronDown, X } from "lucide-react";
 import { LangSwitcher } from "@/components/shared/LangSwitcher";
 import { ThemeSwitcher } from "@/components/shared/ThemeSwitcher";
+import { StaffLoginButton } from "@/components/shared/StaffLoginButton";
 import { useUIStore } from "@/store/ui.store";
 import { cn } from "@/lib/utils";
 import { LogoBadge } from "@/components/shared/LogoBadge";
@@ -281,6 +282,7 @@ export function Header() {
 
             {/* ── Right controls ────────────────────────────────────────── */}
             <div className="flex items-center gap-2 flex-shrink-0">
+              <StaffLoginButton locale={locale} className="hidden sm:flex" />
               <ThemeSwitcher className="hidden sm:flex" />
               <div className="hidden sm:block">
                 <LangSwitcher />
@@ -439,6 +441,7 @@ export function Header() {
                 <div className="flex items-center justify-between">
                   <span className="text-[13px] text-content-muted font-semibold uppercase tracking-[0.1em]">Til</span>
                   <div className="flex items-center gap-2">
+                    <StaffLoginButton locale={locale} />
                     <ThemeSwitcher />
                     <LangSwitcher />
                   </div>
