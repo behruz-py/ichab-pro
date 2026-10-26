@@ -19,7 +19,7 @@ class ServiceImageSerializer(serializers.ModelSerializer):
 class ServiceListSerializer(TranslatedSerializerMixin, serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     short_description = serializers.SerializerMethodField()
-    cover_image = ImageFieldAbsoluteURL(read_only=True)
+    cover_image = serializers.SerializerMethodField()
     division_name = serializers.SerializerMethodField()
     highlights = serializers.SerializerMethodField()
 
@@ -44,6 +44,16 @@ class ServiceListSerializer(TranslatedSerializerMixin, serializers.ModelSerializ
 
     def get_highlights(self, obj):
         return parse_highlights(translate_plain(obj, "highlights", self._lang()))
+
+    def get_cover_image(self, obj):
+        # Admins often upload only to the gallery; the list's cover then falls
+        # back to the main (else first) gallery image. `images` is prefetched
+        # and already ordered main-first, so this adds no queries.
+        image = obj.cover_image or next((i.image for i in obj.images.all() if i.image), None)
+        if not image:
+            return None
+        request = self.context.get("request")
+        return request.build_absolute_uri(image.url) if request else image.url
 
 
 class ServiceDetailSerializer(TranslatedSerializerMixin, serializers.ModelSerializer):
