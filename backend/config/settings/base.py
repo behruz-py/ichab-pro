@@ -46,6 +46,7 @@ LOCAL_APPS = [
     "apps.stats",
     "apps.pages",
     "apps.leads",
+    "apps.internal",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -176,6 +177,7 @@ REST_FRAMEWORK = {
     # and a global AnonRateThrottle would throttle the whole site.
     "DEFAULT_THROTTLE_RATES": {
         "lead": "10/hour",
+        "login": "10/minute",
     },
 }
 

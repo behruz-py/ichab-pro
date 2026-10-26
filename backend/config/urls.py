@@ -4,19 +4,21 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView,
 )
+from apps.internal.views import StaffTokenObtainView, MeView
 
 API_PREFIX = "api/v1/"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     # ─── JWT Auth ────────────────────────────────────────────────────────────
-    path(f"{API_PREFIX}auth/token/", TokenObtainPairView.as_view(), name="token_obtain"),
+    path(f"{API_PREFIX}auth/token/", StaffTokenObtainView.as_view(), name="token_obtain"),
     path(f"{API_PREFIX}auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path(f"{API_PREFIX}auth/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
+    path(f"{API_PREFIX}auth/me/", MeView.as_view(), name="auth_me"),
+    path(f"{API_PREFIX}internal/", include("apps.internal.urls")),
     # ─── Domain APIs ─────────────────────────────────────────────────────────
     path(f"{API_PREFIX}divisions/", include("apps.divisions.urls")),
     path(f"{API_PREFIX}products/", include("apps.products.urls")),
