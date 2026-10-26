@@ -2,7 +2,7 @@
 
 import { useState, type CSSProperties } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight, Factory, FlaskConical, Cpu, Gauge, Activity, Cog, Zap, type LucideIcon } from "lucide-react";
 import type { Division } from "@/types/api";
 import { DEPT_CODE, EASE, PALETTE, structureSub, T, tr } from "./copy";
@@ -11,16 +11,9 @@ import { SectionLabel } from "@/components/editorial/SectionLabel";
 const ICONS: LucideIcon[] = [FlaskConical, Cpu, Gauge, Activity, Cog, Zap];
 
 /** Divisions as an editorial index: full-width rows with the official name,
- * a color wipe on hover and a floating preview badge that trails the cursor. */
+ * a color wipe on hover and a static icon tile that fills with color. */
 export function StructureIndex({ index, locale, divisions }: { index: number; locale: string; divisions: Division[] }) {
-  const reduce = useReducedMotion();
   const [active, setActive] = useState<number | null>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const px = useSpring(x, { stiffness: 220, damping: 24 });
-  const py = useSpring(y, { stiffness: 220, damping: 24 });
-  const ActiveIcon = active !== null ? ICONS[active % ICONS.length] : null;
-  const activeRgb = active !== null ? PALETTE[active % PALETTE.length] : PALETTE[0];
 
   return (
     <section className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
@@ -40,38 +33,12 @@ export function StructureIndex({ index, locale, divisions }: { index: number; lo
         </div>
       </div>
 
-      <div
-        className="relative"
-        onMouseMove={(e) => {
-          const r = e.currentTarget.getBoundingClientRect();
-          x.set(e.clientX - r.left);
-          y.set(e.clientY - r.top);
-        }}
-        onMouseLeave={() => setActive(null)}
-        style={{ borderTop: "1px solid var(--border)" }}
-      >
-        {!reduce && (
-          <AnimatePresence>
-            {ActiveIcon && (
-              <motion.div
-                key="preview"
-                className="hidden lg:flex absolute left-0 top-0 z-20 pointer-events-none items-center justify-center rounded-full"
-                style={{ x: px, y: py, translateX: "-50%", translateY: "-50%", width: 132, height: 132,
-                  background: `radial-gradient(circle at 35% 30%, rgba(${activeRgb},0.95), rgba(${activeRgb},0.55))`,
-                  boxShadow: `0 20px 60px rgba(${activeRgb},0.45)` }}
-                initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0, opacity: 0 }}
-                transition={{ duration: 0.35, ease: EASE }}
-              >
-                <ActiveIcon size={46} color="#fff" strokeWidth={1.6} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        )}
-
+      <div className="relative" onMouseLeave={() => setActive(null)} style={{ borderTop: "1px solid var(--border)" }}>
         {divisions.map((div, i) => {
           const rgb = PALETTE[i % PALETTE.length];
           const code = DEPT_CODE[div.slug];
           const isActive = active === i;
+          const Icon = ICONS[i % ICONS.length];
           return (
             <motion.div key={div.id}
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-40px" }}
@@ -80,7 +47,7 @@ export function StructureIndex({ index, locale, divisions }: { index: number; lo
                 href={`/${locale}/divisions/${div.slug}`}
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
-                className="group relative grid grid-cols-[auto,1fr,auto] lg:grid-cols-[64px,170px,1fr,auto] items-center gap-x-5 lg:gap-x-8 gap-y-2 py-6 sm:py-7 px-2 sm:px-4 overflow-hidden"
+                className="group relative grid grid-cols-[auto,1fr,auto] lg:grid-cols-[48px,56px,150px,1fr,auto] items-center gap-x-5 lg:gap-x-8 gap-y-2 py-6 sm:py-7 px-2 sm:px-4 overflow-hidden"
                 style={{ borderBottom: "1px solid var(--border)", "--c": rgb } as CSSProperties}
               >
                 {/* Color wipe + edge bar */}
@@ -90,6 +57,10 @@ export function StructureIndex({ index, locale, divisions }: { index: number; lo
                 <span className="relative font-mono text-sm font-bold tabular-nums transition-colors duration-300"
                   style={{ color: isActive ? `rgb(${rgb})` : "var(--content-muted)" }}>
                   {String(i + 1).padStart(2, "0")}
+                </span>
+
+                <span className="relative hidden lg:flex items-center justify-center w-12 h-12 rounded-xl border border-[rgba(var(--c),0.3)] bg-[rgba(var(--c),0.12)] transition-colors duration-500 group-hover:bg-[rgb(var(--c))] group-focus-visible:bg-[rgb(var(--c))]" aria-hidden>
+                  <Icon size={21} className="transition-colors duration-500 text-[rgb(var(--c))] group-hover:text-white group-focus-visible:text-white" strokeWidth={1.7} />
                 </span>
 
                 <span className="relative hidden lg:block">
