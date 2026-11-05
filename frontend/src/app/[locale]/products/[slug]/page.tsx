@@ -1,13 +1,16 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Send, FileDown, Package } from "lucide-react";
+import { ArrowLeft, FileDown, Factory, Tag } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
-import type { Product, Availability } from "@/types/api";
+import type { Product, Availability, ProductCategory } from "@/types/api";
+import { SectionLabel } from "@/components/editorial/SectionLabel";
+import { PillLink } from "@/components/editorial/PillLink";
+import { ProductCard } from "@/components/products/ProductCard";
+import { AVAIL_RGB, PRODUCT_PALETTE } from "@/components/products/shared";
 import { ProductGallery } from "../_ProductGallery";
 import { SpecTable } from "../_SpecTable";
 
@@ -21,11 +24,8 @@ const SCHEMA_AVAILABILITY: Record<Availability, string> = {
   discontinued: "https://schema.org/Discontinued",
 };
 
-const AVAILABILITY_STYLE: Record<Availability, { bg: string; color: string }> = {
-  available:    { bg: "rgba(34,197,94,0.12)",   color: "#4ade80" },
-  on_order:     { bg: "rgba(245,158,11,0.12)",  color: "#fbbf24" },
-  discontinued: { bg: "rgba(148,163,184,0.12)", color: "#94a3b8" },
-};
+const SPECS_LABEL: Record<string, string> = { uz: "Xususiyatlar", ru: "Характеристики", en: "Specifications" };
+const RELATED_LABEL: Record<string, string> = { uz: "Shu yo'nalishda", ru: "В этом направлении", en: "In this category" };
 
 function mainImageOf(product: Product): string | null {
   const imgs = product.images ?? [];
@@ -79,18 +79,20 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
   const product = await api.products.detail(slug, locale).catch(() => notFound());
   const t = await getTranslations({ locale, namespace: "products" });
 
-  // Related products from the same category (best-effort)
-  const related = product.category
-    ? await api.products.list({ category: String(product.category.id) }, locale)
-        .then((r) => r.results.filter((p) => p.slug !== slug).slice(0, 4))
-        .catch(() => [])
-    : [];
+  const category = typeof product.category === "object" ? product.category : null;
+  const [categoriesRes, relatedRes] = await Promise.all([
+    api.products.categories(locale).catch(() => null),
+    category ? api.products.list({ category: String(category.id) }, locale).catch(() => null) : Promise.resolve(null),
+  ]);
+  const categories: ProductCategory[] = categoriesRes?.results ?? [];
+  const catPos = category ? categories.findIndex((c) => c.id === category.id) : -1;
+  const rgb = PRODUCT_PALETTE[Math.max(catPos, 0) % PRODUCT_PALETTE.length];
+  const related = (relatedRes?.results ?? []).filter((p) => p.slug !== slug).slice(0, 3);
 
   const images = product.images ?? [];
   const specs  = product.specs  ?? [];
   const table  = product.variant_table ?? null;
   const availability: Availability = product.availability ?? "available";
-  const availStyle = AVAILABILITY_STYLE[availability];
   const canonical = `${SITE_URL}/${locale}/products/${slug}`;
   const image = mainImageOf(product);
 
@@ -105,7 +107,7 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
       : {}),
     ...(product.sku ? { sku: product.sku } : {}),
     ...(product.brand ? { brand: { "@type": "Brand", name: product.brand } } : {}),
-    ...(product.category ? { category: product.category.name } : {}),
+    ...(category ? { category: category.name } : {}),
     offers: {
       "@type": "Offer",
       url: canonical,
@@ -123,185 +125,118 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
+    <div className="relative">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      <div className="absolute inset-x-0 top-0 h-[560px] pointer-events-none" aria-hidden
+        style={{ background: `radial-gradient(ellipse 50% 60% at 20% 0%, rgba(${rgb},0.14), transparent 70%)` }} />
 
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm mb-8 flex-wrap" style={{ color: "var(--content-muted)" }}>
-        <Link href={`/${locale}/products`} className="transition-colors hover:text-[var(--accent-secondary)]">
-          {t("title")}
-        </Link>
-        <span>/</span>
-        {product.category && (
-          <>
-            <span style={{ color: "var(--content-secondary)" }}>{product.category.name}</span>
-            <span>/</span>
-          </>
-        )}
-        <span style={{ color: "var(--content)" }}>{product.name}</span>
-      </nav>
+      <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-24">
+        <nav className="flex items-center gap-2 text-sm mb-10 flex-wrap" style={{ color: "var(--content-muted)" }}>
+          <Link href={`/${locale}/products`} className="inline-flex items-center gap-1.5 transition-colors hover:text-[var(--accent)]">
+            <ArrowLeft size={15} /> {t("title")}
+          </Link>
+          {category && (<><span>/</span><span style={{ color: "var(--content-secondary)" }}>{category.name}</span></>)}
+        </nav>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-12">
-        <ProductGallery
-          images={images}
-          productName={product.name}
-          locale={locale}
-          noImageText={t("no_image")}
-        />
-
-        {/* ── Info ── */}
-        <div className="flex flex-col gap-4">
-          {product.category && (
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "var(--accent)" }}>
-              {product.category.name}
-            </span>
-          )}
-
-          <h1
-            className="font-display font-bold leading-tight"
-            style={{ fontSize: "clamp(22px,3vw,36px)", color: "var(--content)" }}
-          >
-            {product.name || slug}
-          </h1>
-
-          {/* SKU / brand / availability */}
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
-            {product.sku && (
-              <span style={{ color: "var(--content-secondary)" }}>
-                {t("sku")}: <span style={{ color: "var(--content)", fontWeight: 600 }}>{product.sku}</span>
-              </span>
-            )}
-            {product.brand && (
-              <span style={{ color: "var(--content-secondary)" }}>
-                {t("brand")}: <span style={{ color: "var(--content)", fontWeight: 600 }}>{product.brand}</span>
-              </span>
-            )}
-            <span
-              className="px-3 py-1 rounded-full text-xs font-semibold"
-              style={{ background: availStyle.bg, color: availStyle.color }}
-            >
-              {t(`availability_${availability}`)}
-            </span>
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 mb-24">
+          <div className="lg:col-span-7">
+            <ProductGallery images={images} productName={product.name} locale={locale} noImageText={t("no_image")} rgb={rgb} iconName={category?.icon} />
           </div>
 
-          {product.description ? (
-            <p className="leading-relaxed whitespace-pre-line" style={{ color: "var(--content-secondary)", fontSize: "15px" }}>
-              {product.description}
-            </p>
-          ) : product.short_description ? (
-            <p className="leading-relaxed" style={{ color: "var(--content-secondary)", fontSize: "15px" }}>
-              {product.short_description}
-            </p>
-          ) : (
-            <p className="text-sm italic" style={{ color: "var(--content-muted)" }}>{t("no_description")}</p>
-          )}
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-28 flex flex-col">
+              <div className="flex flex-wrap items-center gap-3 mb-6">
+                {product.sku && (
+                  <span className="font-mono text-sm font-bold px-3 py-1 rounded-lg" style={{ color: `rgb(${rgb})`, background: `rgba(${rgb},0.12)` }}>{product.sku}</span>
+                )}
+                {category && (
+                  <span className="text-xs font-bold uppercase tracking-[0.18em]" style={{ color: "var(--content-muted)" }}>{category.name}</span>
+                )}
+              </div>
 
-          <div className="flex flex-wrap gap-3 mt-1">
-            {/* Primary CTA — request a quote (catalog / lead-gen) */}
-            <Link
-              href={`/${locale}/contact?product=${encodeURIComponent(product.name)}`}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-opacity hover:opacity-90"
-              style={{
-                background: "var(--warm-btn)",
-                color: "#fff",
-                boxShadow: "0 6px 22px rgba(var(--warm-glow),0.30)",
-              }}
-            >
-              <Send size={16} />
-              {t("request_quote")}
-            </Link>
+              <h1 className="font-display font-bold leading-[1.05] tracking-[-0.02em] first-letter:uppercase" style={{ fontSize: "clamp(32px,3.6vw,56px)", color: "var(--content)" }}>
+                {product.name || slug}
+              </h1>
 
-            {product.catalog_file && (
-              <a
-                href={product.catalog_file}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-colors"
-                style={{ border: "1px solid rgba(var(--accent-rgb),0.3)", color: "var(--accent)" }}
-              >
-                <FileDown size={16} />
-                {t("catalog_pdf")}
-              </a>
-            )}
+              {product.short_description && (
+                <p className="mt-6 leading-relaxed" style={{ fontSize: "clamp(16px,1.2vw,19px)", color: "var(--content)" }}>{product.short_description}</p>
+              )}
+
+              <dl className="mt-8 grid grid-cols-2" style={{ borderTop: "1px solid var(--border)" }}>
+                {product.brand && (
+                  <div className="py-4 pr-4" style={{ borderBottom: "1px solid var(--border)" }}>
+                    <dt className="flex items-center gap-1.5 text-xs uppercase tracking-[0.16em]" style={{ color: "var(--content-muted)" }}><Factory size={13} /> {t("brand")}</dt>
+                    <dd className="mt-1.5 font-semibold" style={{ color: "var(--content)" }}>{product.brand}</dd>
+                  </div>
+                )}
+                <div className="py-4 pr-4" style={{ borderBottom: "1px solid var(--border)" }}>
+                  <dt className="flex items-center gap-1.5 text-xs uppercase tracking-[0.16em]" style={{ color: "var(--content-muted)" }}><Tag size={13} /> {t("availability")}</dt>
+                  <dd className="mt-1.5 inline-flex items-center gap-2 font-semibold" style={{ color: "var(--content)" }}>
+                    <span className="w-2 h-2 rounded-full" style={{ background: `rgb(${AVAIL_RGB[availability]})`, boxShadow: `0 0 8px rgba(${AVAIL_RGB[availability]},0.7)` }} />
+                    {t(`availability_${availability}`)}
+                  </dd>
+                </div>
+              </dl>
+
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <PillLink href={`/${locale}/contact?product=${encodeURIComponent(product.name)}`}>{t("request_quote")}</PillLink>
+                {product.catalog_file && (
+                  <a href={product.catalog_file} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-semibold transition-opacity hover:opacity-80" style={{ color: "var(--accent)" }}>
+                    <FileDown size={17} /> {t("catalog_pdf")}
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* ── Simple specs ── */}
-      {specs.length > 0 && (
-        <div className="rounded-2xl overflow-hidden mb-10"
-          style={{ border: "1px solid rgba(var(--accent-rgb),0.14)" }}>
-          <div className="px-6 py-4"
-            style={{ background: "rgba(var(--accent-rgb),0.06)", borderBottom: "1px solid rgba(var(--accent-rgb),0.14)" }}>
-            <h2 className="font-display font-bold text-lg" style={{ color: "var(--content)" }}>
-              {t("specs_title")}
-            </h2>
+        <section className="grid lg:grid-cols-12 gap-10 lg:gap-16 mb-24">
+          <div className="lg:col-span-3">
+            <div className="lg:sticky lg:top-28"><SectionLabel index={1} label={SPECS_LABEL[locale] ?? SPECS_LABEL.uz} /></div>
           </div>
-          <table className="w-full">
-            <tbody>
-              {specs.map((spec, i) => (
-                <tr key={spec.id}
-                  style={{ background: i % 2 === 0 ? "rgba(var(--accent-rgb),0.04)" : "transparent" }}>
-                  <td className="px-6 py-3 text-sm font-medium w-1/2"
-                    style={{ color: "var(--content-secondary)", borderBottom: "1px solid rgba(var(--accent-rgb),0.08)" }}>
-                    {spec.label}
-                  </td>
-                  <td className="px-6 py-3 text-sm font-semibold w-1/2"
-                    style={{ color: "var(--content)", borderBottom: "1px solid rgba(var(--accent-rgb),0.08)" }}>
-                    {spec.value}{spec.unit ? ` ${spec.unit}` : ""}
-                  </td>
-                </tr>
+          <div className="lg:col-span-9 space-y-14">
+            {product.description ? (
+              <p className="font-display leading-[1.55] whitespace-pre-line" style={{ fontSize: "clamp(18px,1.6vw,24px)", color: "var(--content)" }}>{product.description}</p>
+            ) : !product.short_description && (
+              <p className="italic" style={{ color: "var(--content-muted)" }}>{t("no_description")}</p>
+            )}
+
+            {specs.length > 0 && (
+              <div>
+                <h2 className="font-display font-bold mb-2" style={{ fontSize: "clamp(20px,1.8vw,26px)", color: "var(--content)" }}>{t("specs_title")}</h2>
+                <dl style={{ borderTop: "1px solid var(--border)" }}>
+                  {specs.map((spec, i) => (
+                    <div key={spec.id} className="grid grid-cols-[48px,1fr] sm:grid-cols-[48px,1fr,1fr] items-baseline gap-x-5 gap-y-1 py-5" style={{ borderBottom: "1px solid var(--border)" }}>
+                      <span className="font-mono text-xs font-bold tabular-nums" style={{ color: `rgb(${rgb})` }}>{String(i + 1).padStart(2, "0")}</span>
+                      <dt className="text-[15px]" style={{ color: "var(--content-secondary)" }}>{spec.label}</dt>
+                      <dd className="col-start-2 sm:col-start-auto font-semibold text-[15px] sm:text-right" style={{ color: "var(--content)" }}>
+                        {spec.value}{spec.unit ? <span className="ml-1 font-normal" style={{ color: "var(--content-muted)" }}>{spec.unit}</span> : null}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            )}
+
+            {table && <SpecTable table={table} title={t("comparison_title")} paramHeader={t("param_header")} />}
+          </div>
+        </section>
+
+        {related.length > 0 && (
+          <section>
+            <SectionLabel index={2} label={RELATED_LABEL[locale] ?? RELATED_LABEL.uz} />
+            <h2 className="font-display font-bold leading-[1.05] tracking-[-0.02em] mb-4" style={{ fontSize: "clamp(28px,3vw,44px)", color: "var(--content)" }}>{t("related")}</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-4">
+              {related.map((p) => (
+                <ProductCard key={p.id} product={p} locale={locale} rgb={rgb}
+                  availabilityLabel={t(`availability_${(p.availability ?? "available") as Availability}`)} iconName={category?.icon} />
               ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {/* ── Multi-column comparison table ── */}
-      {table && (
-        <SpecTable table={table} title={t("comparison_title")} paramHeader={t("param_header")} />
-      )}
-
-      {/* ── Related products ── */}
-      {related.length > 0 && (
-        <div className="mb-12">
-          <h2 className="font-display font-bold text-content mb-5" style={{ fontSize: "clamp(20px,2.4vw,28px)" }}>{t("related")}</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-            {related.map((p) => (
-              <Link key={p.id} href={`/${locale}/products/${p.slug}`}
-                className="group flex flex-col rounded-2xl overflow-hidden glass-card transition-transform duration-300 hover:-translate-y-1"
-                style={{ border: "1px solid rgba(var(--accent-rgb),0.16)", boxShadow: "var(--card-shadow)" }}>
-                <div className="relative overflow-hidden" style={{ aspectRatio: "4/3", background: "var(--card-solid)" }}>
-                  {p.main_image ? (
-                    <Image src={p.main_image} alt={p.name} fill className="object-contain p-3 transition-transform duration-500 group-hover:scale-105" sizes="(max-width:1024px) 50vw, 25vw" />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center" style={{ color: "rgba(var(--accent-rgb),0.4)" }}><Package size={36} strokeWidth={1.3} /></div>
-                  )}
-                </div>
-                <div className="p-4">
-                  <h3 className="font-display font-semibold text-sm leading-snug line-clamp-2 text-content group-hover:text-[var(--accent)] transition-colors">{p.name}</h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Back */}
-      <Link
-        href={`/${locale}/products`}
-        className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-[var(--accent-secondary)]"
-        style={{ color: "var(--accent)" }}
-      >
-        <ArrowLeft size={16} /> {t("back_to_catalog")}
-      </Link>
+            </div>
+          </section>
+        )}
+      </div>
     </div>
   );
 }

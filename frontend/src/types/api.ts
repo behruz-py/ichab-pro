@@ -124,7 +124,8 @@ export interface Product {
   availability?: Availability;
   meta_title?: string;
   meta_description?: string;
-  category: ProductCategory | null;
+  // List responses carry just the category id; the detail response nests the object.
+  category: ProductCategory | number | null;
   category_name?: string;
   main_image: string | null;
   images?: ProductImage[];

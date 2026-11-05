@@ -1,169 +1,105 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
+import { useMemo, useState } from "react";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowRight, Search, X, Package } from "lucide-react";
-import type { Product, ProductCategory, Availability } from "@/types/api";
-import { staggerFast, fadeUp } from "@/lib/motion";
+import { Search, X } from "lucide-react";
+import type { Availability, Product, ProductCategory } from "@/types/api";
+import { EASE } from "@/components/editorial/hooks";
+import { ProductCard } from "@/components/products/ProductCard";
+import { categoryIdOf, PRODUCT_PALETTE } from "@/components/products/shared";
 
 interface Props {
   products: Product[];
   categories: ProductCategory[];
 }
 
-const AVAIL_DOT: Record<Availability, string> = {
-  available: "16,185,129",
-  on_order: "245,158,11",
-  discontinued: "148,163,184",
-};
-
 export function ProductsClient({ products, categories }: Props) {
   const locale = useLocale();
   const t = useTranslations("products");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selected, setSelected] = useState<number | null>(null);
   const [search, setSearch] = useState("");
-  const [sort, setSort] = useState<"default" | "az" | "za">("default");
+
+  const catIndex = useMemo(() => new Map(categories.map((c, i) => [c.id, i])), [categories]);
+  const catById = useMemo(() => new Map(categories.map((c) => [c.id, c])), [categories]);
 
   const counts = useMemo(() => {
-    const m: Record<string, number> = {};
-    products.forEach((p) => { const id = p.category?.id; if (id != null) m[id] = (m[id] ?? 0) + 1; });
+    const m = new Map<number, number>();
+    products.forEach((p) => { const id = categoryIdOf(p); if (id != null) m.set(id, (m.get(id) ?? 0) + 1); });
     return m;
   }, [products]);
 
   const filtered = useMemo(() => {
-    let list = products;
-    if (selectedCategory) list = list.filter((p) => String(p.category?.id) === selectedCategory);
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      list = list.filter((p) =>
-        p.name.toLowerCase().includes(q) ||
-        (p.sku?.toLowerCase().includes(q) ?? false) ||
-        (p.brand?.toLowerCase().includes(q) ?? false) ||
-        (p.short_description?.toLowerCase().includes(q) ?? false)
-      );
-    }
-    if (sort !== "default") {
-      list = [...list].sort((a, b) => sort === "az" ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
-    }
-    return list;
-  }, [products, selectedCategory, search, sort]);
+    const q = search.trim().toLowerCase();
+    return products.filter((p) =>
+      (selected == null || categoryIdOf(p) === selected) &&
+      (!q || [p.name, p.sku, p.brand, p.short_description].some((v) => v?.toLowerCase().includes(q))));
+  }, [products, selected, search]);
 
-  const chip = (active: boolean) =>
-    active
-      ? { background: "var(--warm-btn)", color: "#fff", boxShadow: "0 0 16px rgba(var(--warm-glow),0.4)" }
-      : { background: "var(--glass)", border: "1px solid var(--glass-border)", color: "var(--content-secondary)" };
+  const tabs = [{ id: null as number | null, name: t("filter_all"), count: products.length },
+    ...categories.filter((c) => counts.get(c.id)).map((c) => ({ id: c.id as number | null, name: c.name, count: counts.get(c.id) ?? 0 }))];
 
   return (
-    <>
-      {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
-        <div className="relative flex-1 max-w-md">
-          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "var(--content-muted)" }} />
-          <input
-            type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder={t("search_placeholder")}
-            className="w-full pl-10 pr-9 py-3 rounded-xl text-content text-sm placeholder:text-content-muted focus:outline-none transition-colors"
-            style={{ background: "var(--glass)", border: "1px solid var(--glass-border)" }}
-          />
+    <LayoutGroup>
+      {/* Category tabs + search */}
+      <div className="flex flex-col lg:flex-row lg:items-end gap-6 mb-4 pb-1" style={{ borderBottom: "1px solid var(--border)" }}>
+        <div className="flex gap-x-8 gap-y-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-4 px-4 sm:mx-0 sm:px-0">
+          {tabs.map((tab) => {
+            const on = selected === tab.id;
+            return (
+              <button key={tab.id ?? "all"} type="button" onClick={() => setSelected(tab.id)} aria-pressed={on}
+                className="relative shrink-0 pb-4 text-left transition-colors duration-300">
+                <span className="font-display font-semibold whitespace-nowrap" style={{ fontSize: "clamp(16px,1.35vw,20px)", color: on ? "var(--content)" : "var(--content-muted)" }}>
+                  {tab.name}
+                </span>
+                <sup className="ml-1 font-mono text-[11px] font-bold" style={{ color: on ? "var(--accent)" : "var(--content-muted)" }}>{tab.count}</sup>
+                {on && <motion.span layoutId="product-tab" className="absolute left-0 right-0 -bottom-px h-[2px]" style={{ background: "var(--hero-accent-gradient)" }} transition={{ duration: 0.45, ease: EASE }} />}
+              </button>
+            );
+          })}
+        </div>
+
+        <label className="relative lg:ml-auto lg:w-80 mb-3 block">
+          <span className="sr-only">{t("search_placeholder")}</span>
+          <Search size={16} className="absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "var(--content-muted)" }} />
+          <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder={t("search_placeholder")}
+            className="w-full bg-transparent pl-7 pr-7 py-2 text-[15px] focus:outline-none placeholder:text-[var(--content-muted)]"
+            style={{ color: "var(--content)" }} />
           {search && (
-            <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2" aria-label="Clear" style={{ color: "var(--content-muted)" }}>
+            <button type="button" onClick={() => setSearch("")} className="absolute right-0 top-1/2 -translate-y-1/2" aria-label="Clear" style={{ color: "var(--content-muted)" }}>
               <X size={15} />
             </button>
           )}
-        </div>
-        <div className="flex items-center gap-3 sm:ml-auto">
-          <span className="text-sm tabular-nums whitespace-nowrap" style={{ color: "var(--content-muted)" }}>
-            <span className="font-bold text-content">{filtered.length}</span> {t("results")}
-          </span>
-          <select value={sort} onChange={(e) => setSort(e.target.value as typeof sort)}
-            className="py-2.5 px-3 rounded-xl text-sm text-content focus:outline-none cursor-pointer"
-            style={{ background: "var(--glass)", border: "1px solid var(--glass-border)" }}>
-            <option value="default">{t("sort_default")}</option>
-            <option value="az">{t("sort_name_az")}</option>
-            <option value="za">{t("sort_name_za")}</option>
-          </select>
-        </div>
+        </label>
       </div>
 
-      {/* Category filter */}
-      {categories.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-8">
-          <button onClick={() => setSelectedCategory("")} className="px-4 py-2 rounded-xl text-sm font-medium transition-all" style={chip(selectedCategory === "")}>
-            {t("filter_all")} <span className="opacity-70">· {products.length}</span>
-          </button>
-          {categories.map((cat) => (
-            <button key={cat.id} onClick={() => setSelectedCategory(String(cat.id))} className="px-4 py-2 rounded-xl text-sm font-medium transition-all" style={chip(selectedCategory === String(cat.id))}>
-              {cat.icon && <span className="mr-1">{cat.icon}</span>}
-              {cat.name}
-              {counts[cat.id] ? <span className="opacity-70"> · {counts[cat.id]}</span> : null}
-            </button>
-          ))}
-        </div>
-      )}
+      <p className="mb-2 text-sm" style={{ color: "var(--content-muted)" }}>
+        <span className="font-mono font-bold" style={{ color: "var(--content)" }}>{filtered.length}</span> {t("results")}
+      </p>
 
-      {/* Grid */}
       {filtered.length > 0 ? (
-        <motion.div variants={staggerFast} initial="hidden" animate="visible"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {filtered.map((product) => {
-            const avail = (product.availability ?? "available") as Availability;
-            return (
-              <motion.div key={product.id} variants={fadeUp} whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 300, damping: 24 }}>
-                <Link href={`/${locale}/products/${product.slug}`}
-                  className="group relative flex flex-col h-full rounded-2xl overflow-hidden glass-card transition-colors"
-                  style={{ border: "1px solid rgba(var(--accent-rgb),0.16)", boxShadow: "var(--card-shadow)" }}>
-                  {/* Image */}
-                  <div className="relative overflow-hidden" style={{ aspectRatio: "4/3", background: "var(--card-solid)" }}>
-                    {product.main_image ? (
-                      <Image src={product.main_image} alt={product.name} fill className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,25vw" />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center" style={{ color: "rgba(var(--accent-rgb),0.4)" }}>
-                        <Package size={42} strokeWidth={1.3} />
-                      </div>
-                    )}
-                    {product.category_name && (
-                      <span className="absolute top-2.5 left-2.5 text-[12px] font-bold uppercase tracking-wide px-2 py-1 rounded-md" style={{ background: "rgba(11,27,51,0.82)", color: "#FCD34D" }}>
-                        {product.category_name}
-                      </span>
-                    )}
-                    <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full" title={t(`availability_${avail}`)}
-                      style={{ background: `rgb(${AVAIL_DOT[avail]})`, boxShadow: `0 0 8px rgba(${AVAIL_DOT[avail]},0.8)` }} />
-                  </div>
-
-                  {/* Info */}
-                  <div className="p-4 flex flex-col flex-1">
-                    <h2 className="font-display font-semibold text-sm leading-snug mb-1.5 line-clamp-2 text-content group-hover:text-[var(--accent)] transition-colors">
-                      {product.name}
-                    </h2>
-                    {product.short_description ? (
-                      <p className="text-xs leading-relaxed mb-3 line-clamp-2 flex-1" style={{ color: "var(--content-secondary)" }}>{product.short_description}</p>
-                    ) : <div className="flex-1" />}
-                    {(product.sku || product.brand) && (
-                      <p className="text-[13px] mb-2.5 truncate" style={{ color: "var(--content-muted)" }}>
-                        {product.brand}{product.brand && product.sku ? " · " : ""}{product.sku}
-                      </p>
-                    )}
-                    <span className="text-xs font-bold inline-flex items-center gap-1 group-hover:gap-2 transition-all duration-200" style={{ color: "var(--accent)" }}>
-                      {t("view_detail")} <ArrowRight size={13} />
-                    </span>
-                  </div>
-                  {/* hover ring */}
-                  <span className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                    style={{ boxShadow: "inset 0 0 0 1.5px rgba(var(--accent-rgb),0.5), 0 18px 40px rgba(var(--accent-rgb),0.18)" }} />
-                </Link>
-              </motion.div>
-            );
-          })}
+        <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-5 gap-y-4">
+          <AnimatePresence mode="popLayout">
+            {filtered.map((p) => {
+              const cid = categoryIdOf(p);
+              const rgb = PRODUCT_PALETTE[(cid != null ? catIndex.get(cid) ?? 0 : 0) % PRODUCT_PALETTE.length];
+              const avail = (p.availability ?? "available") as Availability;
+              return (
+                <motion.div key={p.id} layout
+                  initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.5, ease: EASE }}>
+                  <ProductCard product={p} locale={locale} rgb={rgb} availabilityLabel={t(`availability_${avail}`)}
+                    iconName={cid != null ? catById.get(cid)?.icon : null} />
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
         </motion.div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-24 gap-4 glass-card rounded-2xl">
-          <Search size={44} strokeWidth={1.2} style={{ color: "var(--content-muted)" }} />
-          <p style={{ color: "var(--content-muted)" }}>{t("not_found")}</p>
+        <div className="py-24 text-center" style={{ borderBottom: "1px solid var(--border)" }}>
+          <p className="font-display font-semibold text-xl" style={{ color: "var(--content-secondary)" }}>{t("not_found")}</p>
         </div>
       )}
-    </>
+    </LayoutGroup>
   );
 }
