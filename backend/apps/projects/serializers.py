@@ -14,13 +14,14 @@ class ProjectImageSerializer(serializers.ModelSerializer):
 class ProjectListSerializer(TranslatedSerializerMixin, serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     client = serializers.SerializerMethodField()
+    description = serializers.SerializerMethodField()
     location = serializers.SerializerMethodField()
     main_image = serializers.SerializerMethodField()
 
     class Meta:
         model = Project
         fields = (
-            "id", "slug", "name", "client", "location",
+            "id", "slug", "name", "client", "description", "location",
             "completed_date", "division", "main_image",
             "order", "is_active",
         )
@@ -31,11 +32,16 @@ class ProjectListSerializer(TranslatedSerializerMixin, serializers.ModelSerializ
     def get_client(self, obj):
         return self.get_t(obj, "client")
 
+    def get_description(self, obj):
+        return self.get_t(obj, "description")
+
     def get_location(self, obj):
         return self.get_t(obj, "location")
 
     def get_main_image(self, obj):
-        img = obj.images.filter(is_main=True).first() or obj.images.first()
+        # Works off the view's prefetch; .filter() here would query per project.
+        images = list(obj.images.all())
+        img = next((i for i in images if i.is_main), None) or (images[0] if images else None)
         if img:
             request = self.context.get("request")
             return request.build_absolute_uri(img.image.url) if request else img.image.url
