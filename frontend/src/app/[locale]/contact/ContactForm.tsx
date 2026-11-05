@@ -1,49 +1,83 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { useTranslations } from "next-intl";
-import { CheckCircle2 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, Check, Loader2, Package } from "lucide-react";
 import { api, ApiError } from "@/lib/api-client";
-import { Button } from "@/components/ui/Button";
 import type { LeadCreate } from "@/types/api";
+import { EASE } from "@/components/editorial/hooks";
 
-const SUBJECTS = [
-  "PLC/SCADA tizimi",
-  "KIPiA va asbobsozlik",
-  "Elektr ta'minoti",
-  "Loyihalash va dizayn",
-  "Texnik xizmat",
-  "Boshqa",
-];
+type Loc = Record<string, string>;
+const OTHER: Loc = { uz: "Boshqa", ru: "Другое", en: "Other" };
+const PRODUCT: Loc = { uz: "Mahsulot bo'yicha so'rov", ru: "Запрос по изделию", en: "Product inquiry" };
+const AGAIN: Loc = { uz: "Yana murojaat yuborish", ru: "Отправить ещё одно обращение", en: "Send another inquiry" };
 
-export function ContactForm({ locale }: { locale: string }) {
+/** Underlined input with a label that floats up once the field has focus or a value. */
+function Field({ label, required, invalid, value, onChange, type = "text", textarea, autoComplete }: {
+  label: string; required?: boolean; invalid?: boolean; value: string; onChange: (v: string) => void;
+  type?: string; textarea?: boolean; autoComplete?: string;
+}) {
+  const id = useId();
+  const common = {
+    id, value, required, "aria-invalid": invalid || undefined, autoComplete, placeholder: " ",
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChange(e.target.value),
+    className: "peer block w-full bg-transparent pt-7 pb-3 text-[17px] outline-none resize-none",
+    style: { color: "var(--content)" },
+  };
+  return (
+    <div className="relative group">
+      {textarea ? <textarea rows={4} {...common} /> : <input type={type} {...common} />}
+      <label htmlFor={id}
+        className="absolute left-0 top-7 origin-left pointer-events-none transition-all duration-300 text-[17px] peer-focus:top-1 peer-focus:text-xs peer-focus:tracking-[0.16em] peer-focus:uppercase peer-[:not(:placeholder-shown)]:top-1 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:tracking-[0.16em] peer-[:not(:placeholder-shown)]:uppercase"
+        style={{ color: invalid ? "rgb(239,68,68)" : "var(--content-muted)" }}>
+        {label}{required && <span style={{ color: "var(--accent)" }}> *</span>}
+      </label>
+      <span className="absolute inset-x-0 bottom-0 h-px" style={{ background: invalid ? "rgb(239,68,68)" : "var(--border)" }} />
+      <span className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 transition-transform duration-500 peer-focus:scale-x-100"
+        style={{ background: "var(--hero-accent-gradient)" }} />
+    </div>
+  );
+}
+
+export function ContactForm({ locale, topics }: { locale: string; topics: string[] }) {
   const t = useTranslations("contact.form");
-  const [form, setForm] = useState<LeadCreate>({
-    name: "",
-    company: "",
-    phone: "",
-    email: "",
-    subject: "",
-    message: "",
-    source_page: "contact",
-  });
+  const tr = (o: Loc) => o[locale] ?? o.uz;
+  const empty: LeadCreate = { name: "", company: "", phone: "", email: "", subject: "", message: "", source_page: "contact" };
+  const [form, setForm] = useState<LeadCreate>(empty);
+  const [product, setProduct] = useState<string | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
-  // True when the "phone OR email" rule fails — highlights both fields.
   const [contactInvalid, setContactInvalid] = useState(false);
+  const [nameInvalid, setNameInvalid] = useState(false);
+
+  // Product pages link here with ?product=<name>: pre-select it as the topic.
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search).get("product")?.trim();
+    if (p) {
+      setProduct(p);
+      setForm((f) => ({ ...f, subject: `${tr(PRODUCT)}: ${p}`, source_page: "product" }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function set(field: keyof LeadCreate, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
     if ((field === "phone" || field === "email") && contactInvalid) {
       setContactInvalid(false);
+      setErrorMsg("");
     }
+    if (field === "name" && nameInvalid) setNameInvalid(false);
   }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.phone && !form.email) {
-      setContactInvalid(true);
-      setErrorMsg(t("required_either"));
+    const missingName = !form.name.trim();
+    const missingContact = !form.phone && !form.email;
+    setNameInvalid(missingName);
+    setContactInvalid(missingContact);
+    if (missingName || missingContact) {
+      setErrorMsg(missingContact ? t("required_either") : "");
       return;
     }
     setStatus("loading");
@@ -54,133 +88,84 @@ export function ContactForm({ locale }: { locale: string }) {
     } catch (err) {
       setStatus("error");
       if (err instanceof ApiError) {
-        if (err.status === 429) {
-          setErrorMsg(t("rate_limited"));
-        } else {
-          const detail =
-            err.data && typeof err.data === "object" && "detail" in err.data
-              ? String((err.data as { detail: unknown }).detail)
-              : "";
+        if (err.status === 429) setErrorMsg(t("rate_limited"));
+        else {
+          const detail = err.data && typeof err.data === "object" && "detail" in err.data ? String((err.data as { detail: unknown }).detail) : "";
           if (detail) setErrorMsg(detail);
         }
       }
     }
   }
 
-  if (status === "success") {
-    return (
-      <div
-        className="glass-card rounded-2xl border border-accent/30 p-10 text-center"
-        role="status"
-        aria-live="polite"
-      >
-        <CheckCircle2 size={48} className="mx-auto mb-4 text-accent" />
-        <p className="text-content font-semibold text-lg">{t("success")}</p>
-      </div>
-    );
-  }
+  const chips = [...(product ? [`${tr(PRODUCT)}: ${product}`] : []), ...topics, tr(OTHER)];
 
   return (
-    <form
-      onSubmit={submit}
-      noValidate
-      className="glass-card rounded-2xl border border-border-subtle p-8 space-y-5"
-    >
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <Field label={t("name")} required>
-          <input
-            type="text"
-            required
-            value={form.name}
-            onChange={(e) => set("name", e.target.value)}
-            className="form-input"
-          />
-        </Field>
-        <Field label={t("company")}>
-          <input
-            type="text"
-            value={form.company}
-            onChange={(e) => set("company", e.target.value)}
-            className="form-input"
-          />
-        </Field>
-        <Field label={t("phone")}>
-          <input
-            type="tel"
-            value={form.phone}
-            onChange={(e) => set("phone", e.target.value)}
-            aria-invalid={contactInvalid}
-            className="form-input"
-          />
-        </Field>
-        <Field label={t("email")}>
-          <input
-            type="email"
-            value={form.email}
-            onChange={(e) => set("email", e.target.value)}
-            aria-invalid={contactInvalid}
-            className="form-input"
-          />
-        </Field>
-      </div>
+    <AnimatePresence mode="wait" initial={false}>
+      {status === "success" ? (
+        <motion.div key="ok" role="status" aria-live="polite"
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.6, ease: EASE }}
+          className="py-16">
+          <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 260, damping: 18, delay: 0.1 }}
+            className="flex items-center justify-center w-20 h-20 rounded-full mb-8" style={{ background: "var(--hero-accent-gradient)", boxShadow: "0 20px 50px rgba(var(--warm-glow),0.4)" }}>
+            <Check size={38} color="#fff" strokeWidth={2.5} />
+          </motion.span>
+          <p className="font-display font-bold leading-tight" style={{ fontSize: "clamp(28px,3vw,44px)", color: "var(--content)" }}>{t("success")}</p>
+          <button type="button" onClick={() => { setForm(empty); setProduct(null); setStatus("idle"); }}
+            className="mt-8 text-sm font-semibold transition-opacity hover:opacity-80" style={{ color: "var(--accent)" }}>
+            {tr(AGAIN)}
+          </button>
+        </motion.div>
+      ) : (
+        <motion.form key="form" onSubmit={submit} noValidate
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }}>
+          {/* Topic chips */}
+          <fieldset className="mb-10">
+            <legend className="mb-4 text-xs font-bold uppercase tracking-[0.2em]" style={{ color: "var(--content-muted)" }}>{t("subject")}</legend>
+            <div className="flex flex-wrap gap-2.5">
+              {chips.map((c, i) => {
+                const on = form.subject === c;
+                const isProduct = !!product && i === 0;
+                return (
+                  <button key={c} type="button" aria-pressed={on} onClick={() => set("subject", on ? "" : c)}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium text-left transition-all duration-300"
+                    style={on
+                      ? { background: "var(--warm-btn)", color: "#fff", boxShadow: "0 8px 22px rgba(var(--warm-glow),0.3)" }
+                      : { border: "1px solid var(--border)", color: "var(--content-secondary)" }}>
+                    {isProduct && <Package size={15} />}
+                    {on && !isProduct && <Check size={14} />}
+                    {c}
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
 
-      <Field label={t("subject")}>
-        <select
-          value={form.subject}
-          onChange={(e) => set("subject", e.target.value)}
-          className="form-input"
-        >
-          <option value="">—</option>
-          {SUBJECTS.map((s) => (
-            <option key={s} value={s}>{s}</option>
-          ))}
-        </select>
-      </Field>
+          <div className="grid sm:grid-cols-2 gap-x-10 gap-y-6">
+            <Field label={t("name")} required invalid={nameInvalid} value={form.name} onChange={(v) => set("name", v)} autoComplete="name" />
+            <Field label={t("company")} value={form.company ?? ""} onChange={(v) => set("company", v)} autoComplete="organization" />
+            <Field label={t("phone")} type="tel" invalid={contactInvalid} value={form.phone ?? ""} onChange={(v) => set("phone", v)} autoComplete="tel" />
+            <Field label={t("email")} type="email" invalid={contactInvalid} value={form.email ?? ""} onChange={(v) => set("email", v)} autoComplete="email" />
+            <div className="sm:col-span-2">
+              <Field label={t("message")} textarea value={form.message ?? ""} onChange={(v) => set("message", v)} />
+            </div>
+          </div>
 
-      <Field label={t("message")}>
-        <textarea
-          rows={5}
-          value={form.message}
-          onChange={(e) => set("message", e.target.value)}
-          className="form-input resize-none"
-        />
-      </Field>
-
-      {(errorMsg || status === "error") && (
-        <p className="text-red-500 text-sm" role="alert" aria-live="assertive">
-          {errorMsg || t("error")}
-        </p>
+          <div className="mt-10 flex flex-wrap items-center gap-6">
+            <button type="submit" disabled={status === "loading"}
+              className="group relative isolate inline-flex items-center gap-3 pl-8 pr-2 py-2 rounded-full overflow-hidden font-semibold text-base text-white disabled:opacity-70 transition-shadow duration-500 hover:shadow-[0_18px_50px_rgba(var(--warm-glow),0.5)]"
+              style={{ background: "var(--warm-btn)", boxShadow: "0 14px 40px rgba(var(--warm-glow),0.35)" }}>
+              <span aria-hidden className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full -z-10 scale-0 bg-white/15 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[9] motion-reduce:transition-none" />
+              <span>{status === "loading" ? t("submitting") : t("submit")}</span>
+              <span className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20">
+                {status === "loading" ? <Loader2 size={18} className="animate-spin" /> : <ArrowUpRight size={18} className="transition-transform duration-500 group-hover:rotate-45" />}
+              </span>
+            </button>
+            {(errorMsg || status === "error") && (
+              <p className="text-sm font-medium" role="alert" aria-live="assertive" style={{ color: "rgb(239,68,68)" }}>{errorMsg || t("error")}</p>
+            )}
+          </div>
+        </motion.form>
       )}
-
-      <Button
-        type="submit"
-        variant="primary"
-        size="lg"
-        loading={status === "loading"}
-        className="w-full btn-shine"
-      >
-        {status === "loading" ? t("submitting") : t("submit")}
-      </Button>
-    </form>
-  );
-}
-
-function Field({
-  label,
-  required,
-  children,
-}: {
-  label: string;
-  required?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="block">
-      <span className="text-content-secondary text-sm font-medium block mb-1.5">
-        {label}
-        {required && <span className="text-accent ml-1">*</span>}
-      </span>
-      {children}
-    </label>
+    </AnimatePresence>
   );
 }
