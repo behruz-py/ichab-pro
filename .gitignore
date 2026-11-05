@@ -55,3 +55,6 @@ desktop.ini
 *.swp
 *.swo
 URLS.txt
+
+# Claude Code personal settings
+.claude/settings.local.json
