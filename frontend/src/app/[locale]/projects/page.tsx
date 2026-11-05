@@ -1,14 +1,17 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { Factory } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { api } from "@/lib/api-client";
-import { mediaUrl, formatDate } from "@/lib/utils";
-import { CompletedProjectsTimeline } from "@/components/sections/CompletedProjectsTimeline";
+import { SectionLabel } from "@/components/editorial/SectionLabel";
+import { ProjectsTimeline } from "@/components/projects/ProjectsTimeline";
 
 type Props = { params: { locale: string } };
+type Loc = Record<string, string>;
+
+const EYEBROW: Loc = { uz: "Portfolio", ru: "Портфолио", en: "Portfolio" };
+const K_PROJECTS: Loc = { uz: "Amalga oshirilgan loyiha", ru: "Реализованных проектов", en: "Completed projects" };
+const K_PERIOD: Loc = { uz: "Faoliyat davri", ru: "Период работ", en: "Period" };
+const K_LABS: Loc = { uz: "Ishtirok etgan laboratoriya", ru: "Задействованных лабораторий", en: "Laboratories involved" };
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -22,81 +25,50 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
 export default async function ProjectsPage({ params: { locale } }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "projects" });
+  const tr = (o: Loc) => o[locale] ?? o.uz;
 
   const res = await api.projects.list(locale).catch(() => null);
   const projects = res?.results ?? [];
 
+  const years = projects.map((p) => p.completed_date && new Date(p.completed_date).getUTCFullYear()).filter((y): y is number => !!y);
+  const period = years.length ? (Math.min(...years) === Math.max(...years) ? `${Math.min(...years)}` : `${Math.min(...years)}–${Math.max(...years)}`) : null;
+  const labs = new Set(projects.map((p) => p.division).filter((d) => d != null)).size;
+
+  const kpis: [string, string][] = [];
+  if (projects.length) kpis.push([String(res?.count ?? projects.length), tr(K_PROJECTS)]);
+  if (period) kpis.push([period, tr(K_PERIOD)]);
+  if (labs) kpis.push([String(labs), tr(K_LABS)]);
+
   return (
-    <div className="relative overflow-hidden">
-      {/* ambient orbs */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-        <div className="stat-orb" style={{ top: "2%", left: "-4%", background: "radial-gradient(circle, rgba(56,189,248,0.16), transparent 70%)" }} />
-        <div className="stat-orb" style={{ top: "44%", right: "-6%", background: "radial-gradient(circle, rgba(16,185,129,0.14), transparent 70%)", animationDelay: "-9s" }} />
-      </div>
+    <div className="relative">
+      <div className="absolute inset-x-0 top-0 h-[520px] pointer-events-none" aria-hidden
+        style={{ background: "radial-gradient(ellipse 55% 60% at 85% 0%, rgba(var(--accent-rgb),0.12), transparent 70%)" }} />
 
-      <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="mb-12">
-          <h1 className="font-display font-bold text-content mb-4 leading-tight" style={{ fontSize: "clamp(32px,4.5vw,56px)" }}>{t("title")}</h1>
-          <p className="max-w-2xl" style={{ color: "var(--content-secondary)", fontSize: "clamp(16px,2vw,19px)" }}>{t("subtitle")}</p>
-        </div>
+      <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 pb-24">
+        <header className="mb-12 sm:mb-16">
+          <SectionLabel index={1} label={tr(EYEBROW)} />
+          <h1 className="font-display font-bold leading-[1.02] tracking-[-0.025em]" style={{ fontSize: "clamp(40px,6vw,96px)", color: "var(--content)" }}>
+            {t("title")}
+          </h1>
+          <p className="mt-6 max-w-2xl leading-relaxed" style={{ fontSize: "clamp(16px,1.3vw,19px)", color: "var(--content-secondary)" }}>{t("subtitle")}</p>
 
-        {projects.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {projects.map((project) => (
-          <div
-            key={project.id}
-            className="group glass-card rounded-2xl border border-border-subtle overflow-hidden hover:border-accent/40 transition-all duration-300 hover:shadow-glow"
-          >
-            <div className="relative h-56 bg-surface-secondary overflow-hidden">
-              {project.main_image ? (
-                <Image
-                  src={mediaUrl(project.main_image)}
-                  alt={project.name}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-accent/10 to-transparent flex items-center justify-center text-accent/30">
-                  <Factory size={48} strokeWidth={1.5} />
+          {kpis.length > 0 && (
+            <dl className="mt-12 grid grid-cols-2 sm:flex sm:flex-wrap gap-y-8">
+              {kpis.map(([v, label], i) => (
+                <div key={i} className="flex flex-col-reverse pr-6 sm:px-10 sm:first:pl-0 sm:border-l sm:first:border-l-0" style={{ borderColor: "var(--border)" }}>
+                  <dt className="mt-2.5 text-xs uppercase tracking-[0.18em]" style={{ color: "var(--content-muted)" }}>{label}</dt>
+                  <dd className="font-display font-bold leading-none tabular-nums" style={{ fontSize: "clamp(36px,3.8vw,60px)", background: "var(--hero-accent-gradient)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{v}</dd>
                 </div>
-              )}
-            </div>
-            <div className="p-6">
-              <h2 className="font-display font-bold text-content text-xl mb-3 group-hover:text-accent transition-colors">
-                {project.name}
-              </h2>
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                <div>
-                  <p className="text-content-muted text-xs uppercase tracking-wider mb-1">{t("client")}</p>
-                  <p className="text-content-secondary text-sm font-medium">{project.client}</p>
-                </div>
-                <div>
-                  <p className="text-content-muted text-xs uppercase tracking-wider mb-1">{t("location")}</p>
-                  <p className="text-content-secondary text-sm font-medium">{project.location}</p>
-                </div>
-                {project.completed_date && (
-                  <div>
-                    <p className="text-content-muted text-xs uppercase tracking-wider mb-1">{t("completed")}</p>
-                    <p className="text-content-secondary text-sm font-medium">
-                      {formatDate(project.completed_date, locale)}
-                    </p>
-                  </div>
-                )}
-              </div>
-              {project.result && (
-                <div className="pt-3 border-t border-border-subtle">
-                  <p className="text-content-muted text-xs uppercase tracking-wider mb-1">{t("result")}</p>
-                  <p className="text-content-secondary text-sm line-clamp-2">{project.result}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-        </div>
+              ))}
+            </dl>
+          )}
+        </header>
+
+        {projects.length > 0 ? (
+          <ProjectsTimeline projects={projects} locale={locale} />
+        ) : (
+          <p className="py-24 text-center" style={{ color: "var(--content-muted)" }}>—</p>
         )}
-
-        <CompletedProjectsTimeline locale={locale} />
       </div>
     </div>
   );
