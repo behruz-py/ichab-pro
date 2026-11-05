@@ -3,7 +3,7 @@
 import { useEffect, useId, useState } from "react";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Check, Loader2, Package } from "lucide-react";
+import { ArrowUpRight, Check, ChevronDown, Loader2, Package } from "lucide-react";
 import { api, ApiError } from "@/lib/api-client";
 import type { LeadCreate } from "@/types/api";
 import { EASE } from "@/components/editorial/hooks";
@@ -12,6 +12,28 @@ type Loc = Record<string, string>;
 const OTHER: Loc = { uz: "Boshqa", ru: "Другое", en: "Other" };
 const PRODUCT: Loc = { uz: "Mahsulot bo'yicha so'rov", ru: "Запрос по изделию", en: "Product inquiry" };
 const AGAIN: Loc = { uz: "Yana murojaat yuborish", ru: "Отправить ещё одно обращение", en: "Send another inquiry" };
+const CHOOSE: Loc = { uz: "Tanlang (ixtiyoriy)", ru: "Выберите (необязательно)", en: "Choose (optional)" };
+
+/** Native select styled like the underlined fields; keeps keyboard and mobile pickers. */
+function TopicSelect({ label, value, options, placeholder, onChange }: {
+  label: string; value: string; options: string[]; placeholder: string; onChange: (v: string) => void;
+}) {
+  const id = useId();
+  return (
+    <div className="relative">
+      <label htmlFor={id} className="block pt-1 text-xs uppercase tracking-[0.16em]" style={{ color: "var(--content-muted)" }}>{label}</label>
+      <select id={id} value={value} onChange={(e) => onChange(e.target.value)}
+        className="peer block w-full appearance-none bg-transparent pt-2 pb-3 pr-8 text-[17px] outline-none cursor-pointer"
+        style={{ color: value ? "var(--content)" : "var(--content-muted)" }}>
+        <option value="">{placeholder}</option>
+        {options.map((o) => <option key={o} value={o}>{o}</option>)}
+      </select>
+      <ChevronDown size={18} className="absolute right-0 bottom-4 pointer-events-none" style={{ color: "var(--content-muted)" }} />
+      <span className="absolute inset-x-0 bottom-0 h-px" style={{ background: "var(--border)" }} />
+      <span className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 transition-transform duration-500 peer-focus:scale-x-100" style={{ background: "var(--hero-accent-gradient)" }} />
+    </div>
+  );
+}
 
 /** Underlined input with a label that floats up once the field has focus or a value. */
 function Field({ label, required, invalid, value, onChange, type = "text", textarea, autoComplete }: {
@@ -118,33 +140,20 @@ export function ContactForm({ locale, topics }: { locale: string; topics: string
       ) : (
         <motion.form key="form" onSubmit={submit} noValidate
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }}>
-          {/* Topic chips */}
-          <fieldset className="mb-10">
-            <legend className="mb-4 text-xs font-bold uppercase tracking-[0.2em]" style={{ color: "var(--content-muted)" }}>{t("subject")}</legend>
-            <div className="flex flex-wrap gap-2.5">
-              {chips.map((c, i) => {
-                const on = form.subject === c;
-                const isProduct = !!product && i === 0;
-                return (
-                  <button key={c} type="button" aria-pressed={on} onClick={() => set("subject", on ? "" : c)}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium text-left transition-all duration-300"
-                    style={on
-                      ? { background: "var(--warm-btn)", color: "#fff", boxShadow: "0 8px 22px rgba(var(--warm-glow),0.3)" }
-                      : { border: "1px solid var(--border)", color: "var(--content-secondary)" }}>
-                    {isProduct && <Package size={15} />}
-                    {on && !isProduct && <Check size={14} />}
-                    {c}
-                  </button>
-                );
-              })}
+          {product && (
+            <div className="mb-8 flex items-center gap-3 rounded-2xl px-5 py-4" style={{ background: "rgba(var(--accent-rgb),0.08)", border: "1px solid rgba(var(--accent-rgb),0.25)" }}>
+              <Package size={18} style={{ color: "var(--accent)" }} className="shrink-0" />
+              <p className="text-sm" style={{ color: "var(--content)" }}><span style={{ color: "var(--content-secondary)" }}>{tr(PRODUCT)}:</span> <strong>{product}</strong></p>
             </div>
-          </fieldset>
-
+          )}
           <div className="grid sm:grid-cols-2 gap-x-10 gap-y-6">
             <Field label={t("name")} required invalid={nameInvalid} value={form.name} onChange={(v) => set("name", v)} autoComplete="name" />
             <Field label={t("company")} value={form.company ?? ""} onChange={(v) => set("company", v)} autoComplete="organization" />
             <Field label={t("phone")} type="tel" invalid={contactInvalid} value={form.phone ?? ""} onChange={(v) => set("phone", v)} autoComplete="tel" />
             <Field label={t("email")} type="email" invalid={contactInvalid} value={form.email ?? ""} onChange={(v) => set("email", v)} autoComplete="email" />
+            <div className="sm:col-span-2">
+              <TopicSelect label={t("subject")} value={form.subject ?? ""} options={chips} placeholder={tr(CHOOSE)} onChange={(v) => set("subject", v)} />
+            </div>
             <div className="sm:col-span-2">
               <Field label={t("message")} textarea value={form.message ?? ""} onChange={(v) => set("message", v)} />
             </div>
