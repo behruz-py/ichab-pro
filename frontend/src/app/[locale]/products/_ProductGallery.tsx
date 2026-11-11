@@ -30,8 +30,11 @@ export function ProductGallery({ images, productName, locale, noImageText, rgb, 
   const altOf = (img: ProductImage) => ((img[`alt_${locale}` as keyof ProductImage] as string) || img.alt_uz || productName);
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="relative overflow-hidden rounded-[28px] aspect-square sm:aspect-[5/4]"
+    // Thumbnails sit under the stage on small screens and in a column to its
+    // left on desktop; the stage height follows the viewport there so the
+    // whole gallery fits on screen at laptop heights.
+    <div className="flex flex-col lg:flex-row-reverse gap-3 lg:gap-4">
+      <div className="relative flex-1 min-w-0 overflow-hidden rounded-[24px] sm:rounded-[28px] aspect-[4/3] md:aspect-square lg:aspect-auto lg:h-[clamp(420px,calc(100svh-210px),760px)]"
         style={{ background: `radial-gradient(ellipse 60% 55% at 50% 45%, rgba(${rgb},0.28), transparent 70%), var(--surface-card)`, border: `1px solid rgba(${rgb},0.2)` }}>
         <div className="absolute inset-0 pointer-events-none" aria-hidden style={{
           backgroundImage: "linear-gradient(rgba(var(--accent-rgb),0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--accent-rgb),0.07) 1px, transparent 1px)",
@@ -42,7 +45,7 @@ export function ProductGallery({ images, productName, locale, noImageText, rgb, 
 
         <AnimatePresence mode="wait" initial={false}>
           {active ? (
-            <motion.div key={active.id} className="absolute inset-[10%]"
+            <motion.div key={active.id} className="absolute inset-[7%]"
               initial={{ opacity: 0, y: 16, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
               <Image src={mediaUrl(active.image)} alt={altOf(active)} fill priority sizes="(max-width:1024px) 90vw, 45vw"
@@ -52,7 +55,7 @@ export function ProductGallery({ images, productName, locale, noImageText, rgb, 
           ) : (
             <motion.div key="placeholder" className="absolute inset-0 flex flex-col items-center justify-center gap-6"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-[40px] flex items-center justify-center rotate-[-6deg]"
+              <div className="w-32 h-32 sm:w-44 sm:h-44 rounded-[36px] flex items-center justify-center rotate-[-6deg]"
                 style={{ background: `linear-gradient(145deg, rgb(${rgb}), rgba(${rgb},0.6))`, boxShadow: `0 30px 60px rgba(${rgb},0.35), inset 0 1px 0 rgba(255,255,255,0.35)` }}>
                 <Icon size={84} color="#fff" strokeWidth={1.3} />
               </div>
@@ -63,14 +66,14 @@ export function ProductGallery({ images, productName, locale, noImageText, rgb, 
       </div>
 
       {usable.length > 1 && (
-        <div className="flex gap-3 overflow-x-auto pb-1">
+        <div className="flex lg:flex-col gap-2.5 overflow-x-auto lg:overflow-x-visible lg:overflow-y-auto lg:max-h-[clamp(420px,calc(100svh-210px),760px)] pb-1 lg:pb-0 shrink-0">
           {usable.map(img => {
             const on = img.id === active?.id;
             return (
               <button key={img.id} type="button" onClick={() => setActiveId(img.id)} aria-label={altOf(img)} aria-pressed={on}
-                className="relative shrink-0 w-20 h-20 rounded-2xl overflow-hidden transition-all duration-300"
+                className="relative shrink-0 w-16 h-16 lg:w-[72px] lg:h-[72px] rounded-xl lg:rounded-2xl overflow-hidden transition-all duration-300"
                 style={{ background: "var(--surface-card)", border: on ? `2px solid rgb(${rgb})` : "1px solid var(--border)", opacity: on ? 1 : 0.6 }}>
-                <Image src={mediaUrl(img.image)} alt={altOf(img)} fill className="object-contain p-2" sizes="80px" />
+                <Image src={mediaUrl(img.image)} alt={altOf(img)} fill className="object-contain p-1.5" sizes="72px" />
               </button>
             );
           })}
