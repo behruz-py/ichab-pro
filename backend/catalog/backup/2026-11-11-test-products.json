@@ -1,0 +1,283 @@
+{
+  "note": "Test products deleted on 2026-11-11 before entering the real catalogue. Re-import any entry via POST /api/v1/products/import/.",
+  "categories": [
+    {
+      "id": 1,
+      "slug": "rudnik-puskatellari",
+      "name": "Rudnik puskatellari",
+      "icon": "Power",
+      "cover_image": null,
+      "parent": null,
+      "order": 0
+    },
+    {
+      "id": 2,
+      "slug": "boshqaruv-shkaflari",
+      "name": "Boshqaruv shkaflari",
+      "icon": "Server",
+      "cover_image": null,
+      "parent": null,
+      "order": 1
+    },
+    {
+      "id": 3,
+      "slug": "olchov-vositalari",
+      "name": "O'lchov vositalari",
+      "icon": "Gauge",
+      "cover_image": null,
+      "parent": null,
+      "order": 2
+    }
+  ],
+  "products": [
+    {
+      "slug": "shaxta-reversiv-puskateli",
+      "sku": "ПРР",
+      "brand": "ICHAB",
+      "availability": "on_order",
+      "order": 0,
+      "is_active": true,
+      "category": {
+        "slug": "rudnik-puskatellari",
+        "name_uz": "Rudnik puskatellari",
+        "name_ru": "Рудничные пускатели",
+        "name_en": "Mine starters",
+        "icon": "Power",
+        "order": 0
+      },
+      "name_uz": "Shaxta reversiv puskateli",
+      "name_ru": "Пускатель рудничный реверсивный",
+      "name_en": "Mine reversible starter",
+      "short_description_uz": "Yer osti kon ishlarida elektr dvigatellarni ikki yo'nalishda ishga tushirish, to'xtatish va himoyalash uchun mo'ljallangan puskatel.",
+      "short_description_ru": "Пускатель для пуска, остановки, реверса и защиты электродвигателей в условиях подземных горных работ.",
+      "short_description_en": "Starter for starting, stopping, reversing and protecting electric motors in underground mining.",
+      "description_uz": "Shaxta reversiv puskateli (ПРР) yer osti kon uskunalarining asinxron elektr dvigatellarini masofadan va mahalliy boshqarish, aylanish yo'nalishini o'zgartirish hamda qisqa tutashuv va o'ta yuklanishdan himoyalash uchun ishlatiladi. Mahsulot ICHAB tomonidan import o'rnini bosuvchi lokalizatsiya dasturi doirasida ishlab chiqariladi.",
+      "description_ru": "Пускатель рудничный реверсивный (ПРР) применяется для местного и дистанционного управления асинхронными электродвигателями подземного горного оборудования, реверса направления вращения, а также защиты от токов короткого замыкания и перегрузки. Изделие производится ICHAB в рамках программы импортозамещающей локализации.",
+      "description_en": "The mine reversible starter (ПРР) provides local and remote control of the asynchronous motors that drive underground mining equipment, reverses their direction of rotation, and protects them against short circuits and overload. It is manufactured by ICHAB under its import-substituting localization programme.",
+      "meta_title_uz": "",
+      "meta_title_ru": "",
+      "meta_title_en": "",
+      "meta_description_uz": "",
+      "meta_description_ru": "",
+      "meta_description_en": "",
+      "specs": [
+        {
+          "label_uz": "Belgilanishi",
+          "label_ru": "Обозначение",
+          "label_en": "Designation",
+          "value": "ПРР",
+          "unit": ""
+        },
+        {
+          "label_uz": "Ishlab chiqaruvchi",
+          "label_ru": "Производитель",
+          "label_en": "Manufacturer",
+          "value": "ICHAB · NKMK",
+          "unit": ""
+        }
+      ],
+      "images": [
+        {
+          "path": "products/images/1.png",
+          "is_main": false,
+          "alt_uz": "",
+          "alt_ru": "",
+          "alt_en": ""
+        },
+        {
+          "path": "products/images/2.png",
+          "is_main": false,
+          "alt_uz": "",
+          "alt_ru": "",
+          "alt_en": ""
+        }
+      ]
+    },
+    {
+      "slug": "tiristorli-boshqaruv-shkafi",
+      "sku": "ВТЕ",
+      "brand": "ICHAB",
+      "availability": "on_order",
+      "order": 1,
+      "is_active": true,
+      "category": {
+        "slug": "boshqaruv-shkaflari",
+        "name_uz": "Boshqaruv shkaflari",
+        "name_ru": "Шкафы управления",
+        "name_en": "Control cabinets",
+        "icon": "Server",
+        "order": 1
+      },
+      "name_uz": "Tiristorli boshqaruv shkafi",
+      "name_ru": "Шкаф тиристорного управления",
+      "name_en": "Thyristor control cabinet",
+      "short_description_uz": "Tiristorli o'zgartirgich asosida elektr yuritmalarni silliq boshqarish uchun mo'ljallangan boshqaruv shkafi.",
+      "short_description_ru": "Шкаф управления электроприводами на базе тиристорного преобразователя с плавным регулированием.",
+      "short_description_en": "Control cabinet for smooth regulation of electric drives based on a thyristor converter.",
+      "description_uz": "Tiristorli boshqaruv shkafi (ВТЕ) texnologik uskunalarning elektr yuritmalarini tiristorli o'zgartirgich yordamida silliq ishga tushirish va tezligini rostlash uchun ishlatiladi. Shkaf ICHAB ustaxonalarida yig'iladi va kombinat bo'linmalari buyurtmasi asosida tayyorlanadi.",
+      "description_ru": "Шкаф тиристорного управления (ВТЕ) предназначен для плавного пуска и регулирования скорости электроприводов технологического оборудования с помощью тиристорного преобразователя. Шкаф собирается в мастерских ICHAB и изготавливается по заказам подразделений комбината.",
+      "description_en": "The thyristor control cabinet (ВТЕ) provides soft starting and speed control of process-equipment electric drives through a thyristor converter. It is assembled in ICHAB's workshops and built to order for the combine's divisions.",
+      "meta_title_uz": "",
+      "meta_title_ru": "",
+      "meta_title_en": "",
+      "meta_description_uz": "",
+      "meta_description_ru": "",
+      "meta_description_en": "",
+      "specs": [
+        {
+          "label_uz": "Belgilanishi",
+          "label_ru": "Обозначение",
+          "label_en": "Designation",
+          "value": "ВТЕ",
+          "unit": ""
+        },
+        {
+          "label_uz": "Ishlab chiqaruvchi",
+          "label_ru": "Производитель",
+          "label_en": "Manufacturer",
+          "value": "ICHAB · NKMK",
+          "unit": ""
+        }
+      ],
+      "images": [
+        {
+          "path": "products/images/13.png",
+          "is_main": false,
+          "alt_uz": "",
+          "alt_ru": "",
+          "alt_en": ""
+        }
+      ]
+    },
+    {
+      "slug": "dvigatelni-himoyalash-boshqaruv-shkafi",
+      "sku": "",
+      "brand": "ICHAB",
+      "availability": "on_order",
+      "order": 2,
+      "is_active": true,
+      "category": {
+        "slug": "boshqaruv-shkaflari",
+        "name_uz": "Boshqaruv shkaflari",
+        "name_ru": "Шкафы управления",
+        "name_en": "Control cabinets",
+        "icon": "Server",
+        "order": 1
+      },
+      "name_uz": "Dvigatelni himoyalash boshqaruv shkafi",
+      "name_ru": "Шкаф управления защиты двигателя",
+      "name_en": "Motor protection control cabinet",
+      "short_description_uz": "Elektr dvigatellarni boshqarish va ularni avariya rejimlaridan himoyalash uchun to'liq yig'ilgan shkaf.",
+      "short_description_ru": "Комплектный шкаф для управления электродвигателями и их защиты от аварийных режимов.",
+      "short_description_en": "Fully assembled cabinet for controlling electric motors and protecting them against fault conditions.",
+      "description_uz": "Dvigatelni himoyalash boshqaruv shkafi texnologik liniyalardagi elektr dvigatellarni boshqarish va ularni o'ta yuklanish, qisqa tutashuv hamda fazaning uzilishi kabi avariya holatlaridan himoyalashni ta'minlaydi. Buyurtmachi talablariga muvofiq ICHAB tomonidan loyihalanadi va yig'iladi.",
+      "description_ru": "Шкаф управления защиты двигателя обеспечивает управление электродвигателями технологических линий и их защиту от аварийных режимов — перегрузки, короткого замыкания и обрыва фазы. Проектируется и собирается ICHAB в соответствии с требованиями заказчика.",
+      "description_en": "The motor protection control cabinet controls the electric motors of process lines and protects them against fault conditions such as overload, short circuit and phase loss. It is designed and assembled by ICHAB to the customer's requirements.",
+      "meta_title_uz": "",
+      "meta_title_ru": "",
+      "meta_title_en": "",
+      "meta_description_uz": "",
+      "meta_description_ru": "",
+      "meta_description_en": "",
+      "specs": [
+        {
+          "label_uz": "Ishlab chiqaruvchi",
+          "label_ru": "Производитель",
+          "label_en": "Manufacturer",
+          "value": "ICHAB · NKMK",
+          "unit": ""
+        }
+      ],
+      "images": [
+        {
+          "path": "products/images/11.png",
+          "is_main": false,
+          "alt_uz": "",
+          "alt_ru": "",
+          "alt_en": ""
+        }
+      ]
+    },
+    {
+      "slug": "shovqin-darajasi-olchagichi",
+      "sku": "ШУМ-4",
+      "brand": "ICHAB",
+      "availability": "on_order",
+      "order": 3,
+      "is_active": true,
+      "category": {
+        "slug": "olchov-vositalari",
+        "name_uz": "O'lchov vositalari",
+        "name_ru": "Средства измерений",
+        "name_en": "Measuring instruments",
+        "icon": "Gauge",
+        "order": 2
+      },
+      "name_uz": "Shovqin darajasi o'lchagichi",
+      "name_ru": "Измеритель уровня шума",
+      "name_en": "Noise level meter",
+      "short_description_uz": "Ishlab chiqarish binolari va ish joylarida shovqin darajasini nazorat qilish uchun o'lchov asbobi.",
+      "short_description_ru": "Прибор для контроля уровня шума в производственных помещениях и на рабочих местах.",
+      "short_description_en": "Instrument for monitoring noise levels in production areas and at workplaces.",
+      "description_uz": "Shovqin darajasi o'lchagichi (ШУМ-4) ishlab chiqarish binolari va ish joylarida tovush bosimi darajasini o'lchash va nazorat qilish uchun mo'ljallangan. ICHAB tomonidan mahalliylashtirilgan o'lchov vositalari qatorida ishlab chiqariladi.",
+      "description_ru": "Измеритель уровня шума (ШУМ-4) предназначен для измерения и контроля уровня звукового давления в производственных помещениях и на рабочих местах. Выпускается ICHAB в линейке локализованных средств измерений.",
+      "description_en": "The noise level meter (ШУМ-4) measures and monitors sound pressure levels in production areas and at workplaces. It is produced by ICHAB as part of its line of localized measuring instruments.",
+      "meta_title_uz": "",
+      "meta_title_ru": "",
+      "meta_title_en": "",
+      "meta_description_uz": "",
+      "meta_description_ru": "",
+      "meta_description_en": "",
+      "specs": [
+        {
+          "label_uz": "Belgilanishi",
+          "label_ru": "Обозначение",
+          "label_en": "Designation",
+          "value": "ШУМ-4",
+          "unit": ""
+        },
+        {
+          "label_uz": "Ishlab chiqaruvchi",
+          "label_ru": "Производитель",
+          "label_en": "Manufacturer",
+          "value": "ICHAB · NKMK",
+          "unit": ""
+        }
+      ],
+      "images": [
+        {
+          "path": "products/images/10.png",
+          "is_main": false,
+          "alt_uz": "",
+          "alt_ru": "",
+          "alt_en": ""
+        }
+      ]
+    },
+    {
+      "slug": "kirish-taqsimlash-qurilmasi-vru",
+      "sku": "",
+      "brand": "",
+      "availability": "available",
+      "order": 4,
+      "is_active": true,
+      "name_uz": "Kirish-taqsimlash qurilmasi (ВРУ)",
+      "name_ru": "Вводно-распределительное устройство (ВРУ)",
+      "name_en": "Incoming Power Distribution Unit (VRU)",
+      "short_description_uz": "Kirish-taqsimlash qurilmasi (ВРУ) — elektr energiyasini qabul qilish, taqsimlash va hisobga olish, shuningdek, elektr tarmoqlari hamda uskunalarni ortiqcha yuklanish va qisqa tutashuvlardan himoya qilishga mo‘ljallangan elektrotexnik qurilma.",
+      "short_description_ru": "Вводно-распределительное устройство (ВРУ) — электротехническое оборудование, предназначенное для приема, распределения и учета электрической энергии, а также защиты электрических сетей и оборудования от перегрузок и коротких замыканий.",
+      "short_description_en": "The Incoming Power Distribution Unit (VRU) is electrical equipment designed for receiving, distributing, and metering electrical energy while protecting electrical networks and equipment against overloads and short circuits.",
+      "description_uz": "Kirish-taqsimlash qurilmasi (ВРУ) — sanoat korxonalari, tijorat va ma’muriy obyektlarning elektr ta’minotini ishonchli, xavfsiz hamda samarali tashkil etishga mo‘ljallangan zamonaviy elektrotexnik yechimdir. Qurilma elektr energiyasini ta’minot tarmog‘idan qabul qilish, uni chiqish liniyalari bo‘yicha taqsimlash, energiya sarfini hisobga olish va elektr uskunalarini avariya holatlaridan himoya qilish vazifalarini bajaradi.\r\n\r\nВРУ o‘zgaruvchan tok elektr tarmoqlarida qo‘llanilib, kommutatsiya, himoya va nazorat-o‘lchov komponentlarini yagona tizimda birlashtiradi. Qurilma konstruksiyasi turli turdagi avtomatik o‘chirgichlar, aktiv va reaktiv elektr energiyasini hisobga oluvchi elektron yoki induksion hisoblagichlar, o‘lchov asboblari va qo‘shimcha elektr jihozlarini o‘rnatish imkonini beradi.\r\n\r\nBuyurtmachining texnik talablariga muvofiq, qurilma nominal tok qiymatlari, chiqish liniyalari soni va elektr ta’minoti tizimining xususiyatlarini hisobga olgan holda turli konfiguratsiyalarda ishlab chiqarilishi mumkin. Uskunalarning oqilona joylashtirilishi ekspluatatsiya, texnik xizmat ko‘rsatish va elektr parametrlarini nazorat qilish jarayonlarini qulay tashkil etishga xizmat qiladi.\r\n\r\n\r\nElektr energiyasini ta’minot tarmog‘idan qabul qilish.\r\n\r\nElektr energiyasini chiqish liniyalari bo‘yicha taqsimlash.\r\n\r\nAktiv va reaktiv elektr energiyasini hisobga olish.\r\n\r\nElektr zanjirlarini ortiqcha yuklanishlardan himoya qilish.\r\n\r\nUskunalarni qisqa tutashuv toklaridan himoya qilish.\r\n\r\nAsosiy elektr parametrlarini nazorat qilish.\r\n\r\nBuyurtmachining talabiga muvofiq, kirish-taqsimlash qurilmasi turli turdagi avtomatik o‘chirgichlar, aktiv va reaktiv elektr energiyasini hisobga oluvchi elektron yoki induksion hisoblagichlar, nazorat-o‘lchov asboblari hamda boshqa qo‘shimcha qurilmalar bilan jihozlanishi mumkin.",
+      "description_ru": "Вводно-распределительное устройство (ВРУ) — современное электротехническое решение, предназначенное для организации надежного, безопасного и эффективного электроснабжения промышленных, коммерческих и административных объектов. Устройство обеспечивает прием электрической энергии от питающей сети, ее распределение между отходящими линиями, учет энергопотребления и защиту подключенного оборудования от аварийных режимов работы.\r\n\r\nВРУ применяется в электрических сетях переменного тока и представляет собой комплексную систему распределения электроэнергии, объединяющую коммутационные, защитные и контрольно-измерительные компоненты. Конструкция предусматривает установку автоматических выключателей различных типов, электронных или индукционных счетчиков активной и реактивной электрической энергии, измерительных приборов и дополнительного оборудования.\r\n\r\nВ зависимости от технических требований заказчика устройство может изготавливаться в различных конфигурациях с учетом номинальных токов, количества отходящих линий и особенностей системы электроснабжения. Продуманная компоновка оборудования обеспечивает удобство эксплуатации, технического обслуживания и контроля электрических параметров.\r\n\r\n\r\nПрием электрической энергии от питающей сети.\r\n\r\nРаспределение электроэнергии по отходящим линиям.\r\n\r\nУчет активной и реактивной электрической энергии.\r\n\r\nЗащита электрических цепей от перегрузок.\r\n\r\nЗащита оборудования от токов короткого замыкания.\r\n\r\nКонтроль основных электрических параметров.\r\n\r\nПо желанию заказчика вводно-распределительное устройство может комплектоваться автоматическими выключателями различных типов, электронными или индукционными счетчиками активной и реактивной электрической энергии, контрольно-измерительными приборами и другими дополнительными устройствами.",
+      "description_en": "The Incoming Power Distribution Unit (VRU) is a modern electrical distribution solution designed to provide reliable, safe, and efficient power supply for industrial, commercial, and administrative facilities. The unit receives electrical energy from the incoming supply network, distributes it among outgoing feeders, supports electricity consumption metering, and protects connected electrical equipment against abnormal operating conditions.\r\n\r\nDesigned for alternating current power networks, the VRU integrates switching, protection, and electrical measurement components into a centralized distribution system. Its construction supports the installation of various types of circuit breakers, electronic or induction-type meters for active and reactive electrical energy, measuring instruments, and additional electrical equipment.\r\n\r\nDepending on customer specifications, the unit can be manufactured in different configurations, taking into account rated current requirements, the number of outgoing feeders, and the characteristics of the electrical power supply system. The arrangement of internal components facilitates convenient operation, maintenance, and monitoring of electrical parameters.\r\n\r\nReceiving electrical energy from the incoming supply network.\r\n\r\nDistributing power among outgoing feeders.\r\n\r\nMetering active and reactive electrical energy.\r\n\r\nProtecting electrical circuits against overloads.\r\n\r\nProtecting equipment against short-circuit currents.\r\n\r\nMonitoring essential electrical parameters.\r\n\r\nAccording to customer requirements, the Incoming Power Distribution Unit can be equipped with various types of circuit breakers, electronic or induction-type active and reactive energy meters, electrical monitoring and measuring instruments, and other additional devices.",
+      "meta_title_uz": "",
+      "meta_title_ru": "",
+      "meta_title_en": "",
+      "meta_description_uz": "",
+      "meta_description_ru": "",
+      "meta_description_en": "",
+      "specs": [],
+      "images": []
+    }
+  ]
+}
