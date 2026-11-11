@@ -1,0 +1,44 @@
+{
+  "slug": "kirish-taqsimlash-hisobga-olish-qurilmasi-ivru",
+  "sku": "ИВРУ",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "order": 1,
+  "category": {
+    "slug": "power-distribution",
+    "name_uz": "Elektr taqsimlash qurilmalari",
+    "name_ru": "Электрораспределительные устройства",
+    "name_en": "Power distribution equipment"
+  },
+  "name_uz": "Kirish-taqsimlash va hisobga olish qurilmasi (ИВРУ)",
+  "name_ru": "Вводно-распределительное учётное устройство (ИВРУ)",
+  "name_en": "Input-distribution and metering device (IVRU)",
+  "short_description_uz": "Qurilish maydonlari, ishlab chiqarish va turar-joy obyektlarida 380/220 V, 50 Hz tarmoqlarda elektr energiyasini qabul qilish va xavfsiz taqsimlash, liniyalarni o'ta yuklanish va qisqa tutashuvlardan himoyalash uchun.",
+  "short_description_ru": "Приём и безопасное распределение электроэнергии в сетях 380/220 В, 50 Гц на строительных площадках, производственных и жилых объектах; защита линий от перегрузок и коротких замыканий.",
+  "short_description_en": "Receives and safely distributes electricity in 380/220 V, 50 Hz networks at construction sites, industrial and residential facilities, and protects lines against overloads and short circuits.",
+  "description_uz": "Inventar kirish-taqsimlash qurilmalari (keyingi o'rinlarda — ИВРУ) kuchlanishi 380/220 V, chastotasi 50 Hz bo'lgan o'zgaruvchan tok tarmoqlarida elektr energiyasini qabul qilish va xavfsiz taqsimlash (ayrim hollarda hisobga olish) uchun mo'ljallangan.\nИВРУ qurilmalari qurilish maydonlari, ishlab chiqarish obyektlari, turar-joy binolari, jamoat binolari va boshqa obyektlarni elektr bilan ta'minlashda elektr tarmoqlari kamdan-kam (soatiga 6 martagacha) tezkor ulanib-uzilganda, shuningdek liniyalarni o'ta yuklanish va/yoki qisqa tutashuvlardan himoyalash uchun qo'llaniladi.\nBiz ИВРУ-1, ИВРУ-2, ИВРУ-5 seriyali qurilmalarni ishlab chiqaramiz.",
+  "description_ru": "Инвентарные вводно-распределительные устройства (далее ИВРУ) предназначены для приёма и безопасного распределения (в отдельных случаях и учёта) электроэнергии в сетях переменного тока напряжением 380/220 В, частотой 50 Гц.\nУстройства ИВРУ применяются для электроснабжения строительных площадок, производственных объектов, жилых домов, общественных зданий и прочих объектов при нечастых (до 6 включений в час) оперативных включениях и выключениях электрических сетей, а также для защиты линий от перегрузок и/или коротких замыканий.\nНами выпускаются устройства серии ИВРУ-1, ИВРУ-2, ИВРУ-5.",
+  "description_en": "Inventory input-distribution devices (hereinafter IVRU) are designed to receive and safely distribute (and in some cases meter) electricity in AC networks of 380/220 V, 50 Hz.\nIVRU devices are used to supply power to construction sites, industrial facilities, residential and public buildings and other facilities with infrequent (up to 6 per hour) operational switching of electrical networks, and to protect lines against overloads and/or short circuits.\nWe manufacture the ИВРУ-1, ИВРУ-2 and ИВРУ-5 series.",
+  "specs": [],
+  "variant_table": {
+    "parameters": [
+      {"label_uz": "Nominal tok, A", "label_ru": "Номинальный ток, А", "label_en": "Rated current, A"},
+      {"label_uz": "Nominal kuchlanish, V", "label_ru": "Номинальное напряжение, В", "label_en": "Rated voltage, V"},
+      {"label_uz": "Ta'minot tarmog'i chastotasi, Hz", "label_ru": "Частота питающей сети, Гц", "label_en": "Supply frequency, Hz"},
+      {"label_uz": "Chiquvchi liniyalar soni", "label_ru": "Количество отводящих линий", "label_en": "Number of outgoing lines"},
+      {"label_uz": "Chiquvchi liniyaning chegaraviy toki, A", "label_ru": "Предельный ток отводящей линии, А", "label_en": "Maximum outgoing line current, A"},
+      {"label_uz": "Kengligi, mm", "label_ru": "Ширина, мм", "label_en": "Width, mm"},
+      {"label_uz": "Chuqurligi, mm", "label_ru": "Глубина, мм", "label_en": "Depth, mm"},
+      {"label_uz": "Balandligi, mm", "label_ru": "Высота, мм", "label_en": "Height, mm"},
+      {"label_uz": "GOST 15150 bo'yicha iqlim ijrosi", "label_ru": "Климатическое исполнение по ГОСТ 15150", "label_en": "Climatic version per GOST 15150"},
+      {"label_uz": "GOST 14254 bo'yicha himoya darajasi", "label_ru": "Степень защиты по ГОСТ 14254", "label_en": "Degree of protection per GOST 14254"},
+      {"label_uz": "Yerga ulash tizimi turi", "label_ru": "Вид системы заземления", "label_en": "Earthing system type"},
+      {"label_uz": "O'rtacha massasi, kg", "label_ru": "Средняя масса, кг", "label_en": "Average weight, kg"}
+    ],
+    "variants": [
+      {"code": "ИВРУ-1", "values": ["400", "380/220", "50", "1", "400", "700", "350", "1700", "УХЛ4", "IP54", "TN-C(S)", "50"]},
+      {"code": "ИВРУ-2", "values": ["400", "380/220", "50", "≥2", "250", "700", "350", "1700", "УХЛ4", "IP54", "TN-C(S)", "60"]},
+      {"code": "ИВРУ-5", "values": ["250", "380/220", "50", "5", "100", "700", "350", "1700", "УХЛ4", "IP54", "TN-C(S)", "90"]}
+    ]
+  }
+}
