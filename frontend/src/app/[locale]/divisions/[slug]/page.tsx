@@ -52,7 +52,6 @@ export default async function DivisionDetailPage({ params: { locale, slug } }: P
         gallery: (div.gallery ?? []).map((g) => ({ ...g, image: mediaUrl(g.image) })),
         standards: div.standards ?? [],
         teamMembers: (div.team_members ?? []).map((m) => ({ ...m, photo: m.photo ? mediaUrl(m.photo) : null })),
-        relatedProjects: div.related_projects ?? [],
       }}
       locale={locale}
       backLabel={t("title")}

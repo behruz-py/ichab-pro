@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from core.serializers import TranslatedSerializerMixin, ImageFieldAbsoluteURL, translate_plain
-from apps.projects.serializers import ProjectListSerializer
 from apps.services.serializers import ServiceListSerializer
 from .models import (
     Division, DivisionStat, DivisionEquipment,
@@ -115,7 +114,6 @@ class DivisionDetailSerializer(TranslatedSerializerMixin, serializers.ModelSeria
     gallery = DivisionImageSerializer(many=True, read_only=True)
     standards = DivisionStandardSerializer(many=True, read_only=True)
     team_members = DivisionTeamMemberSerializer(many=True, read_only=True)
-    related_projects = serializers.SerializerMethodField()
 
     class Meta:
         model = Division
@@ -125,7 +123,7 @@ class DivisionDetailSerializer(TranslatedSerializerMixin, serializers.ModelSeria
             "leader_name", "leader_position", "leader_photo",
             "contact_phone", "contact_email",
             "stats", "services", "equipment", "gallery", "standards",
-            "team_members", "related_projects",
+            "team_members",
             "order", "is_active", "created_at", "updated_at",
         )
 
@@ -143,10 +141,6 @@ class DivisionDetailSerializer(TranslatedSerializerMixin, serializers.ModelSeria
 
     def get_leader_position(self, obj):
         return self.get_t(obj, "leader_position")
-
-    def get_related_projects(self, obj):
-        projects = [p for p in obj.projects.all() if p.is_active]
-        return ProjectListSerializer(projects, many=True, context=self.context).data
 
     def get_services(self, obj):
         services = [s for s in obj.services.all() if s.is_active]

@@ -51,9 +51,10 @@ class Division(TranslatedModel, OrderedModel, ActiveModel):
 # ─── Per-division laboratory content (universal — same fields, any division) ──
 # These let the admin build a full "laboratory" detail page (stats, equipment,
 # gallery, standards, team) for ANY division without touching code.
-# "What we do" and "related work" are intentionally NOT duplicated here — they
-# reuse apps.services.Service and apps.projects.Project (both already have a
-# `division` FK; Service also carries per-item "why it matters" highlights).
+# "What we do" is intentionally NOT duplicated here — it reuses
+# apps.services.Service (division FK, with per-item "why it matters" highlights).
+# Projects are not tied to a laboratory: one project is often delivered by
+# several laboratories together.
 
 class DivisionStat(models.Model):
     """A single animated-counter stat shown near the top of the lab page."""

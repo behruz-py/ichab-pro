@@ -97,11 +97,8 @@ def seed_partners():
 
 
 def seed_projects():
-    from apps.divisions.models import Division
-    div_map = {d.slug: d for d in Division.objects.all()}
     data_list = [
         dict(slug="navoiy-kimyo",
-             division=div_map.get("automation-projects"),
              name_uz="Navoiy kimyo zavodi — Avtomatlashtirish",
              name_ru="Навоийский химический завод — Автоматизация",
              name_en="Navoiy Chemical Plant — Automation",
@@ -119,7 +116,6 @@ def seed_projects():
              completed_date=datetime.date(2023, 8, 15),
              order=1, is_active=True),
         dict(slug="toshkent-issiqlik",
-             division=div_map.get("plc-scada"),
              name_uz="Toshkent issiqlik elektr stantsiyasi — SCADA",
              name_ru="Ташкентская ТЭЦ — SCADA-система",
              name_en="Tashkent Heat Power Plant — SCADA",
@@ -134,7 +130,6 @@ def seed_projects():
              completed_date=datetime.date(2022, 11, 30),
              order=2, is_active=True),
         dict(slug="fargona-neft",
-             division=div_map.get("sensors-instruments"),
              name_uz="Farg'ona neftni qayta ishlash zavodi — KIPiA",
              name_ru="Ферганский НПЗ — Модернизация КИПиА",
              name_en="Fergana Oil Refinery — Instrumentation Upgrade",
@@ -149,7 +144,6 @@ def seed_projects():
              completed_date=datetime.date(2023, 4, 10),
              order=3, is_active=True),
         dict(slug="samarqand-sement",
-             division=div_map.get("electric-control"),
              name_uz="Samarqand sement zavodi — Elektr shkaflar",
              name_ru="Самаркандский цементный завод — Электрощиты",
              name_en="Samarkand Cement Plant — Control Panels",

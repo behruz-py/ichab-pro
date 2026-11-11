@@ -10,12 +10,12 @@ from .serializers import (
 
 class ProjectViewSet(PublicReadAdminWriteMixin, viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ["is_active", "division"]
+    filterset_fields = ["is_active"]
     search_fields = ["name_uz", "name_ru", "name_en", "client_uz"]
     ordering_fields = ["order", "completed_date"]
 
     def get_queryset(self):
-        qs = Project.objects.select_related("division").prefetch_related("images").order_by("order")
+        qs = Project.objects.prefetch_related("images").order_by("order")
         if not (self.request.user and self.request.user.is_staff):
             qs = qs.filter(is_active=True)
         return qs

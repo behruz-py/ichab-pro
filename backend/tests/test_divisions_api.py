@@ -37,7 +37,7 @@ class TestDivisionAPI:
         # Nested lab-content lists are always present, even when empty.
         assert res.data["stats"] == []
         assert res.data["services"] == []
-        assert res.data["related_projects"] == []
+        assert "related_projects" not in res.data
 
     def test_detail_includes_nested_lab_content(self, api_client):
         div = self._create()

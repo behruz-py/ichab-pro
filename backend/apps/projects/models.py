@@ -28,14 +28,6 @@ class Project(TranslatedModel, OrderedModel, ActiveModel):
 
     completed_date = models.DateField(null=True, blank=True)
 
-    division = models.ForeignKey(
-        "divisions.Division",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="projects",
-    )
-
     class Meta:
         verbose_name = "Loyiha / Obyekt"
         verbose_name_plural = "Loyihalar / Obyektlar"

@@ -22,7 +22,7 @@ class ProjectListSerializer(TranslatedSerializerMixin, serializers.ModelSerializ
         model = Project
         fields = (
             "id", "slug", "name", "client", "description", "location",
-            "completed_date", "division", "main_image",
+            "completed_date", "main_image",
             "order", "is_active",
         )
 
@@ -60,7 +60,7 @@ class ProjectDetailSerializer(TranslatedSerializerMixin, serializers.ModelSerial
         model = Project
         fields = (
             "id", "slug", "name", "client", "description", "result", "location",
-            "completed_date", "division", "images",
+            "completed_date", "images",
             "order", "is_active", "created_at", "updated_at",
         )
 

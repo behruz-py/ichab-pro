@@ -11,7 +11,6 @@ type Loc = Record<string, string>;
 const EYEBROW: Loc = { uz: "Portfolio", ru: "Портфолио", en: "Portfolio" };
 const K_PROJECTS: Loc = { uz: "Amalga oshirilgan loyiha", ru: "Реализованных проектов", en: "Completed projects" };
 const K_PERIOD: Loc = { uz: "Faoliyat davri", ru: "Период работ", en: "Period" };
-const K_LABS: Loc = { uz: "Ishtirok etgan laboratoriya", ru: "Задействованных лабораторий", en: "Laboratories involved" };
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -32,12 +31,10 @@ export default async function ProjectsPage({ params: { locale } }: Props) {
 
   const years = projects.map((p) => p.completed_date && new Date(p.completed_date).getUTCFullYear()).filter((y): y is number => !!y);
   const period = years.length ? (Math.min(...years) === Math.max(...years) ? `${Math.min(...years)}` : `${Math.min(...years)}–${Math.max(...years)}`) : null;
-  const labs = new Set(projects.map((p) => p.division).filter((d) => d != null)).size;
 
   const kpis: [string, string][] = [];
   if (projects.length) kpis.push([String(res?.count ?? projects.length), tr(K_PROJECTS)]);
   if (period) kpis.push([period, tr(K_PERIOD)]);
-  if (labs) kpis.push([String(labs), tr(K_LABS)]);
 
   return (
     <div className="relative">

@@ -4,17 +4,17 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { ArrowLeft, ArrowRight, Phone, Mail, Award, CheckCircle2, Check, User, Cog, Expand, Quote, ChevronDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, Phone, Mail, Award, Check, User, Cog, Expand, Quote, ChevronDown } from "lucide-react";
 import { resolveIcon } from "@/components/ui/DynamicIcon";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { CursorSpotlight } from "@/components/ui/CursorSpotlight";
 import { ProgressRing } from "@/components/ui/ProgressRing";
 import { SectionPathLine } from "@/components/ui/SectionPathLine";
 import { Lightbox, type LightboxItem } from "@/components/ui/Lightbox";
-import { mediaUrl, formatDate } from "@/lib/utils";
+import { mediaUrl } from "@/lib/utils";
 import type {
   DivisionStat, Service, DivisionEquipment,
-  DivisionGalleryImage, DivisionStandard, DivisionTeamMember, Project,
+  DivisionGalleryImage, DivisionStandard, DivisionTeamMember,
 } from "@/types/api";
 
 type Loc = Record<string, string>;
@@ -36,7 +36,6 @@ export interface LabData {
   gallery: DivisionGalleryImage[];
   standards: DivisionStandard[];
   teamMembers: DivisionTeamMember[];
-  relatedProjects: Project[];
 }
 
 // A rotating accent palette — every content item cycles through these so the
@@ -49,13 +48,11 @@ const T = {
   services:     { uz: "Xizmatlar", ru: "Услуги", en: "Services" },
   equipment:    { uz: "Jihozlar", ru: "Оборудование", en: "Equipment" },
   gallery:      { uz: "Galereya", ru: "Галерея", en: "Gallery" },
-  projects:     { uz: "Loyihalar", ru: "Проекты", en: "Projects" },
   standards:    { uz: "Standartlar", ru: "Стандарты", en: "Standards" },
   team:         { uz: "Jamoa", ru: "Команда", en: "Team" },
   contact:      { uz: "Aloqa", ru: "Контакты", en: "Contacts" },
   servicesTitle: { uz: "Xizmatlarimiz", ru: "Наши услуги", en: "Our services" },
   equipmentTitle:    { uz: "Asosiy jihozlar", ru: "Ключевое оборудование", en: "Key equipment" },
-  projectsTitle:     { uz: "Bog'liq loyihalar", ru: "Связанные проекты", en: "Related projects" },
   standardsTitle:    { uz: "Standartlar va akkreditatsiya", ru: "Стандарты и аккредитация", en: "Standards & accreditation" },
   teamTitle:         { uz: "Jamoa", ru: "Команда", en: "Team" },
   leader:       { uz: "Laboratoriya rahbari", ru: "Руководитель лаборатории", en: "Laboratory head" },
@@ -132,7 +129,6 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
   const hasServices = lab.services.length > 0;
   const hasEquipment = lab.equipment.length > 0;
   const hasGallery = lab.gallery.length > 0;
-  const hasProjects = lab.relatedProjects.length > 0;
   const hasStandards = lab.standards.length > 0;
   const hasTeam = lab.teamMembers.length > 0;
 
@@ -141,10 +137,9 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
     { id: "services", label: T.services, show: hasServices },
     { id: "gallery", label: T.gallery, show: hasGallery },
     { id: "equipment", label: T.equipment, show: hasEquipment },
-    { id: "projects", label: T.projects, show: hasProjects },
     { id: "team", label: T.team, show: hasTeam },
     { id: "contact", label: T.contact, show: true },
-  ].filter((n) => n.show), [hasServices, hasEquipment, hasGallery, hasProjects, hasTeam]);
+  ].filter((n) => n.show), [hasServices, hasEquipment, hasGallery, hasTeam]);
 
   const [active, setActive] = useState("overview");
   const statsRef = useRef<HTMLDivElement>(null);
@@ -437,39 +432,6 @@ export function LabShowcase({ lab, locale, backLabel }: { lab: LabData; locale: 
                         {e.model_name && <p className="text-[13px] font-mono truncate mt-0.5" style={{ color: `rgb(${rgb})` }}>{e.model_name}</p>}
                       </div>
                     </TiltCard>
-                  </Reveal>
-                );
-              })}
-            </div>
-          </section>
-        )}
-
-        {/* Related projects */}
-        {hasProjects && (
-          <section id="projects" className="scroll-mt-32">
-            <Reveal><SectionTitle>{tr(T.projectsTitle, locale)}</SectionTitle></Reveal>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {lab.relatedProjects.map((p, i) => {
-                const rgb = rgbAt(i);
-                return (
-                  <Reveal key={p.id} delay={i * 0.06}>
-                    <Link href={`/${locale}/projects`} className="group glass-card rounded-2xl overflow-hidden h-full block" style={{ border: `1px solid rgba(${rgb},0.2)`, boxShadow: "var(--card-shadow)" }}>
-                      {p.main_image && (
-                        <div className="relative" style={{ aspectRatio: "16/10" }}>
-                          <Image src={mediaUrl(p.main_image)} alt={p.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                        </div>
-                      )}
-                      <div className="p-5">
-                        <div className="flex items-center gap-2 mb-2.5">
-                          <CheckCircle2 size={15} style={{ color: `rgb(${rgb})` }} />
-                          {p.completed_date && (
-                            <span className="font-mono text-[13px] font-bold px-2 py-0.5 rounded-md" style={{ background: `rgba(${rgb},0.15)`, color: `rgb(${rgb})` }}>{formatDate(p.completed_date, locale)}</span>
-                          )}
-                        </div>
-                        <p className="text-sm font-medium leading-relaxed text-content">{p.name}</p>
-                        {p.location && <p className="text-xs mt-1.5" style={{ color: "var(--content-muted)" }}>{p.location}</p>}
-                      </div>
-                    </Link>
                   </Reveal>
                 );
               })}

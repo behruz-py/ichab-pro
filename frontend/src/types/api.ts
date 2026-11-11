@@ -68,7 +68,6 @@ export interface Division {
   gallery?: DivisionGalleryImage[];
   standards?: DivisionStandard[];
   team_members?: DivisionTeamMember[];
-  related_projects?: Project[];
   order: number;
   is_active: boolean;
   created_at?: string;
@@ -217,7 +216,6 @@ export interface Project {
   result?: string;
   location: string;
   completed_date: string | null;
-  division: number | null;
   main_image: string | null;
   images?: ProjectImage[];
   order: number;
