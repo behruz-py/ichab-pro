@@ -7,7 +7,7 @@ from .serializers import PartnerSerializer, PartnerWriteSerializer
 
 class PartnerViewSet(PublicReadAdminWriteMixin, viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ["is_active", "is_featured"]
+    filterset_fields = ["is_active", "is_featured", "kind"]
     search_fields = ["name_uz", "name_ru", "name_en"]
     ordering_fields = ["order"]
 
