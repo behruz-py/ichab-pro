@@ -58,3 +58,4 @@ URLS.txt
 
 # Claude Code personal settings
 .claude/settings.local.json
+.claude/api.env

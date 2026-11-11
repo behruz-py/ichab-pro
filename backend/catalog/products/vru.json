@@ -1,0 +1,34 @@
+{
+  "slug": "kirish-taqsimlash-qurilmasi-vru",
+  "sku": "ВРУ",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "category": {
+    "slug": "power-distribution",
+    "name_uz": "Elektr taqsimlash qurilmalari",
+    "name_ru": "Электрораспределительные устройства",
+    "name_en": "Power distribution equipment"
+  },
+  "name_uz": "Kirish-taqsimlash qurilmasi (ВРУ)",
+  "name_ru": "Устройство вводно-распределительное (ВРУ)",
+  "name_en": "Input-distribution device (VRU)",
+  "short_description_uz": "O'zgaruvchan tok tarmoqlarida elektr energiyasini qabul qilish, taqsimlash va hisobga olish, uskunalarni o'ta yuklanish va qisqa tutashuv toklaridan himoyalash uchun.",
+  "short_description_ru": "Приём, распределение и учёт электроэнергии, защита оборудования от перегрузок и токов короткого замыкания в сетях переменного тока.",
+  "short_description_en": "Receives, distributes and meters electricity and protects equipment against overloads and short-circuit currents in AC networks.",
+  "description_uz": "Kirish-taqsimlash qurilmalari (keyingi o'rinlarda — ВРУ) o'zgaruvchan tok tarmoqlarida elektr energiyasini qabul qilish, taqsimlash va hisobga olish, shuningdek uskunalarni o'ta yuklanish va qisqa tutashuv toklaridan himoyalash uchun mo'ljallangan.\nBuyurtmachining xohishiga ko'ra ВРУ quyidagilar bilan jihozlanishi mumkin:\n— turli turdagi avtomatik o'chirgichlar;\n— aktiv va reaktiv elektr energiyasining elektron yoki induksion hisoblagichlari;\n— nazorat-o'lchov asboblari;\n— boshqa qo'shimcha qurilmalar.",
+  "description_ru": "Вводно-распределительные устройства (далее ВРУ) предназначены для приёма, распределения и учёта электроэнергии, защиты оборудования от перегрузок и токов короткого замыкания в сетях переменного тока.\nПо желанию заказчика ВРУ могут комплектоваться:\n— автоматическими выключателями различных типов;\n— электронными или индукционными счётчиками активной и реактивной электрической энергии;\n— контрольно-измерительными приборами;\n— другими дополнительными устройствами.",
+  "description_en": "Input-distribution devices (hereinafter VRU) are designed to receive, distribute and meter electrical energy and to protect equipment against overloads and short-circuit currents in AC networks.\nAt the customer's request, a VRU can be equipped with:\n— circuit breakers of various types;\n— electronic or induction meters of active and reactive electrical energy;\n— control and measuring instruments;\n— other additional devices.",
+  "specs": [
+    {"label_uz": "Nominal kuchlanish, V", "label_ru": "Номинальное напряжение, В", "label_en": "Rated voltage, V", "value": "220/380/660"},
+    {"label_uz": "Ta'minot tarmog'i chastotasi, Hz", "label_ru": "Частота питающей сети, Гц", "label_en": "Supply frequency, Hz", "value": "50"},
+    {"label_uz": "Chiquvchi liniyalar soni", "label_ru": "Число отходящих линий", "label_en": "Number of outgoing lines", "value": "2–30"},
+    {"label_uz": "Chiquvchi liniyalarning nominal toklari, A", "label_ru": "Номинальные токи отходящих линий, А", "label_en": "Rated currents of outgoing lines, A", "value": "160; 250; 400; 500; 630; 1000; 1600; 2500; 4000"},
+    {"label_uz": "Kirishlarning nominal toklari, A", "label_ru": "Номинальные токи вводов, А", "label_en": "Rated input currents, A", "value": "630; 1000; 1600; 2500; 4000"},
+    {"label_uz": "Seksiya panellarining nominal toklari, A", "label_ru": "Номинальные токи секционных панелей, А", "label_en": "Rated currents of sectional panels, A", "value": "630; 1000; 1600; 2500"},
+    {"label_uz": "Yig'ma shinalarning elektrodinamik barqarorligi, kA", "label_ru": "Электродинамическая стойкость сборных шин, кА", "label_en": "Electrodynamic withstand of busbars, kA", "value": "41–80"},
+    {"label_uz": "Gabarit o'lchamlari (B×E×Ch), mm", "label_ru": "Габаритные размеры (В×Ш×Г), мм", "label_en": "Overall dimensions (H×W×D), mm", "value": "1700×700×350"},
+    {"label_uz": "GOST 15150 bo'yicha iqlim ijrosi", "label_ru": "Климатическое исполнение по ГОСТ 15150", "label_en": "Climatic version per GOST 15150", "value": "УХЛ4"},
+    {"label_uz": "GOST 14254 bo'yicha himoya darajasi", "label_ru": "Степень защиты по ГОСТ 14254", "label_en": "Degree of protection per GOST 14254", "value": "IP54"},
+    {"label_uz": "Yerga ulash tizimi turi", "label_ru": "Вид системы заземления", "label_en": "Earthing system type", "value": "TN-C(S)"}
+  ]
+}
