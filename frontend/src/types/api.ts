@@ -187,6 +187,8 @@ export interface Partner {
   id: number;
   name: string;
   description: string;
+  kind: "technology" | "industry";
+  country: string;
   logo: string;
   website: string;
   is_featured: boolean;
