@@ -23,7 +23,7 @@ class ProductImageInline(admin.TabularInline):
 class ProductSpecificationInline(admin.TabularInline):
     model = ProductSpecification
     extra = 1
-    fields = ("label_uz", "label_ru", "label_en", "value", "unit", "order")
+    fields = ("label_uz", "label_ru", "label_en", "value", "value_ru", "value_en", "unit", "order")
     verbose_name = "Xususiyat"
     verbose_name_plural = "Oddiy texnik xususiyatlar (variantsiz — har qator bitta ko'rsatkich)"
 

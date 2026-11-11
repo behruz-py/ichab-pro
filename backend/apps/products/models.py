@@ -142,7 +142,12 @@ class ProductSpecification(models.Model):
     label_uz = models.CharField("Nomi (uz)", max_length=200, help_text="Masalan: Quvvat manbai")
     label_ru = models.CharField("Nomi (ru)", max_length=200, blank=True, help_text="Masalan: Питание")
     label_en = models.CharField("Nomi (en)", max_length=200, blank=True, help_text="Masalan: Power supply")
-    value = models.CharField("Qiymati", max_length=500, help_text="Masalan: 24V DC, 0.5A")
+    value = models.CharField("Qiymati", max_length=500,
+        help_text="Masalan: 24V DC, 0.5A. Matnli qiymat bo'lsa — o'zbekcha yozing va ru/en tarjimasini qo'shing")
+    value_ru = models.CharField("Qiymati (ru)", max_length=500, blank=True,
+        help_text="Faqat matnli qiymat uchun (raqam bo'lsa bo'sh qoldiring)")
+    value_en = models.CharField("Qiymati (en)", max_length=500, blank=True,
+        help_text="Faqat matnli qiymat uchun (raqam bo'lsa bo'sh qoldiring)")
     unit = models.CharField("O'lchov birligi", max_length=40, blank=True, help_text="Ixtiyoriy. Masalan: A, В, мм")
     order = models.PositiveIntegerField(default=0)
 

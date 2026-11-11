@@ -22,6 +22,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class ProductSpecificationSerializer(serializers.ModelSerializer):
     label = serializers.SerializerMethodField()
+    value = serializers.SerializerMethodField()
 
     class Meta:
         model = ProductSpecification
@@ -31,6 +32,13 @@ class ProductSpecificationSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         lang = request.query_params.get("lang", "uz") if request else "uz"
         return translate_plain(obj, "label", lang)
+
+    def get_value(self, obj):
+        # `value` is the Uzbek / language-neutral value (numbers); ru/en
+        # overrides exist only for values that are words.
+        request = self.context.get("request")
+        lang = request.query_params.get("lang", "uz") if request else "uz"
+        return (lang in ("ru", "en") and getattr(obj, f"value_{lang}")) or obj.value
 
 
 class ProductCategoryListSerializer(TranslatedSerializerMixin, serializers.ModelSerializer):

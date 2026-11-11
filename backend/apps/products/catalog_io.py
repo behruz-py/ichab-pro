@@ -12,7 +12,8 @@ Shape (every key optional on import except ``slug`` and ``name_uz``)::
       "order": 0, "is_active": true,
       "category": {"slug": "...", "name_uz": "...", "name_ru": "...", "name_en": "...", "icon": "..."},
       "name_uz": "...", ... (name/short_description/description/meta_* × uz/ru/en),
-      "specs": [{"label_uz": "...", "label_ru": "...", "label_en": "...", "value": "...", "unit": ""}],
+      "specs": [{"label_uz": "...", "label_ru": "...", "label_en": "...", "value": "...",
+                 "value_ru": "", "value_en": "", "unit": ""}],   # value_ru/en only for word values
       "variant_table": {"parameters": [{"label_uz": "...", "unit": ""}],
                         "variants": [{"code": "...", "values": ["...", "..."]}]},
       "images": [{"path": "products/images/x.png" | "file": "<multipart field>",
@@ -50,7 +51,10 @@ def export_product(p: Product) -> dict:
         data["category"] = {"slug": c.slug, **_tr(c, "name"), "icon": c.icon, "order": c.order}
     for f in TRANSLATED:
         data.update(_tr(p, f))
-    data["specs"] = [{**_tr(s, "label"), "value": s.value, "unit": s.unit} for s in p.specs.order_by("order", "id")]
+    data["specs"] = [
+        {**_tr(s, "label"), "value": s.value, "value_ru": s.value_ru, "value_en": s.value_en, "unit": s.unit}
+        for s in p.specs.order_by("order", "id")
+    ]
     params = list(p.parameters.order_by("order", "id"))
     if params:
         variants = []
@@ -100,7 +104,7 @@ def import_product(data: dict, files=None) -> tuple[Product, bool]:
         product.specs.all().delete()
         ProductSpecification.objects.bulk_create([
             ProductSpecification(product=product, order=i, value=s["value"], unit=s.get("unit", ""),
-                                 **_pick(s, [f"label_{l}" for l in LANGS]))
+                                 **_pick(s, [f"label_{l}" for l in LANGS] + ["value_ru", "value_en"]))
             for i, s in enumerate(data["specs"])
         ])
 

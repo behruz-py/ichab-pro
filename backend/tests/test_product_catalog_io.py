@@ -86,3 +86,12 @@ def test_variant_table_roundtrip(admin_client):
     assert exported["variant_table"]["variants"][1] == {"code": "ВРУ-2", "values": ["1000", "150"]}
     bad = {**VRU, "variant_table": {"parameters": table["parameters"], "variants": [{"code": "X", "values": ["1"]}]}}
     assert admin_client.post("/api/v1/products/import/", bad, format="json").status_code == 400
+
+
+def test_word_spec_values_are_translated(admin_client):
+    specs = [{"label_uz": "Sovutish", "label_ru": "Охлаждение", "label_en": "Cooling",
+              "value": "tabiiy", "value_ru": "естественное", "value_en": "natural"},
+             {"label_uz": "Kuchlanish, V", "value": "380/220"}]
+    admin_client.post("/api/v1/products/import/", {**VRU, "specs": specs}, format="json")
+    got = {l: [s["value"] for s in admin_client.get(f"/api/v1/products/{VRU['slug']}/?lang={l}").data["specs"]] for l in ("uz", "ru", "en")}
+    assert got == {"uz": ["tabiiy", "380/220"], "ru": ["естественное", "380/220"], "en": ["natural", "380/220"]}

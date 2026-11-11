@@ -1,0 +1,41 @@
+{
+  "slug": "avtomatika-shkaflari-va-shitlari",
+  "sku": "",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "order": 2,
+  "category": {
+    "slug": "automation-cabinets",
+    "name_uz": "Avtomatika shkaflari",
+    "name_ru": "Шкафы автоматизации",
+    "name_en": "Automation cabinets"
+  },
+  "name_uz": "Avtomatika shkaflari va shitlari",
+  "name_ru": "Шкафы и щиты автоматизации",
+  "name_en": "Automation cabinets and panels",
+  "short_description_uz": "Texnologik jarayonlarni avtomatlashtirish va boshqarish, nazorat, signalizatsiya va elektr energiyasini taqsimlash uchun; Siemens avtomatlashtirish vositalari asosida.",
+  "short_description_ru": "Автоматизация и управление технологическими процессами, контроль, сигнализация и распределение электроэнергии; на базе средств автоматизации Siemens.",
+  "short_description_en": "Automation and control of industrial processes, monitoring, signalling and power distribution, built on Siemens automation equipment.",
+  "description_uz": "Avtomatika shkaflari va shitlari energetika, neft-gaz, metallurgiya va boshqa sanoat tarmoqlarining turli obyektlarida deyarli barcha texnologik jarayonlarni avtomatlashtirish va boshqarish, shuningdek nazorat, signalizatsiya va elektr energiyasini taqsimlash uchun mo'ljallangan.\nICHAB turli texnologik jarayonlar uchun Siemens ishlab chiqarishni avtomatlashtirish vositalari asosida avtomatika shkaflarini ishlab chiqaradi.\nShkaflarning komplektatsiyasi nazorat qilinadigan va rostlanadigan parametrlar soniga, texnologik jarayonning murakkabligiga, ijro qurilmalarining turlariga, ma'lumotlarni yuqori darajadagi tizimlarga uzatish zaruratiga hamda buyurtmachi texnik topshirig'ining boshqa talablariga bog'liq.",
+  "description_ru": "Шкафы и щиты автоматики предназначены для автоматизации и управления практически всеми технологическими процессами, а также для контроля, сигнализации и распределения электрической энергии на различных объектах энергетической, нефтегазовой, металлургической и других отраслей промышленности.\nПодразделение УАП изготавливает шкафы автоматики для различных технологических процессов с использованием средств автоматизации производства Siemens.\nКомплектация шкафов зависит от количества контролируемых и регулируемых параметров, сложности технологического процесса, видов исполнительных устройств, необходимости передачи данных в системы верхнего уровня и других требований технического задания заказчика.",
+  "description_en": "Automation cabinets and panels are designed to automate and control virtually any industrial process, as well as for monitoring, signalling and power distribution at facilities in the power, oil and gas, metallurgical and other industries.\nMAD manufactures automation cabinets for a wide range of processes using Siemens industrial automation equipment.\nThe configuration of each cabinet depends on the number of monitored and controlled parameters, the complexity of the process, the types of actuators, the need to transmit data to higher-level systems and other requirements of the customer's technical specification.",
+  "specs": [
+    {"label_uz": "Nominal kuchlanish, V", "label_ru": "Номинальное напряжение, В", "label_en": "Rated voltage, V", "value": "380/220"},
+    {"label_uz": "Nominal chastota, Hz", "label_ru": "Номинальная частота, Гц", "label_en": "Rated frequency, Hz", "value": "50"},
+    {"label_uz": "Boshqaruv zanjirlarining nominal kuchlanishi, V", "label_ru": "Номинальное напряжение цепей управления, В", "label_en": "Rated control circuit voltage, V", "value": "220; 24; 12"},
+    {"label_uz": "Kirish apparati va qisqichlarining nominal toki, A", "label_ru": "Номинальный ток вводного аппарата, зажимов, А", "label_en": "Rated current of the incoming device and terminals, A", "value": "6–80"},
+    {"label_uz": "Kontrollerlar turi", "label_ru": "Тип контроллеров", "label_en": "Controller type",
+     "value": "erkin dasturlanadigan, standart dasturiy yechimli", "value_ru": "свободно-программируемые, со стандартным программным решением", "value_en": "freely programmable, with a standard software solution"},
+    {"label_uz": "Sensorli boshqaruv paneli", "label_ru": "Панель управления сенсорного типа", "label_en": "Touch-screen control panel",
+     "value": "opsiya", "value_ru": "опция", "value_en": "optional"},
+    {"label_uz": "Interfeys", "label_ru": "Интерфейс", "label_en": "Interface", "value": "PROFINET; PROFIBUS; RS485/Modbus"},
+    {"label_uz": "Tarmoq konfiguratsiyasi", "label_ru": "Конфигурация сети", "label_en": "Network configuration",
+     "value": "ixtiyoriy", "value_ru": "произвольная", "value_en": "any"},
+    {"label_uz": "Sovutish", "label_ru": "Охлаждение", "label_en": "Cooling",
+     "value": "tabiiy; majburiy havo", "value_ru": "естественное; принудительное воздушное", "value_en": "natural; forced air"},
+    {"label_uz": "Ish harorati diapazoni, °C", "label_ru": "Рабочий диапазон температур, °C", "label_en": "Operating temperature range, °C", "value": "−20…+50"},
+    {"label_uz": "GOST 15150 bo'yicha iqlim ijrosi", "label_ru": "Климатическое исполнение по ГОСТ 15150", "label_en": "Climatic version per GOST 15150", "value": "УХЛ4"},
+    {"label_uz": "GOST 14254 bo'yicha himoya darajasi", "label_ru": "Степень защиты по ГОСТ 14254", "label_en": "Degree of protection per GOST 14254", "value": "IP54…IP65"}
+  ],
+  "images": []
+}
