@@ -207,8 +207,8 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
                   <dl style={{ borderTop: "1px solid var(--border)" }}>
                     {specs.map((spec) => (
                       <div key={spec.id} className="flex items-baseline justify-between gap-6 py-4" style={{ borderBottom: "1px solid var(--border)" }}>
-                        <dt className="text-[15px]" style={{ color: "var(--content-secondary)" }}>{spec.label}</dt>
-                        <dd className="font-semibold text-[15px] text-right" style={{ color: "var(--content)" }}>
+                        <dt className="flex-1 min-w-0 text-[15px]" style={{ color: "var(--content-secondary)" }}>{spec.label}</dt>
+                        <dd className="max-w-[60%] font-semibold text-[15px] text-right" style={{ color: "var(--content)" }}>
                           {spec.value}{spec.unit ? <span className="ml-1 font-normal" style={{ color: "var(--content-muted)" }}>{spec.unit}</span> : null}
                         </dd>
                       </div>
