@@ -1,0 +1,38 @@
+{
+  "slug": "shum-4-1-tovush-bosimi-olchagichi",
+  "sku": "ШУМ-4.1",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "order": 10,
+  "category": {
+    "slug": "measuring-instruments",
+    "name_uz": "O'lchov asboblari",
+    "name_ru": "Измерительные приборы",
+    "name_en": "Measuring instruments"
+  },
+  "name_uz": "ШУМ-4.1 tovush bosimi darajasini o'lchagich",
+  "name_ru": "Измеритель уровня звукового давления ШУМ-4.1",
+  "name_en": "SHUM-4.1 sound pressure level meter",
+  "short_description_uz": "Tegirmon barabanining ruda-shar materiali bilan to'lish darajasini tovush bosimi bo'yicha avtomatik nazorat qilish; chiqish signali 4…20 mA yoki 0…5 mA.",
+  "short_description_ru": "Автоматический контроль степени заполнения барабана мельницы рудно-шаровым материалом по звуковому давлению; выходной сигнал 4…20 мА или 0…5 мА.",
+  "short_description_en": "Automatic monitoring of mill drum fill level with the ore-and-ball charge by sound pressure; 4…20 mA or 0…5 mA output.",
+  "description_uz": "ШУМ-4.1 tovush bosimi darajasini o'lchagich tegirmon barabanining ruda-shar materiali bilan to'lish darajasini tovush bosimi bo'yicha avtomatik nazorat qilish uchun mo'ljallangan.\nШУМ-4.1 qurilmasi 900…1200 Hz chastota oralig'idagi (1000 Hz chastotada maksimal kuchaytirish bilan) joriy tovush bosimi darajasini 4…20 mA yoki 0…5 mA standart tok signaliga aylantiradi.\nШУМ-4.1 tovush bosimi darajasini o'lchagich ikkita blokdan iborat:\n— mikrofon bloki (МБ);\n— tovush bosimi o'zgartirgich bloki (БПЗД).",
+  "description_ru": "Измеритель уровня звукового давления ШУМ-4.1 предназначен для автоматического контроля степени заполнения барабана мельницы рудно-шаровым материалом по звуковому давлению.\nУстройство ШУМ-4.1 обеспечивает преобразование текущего уровня звукового давления в полосе частот 900…1200 Гц (с максимальным усилением на частоте 1000 Гц) в стандартный токовый сигнал 4…20 мА или 0…5 мА.\nИзмеритель уровня звукового давления ШУМ-4.1 состоит из двух блоков:\n— микрофонного блока (МБ);\n— блока преобразователя звукового давления (БПЗД).",
+  "description_en": "The ШУМ-4.1 sound pressure level meter is designed for automatic monitoring of how full a mill drum is with the ore-and-ball charge, based on sound pressure.\nThe ШУМ-4.1 converts the current sound pressure level in the 900…1200 Hz band (with maximum gain at 1000 Hz) into a standard 4…20 mA or 0…5 mA current signal.\nThe ШУМ-4.1 meter consists of two units:\n— a microphone unit (MB);\n— a sound-pressure converter unit (BPZD).",
+  "specs": [
+    {"label_uz": "Ta'minot kuchlanishi, V", "label_ru": "Напряжение питания, В", "label_en": "Supply voltage, V", "value": "220"},
+    {"label_uz": "Kuchlanishning ruxsat etilgan og'ishlari, %", "label_ru": "Допускаемые отклонения напряжения, %", "label_en": "Permissible voltage deviations, %", "value": "−15…+10"},
+    {"label_uz": "Nominal chastota, Hz", "label_ru": "Номинальная частота, Гц", "label_en": "Rated frequency, Hz", "value": "50"},
+    {"label_uz": "O'lchanadigan tovush bosimining chastota diapazoni, Hz", "label_ru": "Диапазон частоты измеряемого звукового давления, Гц", "label_en": "Measured sound pressure frequency range, Hz", "value": "900–1200"},
+    {"label_uz": "Chiqish signali, mA", "label_ru": "Выходной сигнал, мА", "label_en": "Output signal, mA",
+     "value": "0…5 yoki 4…20", "value_ru": "0…5 или 4…20", "value_en": "0…5 or 4…20"},
+    {"label_uz": "Mikrofon bloki (МБ) va tovush bosimi o'zgartirgich bloki (БПЗД) orasidagi kabel uzunligi, m", "label_ru": "Длина кабеля между МБ и БПЗД, м", "label_en": "Cable length between the microphone unit (MB) and the converter unit (BPZD), m",
+     "value": "50 gacha", "value_ru": "до 50", "value_en": "up to 50"},
+    {"label_uz": "Atrof-muhit harorati, °C", "label_ru": "Температура окружающей среды, °C", "label_en": "Ambient temperature, °C", "value": "−20…+50"},
+    {"label_uz": "Havoning nisbiy namligi, %", "label_ru": "Относительная влажность воздуха, %", "label_en": "Relative air humidity, %",
+     "value": "25 °C haroratda 98 ± 2", "value_ru": "98 ± 2 при температуре 25 °C", "value_en": "98 ± 2 at 25 °C"},
+    {"label_uz": "GOST 15150 bo'yicha iqlim ijrosi", "label_ru": "Климатическое исполнение по ГОСТ 15150", "label_en": "Climatic version per GOST 15150", "value": "УХЛ4"},
+    {"label_uz": "GOST 14254 bo'yicha himoya darajasi", "label_ru": "Степень защиты по ГОСТ 14254", "label_en": "Degree of protection per GOST 14254", "value": "IP54"}
+  ],
+  "images": []
+}
