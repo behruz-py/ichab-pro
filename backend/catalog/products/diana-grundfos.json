@@ -1,0 +1,43 @@
+{
+  "slug": "diana-grundfos-boshqaruv-stansiyasi",
+  "sku": "Диана-G",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "order": 13,
+  "category": {
+    "slug": "automation-cabinets",
+    "name_uz": "Avtomatika shkaflari",
+    "name_ru": "Шкафы автоматизации",
+    "name_en": "Automation cabinets"
+  },
+  "name_uz": "«ДИАНА-GRUNDFOS» boshqaruv stansiyasi",
+  "name_ru": "Станция управления «ДИАНА-GRUNDFOS»",
+  "name_en": "DIANA-GRUNDFOS control station",
+  "short_description_uz": "«GRUNDFOS» markazdan qochma quduq nasoslari tizimlarini nazorat qilish va boshqarish; MP204 elektron bloki bilan dvigatel, kabel va kabel muftalarini kompleks himoya qilish.",
+  "short_description_ru": "Контроль и управление системами центробежных скважинных насосов «GRUNDFOS»; комплексная защита двигателя, кабелей и муфт электронным блоком MP204.",
+  "short_description_en": "Monitoring and control of GRUNDFOS centrifugal borehole pump systems, with comprehensive motor, cable and cable-joint protection by the MP204 electronic unit.",
+  "description_uz": "«Диана-G» boshqaruv shkafi «GRUNDFOS» firmasining markazdan qochma quduq nasoslari tizimlarini nazorat qilish va boshqarish uchun mo'ljallangan. Shkaf nasoslarning elektr dvigatellari, ta'minot kabellari va kabel muftalarini kompleks himoya qilish uchun o'rnatilgan MP204 elektron bloki (Germaniya) bilan jihozlangan.\nShkafda ish holatining mahalliy indikatsiyasi mavjud, shuningdek masofadan boshqarish va ish holatining masofaviy indikatsiyasini ulash imkoniyati bor.",
+  "description_ru": "Шкаф управления «Диана-G» предназначен для контроля систем центробежных скважинных насосов фирмы «GRUNDFOS» и управления ими. Шкаф оснащён встроенным электронным блоком MP204 (Германия) для комплексной защиты электродвигателей насосов, питающих кабелей и кабельных муфт.\nШкаф имеет местную индикацию состояния работы и возможность подключения дистанционного управления и дистанционной индикации состояния работы.",
+  "description_en": "The «Диана-G» control cabinet is designed to monitor and control GRUNDFOS centrifugal borehole pump systems. The cabinet is fitted with a built-in MP204 electronic unit (Germany) for comprehensive protection of the pump motors, supply cables and cable joints.\nThe cabinet provides local indication of the operating status and can be connected to remote control and remote status indication.",
+  "specs": [
+    {"label_uz": "Tarmoqning ta'minot kuchlanishi, V", "label_ru": "Напряжение питающей сети, В", "label_en": "Mains supply voltage, V", "value": "380/220"},
+    {"label_uz": "Ta'minot tarmog'i chastotasi, Hz", "label_ru": "Частота питающей сети, Гц", "label_en": "Supply frequency, Hz", "value": "50"},
+    {"label_uz": "Elektr dvigatelning nominal quvvati, kW", "label_ru": "Номинальная мощность электродвигателя, кВт", "label_en": "Rated motor power, kW", "value": "4–250"},
+    {"label_uz": "Ulash sxemasi", "label_ru": "Схема включения", "label_en": "Starting method",
+     "value": "to'g'ridan-to'g'ri ulash; yulduz/uchburchak; ravon ishga tushirish",
+     "value_ru": "прямое включение; звезда/треугольник; плавный пуск",
+     "value_en": "direct-on-line; star/delta; soft start"},
+    {"label_uz": "Boshqaruv turi", "label_ru": "Тип управления", "label_en": "Control type",
+     "value": "bosim relesidan; sath relesidan; qalqovichli o'chirgichdan; tashqi rele yoki kontroller signalidan",
+     "value_ru": "от реле давления; реле уровня; поплавкового выключателя; сигнала внешнего реле или контроллера",
+     "value_en": "from a pressure switch; level relay; float switch; or a signal from an external relay or controller"},
+    {"label_uz": "Nazorat qilinadigan himoya parametrlari", "label_ru": "Контролируемые параметры защиты", "label_en": "Monitored protection parameters",
+     "value": "ortiqcha yuklanish/kam yuklanish (quruq ishlash); kuchlanish pasayishi/ortiqcha kuchlanish; tok nosimmetriyasi; faza yo'qligi/fazalar ketma-ketligi; izolyatsiya qarshiligi; harorat datchiklari holati; elektr dvigatelning ishga tushirishlar soni; tashqi boshqaruv tizimi bilan aloqa",
+     "value_ru": "перегрузки/недогрузки (сухой ход); падения напряжения/перенапряжения; асимметрии тока; отсутствия/чередования фазы; сопротивления изоляции; состояния датчиков температуры; количества пусков электродвигателя; связи с внешней системой управления",
+     "value_en": "overload/underload (dry running); undervoltage/overvoltage; current asymmetry; phase loss/phase sequence; insulation resistance; temperature sensor status; number of motor starts; communication with the external control system"},
+    {"label_uz": "Atrof-muhit harorati, °C", "label_ru": "Температура окружающей среды, °C", "label_en": "Ambient temperature, °C", "value": "−20…+50"},
+    {"label_uz": "Himoya darajasi", "label_ru": "Степень защиты", "label_en": "Degree of protection", "value": "IP54"},
+    {"label_uz": "GOST 15150 bo'yicha iqlim ijrosi", "label_ru": "Климатическое исполнение по ГОСТ 15150", "label_en": "Climatic version per GOST 15150", "value": "УХЛ4"}
+  ],
+  "images": []
+}
