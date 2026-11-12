@@ -1,0 +1,38 @@
+{
+  "slug": "mp-301-elektr-dvigatel-himoya-bloki",
+  "sku": "МП-301",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "order": 9,
+  "category": {
+    "slug": "protection-devices",
+    "name_uz": "Himoya va nazorat qurilmalari",
+    "name_ru": "Устройства защиты и контроля",
+    "name_en": "Protection and monitoring devices"
+  },
+  "name_uz": "МП-301 elektr dvigatel himoya bloki",
+  "name_ru": "Блок защиты электродвигателя МП-301",
+  "name_en": "MP-301 motor protection unit",
+  "short_description_uz": "Uch fazali asinxron elektr dvigatellarning tarmoq kuchlanishi va faza/liniya toklarini doimiy nazorat qilish; ma'lumotlarni АСУТП ga uzatish.",
+  "short_description_ru": "Постоянный контроль параметров сетевого напряжения и фазных/линейных токов трёхфазных асинхронных электродвигателей; передача данных в АСУТП.",
+  "short_description_en": "Continuous monitoring of mains voltage and phase/line currents of three-phase asynchronous motors, with data transfer to the APCS.",
+  "description_uz": "МП-301 elektr dvigatel himoya bloki tarmoq kuchlanishi parametrlarini va uch fazali asinxron elektr dvigatellar faza/liniya toklarining ta'sir etuvchi qiymatlarini doimiy nazorat qilish uchun mo'ljallangan.\nМП-301 alohida elektr dvigatel himoya bloki sifatida ishlatilishi yoki modulli boshqaruv tizimiga o'rnatilishi mumkin.\nModernizatsiya qilingan blokni buyurtmachining bevosita vazifalariga moslab sozlash mumkin, jumladan ma'lumotlarni texnologik jarayonlarni avtomatlashtirilgan boshqarish tizimining (АСУТП) lokal tarmog'iga uzatish.",
+  "description_ru": "Блок защиты электродвигателя МП-301 предназначен для постоянного контроля параметров сетевого напряжения и действующих значений фазных/линейных токов трёхфазных асинхронных электродвигателей.\nМП-301 может быть использован как отдельный блок защиты электродвигателя или встроен в модульную систему управления.\nМодернизированный блок имеет возможность конфигурирования под непосредственные задачи заказчика, включая передачу информации в локальную сеть АСУТП.",
+  "description_en": "The МП-301 motor protection unit is designed for continuous monitoring of mains voltage parameters and of the RMS phase/line currents of three-phase asynchronous electric motors.\nThe МП-301 can be used as a standalone motor protection unit or built into a modular control system.\nThe upgraded unit can be configured for the customer's specific tasks, including data transfer to the local network of the automated process control system (APCS).",
+  "specs": [
+    {"label_uz": "Tarmoqning nominal kuchlanishi, V", "label_ru": "Номинальное напряжение сети, В", "label_en": "Rated mains voltage, V", "value": "380"},
+    {"label_uz": "Nominal chastota, Hz", "label_ru": "Номинальная частота, Гц", "label_en": "Rated frequency, Hz", "value": "50"},
+    {"label_uz": "Nominal tok, A", "label_ru": "Номинальный ток, А", "label_en": "Rated current, A", "value": "4–100"},
+    {"label_uz": "Faza kuchlanishi, V", "label_ru": "Фазное напряжение, В", "label_en": "Phase voltage, V", "value": "180–280"},
+    {"label_uz": "Nominal ish rejimi", "label_ru": "Номинальный режим работы", "label_en": "Rated duty",
+     "value": "uzluksiz; qisqa muddatli; takroriy-qisqa muddatli", "value_ru": "продолжительный; кратковременный; повторно-кратковременный", "value_en": "continuous; short-time; intermittent"},
+    {"label_uz": "Nazorat qilinadigan himoya parametrlari", "label_ru": "Контролируемые параметры защиты", "label_en": "Monitored protection parameters",
+     "value": "faza yo'qolishi yoki chulg'am uzilishi; eng katta/eng kichik tok; eng katta/eng kichik kuchlanish; cos φ; kuchlanish va tok nomutanosibligi; izolyatsiya qarshiligi; dvigatelning cho'zilgan ishga tushishi",
+     "value_ru": "потеря фазы или обрыв обмотки; наибольший/наименьший ток; наибольшее/наименьшее напряжение; cos φ; дисбаланс напряжения и тока; сопротивление изоляции; затянувшийся запуск двигателя",
+     "value_en": "phase loss or winding break; maximum/minimum current; maximum/minimum voltage; cos φ; voltage and current imbalance; insulation resistance; prolonged motor start"},
+    {"label_uz": "Atrof-muhit harorati, °C", "label_ru": "Температура окружающей среды, °C", "label_en": "Ambient temperature, °C", "value": "−25…+50"},
+    {"label_uz": "GOST 15150 bo'yicha iqlim ijrosi", "label_ru": "Климатическое исполнение по ГОСТ 15150", "label_en": "Climatic version per GOST 15150", "value": "УХЛ4"},
+    {"label_uz": "GOST 14254 bo'yicha himoya darajasi", "label_ru": "Степень защиты по ГОСТ 14254", "label_en": "Degree of protection per GOST 14254", "value": "IP54"}
+  ],
+  "images": []
+}
