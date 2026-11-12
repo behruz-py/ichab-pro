@@ -1,0 +1,41 @@
+{
+  "slug": "tpe-200-460-togrilagichi",
+  "sku": "ТПЕ-200-460",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "order": 7,
+  "category": {
+    "slug": "power-converters",
+    "name_uz": "O'zgartirgich uskunalari",
+    "name_ru": "Преобразовательная техника",
+    "name_en": "Power conversion equipment"
+  },
+  "name_uz": "ТПЕ-200-460 to'g'rilagichi",
+  "name_ru": "Выпрямитель ТПЕ-200-460",
+  "name_en": "TPE-200-460 rectifier",
+  "short_description_uz": "Burg'ulash dastgohlari elektr yuritmalaridagi o'zgarmas tok dvigatelini boshqarish; yakor zanjiri uchun kuch reversiv o'zgartirgichi va rostlanuvchi qo'zg'atish manbai.",
+  "short_description_ru": "Управление электродвигателем постоянного тока в электроприводах буровых станков; силовой реверсивный преобразователь якорной цепи и регулируемый источник возбуждения.",
+  "short_description_en": "DC motor control for drilling-rig electric drives: a reversible armature power converter plus an adjustable field supply.",
+  "description_uz": "ТПЕ-200-460 У2.1, ТПЕ-100/100-460-1 У2.1 va ТПЕ-200/200-460-1 У2.1 to'g'rilagichlari burg'ulash dastgohlarining elektr yuritmalaridagi o'zgarmas tok elektr dvigatelini boshqarish uchun mo'ljallangan va bevosita dastgohning o'ziga o'rnatiladi.\nFunksional jihatdan to'g'rilagich ikkita o'zgartirgichdan iborat: o'zgarmas tok elektr dvigatelining yakor zanjirini ta'minlovchi kuch reversiv o'zgartirgichi (o'zgartirgich) va qo'zg'atish chulg'amini ta'minlovchi noreversiv o'zgartirgich (tok barqarorlashtiriladigan rostlanuvchi qo'zg'atish manbai).",
+  "description_ru": "Выпрямители ТПЕ-200-460 У2.1, ТПЕ-100/100-460-1 У2.1 и ТПЕ-200/200-460-1 У2.1 предназначены для управления электродвигателем постоянного тока в электроприводах буровых станков с непосредственной установкой на них.\nФункционально выпрямитель включает в себя два преобразователя — силовой реверсивный преобразователь для питания якорной цепи электродвигателя постоянного тока (преобразователь) и нереверсивный преобразователь для питания обмотки возбуждения (регулируемый источник возбуждения со стабилизацией тока).",
+  "description_en": "The ТПЕ-200-460 У2.1, ТПЕ-100/100-460-1 У2.1 and ТПЕ-200/200-460-1 У2.1 rectifiers are designed to control the DC motor in the electric drives of drilling rigs and are mounted directly on the rig.\nFunctionally, the rectifier comprises two converters: a reversible power converter supplying the armature circuit of the DC motor (the converter) and a non-reversible converter supplying the field winding (an adjustable excitation source with current stabilization).",
+  "specs": [
+    {"label_uz": "Nominal kirish kuchlanishi, V", "label_ru": "Номинальное входное напряжение, В", "label_en": "Rated input voltage, V", "value": "380"},
+    {"label_uz": "Kirish kuchlanishining ruxsat etilgan og'ishi, %", "label_ru": "Допустимое отклонение входного напряжения, %", "label_en": "Permissible input voltage deviation, %", "value": "+5; −10"},
+    {"label_uz": "Nominal kirish chastotasi, Hz", "label_ru": "Номинальная входная частота, Гц", "label_en": "Rated input frequency, Hz", "value": "50"},
+    {"label_uz": "Ta'minot tarmog'i fazalari soni", "label_ru": "Число фаз питающей сети", "label_en": "Number of supply phases", "value": "3"},
+    {"label_uz": "Nominal chiqish toki, A", "label_ru": "Номинальный выходной ток, А", "label_en": "Rated output current, A", "value": "200"},
+    {"label_uz": "Nominal chiqish kuchlanishi, V", "label_ru": "Номинальное выходное напряжение, В", "label_en": "Rated output voltage, V", "value": "460"},
+    {"label_uz": "Nominal chiqish aktiv quvvati, kW", "label_ru": "Номинальная выходная активная мощность, кВт", "label_en": "Rated active output power, kW", "value": "92"},
+    {"label_uz": "Chiqish kuchlanishini o'zgartirish diapazoni, V", "label_ru": "Диапазон изменения выходного напряжения, В", "label_en": "Output voltage range, V", "value": "0…460"},
+    {"label_uz": "Qo'zg'atishning nominal kirish kuchlanishi, V", "label_ru": "Номинальное входное напряжение возбуждения, В", "label_en": "Rated excitation input voltage, V", "value": "380"},
+    {"label_uz": "Dvigatel qo'zg'atish tokini o'zgartirish diapazoni, A", "label_ru": "Диапазон изменения тока возбуждения двигателя, А", "label_en": "Motor field current range, A", "value": "0…13"},
+    {"label_uz": "Dvigatel qo'zg'atishining nominal chiqish toki, A", "label_ru": "Номинальный выходной ток возбуждения двигателя, А", "label_en": "Rated motor field output current, A", "value": "13"},
+    {"label_uz": "Dvigatel qo'zg'atish kuchlanishini o'zgartirish diapazoni, V", "label_ru": "Диапазон изменения напряжения возбуждения двигателя, В", "label_en": "Motor field voltage range, V", "value": "0…220"},
+    {"label_uz": "Impuls-fazali boshqaruv tizimi (СИФУ) turi", "label_ru": "Тип управления СИФУ", "label_en": "Pulse-phase control system (SIFU) type",
+     "value": "kontrollerda raqamli, operator paneliga chiqarish bilan", "value_ru": "цифровое на контроллере с выводом на панель оператора", "value_en": "digital, controller-based, with output to the operator panel"},
+    {"label_uz": "Foydali ish koeffitsienti, %, kamida", "label_ru": "Коэффициент полезного действия, %, не менее", "label_en": "Efficiency, %, min", "value": "94"},
+    {"label_uz": "Quvvat koeffitsienti, kamida", "label_ru": "Коэффициент мощности, не менее", "label_en": "Power factor, min", "value": "0,87", "value_en": "0.87"}
+  ],
+  "images": []
+}
