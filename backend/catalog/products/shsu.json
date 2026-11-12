@@ -1,0 +1,37 @@
+{
+  "slug": "kuch-boshqaruv-shkaflari-va-shchitlari",
+  "sku": "ШСУ",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "order": 15,
+  "category": {
+    "slug": "power-distribution",
+    "name_uz": "Elektr taqsimlash qurilmalari",
+    "name_ru": "Электрораспределительные устройства",
+    "name_en": "Power distribution equipment"
+  },
+  "name_uz": "Kuch boshqaruv shkaflari va shchitlari (ШСУ)",
+  "name_ru": "Шкафы и щиты силового управления (ШСУ)",
+  "name_en": "Power control cabinets and panels (ShSU)",
+  "short_description_uz": "Sanoat obyektlarida kuch uskunalari ta'minot zanjirlarini taqsimlash, boshqarish va himoya qilish hamda elektr energiyasi iste'molini hisobga olish; 380 V, 600 A gacha.",
+  "short_description_ru": "Распределение, управление и защита цепей питания силового оборудования, а также учёт потребления электроэнергии на промышленных объектах; 380 В, до 600 А.",
+  "short_description_en": "Distribution, control and protection of power equipment supply circuits, plus electricity metering, at industrial sites; 380 V, up to 600 A.",
+  "description_uz": "Kuch boshqaruv shkaflari va shchitlari (ШСУ) sanoat obyektlarida kuch uskunalarining ta'minot zanjirlarini taqsimlash, boshqarish va himoya qilish, shuningdek elektr energiyasi iste'molini hisobga olish uchun mo'ljallangan.\nШСУ kuchlanishi 380 V, chastotasi 50 Hz va toki 600 A gacha bo'lgan uch fazali tarmoqlarda ishlash uchun qo'llaniladi.\nШСУ quyidagi turdagi uskunalarni elektr bilan ta'minlaydi va ularni ulash/o'chirish orqali boshqaradi:\n— nasoslar;\n— turli quvvatdagi elektr dvigatellar;\n— berkituvchi-rostlovchi armatura elektr yuritmalari;\n— namuna olgichlar;\n— ventilyatsiya/konditsionerlash qurilmalari;\n— ishchi va avariya yoritgichlari;\n— elektr isitish elementlari;\n— elektrotexnik shchitlar va boshqa uskunalar.",
+  "description_ru": "Шкафы и щиты силового управления (ШСУ) предназначены для распределения, управления и защиты цепей питания силового оборудования, а также ведения учёта потребления электроэнергии на промышленных объектах.\nШСУ применяются для работы в трёхфазных сетях с напряжением 380 В, частотой 50 Гц и током до 600 А.\nШСУ обеспечивают электропитание и управление включением/выключением следующих типов оборудования:\n— насосы;\n— электродвигатели различной мощности;\n— электроприводы запорно-регулирующей арматуры;\n— пробоотборники;\n— приборы вентиляции/кондиционирования;\n— рабочее и аварийное освещение;\n— электронагревательные элементы;\n— щиты электротехнические и прочее оборудование.",
+  "description_en": "ШСУ power control cabinets and panels are designed to distribute, control and protect the supply circuits of power equipment and to meter electricity consumption at industrial sites.\nThe ШСУ are used in three-phase networks of 380 V, 50 Hz, with currents up to 600 A.\nThe ШСУ supply power to and switch on/off the following types of equipment:\n— pumps;\n— electric motors of various ratings;\n— electric actuators of shut-off and control valves;\n— samplers;\n— ventilation/air-conditioning units;\n— working and emergency lighting;\n— electric heating elements;\n— electrical panels and other equipment.",
+  "specs": [
+    {"label_uz": "Ta'minot tarmog'i kuchlanishi, V", "label_ru": "Напряжение питающей сети, В", "label_en": "Supply voltage, V", "value": "380 ± 10%"},
+    {"label_uz": "Boshqaruv zanjirlari kuchlanishi, V", "label_ru": "Напряжение цепей управления, В", "label_en": "Control circuit voltage, V", "value": "220"},
+    {"label_uz": "Ta'minot tarmog'i chastotasi, Hz", "label_ru": "Частота питающей сети, Гц", "label_en": "Supply frequency, Hz", "value": "50"},
+    {"label_uz": "Nominal tok, A", "label_ru": "Номинальный ток, А", "label_en": "Rated current, A",
+     "value": "600 gacha", "value_ru": "до 600", "value_en": "up to 600"},
+    {"label_uz": "Ulanadigan energiya iste'molchilari soni", "label_ru": "Количество подключаемых энергопотребителей", "label_en": "Number of connected loads",
+     "value": "buyurtmachi talablari bilan belgilanadi", "value_ru": "определяется требованиями заказчика", "value_en": "per customer requirements"},
+    {"label_uz": "Ishchi harorat diapazoni, °C", "label_ru": "Рабочий диапазон температур, °C", "label_en": "Operating temperature range, °C", "value": "−20…+50"},
+    {"label_uz": "Massa, kg, ko'pi bilan", "label_ru": "Масса, кг, не более", "label_en": "Weight, kg, max", "value": "200"},
+    {"label_uz": "GOST 15150 bo'yicha iqlim ijrosi", "label_ru": "Климатическое исполнение по ГОСТ 15150", "label_en": "Climatic version per GOST 15150", "value": "УХЛ4"},
+    {"label_uz": "GOST 14254 bo'yicha himoya darajasi", "label_ru": "Степень защиты по ГОСТ 14254", "label_en": "Degree of protection per GOST 14254", "value": "IP24…IP54"},
+    {"label_uz": "Yerga ulash tizimi turi", "label_ru": "Вид системы заземления", "label_en": "Earthing system type", "value": "TN-C(S)"}
+  ],
+  "images": []
+}
