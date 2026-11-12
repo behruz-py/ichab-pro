@@ -1,0 +1,42 @@
+{
+  "slug": "v-tpe-500-275-togrilagichi",
+  "sku": "В-ТПЕ-500-275",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "order": 8,
+  "category": {
+    "slug": "power-converters",
+    "name_uz": "O'zgartirgich uskunalari",
+    "name_ru": "Преобразовательная техника",
+    "name_en": "Power conversion equipment"
+  },
+  "name_uz": "Mikroprotsessorli boshqaruv tizimiga ega В-ТПЕ-500-275 to'g'rilagichi",
+  "name_ru": "Выпрямитель В-ТПЕ-500-275 с микропроцессорной системой управления",
+  "name_en": "V-TPE-500-275 rectifier with microprocessor control system",
+  "short_description_uz": "Shaxtalardagi yer osti elektrovozlarining kontakt tarmog'ini ta'minlash uchun uch fazali o'zgaruvchan tokni o'zgarmas tokka aylantirish.",
+  "short_description_ru": "Преобразование трёхфазного переменного тока в постоянный для питания контактной сети подземных электровозов в шахтах.",
+  "short_description_en": "Converts three-phase AC to DC to supply the contact network of underground mine locomotives.",
+  "description_uz": "Raqamli boshqaruv kontrollerli В-ТПЕ-500-275 to'g'rilagichi uch fazali o'zgaruvchan tokni o'zgarmas tokka aylantirish va dvigatelni mikroprotsessorli yoki analog (buyurtmachining xohishiga ko'ra) boshqaruv tizimlariga ega yer osti elektrlashtirilgan transportining (kontakt elektrovozlari) kontakt tarmog'ini ta'minlash uchun mo'ljallangan. U gaz va chang bo'yicha xavfli bo'lmagan shaxtalarning kon lahimlarida, shuningdek gaz bo'yicha I va II toifali yoki chang bo'yicha xavfli shaxtalarning toza havo oqimi o'tadigan lahimlarida qo'llaniladi.",
+  "description_ru": "Выпрямитель В-ТПЕ-500-275 с цифровым контроллером управления предназначен для преобразования трёхфазного переменного тока в постоянный и питания контактной сети подземного электрифицированного транспорта с микропроцессорной или аналоговой (по желанию заказчика) системами управления двигателем (контактные электровозы) в горных выработках шахт, не опасных по газу и пыли, а также в выработках со свежей струёй воздуха шахт I и II категории по газу или опасных по пыли.",
+  "description_en": "The В-ТПЕ-500-275 rectifier with a digital controller is designed to convert three-phase AC into DC and to supply the contact network of underground electrified transport (contact electric locomotives) with microprocessor or analogue (at the customer's choice) motor control systems. It is used in mine workings that are not hazardous for gas or dust, and in fresh-air workings of mines of gas category I and II or hazardous for dust.",
+  "specs": [
+    {"label_uz": "Kuch tarmog'ining nominal kuchlanishi, V", "label_ru": "Номинальное напряжение силовой сети, В", "label_en": "Rated power-network voltage, V", "value": "230"},
+    {"label_uz": "Ta'minot tarmog'ining nominal chastotasi, Hz", "label_ru": "Номинальная частота питающей сети, Гц", "label_en": "Rated supply frequency, Hz", "value": "50"},
+    {"label_uz": "Nominal chiqish toki, A", "label_ru": "Номинальный выходной ток, А", "label_en": "Rated output current, A", "value": "500"},
+    {"label_uz": "Nominal chiqish kuchlanishi, V", "label_ru": "Номинальное выходное напряжение, В", "label_en": "Rated output voltage, V", "value": "275"},
+    {"label_uz": "Chiqish kuchlanishining ruxsat etilgan og'ishi, %", "label_ru": "Допустимое отклонение выходного напряжения, %", "label_en": "Permissible output voltage deviation, %", "value": "−15…+10"},
+    {"label_uz": "Nominal quvvat, kW", "label_ru": "Номинальная мощность, кВт", "label_en": "Rated power, kW", "value": "137,5", "value_en": "137.5"},
+    {"label_uz": "Aktiv yuklamada nominal rejimdagi foydali ish koeffitsienti, %", "label_ru": "КПД в номинальном режиме при активной нагрузке, %", "label_en": "Efficiency at rated duty with resistive load, %", "value": "97"},
+    {"label_uz": "Quvvat koeffitsienti, kamida", "label_ru": "Коэффициент мощности, не менее", "label_en": "Power factor, min", "value": "0,9", "value_en": "0.9"},
+    {"label_uz": "O'zgartirgich transformatorining nominal quvvati, kVA", "label_ru": "Номинальная мощность преобразовательного трансформатора, кВА", "label_en": "Rated power of the converter transformer, kVA", "value": "160"},
+    {"label_uz": "Tok sizishi bartaraf bo'lgandan keyin tarmoqni avtomatik qayta ulash vaqti, s, ko'pi bilan", "label_ru": "Время автоматического повторного включения сети после исчезновения утечки, с, не более", "label_en": "Automatic reclosing time after the leakage clears, s, max", "value": "1"},
+    {"label_uz": "Yuklamani uzish davriyligi, s, ko'pi bilan", "label_ru": "Цикличность прерывания нагрузки, с, не более", "label_en": "Load interruption cycle, s, max", "value": "0,2", "value_en": "0.2"},
+    {"label_uz": "Yuklama ta'minotidagi pauza vaqti, s, ko'pi bilan", "label_ru": "Время паузы в питании нагрузки, с, не более", "label_en": "Load supply pause time, s, max", "value": "0,01", "value_en": "0.01"},
+    {"label_uz": "Kuchlanish va tokni ushlab turish aniqligi, %", "label_ru": "Точность поддержания напряжения и тока, %", "label_en": "Voltage and current regulation accuracy, %", "value": "±2"},
+    {"label_uz": "Sovutish", "label_ru": "Охлаждение", "label_en": "Cooling", "value": "tabiiy", "value_ru": "естественное", "value_en": "natural"},
+    {"label_uz": "Ish rejimi", "label_ru": "Режим работы", "label_en": "Operating mode", "value": "uzoq muddatli", "value_ru": "длительный", "value_en": "continuous"},
+    {"label_uz": "Himoya darajasi", "label_ru": "Степень защиты", "label_en": "Degree of protection", "value": "IP54"},
+    {"label_uz": "GOST 15150 bo'yicha iqlim ijrosi", "label_ru": "Климатическое исполнение по ГОСТ 15150", "label_en": "Climatic version per GOST 15150", "value": "УХЛ5"}
+  ],
+  "images": []
+}
