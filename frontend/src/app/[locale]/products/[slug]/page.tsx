@@ -91,6 +91,9 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
 
   const images = product.images ?? [];
   const specs  = product.specs  ?? [];
+  // Long parameter names (formula-like conditions) need the full width; short
+  // ones sit beside the description on wide screens.
+  const sideBySide = !!product.description && specs.length > 0 && !specs.some((s) => (s.label?.length ?? 0) > 70);
   const table  = product.variant_table ?? null;
   const availability: Availability = product.availability ?? "available";
   const canonical = `${SITE_URL}/${locale}/products/${slug}`;
@@ -195,20 +198,20 @@ export default async function ProductDetailPage({ params: { locale, slug } }: Pr
         {(product.description || specs.length > 0 || table) && (
           <section className={related.length > 0 ? "mb-20 sm:mb-28" : ""}>
             <SectionLabel index={1} label={SPECS_LABEL[locale] ?? SPECS_LABEL.uz} />
-            <div className={`grid gap-12 lg:gap-16 ${product.description && specs.length > 0 ? "lg:grid-cols-12" : ""}`}>
+            <div className={`grid gap-12 lg:gap-16 ${sideBySide ? "lg:grid-cols-12" : ""}`}>
               {product.description && (
-                <p className={`leading-[1.75] whitespace-pre-line max-w-[68ch] ${specs.length > 0 ? "lg:col-span-7" : ""}`}
+                <p className={`leading-[1.75] whitespace-pre-line max-w-[68ch] ${sideBySide ? "lg:col-span-7" : ""}`}
                   style={{ fontSize: "clamp(16px,1.25vw,19px)", color: "var(--content)" }}>{product.description}</p>
               )}
 
               {specs.length > 0 && (
-                <div className={product.description ? "lg:col-span-5" : "max-w-3xl"}>
+                <div className={sideBySide ? "lg:col-span-5" : "max-w-5xl"}>
                   <h2 className="font-display font-bold mb-3" style={{ fontSize: "clamp(19px,1.6vw,24px)", color: "var(--content)" }}>{t("specs_title")}</h2>
                   <dl style={{ borderTop: "1px solid var(--border)" }}>
                     {specs.map((spec) => (
-                      <div key={spec.id} className="flex items-baseline justify-between gap-6 py-4" style={{ borderBottom: "1px solid var(--border)" }}>
-                        <dt className="flex-1 min-w-0 text-[15px]" style={{ color: "var(--content-secondary)" }}>{spec.label}</dt>
-                        <dd className="max-w-[60%] font-semibold text-[15px] text-right" style={{ color: "var(--content)" }}>
+                      <div key={spec.id} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1.5 py-4" style={{ borderBottom: "1px solid var(--border)" }}>
+                        <dt className="flex-1 min-w-[min(100%,13rem)] text-[15px]" style={{ color: "var(--content-secondary)" }}>{spec.label}</dt>
+                        <dd className="ml-auto max-w-full sm:max-w-[60%] font-semibold text-[15px] text-right" style={{ color: "var(--content)" }}>
                           {spec.value}{spec.unit ? <span className="ml-1 font-normal" style={{ color: "var(--content-muted)" }}>{spec.unit}</span> : null}
                         </dd>
                       </div>
