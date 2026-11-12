@@ -1,0 +1,42 @@
+{
+  "slug": "vibratsion-taminlagichlarni-boshqarish-shkafi-shuv",
+  "sku": "ШУВ",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "order": 4,
+  "category": {
+    "slug": "automation-cabinets",
+    "name_uz": "Avtomatika shkaflari",
+    "name_ru": "Шкафы автоматизации",
+    "name_en": "Automation cabinets"
+  },
+  "name_uz": "Vibratsion ta'minlagichlarni boshqarish shkafi (ШУВ)",
+  "name_ru": "Шкаф управления вибропитателями типа ШУВ",
+  "name_en": "Vibratory feeder control cabinet (ShUV)",
+  "short_description_uz": "Vibratsion ta'minlagichlar unumdorligini ijro mexanizmidagi o'zgarmas kuchlanishni o'zgartirish orqali qo'lda yoki masofadan rostlash uchun.",
+  "short_description_ru": "Ручное или дистанционное регулирование производительности вибропитателей изменением постоянного напряжения на их исполнительном механизме.",
+  "short_description_en": "Manual or remote control of vibratory feeder output by varying the DC voltage on the feeder's drive mechanism.",
+  "description_uz": "ШУВ turidagi boshqaruv shkaflari vibratsion ta'minlagichlarning unumdorligini ta'minlagich ijro mexanizmidagi o'zgarmas kuchlanishni rostlash orqali qo'lda yoki masofadan rostlash uchun mo'ljallangan. ШУВ, shuningdek, vibratsion ta'minlagichning qo'shimcha uskunalarini elektr bilan ta'minlaydi.\nШУВ shkaflari kalit bilan qulflanadigan eshikli elektrotexnik shkaf ko'rinishida tayyorlangan, changdan va namlikdan himoya darajasi IP54. Kabellar pastdan kiritiladi va chiqariladi.",
+  "description_ru": "Шкафы управления типа ШУВ предназначены для регулирования производительности вибрационных питателей вручную или дистанционно путём регулирования постоянного напряжения на исполнительном механизме вибропитателя. ШУВ также обеспечивает питание дополнительного оборудования вибропитателя.\nШкафы ШУВ выполнены в виде электротехнического шкафа с дверью, запираемой на ключ, имеют степень защиты от пыли и влаги IP54. Подвод и отвод кабелей осуществляется снизу.",
+  "description_en": "ShUV control cabinets are designed to adjust the output of vibratory feeders manually or remotely by regulating the DC voltage applied to the feeder's drive mechanism. The ShUV also powers the feeder's auxiliary equipment.\nShUV units are built as an electrical cabinet with a lockable door and dust and moisture protection to IP54. Cables enter and exit from the bottom.",
+  "specs": [
+    {"label_uz": "Ta'minot tarmog'i kuchlanishi, V", "label_ru": "Напряжение питающей сети, В", "label_en": "Supply voltage, V", "value": "380 ± 10%"},
+    {"label_uz": "Ta'minot tarmog'i chastotasi, Hz", "label_ru": "Частота питающей сети, Гц", "label_en": "Supply frequency, Hz", "value": "50"},
+    {"label_uz": "Ta'minlagich chulg'amidagi o'zgarmas tok kuchlanishini rostlash diapazoni, V", "label_ru": "Диапазон регулирования напряжения постоянного тока на обмотке вибропитателя, В", "label_en": "DC voltage adjustment range at the feeder winding, V", "value": "0–150"},
+    {"label_uz": "Nominal tok, A", "label_ru": "Номинальный ток, А", "label_en": "Rated current, A",
+     "value": "30 gacha", "value_ru": "до 30", "value_en": "up to 30"},
+    {"label_uz": "Nominal ish rejimi", "label_ru": "Номинальный режим работы", "label_en": "Rated duty",
+     "value": "uzluksiz", "value_ru": "продолжительный", "value_en": "continuous"},
+    {"label_uz": "Shkafni o'rnatish usuli", "label_ru": "Способ установки шкафа", "label_en": "Mounting",
+     "value": "devorga osma", "value_ru": "навесной", "value_en": "wall-mounted"},
+    {"label_uz": "Ish holati", "label_ru": "Рабочее положение", "label_en": "Operating position",
+     "value": "vertikal (og'ish 10° dan oshmasligi kerak)", "value_ru": "вертикальное (отклонение не более 10°)", "value_en": "vertical (deviation no more than 10°)"},
+    {"label_uz": "Sovutish", "label_ru": "Охлаждение", "label_en": "Cooling",
+     "value": "majburiy havo", "value_ru": "принудительное воздушное", "value_en": "forced air"},
+    {"label_uz": "Massasi, ko'pi bilan, kg", "label_ru": "Масса, не более, кг", "label_en": "Weight, max, kg", "value": "35"},
+    {"label_uz": "GOST 15150 bo'yicha iqlim ijrosi", "label_ru": "Климатическое исполнение по ГОСТ 15150", "label_en": "Climatic version per GOST 15150", "value": "УХЛ4"},
+    {"label_uz": "GOST 14254 bo'yicha himoya darajasi", "label_ru": "Степень защиты по ГОСТ 14254", "label_en": "Degree of protection per GOST 14254", "value": "IP54"},
+    {"label_uz": "Yerga ulash tizimi turi", "label_ru": "Вид системы заземления", "label_en": "Earthing system type", "value": "TN-C(S)"}
+  ],
+  "images": []
+}
