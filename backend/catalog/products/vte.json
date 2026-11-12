@@ -1,0 +1,50 @@
+{
+  "slug": "vte-tiristorli-qozgatgich-boshqaruv-shkafi",
+  "sku": "ВТЕ",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "order": 5,
+  "category": {
+    "slug": "power-converters",
+    "name_uz": "O'zgartirgich uskunalari",
+    "name_ru": "Преобразовательная техника",
+    "name_en": "Power conversion equipment"
+  },
+  "name_uz": "Raqamli boshqaruvli ВТЕ seriyali tiristorli qo'zg'atgich boshqaruv shkafi",
+  "name_ru": "Шкаф управления тиристорного возбудителя серии ВТЕ с цифровым управлением",
+  "name_en": "VTE series thyristor exciter control cabinet with digital control",
+  "short_description_uz": "Yirik sinxron elektr dvigatellarning qo'zg'atish chulg'amini ta'minlash va qo'zg'atish tokini avtomatik rostlash; БУВ5 mikroprotsessorli bloki.",
+  "short_description_ru": "Питание обмотки возбуждения и автоматическое регулирование тока возбуждения крупных синхронных электродвигателей; микропроцессорный блок БУВ5.",
+  "short_description_en": "Field winding supply and automatic field current regulation for large synchronous motors, with the БУВ5 microprocessor unit.",
+  "description_uz": "БУВ5 mikroprotsessorli bloki bilan komplektdagi ВТЕ seriyali tiristorli qo'zg'atgichlar cho'tka mexanizmli yirik sinxron elektr dvigatellarning qo'zg'atish chulg'amini ta'minlash, tarmoqdan yoki chastota o'zgartirgichidan to'g'ridan-to'g'ri yoki reaktorli ishga tushirishda, sinxron ishlashda va avariya rejimlarida qo'zg'atish tokini boshqarish va avtomatik rostlash uchun mo'ljallangan.\nRaqamli ВТЕ qo'zg'atgichi konstruktiv jihatdan ikki tomonlama xizmat ko'rsatiladigan metall shkaf va alohida turuvchi himoyalangan (metall g'ilofdagi) transformator ko'rinishida tayyorlangan.",
+  "description_ru": "Тиристорные возбудители серии ВТЕ в комплекте с микропроцессорным блоком БУВ5 предназначены для питания обмотки возбуждения, управления и автоматического регулирования тока возбуждения при прямом или реакторном пуске от сети или частотного преобразователя, синхронной работе и аварийных режимах крупных синхронных электродвигателей со щёточным механизмом.\nВозбудитель ВТЕ цифровой конструктивно выполнен в виде металлического шкафа двухстороннего обслуживания и отдельно стоящего трансформатора защищённого исполнения (в металлическом кожухе).",
+  "description_en": "ВТЕ series thyristor exciters, supplied with the БУВ5 microprocessor unit, are designed to power the field winding and to control and automatically regulate the field current of large synchronous motors with brush gear during direct-on-line or reactor starting from the mains or a frequency converter, in synchronous operation and in emergency modes.\nThe digital ВТЕ exciter is built as a metal cabinet with two-sided service access plus a free-standing transformer of protected design (in a metal enclosure).",
+  "specs": [
+    {"label_uz": "Kuchlanish bo'yicha forsirovka karraligi, kamida", "label_ru": "Кратность форсировки по напряжению, не менее", "label_en": "Voltage ceiling ratio, min",
+     "value": "1,75; 2,5", "value_en": "1.75; 2.5"},
+    {"label_uz": "To'g'rilash sxemasi", "label_ru": "Схема выпрямления", "label_en": "Rectifier circuit",
+     "value": "3 fazali ko'prik; 3 fazali asosiy va forsirovka ko'priklari",
+     "value_ru": "3-х фазная мостовая; 3-х фазные мостовые основная и форсировочная",
+     "value_en": "three-phase bridge; three-phase main and field-forcing bridges"},
+    {"label_uz": "Gabaritlar (B×E×Ch), mm", "label_ru": "Габариты (В×Ш×Г), мм", "label_en": "Overall dimensions (H×W×D), mm", "value": "1450×650×430"}
+  ],
+  "variant_table": {
+    "parameters": [
+      {"label_uz": "Nominal quvvat, kVA", "label_ru": "Номинальная мощность, кВА", "label_en": "Rated power, kVA"},
+      {"label_uz": "Nominal tok, A", "label_ru": "Номинальный ток, А", "label_en": "Rated current, A"},
+      {"label_uz": "Nominal kuchlanish, V", "label_ru": "Номинальное напряжение, В", "label_en": "Rated voltage, V"},
+      {"label_uz": "Qo'zg'atgich massasi, kg", "label_ru": "Масса возбудителя, кг", "label_en": "Exciter weight, kg"},
+      {"label_uz": "Foydali ish koeffitsienti, %", "label_ru": "КПД, %", "label_en": "Efficiency, %"},
+      {"label_uz": "Quvvat koeffitsienti", "label_ru": "Коэффициент мощности", "label_en": "Power factor"}
+    ],
+    "variants": [
+      {"code": "ВТЕ-200/48", "values": ["15,12", "200", "48", "90–110", "91", "0,88"]},
+      {"code": "ВТЕ-315/48", "values": ["15,12", "315", "48", "90–110", "91", "0,88"]},
+      {"code": "ВТЕ-315/75", "values": ["23,62", "315", "75", "90–110", "92", "0,88"]},
+      {"code": "ВТЕ-315/115", "values": ["36,22", "315", "115", "90–110", "94", "0,88"]},
+      {"code": "ВТЕ-315/150", "values": ["47,25", "315", "150", "135–140", "94", "0,92"]},
+      {"code": "ВТЕ-315/230", "values": ["72,45", "315", "230", "135–140", "96", "0,92"]}
+    ]
+  },
+  "images": []
+}
