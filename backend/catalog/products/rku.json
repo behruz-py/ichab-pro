@@ -1,0 +1,35 @@
+{
+  "slug": "rku-sath-nazorati-relesi",
+  "sku": "РКУ",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "order": 11,
+  "category": {
+    "slug": "protection-devices",
+    "name_uz": "Himoya va nazorat qurilmalari",
+    "name_ru": "Устройства защиты и контроля",
+    "name_en": "Protection and monitoring devices"
+  },
+  "name_uz": "РКУ sath nazorati relesi",
+  "name_ru": "Реле контроля уровня РКУ",
+  "name_en": "RKU level control relay",
+  "short_description_uz": "Rezervuarlardagi tok o'tkazuvchi suyuqliklar sathini nazorat qilish va ushlab turish; nasoslar, klapanlar, zadvijkalar va ventillarni boshqarish; 3 ta mustaqil kanal.",
+  "short_description_ru": "Контроль и поддержание уровня токопроводящих жидкостей в резервуарах; управление насосами, клапанами, задвижками и вентилями; 3 независимых канала.",
+  "short_description_en": "Monitors and maintains the level of conductive liquids in tanks and controls pumps, valves, gate valves and shut-off valves, with three independent channels.",
+  "description_uz": "РКУ sath nazorati relesi rezervuarlardagi tok o'tkazuvchi suyuqliklarning belgilangan sathini nazorat qilish va ushlab turish, nasos qurilmalarining elektr dvigatellarini, elektromagnit klapanlar, zadvijkalar va ventillarni boshqarish uchun mo'ljallangan.\nРКУ 3 ta datchik va uzatuvchi o'zgartirgichdan iborat.\nQurilma parallel ishlaydigan uchta kanalga ega bo'lib, ular bitta yoki turli rezervuarlardagi suyuqliklarning 1 tadan 3 tagacha sathini bir-biridan mustaqil ravishda nazorat qilish imkonini beradi.\nРКУ indikator qurilmalar toifasiga kiradi va metrologik attestatsiya hamda qiyoslashdan o'tkazilmaydi.",
+  "description_ru": "Реле контроля уровня РКУ предназначено для контроля и поддержания заданного уровня токопроводящих жидкостей в резервуарах, управления электродвигателями насосных установок, управления электромагнитными клапанами, задвижками и вентилями.\nРКУ состоит из 3-х датчиков и передающего преобразователя.\nУстройство имеет три параллельно действующих канала, позволяющих независимо друг от друга контролировать от 1 до 3 уровней жидкостей в одном или разных резервуарах.\nРКУ относится к индикаторным устройствам и не подлежит метрологической аттестации и поверке.",
+  "description_en": "The РКУ level control relay is designed to monitor and maintain a set level of electrically conductive liquids in tanks, and to control pump motors, solenoid valves, gate valves and shut-off valves.\nThe РКУ consists of three sensors and a transmitting converter.\nThe device has three channels working in parallel, which allow 1 to 3 liquid levels to be monitored independently of each other in one tank or in different tanks.\nThe РКУ is an indicator device and is not subject to metrological certification or verification.",
+  "specs": [
+    {"label_uz": "Nominal ta'minot kuchlanishi, V", "label_ru": "Номинальное напряжение питания, В", "label_en": "Rated supply voltage, V", "value": "220"},
+    {"label_uz": "Kuchlanishning ruxsat etilgan og'ishlari, %", "label_ru": "Допускаемые отклонения напряжения, %", "label_en": "Permissible voltage deviations, %", "value": "−15…+10"},
+    {"label_uz": "Nominal chastota, Hz", "label_ru": "Номинальная частота, Гц", "label_en": "Rated frequency, Hz", "value": "50"},
+    {"label_uz": "Kuchlanish chastotasining ruxsat etilgan og'ishlari, %", "label_ru": "Допустимые отклонения частоты напряжения, %", "label_en": "Permissible supply frequency deviations, %", "value": "±2"},
+    {"label_uz": "Chiqish relesi kontaktlaridagi nominal yuklama toki, A", "label_ru": "Номинальный ток нагрузки на контакты выходного реле, А", "label_en": "Rated load current of the output relay contacts, A", "value": "1–5"},
+    {"label_uz": "Ulanadigan sath datchiklarining maksimal soni, dona", "label_ru": "Максимальное количество подключаемых датчиков уровня, шт.", "label_en": "Maximum number of level sensors connected, pcs",
+     "value": "3 tagacha", "value_ru": "до 3", "value_en": "up to 3"},
+    {"label_uz": "Atrof-muhit harorati, °C", "label_ru": "Температура окружающей среды, °C", "label_en": "Ambient temperature, °C", "value": "−10…+40"},
+    {"label_uz": "GOST 15150 bo'yicha iqlim ijrosi", "label_ru": "Климатическое исполнение по ГОСТ 15150", "label_en": "Climatic version per GOST 15150", "value": "УХЛ4"},
+    {"label_uz": "GOST 14254 bo'yicha himoya darajasi", "label_ru": "Степень защиты по ГОСТ 14254", "label_en": "Degree of protection per GOST 14254", "value": "IP54"}
+  ],
+  "images": []
+}
