@@ -1,0 +1,41 @@
+{
+  "slug": "chuktiriladigan-nasoslar-nazorat-tizimi",
+  "sku": "",
+  "brand": "ICHAB",
+  "availability": "on_order",
+  "order": 12,
+  "category": {
+    "slug": "protection-devices",
+    "name_uz": "Himoya va nazorat qurilmalari",
+    "name_ru": "Устройства защиты и контроля",
+    "name_en": "Protection and monitoring devices"
+  },
+  "name_uz": "Cho'ktiriladigan nasoslar ishini nazorat qilish tizimi (radiomodemlar)",
+  "name_ru": "Система контроля работы погружных насосов (радиомодемы)",
+  "name_en": "Submersible pump monitoring system (radio modems)",
+  "short_description_uz": "Cho'ktiriladigan nasoslar holatini radiokanal orqali masofadan monitoring qilish va boshqarish; aloqa uzoqligi 5 km gacha, bitta blokka 8 tagacha nasos.",
+  "short_description_ru": "Дистанционный мониторинг и управление погружными насосами по радиоканалу; дальность связи до 5 км, до 8 насосов на один блок.",
+  "short_description_en": "Remote monitoring and control of submersible pumps over a radio link, with a range of up to 5 km and up to 8 pumps per unit.",
+  "description_uz": "Tizim nazorat qilinadigan obyekt (cho'ktiriladigan nasoslar) holati haqidagi ma'lumotlarni yig'ish va radiokanal orqali uzatish uchun mo'ljallangan, shuningdek obyektni masofadan boshqarish uchun diskret chiqishlarga ega.\nCho'ktiriladigan nasoslarning joriy holatini masofadan monitoring qilish uchun tizimda 5 kilometrgacha masofada ishlay oladigan radiomodemlar qo'llaniladi. Bitta blok bitta nasos ishini nazorat qiladi; buyurtmachining xohishiga ko'ra blokni nasoslarning joylashuviga qarab 8 tagacha cho'ktiriladigan nasosni nazorat qilishga sozlash mumkin.",
+  "description_ru": "Система предназначена для сбора и передачи по радиоканалу информации о состоянии контролируемого объекта (погружных насосов), а также имеет дискретные выходы для дистанционного управления объектом.\nДля дистанционного мониторинга текущего состояния погружных насосов в системе используются радиомодемы, которые могут работать на расстоянии до 5-ти километров. Один блок контролирует работу одного насоса; по желанию заказчика блок можно настроить для контроля до 8-ми погружных насосов исходя из их расположения.",
+  "description_en": "The system is designed to collect information on the state of the monitored equipment (submersible pumps) and transmit it over a radio channel; it also has discrete outputs for remote control of the equipment.\nFor remote monitoring of the current state of the submersible pumps, the system uses radio modems with a range of up to 5 km. One unit monitors one pump; at the customer's request, a unit can be configured to monitor up to 8 submersible pumps, depending on their location.",
+  "specs": [
+    {"label_uz": "Nominal ta'minot kuchlanishi, V", "label_ru": "Номинальное напряжение питания, В", "label_en": "Rated supply voltage, V", "value": "220"},
+    {"label_uz": "Kuchlanishning ruxsat etilgan og'ishlari, %", "label_ru": "Допускаемые отклонения напряжения, %", "label_en": "Permissible voltage deviations, %", "value": "−15…+10"},
+    {"label_uz": "Nominal chastota, Hz", "label_ru": "Номинальная частота, Гц", "label_en": "Rated frequency, Hz", "value": "50 ± 2"},
+    {"label_uz": "Nazorat qilinadigan parametrlar", "label_ru": "Контролируемые параметры", "label_en": "Monitored parameters",
+     "value": "diskret signal bo'yicha; analog signal bo'yicha", "value_ru": "по дискретному сигналу; по аналоговому сигналу", "value_en": "discrete signal; analogue signal"},
+    {"label_uz": "Masofadan nazorat qilinadigan cho'ktiriladigan nasoslar soni", "label_ru": "Количество дистанционно контролируемых погружных насосов", "label_en": "Number of remotely monitored submersible pumps",
+     "value": "8 tagacha", "value_ru": "до 8", "value_en": "up to 8"},
+    {"label_uz": "Radiomodem qabul qilish-uzatish qurilmasining aloqa uzoqligi, km", "label_ru": "Дальность связи приёмо-передающего устройства радиомодема, км", "label_en": "Radio modem transceiver range, km",
+     "value": "5 gacha", "value_ru": "до 5", "value_en": "up to 5"},
+    {"label_uz": "Ishchi chastota diapazoni, MHz", "label_ru": "Рабочий диапазон частот, МГц", "label_en": "Operating frequency bands, MHz",
+     "value": "433 va 868", "value_ru": "433 и 868", "value_en": "433 and 868"},
+    {"label_uz": "Ma'lumot uzatish tezligi, kbit/s", "label_ru": "Скорость передачи данных, кбит/с", "label_en": "Data rate, kbit/s",
+     "value": "300 gacha", "value_ru": "до 300", "value_en": "up to 300"},
+    {"label_uz": "Atrof-muhit harorati, °C", "label_ru": "Температура окружающей среды, °C", "label_en": "Ambient temperature, °C", "value": "−20…+50"},
+    {"label_uz": "GOST 15150 bo'yicha iqlim ijrosi", "label_ru": "Климатическое исполнение по ГОСТ 15150", "label_en": "Climatic version per GOST 15150", "value": "УХЛ4"},
+    {"label_uz": "GOST 14254 bo'yicha himoya darajasi", "label_ru": "Степень защиты по ГОСТ 14254", "label_en": "Degree of protection per GOST 14254", "value": "IP54"}
+  ],
+  "images": []
+}
